@@ -46,6 +46,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTabbedPane jTabPestañas;
 	private JLabel jLabelMontoPrestamo;
 	private JPanel jPanelAgregarAbono;
+	private JTextField jTextCodigoPrestamo;
+	private JLabel jLabelCodigoPrestamo;
+	private JLabel jLabelFecha;
+	private JTextField jTextField1;
+	private JLabel jLabelMonto;
 	private JTable jTableAbonosRecibidos;
 	private JScrollPane jScrollAbonosRecibidos;
 	private JPanel jPanelAbonosRecibidos;
@@ -78,7 +83,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JPanel jPanelEntradasPrestamo;
 	private JTable jTablePrestamos;
 	private JScrollPane jScrollReportes;
-	private JDateChooser calendario;
+	private JDateChooser calendarioPrestamos;
+	private JDateChooser calendarioAbonos;
 
 	/**
 	 * Auto-generated main method to display this JFrame
@@ -340,9 +346,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 										});
 							}
 							{
-								calendario = new JDateChooser();
-								jPanelEntradasPrestamo.add(calendario);
-								calendario.setBounds(201, 129, 135, 22);
+								calendarioPrestamos = new JDateChooser();
+								jPanelEntradasPrestamo.add(calendarioPrestamos);
+								calendarioPrestamos.setBounds(201, 129, 135, 22);
 							}
 							{
 								jLabelNombreCliente = new JLabel();
@@ -431,6 +437,40 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jPanelAbonos.add(jPanelAgregarAbono, BorderLayout.NORTH);
 						jPanelAgregarAbono.setPreferredSize(new java.awt.Dimension(756, 138));
 						jPanelAgregarAbono.setBorder(BorderFactory.createTitledBorder("Agregar abono"));
+						jPanelAgregarAbono.setLayout(null);
+						{
+							jLabelMonto = new JLabel();
+							jPanelAgregarAbono.add(jLabelMonto);
+							jLabelMonto.setText("Monto:");
+							jLabelMonto.setBounds(17, 29, 174, 15);
+						}
+						{
+							jTextField1 = new JTextField();
+							jPanelAgregarAbono.add(jTextField1);
+							jTextField1.setBounds(191, 27, 115, 22);
+						}
+						{
+							jLabelFecha = new JLabel();
+							jPanelAgregarAbono.add(jLabelFecha);
+							jLabelFecha.setText("Fecha:");
+							jLabelFecha.setBounds(17, 68, 174, 15);
+						}
+						{
+							calendarioAbonos = new JDateChooser();
+							jPanelAgregarAbono.add(calendarioAbonos);
+							calendarioAbonos.setBounds(191, 61, 135, 22);
+						}
+						{
+							jLabelCodigoPrestamo = new JLabel();
+							jPanelAgregarAbono.add(jLabelCodigoPrestamo);
+							jLabelCodigoPrestamo.setText("Código préstamo:");
+							jLabelCodigoPrestamo.setBounds(17, 101, 174, 15);
+						}
+						{
+							jTextCodigoPrestamo = new JTextField();
+							jPanelAgregarAbono.add(jTextCodigoPrestamo);
+							jTextCodigoPrestamo.setBounds(191, 99, 115, 22);
+						}
 					}
 					jTabPestañas.addTab("Clientes", jPanelClientes);
 					jTabPestañas.addTab("Reportes", jPanelReportes);
