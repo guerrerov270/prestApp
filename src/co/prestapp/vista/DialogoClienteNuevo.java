@@ -1,7 +1,7 @@
 package co.prestapp.vista;
 import java.awt.BorderLayout;
-import javax.swing.JButton;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -136,10 +136,12 @@ public class DialogoClienteNuevo extends javax.swing.JDialog {
 			this.setSize(396, 349);
 			 this.setLocationRelativeTo(null);
 			this.setResizable(false);
-			
+		
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
 
 }

@@ -46,6 +46,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTabbedPane jTabPestañas;
 	private JLabel jLabelMontoPrestamo;
 	private JPanel jPanelAgregarAbono;
+	private JTable jTableClientes;
+	private JScrollPane jScrollPaneClientes;
+	private JButton jButton1;
+	private JButton jButtonGuardar;
+	private JLabel jLabelEsPuntualR;
+	private JLabel jLabel1EsCompletoR;
+	private JLabel jLabelEsPuntual;
+	private JLabel jLabelEsCompleto;
 	private JTextField jTextCodigoPrestamo;
 	private JLabel jLabelCodigoPrestamo;
 	private JLabel jLabelFecha;
@@ -66,7 +74,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelTotalFormato;
 	private JLabel jLabelTotalPago;
 	private JLabel jLabelCliente;
-	private JButton jButtonCancelar;
 	private JButton jButtonAceptar;
 	private JLabel jLabelFechaFinResultado;
 	private JComboBox jComboPlazo;
@@ -114,6 +121,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				BorderLayout jPanelAbonosLayout = new BorderLayout();
 				jPanelAbonos.setLayout(jPanelAbonosLayout);
 				jPanelClientes = new JPanel();
+				BorderLayout jPanelClientesLayout = new BorderLayout();
+				jPanelClientes.setLayout(jPanelClientesLayout);
 				jPanelPrestamos = new JPanel();
 				BorderLayout jPanelPrestamosLayout = new BorderLayout();
 				jPanelPrestamos.setLayout(jPanelPrestamosLayout);
@@ -293,10 +302,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 											GridBagConstraints.NONE,
 											new Insets(0, 0, 0, 0), 0, 0));
 							{
-								jButtonCancelar = new JButton();
+								final JButton jButtonCancelar = new JButton();
 								jPanelEntradasPrestamo.add(jButtonCancelar);
 								jButtonCancelar.setText("Cancelar");
 								jButtonCancelar.setBounds(603, 254, 135, 22);
+						
 							}
 							{
 								jLabelCliente = new JLabel();
@@ -471,8 +481,58 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jPanelAgregarAbono.add(jTextCodigoPrestamo);
 							jTextCodigoPrestamo.setBounds(191, 99, 115, 22);
 						}
+						{
+							jLabelEsCompleto = new JLabel();
+							jPanelAgregarAbono.add(jLabelEsCompleto);
+							jLabelEsCompleto.setText("¿Abono completo?");
+							jLabelEsCompleto.setBounds(433, 30, 201, 15);
+						}
+						{
+							jLabelEsPuntual = new JLabel();
+							jPanelAgregarAbono.add(jLabelEsPuntual);
+							jLabelEsPuntual.setText("¿Abono puntual?");
+							jLabelEsPuntual.setBounds(433, 68, 201, 15);
+						}
+						{
+							jLabel1EsCompletoR = new JLabel();
+							jPanelAgregarAbono.add(jLabel1EsCompletoR);
+							jLabel1EsCompletoR.setText("Sí");
+							jLabel1EsCompletoR.setBounds(676, 30, 84, 15);
+						}
+						{
+							jLabelEsPuntualR = new JLabel();
+							jPanelAgregarAbono.add(jLabelEsPuntualR);
+							jLabelEsPuntualR.setText("Sí");
+							jLabelEsPuntualR.setBounds(676, 68, 84, 15);
+						}
+						{
+							jButtonGuardar = new JButton();
+							jPanelAgregarAbono.add(jButtonGuardar);
+							jButtonGuardar.setText("Guardar");
+							jButtonGuardar.setBounds(433, 100, 132, 22);
+						}
+						{
+							jButton1 = new JButton();
+							jPanelAgregarAbono.add(jButton1);
+							jButton1.setText("Cancelar");
+							jButton1.setBounds(587, 100, 132, 22);
+						}
 					}
 					jTabPestañas.addTab("Clientes", jPanelClientes);
+					jPanelClientes.setBorder(BorderFactory.createTitledBorder("Listado de clientes"));
+					{
+						jScrollPaneClientes = new JScrollPane();
+						jPanelClientes.add(jScrollPaneClientes, BorderLayout.CENTER);
+						{
+							TableModel jTableClientesModel = 
+									new DefaultTableModel(
+											new String[][] { { "One", "Two" }, { "Three", "Four" } },
+											new String[] { "Column 1", "Column 2" });
+							jTableClientes = new JTable();
+							jScrollPaneClientes.setViewportView(jTableClientes);
+							jTableClientes.setModel(jTableClientesModel);
+						}
+					}
 					jTabPestañas.addTab("Reportes", jPanelReportes);
 
 				}
