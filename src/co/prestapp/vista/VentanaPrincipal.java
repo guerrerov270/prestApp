@@ -23,6 +23,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.SwingUtilities;
 
+import co.prestapp.controlador.ControlaCargaInicial;
+
 import com.toedter.calendar.JDateChooser;
 
 /**
@@ -92,6 +94,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JScrollPane jScrollReportes;
 	private JDateChooser calendarioPrestamos;
 	private JDateChooser calendarioAbonos;
+	private ControlaCargaInicial controladorInicio;
 
 	/**
 	 * Auto-generated main method to display this JFrame
@@ -269,7 +272,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 											GridBagConstraints.NONE,
 											new Insets(0, 0, 0, 0), 0, 0));
 							jLabelFechaFinResultado.setText("Fecha en formato");
-							jLabelFechaFinResultado.setBounds(201, 217, 135, 15);
+							jLabelFechaFinResultado
+									.setBounds(201, 217, 135, 15);
 						}
 						{
 							jLabelTipoPlazo = new JLabel();
@@ -306,7 +310,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jPanelEntradasPrestamo.add(jButtonCancelar);
 								jButtonCancelar.setText("Cancelar");
 								jButtonCancelar.setBounds(603, 254, 135, 22);
-						
+
 							}
 							{
 								jLabelCliente = new JLabel();
@@ -358,7 +362,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							{
 								calendarioPrestamos = new JDateChooser();
 								jPanelEntradasPrestamo.add(calendarioPrestamos);
-								calendarioPrestamos.setBounds(201, 129, 135, 22);
+								calendarioPrestamos
+										.setBounds(201, 129, 135, 22);
 							}
 							{
 								jLabelNombreCliente = new JLabel();
@@ -401,52 +406,76 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					{
 						jPanelAbonosPendientes = new JPanel();
 						BorderLayout jPanelAbonosPendientesLayout = new BorderLayout();
-						jPanelAbonosPendientes.setLayout(jPanelAbonosPendientesLayout);
-						jPanelAbonos.add(jPanelAbonosPendientes, BorderLayout.CENTER);
-						jPanelAbonosPendientes.setPreferredSize(new java.awt.Dimension(755, 186));
-						jPanelAbonosPendientes.setBorder(BorderFactory.createTitledBorder("Pendientes"));
+						jPanelAbonosPendientes
+								.setLayout(jPanelAbonosPendientesLayout);
+						jPanelAbonos.add(jPanelAbonosPendientes,
+								BorderLayout.CENTER);
+						jPanelAbonosPendientes
+								.setPreferredSize(new java.awt.Dimension(755,
+										186));
+						jPanelAbonosPendientes.setBorder(BorderFactory
+								.createTitledBorder("Pendientes"));
 						{
 							jScrollAbonosPendientes = new JScrollPane();
-							jPanelAbonosPendientes.add(jScrollAbonosPendientes, BorderLayout.CENTER);
-							jScrollAbonosPendientes.setPreferredSize(new java.awt.Dimension(730, 157));
+							jPanelAbonosPendientes.add(jScrollAbonosPendientes,
+									BorderLayout.CENTER);
+							jScrollAbonosPendientes
+									.setPreferredSize(new java.awt.Dimension(
+											730, 157));
 							{
-								TableModel jTableAbonosPendientesModel = 
-										new DefaultTableModel(
-												new String[][] { { "One", "Two" }, { "Three", "Four" } },
-												new String[] { "Column 1", "Column 2" });
+								TableModel jTableAbonosPendientesModel = new DefaultTableModel(
+										new String[][] { { "One", "Two" },
+												{ "Three", "Four" } },
+										new String[] { "Column 1", "Column 2" });
 								jTableAbonosPendientes = new JTable();
-								jScrollAbonosPendientes.setViewportView(jTableAbonosPendientes);
-								jTableAbonosPendientes.setModel(jTableAbonosPendientesModel);
+								jScrollAbonosPendientes
+										.setViewportView(jTableAbonosPendientes);
+								jTableAbonosPendientes
+										.setModel(jTableAbonosPendientesModel);
 							}
 						}
 					}
 					{
 						jPanelAbonosRecibidos = new JPanel();
 						BorderLayout jPanelAbonosRecibidosLayout = new BorderLayout();
-						jPanelAbonosRecibidos.setLayout(jPanelAbonosRecibidosLayout);
-						jPanelAbonos.add(jPanelAbonosRecibidos, BorderLayout.SOUTH);
-						jPanelAbonosRecibidos.setPreferredSize(new java.awt.Dimension(763, 181));
-						jPanelAbonosRecibidos.setBorder(BorderFactory.createTitledBorder("Recibidos"));
+						jPanelAbonosRecibidos
+								.setLayout(jPanelAbonosRecibidosLayout);
+						jPanelAbonos.add(jPanelAbonosRecibidos,
+								BorderLayout.SOUTH);
+						jPanelAbonosRecibidos
+								.setPreferredSize(new java.awt.Dimension(763,
+										181));
+						jPanelAbonosRecibidos.setBorder(BorderFactory
+								.createTitledBorder("Recibidos"));
 						{
 							jScrollAbonosRecibidos = new JScrollPane();
-							jPanelAbonosRecibidos.add(jScrollAbonosRecibidos, BorderLayout.CENTER);
-							jScrollAbonosRecibidos.setPreferredSize(new java.awt.Dimension(713, 146));
+							jPanelAbonosRecibidos.add(jScrollAbonosRecibidos,
+									BorderLayout.CENTER);
+							jScrollAbonosRecibidos
+									.setPreferredSize(new java.awt.Dimension(
+											713, 146));
 							{
-								TableModel jTableAbonosRecibidosModel = 
-										new DefaultTableModel(
-												new String[][] { { "One", "Two" }, { "Three", "Four" } },
-												new String[] { "Column 1", "Column 2" });
+								TableModel jTableAbonosRecibidosModel = new DefaultTableModel(
+										new String[][] { { "One", "Two" },
+												{ "Three", "Four" } },
+										new String[] { "Column 1", "Column 2" });
 								jTableAbonosRecibidos = new JTable();
-								jScrollAbonosRecibidos.setViewportView(jTableAbonosRecibidos);
-								jTableAbonosRecibidos.setModel(jTableAbonosRecibidosModel);
+								jScrollAbonosRecibidos
+										.setViewportView(jTableAbonosRecibidos);
+								jTableAbonosRecibidos
+										.setModel(jTableAbonosRecibidosModel);
 							}
 						}
 					}
 					{
 						jPanelAgregarAbono = new JPanel();
-						jPanelAbonos.add(jPanelAgregarAbono, BorderLayout.NORTH);
-						jPanelAgregarAbono.setPreferredSize(new java.awt.Dimension(756, 138));
-						jPanelAgregarAbono.setBorder(BorderFactory.createTitledBorder("Agregar abono"));
+						jPanelAbonos
+								.add(jPanelAgregarAbono, BorderLayout.NORTH);
+						jPanelAgregarAbono
+								.setPreferredSize(new java.awt.Dimension(756,
+										138));
+						jPanelAgregarAbono.setBorder(BorderFactory
+								.createTitledBorder("Agregar abono"));
 						jPanelAgregarAbono.setLayout(null);
 						{
 							jLabelMonto = new JLabel();
@@ -519,18 +548,23 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						}
 					}
 					jTabPestañas.addTab("Clientes", jPanelClientes);
-					jPanelClientes.setBorder(BorderFactory.createTitledBorder("Listado de clientes"));
+					jPanelClientes.setBorder(BorderFactory
+							.createTitledBorder("Listado de clientes"));
 					{
+						controladorInicio = new ControlaCargaInicial(this);
 						jScrollPaneClientes = new JScrollPane();
-						jPanelClientes.add(jScrollPaneClientes, BorderLayout.CENTER);
+						jPanelClientes.add(jScrollPaneClientes,
+								BorderLayout.CENTER);
 						{
-							TableModel jTableClientesModel = 
-									new DefaultTableModel(
-											new String[][] { { "One", "Two" }, { "Three", "Four" } },
-											new String[] { "Column 1", "Column 2" });
-							jTableClientes = new JTable();
+							String encabezados[] = { "Código", "Nombre",
+									"Dirección", "Empresa", "Telefono",
+									"Referencia" };
+							String informacion[][] = controladorInicio
+									.cargarClientes();
+							jTableClientes = new JTable(informacion,
+									encabezados);
 							jScrollPaneClientes.setViewportView(jTableClientes);
-							jTableClientes.setModel(jTableClientesModel);
+
 						}
 					}
 					jTabPestañas.addTab("Reportes", jPanelReportes);
