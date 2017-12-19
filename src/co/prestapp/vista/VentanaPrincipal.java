@@ -68,9 +68,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTable jTableAbonosPendientes;
 	private JScrollPane jScrollAbonosPendientes;
 	private JComboBox jComboFechasCobro;
-	private JLabel jLabelTelefono;
+	public JLabel jLabelCodigo;
 	private JLabel jLabelEmpresaCliente;
-	private JLabel jLabelNombreCliente;
+	public JLabel jLabelNombreCliente;
 	private JButton jButtonClienteNuevo;
 	private JButton jButtonClienteExiste;
 	private JLabel jLabelTotalFormato;
@@ -368,23 +368,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							{
 								jLabelNombreCliente = new JLabel();
 								jPanelEntradasPrestamo.add(jLabelNombreCliente);
-								jLabelNombreCliente.setText("nombreC");
+								jLabelNombreCliente.setText("nombre");
 								jLabelNombreCliente
 										.setBounds(603, 122, 113, 15);
 							}
 							{
-								jLabelEmpresaCliente = new JLabel();
-								jPanelEntradasPrestamo
-										.add(jLabelEmpresaCliente);
-								jLabelEmpresaCliente.setText("empresa");
-								jLabelEmpresaCliente.setBounds(603, 143, 113,
-										15);
-							}
-							{
-								jLabelTelefono = new JLabel();
-								jPanelEntradasPrestamo.add(jLabelTelefono);
-								jLabelTelefono.setText("telefono");
-								jLabelTelefono.setBounds(603, 164, 113, 15);
+								jLabelCodigo = new JLabel();
+								jPanelEntradasPrestamo.add(jLabelCodigo);
+								jLabelCodigo.setText("Código");
+								jLabelCodigo.setBounds(603, 149, 113, 15);
 							}
 							{
 								ComboBoxModel jComboFechasCobroModel = new DefaultComboBoxModel(

@@ -1,5 +1,11 @@
 package co.prestapp.vista;
+
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -8,19 +14,18 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import co.prestapp.controlador.ControlaDialogo;
 
 /**
-* This code was edited or generated using CloudGarden's Jigloo
-* SWT/Swing GUI Builder, which is free for non-commercial
-* use. If Jigloo is being used commercially (ie, by a corporation,
-* company or business for any purpose whatever) then you
-* should purchase a license for each developer using Jigloo.
-* Please visit www.cloudgarden.com for details.
-* Use of Jigloo implies acceptance of these licensing terms.
-* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
-* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
-* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
-*/
+ * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
+ * Builder, which is free for non-commercial use. If Jigloo is being used
+ * commercially (ie, by a corporation, company or business for any purpose
+ * whatever) then you should purchase a license for each developer using Jigloo.
+ * Please visit www.cloudgarden.com for details. Use of Jigloo implies
+ * acceptance of these licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN
+ * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
+ * ANY CORPORATE OR COMMERCIAL PURPOSE.
+ */
 public class DialogoClienteNuevo extends javax.swing.JDialog {
 	private JPanel jPanelDatosNuevoCliente;
 	private JLabel jLabelNombre;
@@ -35,10 +40,11 @@ public class DialogoClienteNuevo extends javax.swing.JDialog {
 	private JTextField jTextDireccion;
 	private JTextField jTextNombre;
 	private JLabel jLabelEmpresa;
+	private ControlaDialogo controladorDialogo;
 
 	/**
-	* Auto-generated main method to display this JDialog
-	*/
+	 * Auto-generated main method to display this JDialog
+	 */
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -48,12 +54,12 @@ public class DialogoClienteNuevo extends javax.swing.JDialog {
 			}
 		});
 	}
-	
+
 	public DialogoClienteNuevo(JFrame frame) {
 		super(frame);
 		initGUI();
 	}
-	
+
 	private void initGUI() {
 		try {
 			{
@@ -61,14 +67,16 @@ public class DialogoClienteNuevo extends javax.swing.JDialog {
 				{
 					jPanelDatosNuevoCliente = new JPanel();
 					jPanelDatosNuevoCliente.setLayout(null);
-					getContentPane().add(jPanelDatosNuevoCliente, BorderLayout.CENTER);
-					jPanelDatosNuevoCliente.setPreferredSize(new java.awt.Dimension(390, 305));
+					getContentPane().add(jPanelDatosNuevoCliente,
+							BorderLayout.CENTER);
+					jPanelDatosNuevoCliente
+							.setPreferredSize(new java.awt.Dimension(390, 305));
 					{
 						jLabelNombre = new JLabel();
 						jPanelDatosNuevoCliente.add(jLabelNombre);
 						jLabelNombre.setText("Nombre:");
 						jLabelNombre.setBounds(12, 18, 184, 32);
-		
+
 					}
 					{
 						jLabelDirección = new JLabel();
@@ -91,34 +99,45 @@ public class DialogoClienteNuevo extends javax.swing.JDialog {
 					{
 						jTextNombre = new JTextField();
 						jPanelDatosNuevoCliente.add(jTextNombre);
-						jTextNombre.setBounds(184, 69, 184, 32);
+						jTextNombre.setBounds(183, 19, 184, 32);
+						jTextNombre.setText("nombre");
 					}
 					{
 						jTextDireccion = new JTextField();
 						jPanelDatosNuevoCliente.add(jTextDireccion);
-						jTextDireccion.setBounds(184, 119, 184, 32);
+						jTextDireccion.setBounds(181, 69, 184, 32);
 					}
 					{
 						jTextEmpresa = new JTextField();
 						jPanelDatosNuevoCliente.add(jTextEmpresa);
-						jTextEmpresa.setBounds(184, 169, 184, 32);
+						jTextEmpresa.setBounds(182, 120, 184, 32);
 					}
 					{
 						jTextTeléfono = new JTextField();
 						jPanelDatosNuevoCliente.add(jTextTeléfono);
-						jTextTeléfono.setBounds(184, 19, 184, 32);
+						jTextTeléfono.setBounds(181, 171, 184, 32);
 					}
 					{
 						jButtonGuardar = new JButton();
 						jPanelDatosNuevoCliente.add(jButtonGuardar);
 						jButtonGuardar.setText("Guardar");
 						jButtonGuardar.setBounds(69, 266, 120, 32);
+						jButtonGuardar.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								jButtonGuardarActionPerformed(evt);
+							}
+						});
 					}
 					{
 						jButtonCancelar = new JButton();
 						jPanelDatosNuevoCliente.add(jButtonCancelar);
 						jButtonCancelar.setText("Cancelar");
 						jButtonCancelar.setBounds(221, 266, 120, 32);
+						jButtonCancelar.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								jButtonCancelarActionPerformed(evt);
+							}
+						});
 					}
 					{
 						jLabelReferencia = new JLabel();
@@ -134,14 +153,36 @@ public class DialogoClienteNuevo extends javax.swing.JDialog {
 				}
 			}
 			this.setSize(396, 349);
-			 this.setLocationRelativeTo(null);
+			this.setLocationRelativeTo(null);
 			this.setResizable(false);
-		
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
+	private void jButtonGuardarActionPerformed(ActionEvent evt) {
+
+		Date fechaClave= new Date();
+		DateFormat formato= new SimpleDateFormat("ddMMHHmmss");
+		String clave= formato.format(new Date());		
+		int codigoCliente= Integer.parseInt(clave);
+		String nombre = jTextNombre.getText();
+		String direccion = jTextDireccion.getText();
+		String empresa = jTextEmpresa.getText();
+		String telefono = jTextTeléfono.getText();
+		String referencia = jTextReferencia.getText();
+		controladorDialogo = new ControlaDialogo();
+		controladorDialogo.guardarCliente(codigoCliente, nombre, direccion, empresa, telefono,
+				referencia);
+		this.setVisible(false);
+
+	}
+
+	private void jButtonCancelarActionPerformed(ActionEvent evt) {
+
+		this.setVisible(false);
+
+	}
 
 }

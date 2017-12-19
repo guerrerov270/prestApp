@@ -45,4 +45,29 @@ public class ClienteDAO {
 
 	}
 
+	public void agregarCliente(int codigoCliente, String nombre,
+			String direccion, String empresa, String telefono, String referencia) {
+
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		try {
+			CallableStatement miProcedimiento = conexion
+					.prepareCall("{call agregar_cliente(?,?,?,?,?,?)}");
+			miProcedimiento.setInt(1, codigoCliente);
+			miProcedimiento.setString(2, nombre);
+			miProcedimiento.setString(3, direccion);
+			miProcedimiento.setString(4, empresa);
+			miProcedimiento.setString(5, telefono);
+			miProcedimiento.setString(6, referencia);
+			miProcedimiento.execute();
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out
+					.println("Error al ejecutar consulta para agregar cliente");
+			System.out.println(e.getMessage());
+		}
+
+	}
+
 }

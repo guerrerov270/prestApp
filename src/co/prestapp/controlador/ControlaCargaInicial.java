@@ -1,14 +1,12 @@
 package co.prestapp.controlador;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import co.prestapp.DAO.ClienteDAO;
 import co.prestapp.VO.ClienteVO;
 import co.prestapp.vista.VentanaPrincipal;
 
-public class ControlaCargaInicial extends WindowAdapter{
+public class ControlaCargaInicial{
 	
 	ClienteDAO miClienteDAO= new ClienteDAO();
 	private VentanaPrincipal ventana;
@@ -16,12 +14,6 @@ public class ControlaCargaInicial extends WindowAdapter{
 	public ControlaCargaInicial(VentanaPrincipal ventana) {
 		
 		this.ventana=ventana;
-		
-	}
-	
-	public void windowOpened(WindowEvent e){
-		
-		
 		
 	}
 	
