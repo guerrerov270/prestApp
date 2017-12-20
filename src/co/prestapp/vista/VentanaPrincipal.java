@@ -681,24 +681,22 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	
 	private void jButtonGuardarActionPerformed(ActionEvent evt) {
 		
-		Date fechaClave= new Date();
-		DateFormat formato= new SimpleDateFormat("ddMMHHmmss");
-		String clave= formato.format(new Date());		
-		int codigoCliente= Integer.parseInt(clave);
 		String nombre = jTextNombre.getText();
 		String direccion = jTextDireccion.getText();
 		String empresa = jTextEmpresa.getText();
 		String telefono = jTextTeléfono.getText();
 		String referencia = jTextReferencia.getText();
 		ClienteDAO miCliente= new ClienteDAO();
-		miCliente.agregarCliente(codigoCliente, nombre, direccion, empresa, telefono,
+		miCliente.agregarCliente(nombre, direccion, empresa, telefono,
 				referencia);	
+		limpiarCamposCliente();
 		
 	}
 
 	private void jButtonCancelarActionPerformed(ActionEvent evt) {
 
 
+		limpiarCamposCliente();
 	}
 	
 	public DefaultTableModel actualizaTabla(){
@@ -729,5 +727,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		jTableClientes= new JTable();
 		jTableClientes.setModel(actualizaTabla());
 		jScrollPaneClientes.setViewportView(jTableClientes);
+	}
+	
+	public void limpiarCamposCliente(){
+		
+		jTextNombre.setText("");
+		jTextDireccion.setText("");
+		jTextEmpresa.setText("");
+		jTextTeléfono.setText("");
+		jTextReferencia.setText("");
+		
 	}
 }

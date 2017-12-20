@@ -14,20 +14,19 @@ import co.prestapp.connection.DBConnection;
 
 public class ClienteDAO {
 
-	public void agregarCliente(int codigoCliente, String nombre,
+	public void agregarCliente(String nombre,
 			String direccion, String empresa, String telefono, String referencia) {
 
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
 		try {
 			CallableStatement miProcedimiento = conexion
-					.prepareCall("{call agregar_cliente(?,?,?,?,?,?)}");
-			miProcedimiento.setInt(1, codigoCliente);
-			miProcedimiento.setString(2, nombre);
-			miProcedimiento.setString(3, direccion);
-			miProcedimiento.setString(4, empresa);
-			miProcedimiento.setString(5, telefono);
-			miProcedimiento.setString(6, referencia);
+					.prepareCall("{call agregar_cliente(?,?,?,?,?)}");
+			miProcedimiento.setString(1, nombre);
+			miProcedimiento.setString(2, direccion);
+			miProcedimiento.setString(3, empresa);
+			miProcedimiento.setString(4, telefono);
+			miProcedimiento.setString(5, referencia);
 			miProcedimiento.execute();
 			conexion.close();
 
