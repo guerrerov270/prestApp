@@ -26,8 +26,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.SwingUtilities;
 
-import co.prestapp.controlador.ControlaCargaInicial;
-import co.prestapp.controlador.ControlaDialogo;
+import co.prestapp.DAO.ClienteDAO;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -99,20 +98,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JScrollPane jScrollReportes;
 	private JDateChooser calendarioPrestamos;
 	private JDateChooser calendarioAbonos;
-	private ControlaCargaInicial controladorInicio;
 	private JLabel jLabelNombre;
 	private JLabel jLabelDirección;
 	private JLabel jLabelTelefono;
 	private JTextField jTextEmpresa;
 	private JLabel jLabelReferencia;
 	private JTextField jTextReferencia;
+	private JButton jButtonActualizar;
 	private JButton jButtonCancelar;
 	private JButton jButtonGuardarCliente;
 	private JTextField jTextTeléfono;
 	private JTextField jTextDireccion;
 	private JTextField jTextNombre;
 	private JLabel jLabelEmpresa;
-	private ControlaDialogo controladorDialogo;
 	
 
 	/**
@@ -561,13 +559,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					jTabPestañas.addTab("Clientes", jPanelClientes);
 					jPanelClientes.setBorder(BorderFactory.createTitledBorder("Datos de clientes"));
 					{
-						controladorInicio = new ControlaCargaInicial(this);
+					
 						jScrollPaneClientes = new JScrollPane();
 						jPanelClientes.add(jScrollPaneClientes,
 								BorderLayout.CENTER);
 						{
-							llenaTabla();
-							jScrollPaneClientes.setViewportView(jTableClientes);
+							
 
 						}
 					}
@@ -625,7 +622,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jButtonGuardarCliente = new JButton();
 							jPanelAgregarCliente.add(jButtonGuardarCliente);
 							jButtonGuardarCliente.setText("Guardar");
-							jButtonGuardarCliente.setBounds(341, 131, 184, 32);
+							jButtonGuardarCliente.setBounds(452, 99, 184, 32);
 							jButtonGuardarCliente.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
 									jButtonGuardarActionPerformed(evt);
@@ -636,7 +633,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jButtonCancelar = new JButton();
 							jPanelAgregarCliente.add(jButtonCancelar);
 							jButtonCancelar.setText("Cancelar");
-							jButtonCancelar.setBounds(553, 131, 184, 32);
+							jButtonCancelar.setBounds(452, 148, 184, 32);
 							jButtonCancelar.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
 									jButtonCancelarActionPerformed(evt);
@@ -652,6 +649,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						{
 							jTextReferencia = new JTextField();
 							jPanelAgregarCliente.add(jTextReferencia);
+							jPanelAgregarCliente.add(getJButtonActualizar());
 							jTextReferencia.setBounds(452, 13, 184, 32);
 						}
 					}
@@ -669,9 +667,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private void jButtonClienteNuevoActionPerformed(ActionEvent evt) {
 
-		DialogoClienteNuevo dialogoClienteNuevo = new DialogoClienteNuevo(this);
-		dialogoClienteNuevo.setVisible(true);
-
 		// obtener los datos ingresados en el dialogo, guardar cliente en bd y
 		// adjuntarlo a prestamo actual
 	}
@@ -685,7 +680,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	}
 	
 	private void jButtonGuardarActionPerformed(ActionEvent evt) {
-
+		
 		Date fechaClave= new Date();
 		DateFormat formato= new SimpleDateFormat("ddMMHHmmss");
 		String clave= formato.format(new Date());		
@@ -695,33 +690,44 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String empresa = jTextEmpresa.getText();
 		String telefono = jTextTeléfono.getText();
 		String referencia = jTextReferencia.getText();
-		controladorDialogo = new ControlaDialogo();
-		controladorDialogo.guardarCliente(codigoCliente, nombre, direccion, empresa, telefono,
-				referencia);
-		actualizaTabla();
-
+		ClienteDAO miCliente= new ClienteDAO();
+		miCliente.agregarCliente(codigoCliente, nombre, direccion, empresa, telefono,
+				referencia);	
+		
 	}
 
 	private void jButtonCancelarActionPerformed(ActionEvent evt) {
 
 
 	}
-
-	public void llenaTabla(){
+	
+	public DefaultTableModel actualizaTabla(){
+	
+		ClienteDAO miCliente= new ClienteDAO();
+		DefaultTableModel modelo=miCliente.llenaTablaClientes();
+		return modelo;
 		
-		String encabezados[] = { "Código", "Nombre",
-				"Dirección", "Empresa", "Telefono",
-				"Referencia" };
-		String informacion[][] = controladorInicio
-				.cargarClientes();
-		jTableClientes = new JTable(informacion,
-				encabezados);
+		
 	}
 	
-	public void actualizaTabla(){
-		 
+	private JButton getJButtonActualizar() {
+		if(jButtonActualizar == null) {
+			jButtonActualizar = new JButton();
+			jButtonActualizar.setText("Actualizar");
+			jButtonActualizar.setBounds(452, 51, 184, 32);
+			jButtonActualizar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+					jButtonActualizarActionPerformed(evt);
+				}
+			});
+		}
+		return jButtonActualizar;
+	}
 	
-	
+	private void jButtonActualizarActionPerformed(ActionEvent evt) {
 		
+		jTableClientes= new JTable();
+		jTableClientes.setModel(actualizaTabla());
+		jScrollPaneClientes.setViewportView(jTableClientes);
 	}
 }
