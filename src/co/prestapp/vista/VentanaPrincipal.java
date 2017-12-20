@@ -5,6 +5,9 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.ComboBoxModel;
@@ -24,6 +27,7 @@ import javax.swing.table.TableModel;
 import javax.swing.SwingUtilities;
 
 import co.prestapp.controlador.ControlaCargaInicial;
+import co.prestapp.controlador.ControlaDialogo;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -48,6 +52,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTabbedPane jTabPestañas;
 	private JLabel jLabelMontoPrestamo;
 	private JPanel jPanelAgregarAbono;
+	private JPanel jPanelAgregarCliente;
 	private JTable jTableClientes;
 	private JScrollPane jScrollPaneClientes;
 	private JButton jButton1;
@@ -95,6 +100,20 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JDateChooser calendarioPrestamos;
 	private JDateChooser calendarioAbonos;
 	private ControlaCargaInicial controladorInicio;
+	private JLabel jLabelNombre;
+	private JLabel jLabelDirección;
+	private JLabel jLabelTelefono;
+	private JTextField jTextEmpresa;
+	private JLabel jLabelReferencia;
+	private JTextField jTextReferencia;
+	private JButton jButtonCancelar;
+	private JButton jButtonGuardarCliente;
+	private JTextField jTextTeléfono;
+	private JTextField jTextDireccion;
+	private JTextField jTextNombre;
+	private JLabel jLabelEmpresa;
+	private ControlaDialogo controladorDialogo;
+	
 
 	/**
 	 * Auto-generated main method to display this JFrame
@@ -540,23 +559,100 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						}
 					}
 					jTabPestañas.addTab("Clientes", jPanelClientes);
-					jPanelClientes.setBorder(BorderFactory
-							.createTitledBorder("Listado de clientes"));
+					jPanelClientes.setBorder(BorderFactory.createTitledBorder("Datos de clientes"));
 					{
 						controladorInicio = new ControlaCargaInicial(this);
 						jScrollPaneClientes = new JScrollPane();
 						jPanelClientes.add(jScrollPaneClientes,
 								BorderLayout.CENTER);
 						{
-							String encabezados[] = { "Código", "Nombre",
-									"Dirección", "Empresa", "Telefono",
-									"Referencia" };
-							String informacion[][] = controladorInicio
-									.cargarClientes();
-							jTableClientes = new JTable(informacion,
-									encabezados);
+							llenaTabla();
 							jScrollPaneClientes.setViewportView(jTableClientes);
 
+						}
+					}
+					{
+						jPanelAgregarCliente = new JPanel();
+						jPanelClientes.add(jPanelAgregarCliente, BorderLayout.NORTH);
+						jPanelAgregarCliente.setPreferredSize(new java.awt.Dimension(767, 191));
+						jPanelAgregarCliente.setLayout(null);
+						{
+							jLabelNombre = new JLabel();
+							jPanelAgregarCliente.add(jLabelNombre);
+							jLabelNombre.setText("Nombre:");
+							jLabelNombre.setBounds(11, 12,184, 32);
+							
+						}
+						{
+							jLabelDirección = new JLabel();
+							jPanelAgregarCliente.add(jLabelDirección);
+							jLabelDirección.setText("Dirección:");
+							jLabelDirección.setBounds(12, 59, 184, 32);
+						}
+						{
+							jLabelEmpresa = new JLabel();
+							jPanelAgregarCliente.add(jLabelEmpresa);
+							jLabelEmpresa.setText("Empresa:");
+							jLabelEmpresa.setBounds(12, 107, 184, 32);
+						}
+						{
+							jLabelTelefono = new JLabel();
+							jPanelAgregarCliente.add(jLabelTelefono);
+							jLabelTelefono.setText("Telefono:");
+							jLabelTelefono.setBounds(12, 155, 184, 32);
+						}
+						{
+							jTextNombre = new JTextField();
+							jPanelAgregarCliente.add(jTextNombre);
+							jTextNombre.setBounds(114, 9,184, 32);
+						}
+						{
+							jTextDireccion = new JTextField();
+							jPanelAgregarCliente.add(jTextDireccion);
+							jTextDireccion.setBounds(114, 51, 184, 32);
+						}
+						{
+							jTextEmpresa = new JTextField();
+							jPanelAgregarCliente.add(jTextEmpresa);
+							jTextEmpresa.setBounds(114, 99, 184, 32);
+						}
+						{
+							jTextTeléfono = new JTextField();
+							jPanelAgregarCliente.add(jTextTeléfono);
+							jTextTeléfono.setBounds(114, 152, 184, 32);
+						}
+						{
+							jButtonGuardarCliente = new JButton();
+							jPanelAgregarCliente.add(jButtonGuardarCliente);
+							jButtonGuardarCliente.setText("Guardar");
+							jButtonGuardarCliente.setBounds(341, 131, 184, 32);
+							jButtonGuardarCliente.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonGuardarActionPerformed(evt);
+								}
+							});
+						}
+						{
+							jButtonCancelar = new JButton();
+							jPanelAgregarCliente.add(jButtonCancelar);
+							jButtonCancelar.setText("Cancelar");
+							jButtonCancelar.setBounds(553, 131, 184, 32);
+							jButtonCancelar.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonCancelarActionPerformed(evt);
+								}
+							});
+						}
+						{
+							jLabelReferencia = new JLabel();
+							jPanelAgregarCliente.add(jLabelReferencia);
+							jLabelReferencia.setText("Referencia:");
+							jLabelReferencia.setBounds(346, 12, 184, 32);
+						}
+						{
+							jTextReferencia = new JTextField();
+							jPanelAgregarCliente.add(jTextReferencia);
+							jTextReferencia.setBounds(452, 13, 184, 32);
 						}
 					}
 					jTabPestañas.addTab("Reportes", jPanelReportes);
@@ -587,5 +683,45 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 		// Busco el código en la bd y lo adjunto al prestamo
 	}
+	
+	private void jButtonGuardarActionPerformed(ActionEvent evt) {
 
+		Date fechaClave= new Date();
+		DateFormat formato= new SimpleDateFormat("ddMMHHmmss");
+		String clave= formato.format(new Date());		
+		int codigoCliente= Integer.parseInt(clave);
+		String nombre = jTextNombre.getText();
+		String direccion = jTextDireccion.getText();
+		String empresa = jTextEmpresa.getText();
+		String telefono = jTextTeléfono.getText();
+		String referencia = jTextReferencia.getText();
+		controladorDialogo = new ControlaDialogo();
+		controladorDialogo.guardarCliente(codigoCliente, nombre, direccion, empresa, telefono,
+				referencia);
+		actualizaTabla();
+
+	}
+
+	private void jButtonCancelarActionPerformed(ActionEvent evt) {
+
+
+	}
+
+	public void llenaTabla(){
+		
+		String encabezados[] = { "Código", "Nombre",
+				"Dirección", "Empresa", "Telefono",
+				"Referencia" };
+		String informacion[][] = controladorInicio
+				.cargarClientes();
+		jTableClientes = new JTable(informacion,
+				encabezados);
+	}
+	
+	public void actualizaTabla(){
+		 
+	
+	
+		
+	}
 }
