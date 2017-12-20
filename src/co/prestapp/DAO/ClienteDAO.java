@@ -36,7 +36,7 @@ public class ClienteDAO {
 			System.out.println(e.getMessage());
 		}
 
-	}
+	}//Fin agregar cliente
 	
 	public DefaultTableModel llenaTablaClientes(){
 		
@@ -44,7 +44,7 @@ public class ClienteDAO {
 		modeloTablaClientes= new DefaultTableModel(null,getColumnas());
 		return setFilas(modeloTablaClientes);
 	
-	}
+	}// Fin llenaTablaClientes
 
 	private DefaultTableModel setFilas(DefaultTableModel modeloTablaClientes) {
 		
@@ -75,7 +75,7 @@ public class ClienteDAO {
 		}
 		return modeloTablaClientes;
 			
-	}
+	}// Fin setFilas
 
 	private String[] getColumnas() {
 		
@@ -83,6 +83,23 @@ public class ClienteDAO {
 				"Dirección", "Empresa", "Telefono",
 				"Referencia" };
 		return encabezados;
-	}
+	}// Fin getColumnas
 
+	public void eliminarCliente(int idCliente){
+		
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		try {
+			CallableStatement miProcedimiento = conexion
+					.prepareCall("{call eliminar_cliente(?)}");
+			miProcedimiento.setInt(1, idCliente);
+			miProcedimiento.execute();
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out
+					.println("Error al ejecutar consulta para eliminar cliente");
+			System.out.println(e.getMessage());
+		}
+	}
 }

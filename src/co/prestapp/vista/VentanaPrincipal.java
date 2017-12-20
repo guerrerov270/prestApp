@@ -5,6 +5,9 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,8 +18,10 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -104,6 +109,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField jTextEmpresa;
 	private JLabel jLabelReferencia;
 	private JTextField jTextReferencia;
+	private JMenuItem jMenuItemEliminar;
+	private JMenuItem jMenuItemModificar;
+	private JPopupMenu jPopupMenuOpciones;
 	private JButton jButtonActualizar;
 	private JButton jButtonCancelar;
 	private JButton jButtonGuardarCliente;
@@ -727,6 +735,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		jTableClientes= new JTable();
 		jTableClientes.setModel(actualizaTabla());
 		jScrollPaneClientes.setViewportView(jTableClientes);
+		setComponentPopupMenu(jTableClientes, getJPopupMenuOpciones());
 	}
 	
 	public void limpiarCamposCliente(){
@@ -738,4 +747,69 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		jTextReferencia.setText("");
 		
 	}
+	
+	private JPopupMenu getJPopupMenuOpciones() {
+		if(jPopupMenuOpciones == null) {
+			jPopupMenuOpciones = new JPopupMenu();
+			jPopupMenuOpciones.add(getJMenuItemModificar());
+			jPopupMenuOpciones.add(getJMenuItemEliminar());
+		}
+		return jPopupMenuOpciones;
+	}
+	
+	/**
+	* Auto-generated method for setting the popup menu for a component
+	*/
+	private void setComponentPopupMenu(final java.awt.Component parent, final javax.swing.JPopupMenu menu) {
+		parent.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mousePressed(java.awt.event.MouseEvent e) {
+				if(e.isPopupTrigger())
+					menu.show(parent, e.getX(), e.getY());
+			}
+			public void mouseReleased(java.awt.event.MouseEvent e) {
+				if(e.isPopupTrigger())
+					menu.show(parent, e.getX(), e.getY());
+			}
+		});
+	}
+	
+	private JMenuItem getJMenuItemModificar() {
+		if(jMenuItemModificar == null) {
+			jMenuItemModificar = new JMenuItem();
+			jMenuItemModificar.setText("Modificar cliente");
+			jMenuItemModificar.addMouseListener(new MouseAdapter() {
+				public void mousePressed(MouseEvent evt) {
+					jMenuItemModificarMousePressed(evt);
+				}
+			});
+		}
+		return jMenuItemModificar;
+	}
+	
+	private JMenuItem getJMenuItemEliminar() {
+		if(jMenuItemEliminar == null) {
+			jMenuItemEliminar = new JMenuItem();
+			jMenuItemEliminar.setText("Eliminar cliente");
+			jMenuItemEliminar.addMouseListener(new MouseAdapter() {
+				public void mousePressed(MouseEvent evt) {
+					jMenuItemEliminarMousePressed(evt);
+				}
+			});
+		}
+		return jMenuItemEliminar;
+	}
+	
+	private void jMenuItemModificarMousePressed(MouseEvent evt) {
+		
+		System.out.println(jTableClientes.getSelectedRow());
+		System.out.println(jTableClientes.getSelectedColumn());
+		
+		
+	}
+	
+	private void jMenuItemEliminarMousePressed(MouseEvent evt) {
+		
+		
+	}
+
 }
