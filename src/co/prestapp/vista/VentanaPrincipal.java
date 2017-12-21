@@ -7,6 +7,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -377,8 +381,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							}
 							{
 								calendarioPrestamos = new JDateChooser();
-								calendarioPrestamos.setLocale(new Locale("es"));
-								calendarioPrestamos.setDateFormatString("dd/MM/yyyy");
+								calendarioPrestamos.setLocale(new Locale("ES",
+										"CO"));
+								calendarioPrestamos
+										.setDateFormatString("dd/MM/yyyy");
 								jPanelEntradasPrestamo.add(calendarioPrestamos);
 								calendarioPrestamos
 										.setBounds(201, 129, 135, 22);
@@ -387,7 +393,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jLabelNombreCliente = new JLabel();
 								jPanelEntradasPrestamo.add(jLabelNombreCliente);
 								jLabelNombreCliente.setText("nombre");
-								jLabelNombreCliente.setBounds(641, 175, 113, 15);
+								jLabelNombreCliente
+										.setBounds(641, 175, 113, 15);
 							}
 							{
 								jLabelCodigo = new JLabel();
@@ -402,7 +409,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 												"Fecha 4", "Fecha 5", "Fecha 6" });
 								jComboFechasCobro = new JComboBox();
 								jPanelEntradasPrestamo.add(jComboFechasCobro);
-								jPanelEntradasPrestamo.add(getJButtonCalcular());
+								jPanelEntradasPrestamo
+										.add(getJButtonCalcular());
 								jComboFechasCobro
 										.setModel(jComboFechasCobroModel);
 								jComboFechasCobro.setBounds(201, 171, 135, 22);
@@ -653,7 +661,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private void jButtonClienteNuevoActionPerformed(ActionEvent evt) {
 
-		
 		// obtener los datos ingresados en el dialogo, guardar cliente en bd y
 		// adjuntarlo a prestamo actual
 	}
@@ -718,33 +725,62 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		jTextReferencia.setText("");
 
 	}
-	
+
 	private JButton getJButtonCalcular() {
-		if(jButtonCalcular == null) {
+		if (jButtonCalcular == null) {
 			jButtonCalcular = new JButton();
 			jButtonCalcular.setText("Calcular");
 			jButtonCalcular.setBounds(498, 124, 184, 32);
 			jButtonCalcular.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
-					jButtonCalcularActionPerformed(evt);
+					try {
+						jButtonCalcularActionPerformed(evt);
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			});
 		}
 		return jButtonCalcular;
 	}
-	
-	private void jButtonCalcularActionPerformed(ActionEvent evt) {
-		
-		float montoPrestamo=Float.parseFloat(jTextMonto.getText());
-		int tasaInteres=Integer.parseInt(jTextTasaInteres.getText());
-		String tipoPlazo=(String) jComboPlazo.getSelectedItem();
-		int numeroCuotas=Integer.parseInt(jTextNumeroCuotas.getText());
-		Date fechaInicio=calendarioPrestamos.getDate();
+
+	private void jButtonCalcularActionPerformed(ActionEvent evt)
+			throws ParseException {
+
+		float montoPrestamo = Float.parseFloat(jTextMonto.getText());
+		int tasaInteres = Integer.parseInt(jTextTasaInteres.getText());
+		String tipoPlazo = (String) jComboPlazo.getSelectedItem();
+		int numeroCuotas = Integer.parseInt(jTextNumeroCuotas.getText());
+		Date fechaInicio = calendarioPrestamos.getDate();
+		java.sql.Date fechaFormateada = new java.sql.Date(fechaInicio.getTime());
+		DateFormat formato= new SimpleDateFormat("dd MMMM yyyy");
 		System.out.println(montoPrestamo);
 		System.out.println(tasaInteres);
 		System.out.println(tipoPlazo);
 		System.out.println(numeroCuotas);
-		System.out.println(fechaInicio);
+		System.out.println(fechaFormateada);
+		System.out.println("Sumando dias a la fecha");
+		Date nuevaFecha=sumarRestarDiasFecha(fechaFormateada, 15);
+		java.sql.Date fechaNuevaFormateada = new java.sql.Date(nuevaFecha.getTime());
+		System.out.println(fechaNuevaFormateada);
+		System.out.println(formato.format(fechaNuevaFormateada));
+	}
+
+	// Suma los días recibidos a la fecha
+
+	public Date sumarRestarDiasFecha(Date fecha, int dias) {
+
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.setTime(fecha); // Configuramos la fecha que se recibe
+
+		calendar.add(Calendar.DAY_OF_YEAR, dias); // numero de días a añadir, o
+													// restar en caso de días<0
+
+		return calendar.getTime(); // Devuelve el objeto Date con los nuevos
+									// días añadidos
+
 	}
 
 }
