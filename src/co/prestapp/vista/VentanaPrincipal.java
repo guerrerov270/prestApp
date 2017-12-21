@@ -35,6 +35,7 @@ import javax.swing.table.TableModel;
 import javax.swing.SwingUtilities;
 
 import co.prestapp.DAO.ClienteDAO;
+import co.prestapp.DAO.PrestamoDAO;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -109,6 +110,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField jTextEmpresa;
 	private JLabel jLabelReferencia;
 	private JTextField jTextReferencia;
+	private JButton jButton2;
 	private JButton jButtonCalcular;
 	private JButton jButtonActualizar;
 	private JButton jButtonCancelar;
@@ -170,14 +172,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								.setPreferredSize(new java.awt.Dimension(753,
 										219));
 						{
-							TableModel jTablePrestamosModel = new DefaultTableModel(
-									new String[][] { { "One", "Two" },
-											{ "Three", "Four" } },
-									new String[] { "Cliente", "Empresa",
-											"Monto", "Plazo", "Saldo pendiente" });
-							jTablePrestamos = new JTable();
-							jScrollReportes.setViewportView(jTablePrestamos);
-							jTablePrestamos.setModel(jTablePrestamosModel);
+							
 						}
 					}
 					{
@@ -329,7 +324,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								final JButton jButtonCancelar = new JButton();
 								jPanelEntradasPrestamo.add(jButtonCancelar);
 								jButtonCancelar.setText("Cancelar");
-								jButtonCancelar.setBounds(603, 254, 135, 22);
+								jButtonCancelar.setBounds(427, 258, 135, 22);
 
 							}
 							{
@@ -411,13 +406,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jPanelEntradasPrestamo.add(jComboFechasCobro);
 								jPanelEntradasPrestamo
 										.add(getJButtonCalcular());
+								jPanelEntradasPrestamo.add(getJButton2());
 								jComboFechasCobro
 										.setModel(jComboFechasCobroModel);
 								jComboFechasCobro.setBounds(201, 171, 135, 22);
 							}
 
 							jButtonAceptar.setText("Guardar");
-							jButtonAceptar.setBounds(427, 254, 135, 22);
+							jButtonAceptar.setBounds(605, 124, 131, 32);
+							jButtonAceptar.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonAceptarActionPerformed(evt);
+								}
+							});
 						}
 					}
 					jTabPestañas.addTab("Abonos", jPanelAbonos);
@@ -673,6 +674,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		// Busco el código en la bd y lo adjunto al prestamo
 	}
 
+	/**
+	 * Guarda los clientes
+	 * @param evt
+	 */
 	private void jButtonGuardarActionPerformed(ActionEvent evt) {
 
 		String nombre = jTextNombre.getText();
@@ -689,10 +694,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		limpiarCamposCliente();
 	}
 
-	public DefaultTableModel actualizaTabla() {
+	public DefaultTableModel actualizaTablaClientes() {
 
 		ClienteDAO miCliente = new ClienteDAO();
 		DefaultTableModel modelo = miCliente.llenaTablaClientes();
+		return modelo;
+
+	}
+	
+	public DefaultTableModel actualizaTablaPrestamos() {
+
+		PrestamoDAO miPrestamo = new PrestamoDAO();
+		DefaultTableModel modelo = miPrestamo.llenaTablaPrestamos();
 		return modelo;
 
 	}
@@ -711,10 +724,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		return jButtonActualizar;
 	}
 
+	/**
+	 * Actualiza la tabla de clientes
+	 * @param evt
+	 */
 	private void jButtonActualizarActionPerformed(ActionEvent evt) {
 
 		jTableClientes = new JTable();
-		jTableClientes.setModel(actualizaTabla());
+		jTableClientes.setModel(actualizaTablaClientes());
 		jScrollPaneClientes.setViewportView(jTableClientes);
 	}
 
@@ -730,7 +747,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jButtonCalcular == null) {
 			jButtonCalcular = new JButton();
 			jButtonCalcular.setText("Calcular");
-			jButtonCalcular.setBounds(498, 124, 184, 32);
+			jButtonCalcular.setBounds(427, 124, 131, 32);
 			jButtonCalcular.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					try {
@@ -768,19 +785,50 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	}
 
 	// Suma los días recibidos a la fecha
-
 	public Date sumarRestarDiasFecha(Date fecha, int dias) {
 
 		Calendar calendar = Calendar.getInstance();
-
 		calendar.setTime(fecha); // Configuramos la fecha que se recibe
-
 		calendar.add(Calendar.DAY_OF_YEAR, dias); // numero de días a añadir, o
 													// restar en caso de días<0
 
 		return calendar.getTime(); // Devuelve el objeto Date con los nuevos
 									// días añadidos
 
+	}
+	
+	/**
+	 * Guarda los préstamos
+	 * @param evt
+	 */
+	private void jButtonAceptarActionPerformed(ActionEvent evt) {
+		
+		
+	}
+	
+	private JButton getJButton2() {
+		if(jButton2 == null) {
+			jButton2 = new JButton();
+			jButton2.setText("Actualizar");
+			jButton2.setBounds(603, 258, 135, 22);
+			jButton2.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+					jButton2ActionPerformed(evt);
+				}
+			});
+		}
+		return jButton2;
+	}
+	
+	/**
+	 * Actualiza la tabla de prestamos
+	 * @param evt
+	 */
+	private void jButton2ActionPerformed(ActionEvent evt) {
+		
+		jTablePrestamos = new JTable();
+		jTablePrestamos.setModel(actualizaTablaPrestamos());
+		jScrollReportes.setViewportView(jTablePrestamos);
 	}
 
 }
