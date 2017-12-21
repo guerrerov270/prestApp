@@ -14,19 +14,16 @@ import co.prestapp.connection.DBConnection;
 
 public class ClienteDAO {
 
-	public void agregarCliente(String nombre,
-			String direccion, String empresa, String telefono, String referencia) {
+	public void agregarCliente(String nombre, String empresa, String referencia) {
 
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
 		try {
 			CallableStatement miProcedimiento = conexion
-					.prepareCall("{call agregar_cliente(?,?,?,?,?)}");
+					.prepareCall("{call agregar_cliente(?,?,?)}");
 			miProcedimiento.setString(1, nombre);
-			miProcedimiento.setString(2, direccion);
-			miProcedimiento.setString(3, empresa);
-			miProcedimiento.setString(4, telefono);
-			miProcedimiento.setString(5, referencia);
+			miProcedimiento.setString(2, empresa);
+			miProcedimiento.setString(3, referencia);
 			miProcedimiento.execute();
 			conexion.close();
 
@@ -36,32 +33,32 @@ public class ClienteDAO {
 			System.out.println(e.getMessage());
 		}
 
-	}//Fin agregar cliente
-	
-	public DefaultTableModel llenaTablaClientes(){
-		
+	}// Fin agregar cliente
+
+	public DefaultTableModel llenaTablaClientes() {
+
 		DefaultTableModel modeloTablaClientes;
-		modeloTablaClientes= new DefaultTableModel(null,getColumnas());
+		modeloTablaClientes = new DefaultTableModel(null, getColumnas());
 		return setFilas(modeloTablaClientes);
-	
+
 	}// Fin llenaTablaClientes
 
 	private DefaultTableModel setFilas(DefaultTableModel modeloTablaClientes) {
-		
+
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
-		Object datos[]= new Object[6];
-		
+		Object datos[] = new Object[4];
+
 		try {
 			CallableStatement miProcedimiento = conexion
 					.prepareCall("{call listar_clientes}");
 			ResultSet miRs = miProcedimiento.executeQuery();
 
 			while (miRs.next()) {
-				
-				for (int i = 0; i < 6; i++) {
-					datos[i] = miRs.getObject(i+1);
-					
+
+				for (int i = 0; i < 4; i++) {
+					datos[i] = miRs.getObject(i + 1);
+
 				}
 				modeloTablaClientes.addRow(datos);
 
@@ -74,19 +71,17 @@ public class ClienteDAO {
 			System.out.println(e.getMessage());
 		}
 		return modeloTablaClientes;
-			
+
 	}// Fin setFilas
 
 	private String[] getColumnas() {
-		
-		String encabezados[] = { "Código", "Nombre",
-				"Dirección", "Empresa", "Telefono",
-				"Referencia" };
+
+		String encabezados[] = { "Código", "Nombre", "Empresa", "Referencia" };
 		return encabezados;
 	}// Fin getColumnas
 
-	public void eliminarCliente(int idCliente){
-		
+	public void eliminarCliente(int idCliente) {
+
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
 		try {

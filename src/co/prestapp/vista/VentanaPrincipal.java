@@ -7,16 +7,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import javax.swing.BorderFactory;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -78,7 +77,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JScrollPane jScrollAbonosPendientes;
 	private JComboBox jComboFechasCobro;
 	public JLabel jLabelCodigo;
-	private JLabel jLabelEmpresaCliente;
 	public JLabel jLabelNombreCliente;
 	private JButton jButtonClienteNuevo;
 	private JButton jButtonClienteExiste;
@@ -104,22 +102,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JDateChooser calendarioPrestamos;
 	private JDateChooser calendarioAbonos;
 	private JLabel jLabelNombre;
-	private JLabel jLabelDirección;
-	private JLabel jLabelTelefono;
 	private JTextField jTextEmpresa;
 	private JLabel jLabelReferencia;
 	private JTextField jTextReferencia;
-	private JMenuItem jMenuItemEliminar;
-	private JMenuItem jMenuItemModificar;
-	private JPopupMenu jPopupMenuOpciones;
+	private JButton jButtonCalcular;
 	private JButton jButtonActualizar;
 	private JButton jButtonCancelar;
 	private JButton jButtonGuardarCliente;
-	private JTextField jTextTeléfono;
-	private JTextField jTextDireccion;
 	private JTextField jTextNombre;
 	private JLabel jLabelEmpresa;
-	
 
 	/**
 	 * Auto-generated main method to display this JFrame
@@ -341,7 +332,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jLabelCliente = new JLabel();
 								jPanelEntradasPrestamo.add(jLabelCliente);
 								jLabelCliente.setText("Cliente:");
-								jLabelCliente.setBounds(425, 128, 178, 15);
+								jLabelCliente.setBounds(425, 175, 178, 15);
 							}
 							{
 								jLabelTotalPago = new JLabel();
@@ -386,6 +377,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							}
 							{
 								calendarioPrestamos = new JDateChooser();
+								calendarioPrestamos.setLocale(new Locale("es"));
+								calendarioPrestamos.setDateFormatString("dd/MM/yyyy");
 								jPanelEntradasPrestamo.add(calendarioPrestamos);
 								calendarioPrestamos
 										.setBounds(201, 129, 135, 22);
@@ -394,14 +387,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jLabelNombreCliente = new JLabel();
 								jPanelEntradasPrestamo.add(jLabelNombreCliente);
 								jLabelNombreCliente.setText("nombre");
-								jLabelNombreCliente
-										.setBounds(603, 122, 113, 15);
+								jLabelNombreCliente.setBounds(641, 175, 113, 15);
 							}
 							{
 								jLabelCodigo = new JLabel();
 								jPanelEntradasPrestamo.add(jLabelCodigo);
 								jLabelCodigo.setText("Código");
-								jLabelCodigo.setBounds(603, 149, 113, 15);
+								jLabelCodigo.setBounds(532, 175, 113, 15);
 							}
 							{
 								ComboBoxModel jComboFechasCobroModel = new DefaultComboBoxModel(
@@ -410,6 +402,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 												"Fecha 4", "Fecha 5", "Fecha 6" });
 								jComboFechasCobro = new JComboBox();
 								jPanelEntradasPrestamo.add(jComboFechasCobro);
+								jPanelEntradasPrestamo.add(getJButtonCalcular());
 								jComboFechasCobro
 										.setModel(jComboFechasCobroModel);
 								jComboFechasCobro.setBounds(201, 171, 135, 22);
@@ -565,100 +558,85 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						}
 					}
 					jTabPestañas.addTab("Clientes", jPanelClientes);
-					jPanelClientes.setBorder(BorderFactory.createTitledBorder("Datos de clientes"));
+					jPanelClientes.setBorder(BorderFactory
+							.createTitledBorder("Datos de clientes"));
 					{
-					
+
 						jScrollPaneClientes = new JScrollPane();
 						jPanelClientes.add(jScrollPaneClientes,
 								BorderLayout.CENTER);
 						{
-							
 
 						}
 					}
 					{
 						jPanelAgregarCliente = new JPanel();
-						jPanelClientes.add(jPanelAgregarCliente, BorderLayout.NORTH);
-						jPanelAgregarCliente.setPreferredSize(new java.awt.Dimension(767, 191));
+						jPanelClientes.add(jPanelAgregarCliente,
+								BorderLayout.NORTH);
+						jPanelAgregarCliente
+								.setPreferredSize(new java.awt.Dimension(767,
+										191));
 						jPanelAgregarCliente.setLayout(null);
 						{
 							jLabelNombre = new JLabel();
 							jPanelAgregarCliente.add(jLabelNombre);
 							jLabelNombre.setText("Nombre:");
-							jLabelNombre.setBounds(11, 12,184, 32);
-							
-						}
-						{
-							jLabelDirección = new JLabel();
-							jPanelAgregarCliente.add(jLabelDirección);
-							jLabelDirección.setText("Dirección:");
-							jLabelDirección.setBounds(12, 59, 184, 32);
+							jLabelNombre.setBounds(12, 10, 184, 32);
+
 						}
 						{
 							jLabelEmpresa = new JLabel();
 							jPanelAgregarCliente.add(jLabelEmpresa);
 							jLabelEmpresa.setText("Empresa:");
-							jLabelEmpresa.setBounds(12, 107, 184, 32);
-						}
-						{
-							jLabelTelefono = new JLabel();
-							jPanelAgregarCliente.add(jLabelTelefono);
-							jLabelTelefono.setText("Telefono:");
-							jLabelTelefono.setBounds(12, 155, 184, 32);
+							jLabelEmpresa.setBounds(12, 68, 184, 32);
 						}
 						{
 							jTextNombre = new JTextField();
 							jPanelAgregarCliente.add(jTextNombre);
-							jTextNombre.setBounds(114, 9,184, 32);
-						}
-						{
-							jTextDireccion = new JTextField();
-							jPanelAgregarCliente.add(jTextDireccion);
-							jTextDireccion.setBounds(114, 51, 184, 32);
+							jTextNombre.setBounds(110, 11, 184, 32);
 						}
 						{
 							jTextEmpresa = new JTextField();
 							jPanelAgregarCliente.add(jTextEmpresa);
-							jTextEmpresa.setBounds(114, 99, 184, 32);
-						}
-						{
-							jTextTeléfono = new JTextField();
-							jPanelAgregarCliente.add(jTextTeléfono);
-							jTextTeléfono.setBounds(114, 152, 184, 32);
+							jTextEmpresa.setBounds(110, 69, 184, 32);
 						}
 						{
 							jButtonGuardarCliente = new JButton();
 							jPanelAgregarCliente.add(jButtonGuardarCliente);
 							jButtonGuardarCliente.setText("Guardar");
-							jButtonGuardarCliente.setBounds(452, 99, 184, 32);
-							jButtonGuardarCliente.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent evt) {
-									jButtonGuardarActionPerformed(evt);
-								}
-							});
+							jButtonGuardarCliente.setBounds(334, 69, 184, 32);
+							jButtonGuardarCliente
+									.addActionListener(new ActionListener() {
+										public void actionPerformed(
+												ActionEvent evt) {
+											jButtonGuardarActionPerformed(evt);
+										}
+									});
 						}
 						{
 							jButtonCancelar = new JButton();
 							jPanelAgregarCliente.add(jButtonCancelar);
 							jButtonCancelar.setText("Cancelar");
-							jButtonCancelar.setBounds(452, 148, 184, 32);
-							jButtonCancelar.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent evt) {
-									jButtonCancelarActionPerformed(evt);
-								}
-							});
+							jButtonCancelar.setBounds(334, 128, 184, 32);
+							jButtonCancelar
+									.addActionListener(new ActionListener() {
+										public void actionPerformed(
+												ActionEvent evt) {
+											jButtonCancelarActionPerformed(evt);
+										}
+									});
 						}
 						{
 							jLabelReferencia = new JLabel();
 							jPanelAgregarCliente.add(jLabelReferencia);
 							jLabelReferencia.setText("Referencia:");
-							jLabelReferencia.setBounds(346, 12, 184, 32);
+							jLabelReferencia.setBounds(13, 127, 184, 32);
 						}
 						{
 							jTextReferencia = new JTextField();
 							jPanelAgregarCliente.add(jTextReferencia);
 							jPanelAgregarCliente.add(getJButtonActualizar());
-							jTextReferencia.setBounds(452, 13, 184, 32);
+							jTextReferencia.setBounds(111, 128, 184, 32);
 						}
 					}
 					jTabPestañas.addTab("Reportes", jPanelReportes);
@@ -675,6 +653,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private void jButtonClienteNuevoActionPerformed(ActionEvent evt) {
 
+		
 		// obtener los datos ingresados en el dialogo, guardar cliente en bd y
 		// adjuntarlo a prestamo actual
 	}
@@ -686,41 +665,36 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 		// Busco el código en la bd y lo adjunto al prestamo
 	}
-	
+
 	private void jButtonGuardarActionPerformed(ActionEvent evt) {
-		
+
 		String nombre = jTextNombre.getText();
-		String direccion = jTextDireccion.getText();
 		String empresa = jTextEmpresa.getText();
-		String telefono = jTextTeléfono.getText();
 		String referencia = jTextReferencia.getText();
-		ClienteDAO miCliente= new ClienteDAO();
-		miCliente.agregarCliente(nombre, direccion, empresa, telefono,
-				referencia);	
+		ClienteDAO miCliente = new ClienteDAO();
+		miCliente.agregarCliente(nombre, empresa, referencia);
 		limpiarCamposCliente();
-		
+
 	}
 
 	private void jButtonCancelarActionPerformed(ActionEvent evt) {
 
-
 		limpiarCamposCliente();
 	}
-	
-	public DefaultTableModel actualizaTabla(){
-	
-		ClienteDAO miCliente= new ClienteDAO();
-		DefaultTableModel modelo=miCliente.llenaTablaClientes();
+
+	public DefaultTableModel actualizaTabla() {
+
+		ClienteDAO miCliente = new ClienteDAO();
+		DefaultTableModel modelo = miCliente.llenaTablaClientes();
 		return modelo;
-		
-		
+
 	}
-	
+
 	private JButton getJButtonActualizar() {
-		if(jButtonActualizar == null) {
+		if (jButtonActualizar == null) {
 			jButtonActualizar = new JButton();
 			jButtonActualizar.setText("Actualizar");
-			jButtonActualizar.setBounds(452, 51, 184, 32);
+			jButtonActualizar.setBounds(334, 11, 184, 32);
 			jButtonActualizar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					jButtonActualizarActionPerformed(evt);
@@ -729,87 +703,48 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		}
 		return jButtonActualizar;
 	}
-	
+
 	private void jButtonActualizarActionPerformed(ActionEvent evt) {
-		
-		jTableClientes= new JTable();
+
+		jTableClientes = new JTable();
 		jTableClientes.setModel(actualizaTabla());
 		jScrollPaneClientes.setViewportView(jTableClientes);
-		setComponentPopupMenu(jTableClientes, getJPopupMenuOpciones());
 	}
-	
-	public void limpiarCamposCliente(){
-		
+
+	public void limpiarCamposCliente() {
+
 		jTextNombre.setText("");
-		jTextDireccion.setText("");
 		jTextEmpresa.setText("");
-		jTextTeléfono.setText("");
 		jTextReferencia.setText("");
-		
+
 	}
 	
-	private JPopupMenu getJPopupMenuOpciones() {
-		if(jPopupMenuOpciones == null) {
-			jPopupMenuOpciones = new JPopupMenu();
-			jPopupMenuOpciones.add(getJMenuItemModificar());
-			jPopupMenuOpciones.add(getJMenuItemEliminar());
-		}
-		return jPopupMenuOpciones;
-	}
-	
-	/**
-	* Auto-generated method for setting the popup menu for a component
-	*/
-	private void setComponentPopupMenu(final java.awt.Component parent, final javax.swing.JPopupMenu menu) {
-		parent.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mousePressed(java.awt.event.MouseEvent e) {
-				if(e.isPopupTrigger())
-					menu.show(parent, e.getX(), e.getY());
-			}
-			public void mouseReleased(java.awt.event.MouseEvent e) {
-				if(e.isPopupTrigger())
-					menu.show(parent, e.getX(), e.getY());
-			}
-		});
-	}
-	
-	private JMenuItem getJMenuItemModificar() {
-		if(jMenuItemModificar == null) {
-			jMenuItemModificar = new JMenuItem();
-			jMenuItemModificar.setText("Modificar cliente");
-			jMenuItemModificar.addMouseListener(new MouseAdapter() {
-				public void mousePressed(MouseEvent evt) {
-					jMenuItemModificarMousePressed(evt);
+	private JButton getJButtonCalcular() {
+		if(jButtonCalcular == null) {
+			jButtonCalcular = new JButton();
+			jButtonCalcular.setText("Calcular");
+			jButtonCalcular.setBounds(498, 124, 184, 32);
+			jButtonCalcular.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+					jButtonCalcularActionPerformed(evt);
 				}
 			});
 		}
-		return jMenuItemModificar;
+		return jButtonCalcular;
 	}
 	
-	private JMenuItem getJMenuItemEliminar() {
-		if(jMenuItemEliminar == null) {
-			jMenuItemEliminar = new JMenuItem();
-			jMenuItemEliminar.setText("Eliminar cliente");
-			jMenuItemEliminar.addMouseListener(new MouseAdapter() {
-				public void mousePressed(MouseEvent evt) {
-					jMenuItemEliminarMousePressed(evt);
-				}
-			});
-		}
-		return jMenuItemEliminar;
-	}
-	
-	private void jMenuItemModificarMousePressed(MouseEvent evt) {
+	private void jButtonCalcularActionPerformed(ActionEvent evt) {
 		
-		System.out.println(jTableClientes.getSelectedRow());
-		System.out.println(jTableClientes.getSelectedColumn());
-		
-		
-	}
-	
-	private void jMenuItemEliminarMousePressed(MouseEvent evt) {
-		
-		
+		float montoPrestamo=Float.parseFloat(jTextMonto.getText());
+		int tasaInteres=Integer.parseInt(jTextTasaInteres.getText());
+		String tipoPlazo=(String) jComboPlazo.getSelectedItem();
+		int numeroCuotas=Integer.parseInt(jTextNumeroCuotas.getText());
+		Date fechaInicio=calendarioPrestamos.getDate();
+		System.out.println(montoPrestamo);
+		System.out.println(tasaInteres);
+		System.out.println(tipoPlazo);
+		System.out.println(numeroCuotas);
+		System.out.println(fechaInicio);
 	}
 
 }
