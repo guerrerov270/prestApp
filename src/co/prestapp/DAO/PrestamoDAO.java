@@ -105,10 +105,10 @@ public class PrestamoDAO {
 
 	}
 
-	public void calcularFechasPago(String tipoPlazo, int cuotas,
+	public ArrayList<Date> calcularFechasPago(String tipoPlazo, int cuotas,
 			Date fechaInicio) {
 
-		ArrayList<Date> fechasPago;
+		ArrayList<Date> fechasPago = null;
 
 		switch (tipoPlazo) {
 		case "Mensual":
@@ -118,15 +118,15 @@ public class PrestamoDAO {
 				fechasPago.add(sumarRestarMesesFecha(fechaInicio, i));
 			}
 
-			System.out.println("Lista de fechas que contiene" + " "
-					+ fechasPago.size() + " " + "elementos");
-			Iterator it = fechasPago.iterator();
-			while (it.hasNext()) {
-				Date fechaSalida = (Date) it.next();
-				System.out.println(fechaSalida);
-			}
+//			System.out.println("Lista de fechas que contiene" + " "
+//					+ fechasPago.size() + " " + "elementos");
+//			Iterator it = fechasPago.iterator();
+//			while (it.hasNext()) {
+//				Date fechaSalida = (Date) it.next();
+//				System.out.println(fechaSalida);
+//			}
+			return fechasPago;
 
-			break;
 		case "Quincenal":
 			fechasPago = new ArrayList<Date>();
 
@@ -135,15 +135,15 @@ public class PrestamoDAO {
 				fechasPago.add(sumarRestarQuincenaFecha(fechaInicio, i));
 			}
 
-			System.out.println("Lista de fechas que contiene" + " "
-					+ fechasPago.size() + " " + "elementos");
-			Iterator it2 = fechasPago.iterator();
-			while (it2.hasNext()) {
-				Date fechaSalida = (Date) it2.next();
-				System.out.println(fechaSalida);
-			}
+//			System.out.println("Lista de fechas que contiene" + " "
+//					+ fechasPago.size() + " " + "elementos");
+//			Iterator it2 = fechasPago.iterator();
+//			while (it2.hasNext()) {
+//				Date fechaSalida = (Date) it2.next();
+//				System.out.println(fechaSalida);
+//			}
 
-			break;
+			return fechasPago;
 		case "Semanal":
 			fechasPago = new ArrayList<Date>();
 
@@ -152,19 +152,19 @@ public class PrestamoDAO {
 				fechasPago.add(sumarRestarSemanaFecha(fechaInicio, i));
 			}
 
-			System.out.println("Lista de fechas que contiene" + " "
-					+ fechasPago.size() + " " + "elementos");
-			Iterator it3 = fechasPago.iterator();
-			while (it3.hasNext()) {
-				Date fechaSalida = (Date) it3.next();
-				System.out.println(fechaSalida);
-			}
+//			System.out.println("Lista de fechas que contiene" + " "
+//					+ fechasPago.size() + " " + "elementos");
+//			Iterator it3 = fechasPago.iterator();
+//			while (it3.hasNext()) {
+//				Date fechaSalida = (Date) it3.next();
+//				System.out.println(fechaSalida);
+//			}
 
-			break;
+			return fechasPago;
 
-		default:
-			break;
 		}
+		return fechasPago;
+
 	}
 
 	// Suma los días recibidos a la fecha
@@ -198,25 +198,26 @@ public class PrestamoDAO {
 
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(fecha); // Configuramos la fecha que se recibe
-		calendar.add(Calendar.WEEK_OF_MONTH,dias);
-		calendar.add(Calendar.WEEK_OF_MONTH,dias);
-		
+		calendar.add(Calendar.WEEK_OF_MONTH, dias);
+		calendar.add(Calendar.WEEK_OF_MONTH, dias);
+
 		return calendar.getTime(); // Devuelve el objeto Date con los nuevos
 									// días añadidos
 
 	}
-	
-	// Suma los días recibidos a la fecha
-		public Date sumarRestarSemanaFecha(Date fecha, int dias) {
 
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(fecha); // Configuramos la fecha que se recibe
-			calendar.add(Calendar.WEEK_OF_MONTH,dias); // numero de días a añadir, o
+	// Suma los días recibidos a la fecha
+	public Date sumarRestarSemanaFecha(Date fecha, int dias) {
+
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fecha); // Configuramos la fecha que se recibe
+		calendar.add(Calendar.WEEK_OF_MONTH, dias); // numero de días a añadir,
+													// o
 													// restar en caso de días<0
 
-			return calendar.getTime(); // Devuelve el objeto Date con los nuevos
-										// días añadidos
+		return calendar.getTime(); // Devuelve el objeto Date con los nuevos
+									// días añadidos
 
-		}
+	}
 
 }// Fin clase

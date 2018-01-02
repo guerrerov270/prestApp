@@ -11,8 +11,11 @@ import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 
 import javax.swing.BorderFactory;
@@ -352,7 +355,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jPanelEntradasPrestamo
 										.add(jButtonClienteExiste);
 								jButtonClienteExiste.setText("Buscar");
-								jButtonClienteExiste.setBounds(487, 172, 59, 22);
+								jButtonClienteExiste
+										.setBounds(487, 172, 59, 22);
 								jButtonClienteExiste
 										.addActionListener(new ActionListener() {
 											public void actionPerformed(
@@ -375,7 +379,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jLabelNombreCliente = new JLabel();
 								jPanelEntradasPrestamo.add(jLabelNombreCliente);
 								jLabelNombreCliente.setText("nombre");
-								jLabelNombreCliente.setBounds(425, 202, 137, 15);
+								jLabelNombreCliente
+										.setBounds(425, 202, 137, 15);
 							}
 							{
 								jLabelCodigo = new JLabel();
@@ -384,18 +389,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jLabelCodigo.setBounds(657, 202, 79, 15);
 							}
 							{
-								ComboBoxModel jComboFechasCobroModel = new DefaultComboBoxModel(
-										new String[] { "Ver fechas", "Fecha 1",
-												"Fecha 2", "Fecha 3",
-												"Fecha 4", "Fecha 5", "Fecha 6" });
+
 								jComboFechasCobro = new JComboBox();
 								jPanelEntradasPrestamo.add(jComboFechasCobro);
 								jPanelEntradasPrestamo
 										.add(getJButtonCalcular());
 								jPanelEntradasPrestamo.add(getJButton2());
-								jPanelEntradasPrestamo.add(getJLabelEmpresaResult());
-								jComboFechasCobro
-										.setModel(jComboFechasCobroModel);
+								jPanelEntradasPrestamo
+										.add(getJLabelEmpresaResult());
 								jComboFechasCobro.setBounds(201, 171, 135, 22);
 							}
 
@@ -662,20 +663,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					.showInputDialog("Ingrese código del cliente"));
 			// Busco el código en la bd y lo adjunto al prestamo
 			ClienteDAO miCliente = new ClienteDAO();
-			ClienteVO cliente= miCliente.buscarCliente(codigoCliente);
-			
-			//Cambio valores de etiquetas en la vista
+			ClienteVO cliente = miCliente.buscarCliente(codigoCliente);
+
+			// Cambio valores de etiquetas en la vista
 			jLabelNombreCliente.setText(cliente.getNombreCliente());
 			jLabelCodigo.setForeground(Color.RED);
 			jLabelCodigo.setText(cliente.getCodigoCliente() + "");
 			jLabelEmpresaResult.setText(cliente.getEmpresaCliente());
-			
+
 		} catch (NumberFormatException e) {
 			// TODO: handle exception
 			System.out.println(e.getMessage());
 		}
 
-		
 	}
 
 	/**
@@ -771,30 +771,34 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private void jButtonCalcularActionPerformed(ActionEvent evt)
 			throws ParseException {
 
-	//	float montoPrestamo = Float.parseFloat(jTextMonto.getText());
-	//	int tasaInteres = Integer.parseInt(jTextTasaInteres.getText());
+		// float montoPrestamo = Float.parseFloat(jTextMonto.getText());
+		// int tasaInteres = Integer.parseInt(jTextTasaInteres.getText());
 		String tipoPlazo = (String) jComboPlazo.getSelectedItem();
 		int numeroCuotas = Integer.parseInt(jTextNumeroCuotas.getText());
 		Date fechaInicio = calendarioPrestamos.getDate();
-	//	java.sql.Date fechaFormateada = new java.sql.Date(fechaInicio.getTime());
-	//	DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
-		
-		PrestamoDAO miPrestamo= new PrestamoDAO();
-		miPrestamo.calcularFechasPago(tipoPlazo, numeroCuotas, fechaInicio);
-		
-		
-//		System.out.println(montoPrestamo);
-//		System.out.println(tasaInteres);
-//		System.out.println(tipoPlazo);
-//		System.out.println(numeroCuotas);
-//		System.out.println(fechaFormateada);
-//		System.out.println("Sumando dias a la fecha");
-//		Date nuevaFecha = sumarRestarDiasFecha(fechaFormateada, 15);
-//		java.sql.Date fechaNuevaFormateada = new java.sql.Date(
-//				nuevaFecha.getTime());
-//		System.out.println(fechaNuevaFormateada);
-//		System.out.println(formato.format(fechaNuevaFormateada));
-		
+		// java.sql.Date fechaFormateada = new
+		// java.sql.Date(fechaInicio.getTime());
+		// DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
+
+		PrestamoDAO miPrestamo = new PrestamoDAO();
+		ArrayList<Date> fechasPago = miPrestamo.calcularFechasPago(tipoPlazo,
+				numeroCuotas, fechaInicio);
+		DefaultComboBoxModel modeloNuevo= new DefaultComboBoxModel();
+		modeloNuevo=llenaComboPlazos(fechasPago);
+		jComboFechasCobro.setModel(modeloNuevo);
+
+		// System.out.println(montoPrestamo);
+		// System.out.println(tasaInteres);
+		// System.out.println(tipoPlazo);
+		// System.out.println(numeroCuotas);
+		// System.out.println(fechaFormateada);
+		// System.out.println("Sumando dias a la fecha");
+		// Date nuevaFecha = sumarRestarDiasFecha(fechaFormateada, 15);
+		// java.sql.Date fechaNuevaFormateada = new java.sql.Date(
+		// nuevaFecha.getTime());
+		// System.out.println(fechaNuevaFormateada);
+		// System.out.println(formato.format(fechaNuevaFormateada));
+
 	}// Fin método jButtonCalcularActionPerformed
 
 	// Suma los días recibidos a la fecha
@@ -846,12 +850,29 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	}
 
 	private JLabel getJLabelEmpresaResult() {
-		if(jLabelEmpresaResult == null) {
+		if (jLabelEmpresaResult == null) {
 			jLabelEmpresaResult = new JLabel();
 			jLabelEmpresaResult.setText("Empresa");
 			jLabelEmpresaResult.setBounds(425, 229, 134, 15);
 		}
 		return jLabelEmpresaResult;
+	}
+
+	private DefaultComboBoxModel llenaComboPlazos(ArrayList<Date> fechasPago) {
+
+		DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+		Iterator it = fechasPago.iterator();
+		while (it.hasNext()) {
+			Date fechaSalida = (Date) it.next();
+			//Añadimos la fecha al modelo
+			 java.sql.Date fechaFormateada = new
+			 java.sql.Date(fechaSalida.getTime());
+			 DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
+			 modelo.addElement(formato.format(fechaSalida));
+			
+		}
+		return modelo;
+
 	}
 
 }
