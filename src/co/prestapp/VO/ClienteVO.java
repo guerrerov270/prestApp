@@ -2,7 +2,7 @@ package co.prestapp.VO;
 
 public class ClienteVO {
 
-	private String codigoCliente;
+	private int codigoCliente;
 	private String nombreCliente;
 	private String direccionCliente;
 	private String empresaCliente;
@@ -49,12 +49,12 @@ public class ClienteVO {
 		this.referenciaCliente = referenciaCliente;
 	}
 
-	public String getCodigoCliente() {
+	public int getCodigoCliente() {
 		return codigoCliente;
 	}
 
-	public void setCodigoCliente(String codigoCliente) {
-		this.codigoCliente = codigoCliente;
+	public void setCodigoCliente(int i) {
+		this.codigoCliente = i;
 	}
 
 }

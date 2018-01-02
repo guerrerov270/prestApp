@@ -35,6 +35,34 @@ public class ClienteDAO {
 
 	}// Fin agregar cliente
 
+	public ClienteVO buscarCliente(int codigoCliente) {
+
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		ClienteVO miCliente = new ClienteVO();
+		try {
+			CallableStatement miProcedimiento = conexion
+					.prepareCall("{call buscar_cliente(?)}");
+			miProcedimiento.setInt(1, codigoCliente);
+			ResultSet miRs = miProcedimiento.executeQuery();
+			if (miRs.next()) {
+				miCliente.setCodigoCliente(miRs.getInt("idCliente"));
+				miCliente.setNombreCliente(miRs.getString("nombreCliente"));
+				miCliente.setEmpresaCliente(miRs.getString("empresaCliente"));
+				miCliente.setReferenciaCliente(miRs
+						.getString("referenciaCliente"));
+			}
+
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out
+					.println("Error al ejecutar consulta para buscar cliente");
+			System.out.println(e.getMessage());
+		}
+		return miCliente;
+	}
+
 	public DefaultTableModel llenaTablaClientes() {
 
 		DefaultTableModel modeloTablaClientes;

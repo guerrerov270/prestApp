@@ -1,6 +1,7 @@
 package co.prestapp.vista;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -36,6 +37,7 @@ import javax.swing.SwingUtilities;
 
 import co.prestapp.DAO.ClienteDAO;
 import co.prestapp.DAO.PrestamoDAO;
+import co.prestapp.VO.ClienteVO;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -83,7 +85,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JComboBox jComboFechasCobro;
 	public JLabel jLabelCodigo;
 	public JLabel jLabelNombreCliente;
-	private JButton jButtonClienteNuevo;
 	private JButton jButtonClienteExiste;
 	private JLabel jLabelTotalFormato;
 	private JLabel jLabelTotalPago;
@@ -110,6 +111,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField jTextEmpresa;
 	private JLabel jLabelReferencia;
 	private JTextField jTextReferencia;
+	private JLabel jLabelEmpresaResult;
 	private JButton jButton2;
 	private JButton jButtonCalcular;
 	private JButton jButtonActualizar;
@@ -172,7 +174,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								.setPreferredSize(new java.awt.Dimension(753,
 										219));
 						{
-							
+
 						}
 					}
 					{
@@ -324,7 +326,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								final JButton jButtonCancelar = new JButton();
 								jPanelEntradasPrestamo.add(jButtonCancelar);
 								jButtonCancelar.setText("Cancelar");
-								jButtonCancelar.setBounds(427, 258, 135, 22);
+								jButtonCancelar.setBounds(575, 253, 135, 32);
 
 							}
 							{
@@ -349,28 +351,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jButtonClienteExiste = new JButton();
 								jPanelEntradasPrestamo
 										.add(jButtonClienteExiste);
-								jButtonClienteExiste.setText("Existente");
-								jButtonClienteExiste.setBounds(427, 214, 135,
-										22);
+								jButtonClienteExiste.setText("Buscar");
+								jButtonClienteExiste.setBounds(487, 172, 59, 22);
 								jButtonClienteExiste
 										.addActionListener(new ActionListener() {
 											public void actionPerformed(
 													ActionEvent evt) {
 												jButtonClienteExisteActionPerformed(evt);
-											}
-										});
-							}
-							{
-								jButtonClienteNuevo = new JButton();
-								jPanelEntradasPrestamo.add(jButtonClienteNuevo);
-								jButtonClienteNuevo.setText("Nuevo");
-								jButtonClienteNuevo
-										.setBounds(603, 214, 135, 22);
-								jButtonClienteNuevo
-										.addActionListener(new ActionListener() {
-											public void actionPerformed(
-													ActionEvent evt) {
-												jButtonClienteNuevoActionPerformed(evt);
 											}
 										});
 							}
@@ -388,14 +375,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jLabelNombreCliente = new JLabel();
 								jPanelEntradasPrestamo.add(jLabelNombreCliente);
 								jLabelNombreCliente.setText("nombre");
-								jLabelNombreCliente
-										.setBounds(641, 175, 113, 15);
+								jLabelNombreCliente.setBounds(425, 202, 137, 15);
 							}
 							{
 								jLabelCodigo = new JLabel();
 								jPanelEntradasPrestamo.add(jLabelCodigo);
 								jLabelCodigo.setText("Código");
-								jLabelCodigo.setBounds(532, 175, 113, 15);
+								jLabelCodigo.setBounds(657, 202, 79, 15);
 							}
 							{
 								ComboBoxModel jComboFechasCobroModel = new DefaultComboBoxModel(
@@ -407,18 +393,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jPanelEntradasPrestamo
 										.add(getJButtonCalcular());
 								jPanelEntradasPrestamo.add(getJButton2());
+								jPanelEntradasPrestamo.add(getJLabelEmpresaResult());
 								jComboFechasCobro
 										.setModel(jComboFechasCobroModel);
 								jComboFechasCobro.setBounds(201, 171, 135, 22);
 							}
 
 							jButtonAceptar.setText("Guardar");
-							jButtonAceptar.setBounds(605, 124, 131, 32);
-							jButtonAceptar.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent evt) {
-									jButtonAceptarActionPerformed(evt);
-								}
-							});
+							jButtonAceptar.setBounds(424, 253, 131, 32);
+							jButtonAceptar
+									.addActionListener(new ActionListener() {
+										public void actionPerformed(
+												ActionEvent evt) {
+											jButtonAceptarActionPerformed(evt);
+										}
+									});
 						}
 					}
 					jTabPestañas.addTab("Abonos", jPanelAbonos);
@@ -668,14 +657,30 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private void jButtonClienteExisteActionPerformed(ActionEvent evt) {
 
-		int codigoCliente = Integer.parseInt(JOptionPane
-				.showInputDialog("Ingrese código del cliente"));
+		try {
+			int codigoCliente = Integer.parseInt(JOptionPane
+					.showInputDialog("Ingrese código del cliente"));
+			// Busco el código en la bd y lo adjunto al prestamo
+			ClienteDAO miCliente = new ClienteDAO();
+			ClienteVO cliente= miCliente.buscarCliente(codigoCliente);
+			
+			//Cambio valores de etiquetas en la vista
+			jLabelNombreCliente.setText(cliente.getNombreCliente());
+			jLabelCodigo.setForeground(Color.RED);
+			jLabelCodigo.setText(cliente.getCodigoCliente() + "");
+			jLabelEmpresaResult.setText(cliente.getEmpresaCliente());
+			
+		} catch (NumberFormatException e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+		}
 
-		// Busco el código en la bd y lo adjunto al prestamo
+		
 	}
 
 	/**
 	 * Guarda los clientes
+	 * 
 	 * @param evt
 	 */
 	private void jButtonGuardarActionPerformed(ActionEvent evt) {
@@ -701,7 +706,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		return modelo;
 
 	}
-	
+
 	public DefaultTableModel actualizaTablaPrestamos() {
 
 		PrestamoDAO miPrestamo = new PrestamoDAO();
@@ -726,6 +731,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	/**
 	 * Actualiza la tabla de clientes
+	 * 
 	 * @param evt
 	 */
 	private void jButtonActualizarActionPerformed(ActionEvent evt) {
@@ -771,15 +777,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		int numeroCuotas = Integer.parseInt(jTextNumeroCuotas.getText());
 		Date fechaInicio = calendarioPrestamos.getDate();
 		java.sql.Date fechaFormateada = new java.sql.Date(fechaInicio.getTime());
-		DateFormat formato= new SimpleDateFormat("dd MMMM yyyy");
+		DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
 		System.out.println(montoPrestamo);
 		System.out.println(tasaInteres);
 		System.out.println(tipoPlazo);
 		System.out.println(numeroCuotas);
 		System.out.println(fechaFormateada);
 		System.out.println("Sumando dias a la fecha");
-		Date nuevaFecha=sumarRestarDiasFecha(fechaFormateada, 15);
-		java.sql.Date fechaNuevaFormateada = new java.sql.Date(nuevaFecha.getTime());
+		Date nuevaFecha = sumarRestarDiasFecha(fechaFormateada, 15);
+		java.sql.Date fechaNuevaFormateada = new java.sql.Date(
+				nuevaFecha.getTime());
 		System.out.println(fechaNuevaFormateada);
 		System.out.println(formato.format(fechaNuevaFormateada));
 	}
@@ -796,21 +803,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 									// días añadidos
 
 	}
-	
+
 	/**
 	 * Guarda los préstamos
+	 * 
 	 * @param evt
 	 */
 	private void jButtonAceptarActionPerformed(ActionEvent evt) {
-		
-		
+
 	}
-	
+
 	private JButton getJButton2() {
-		if(jButton2 == null) {
+		if (jButton2 == null) {
 			jButton2 = new JButton();
 			jButton2.setText("Actualizar");
-			jButton2.setBounds(603, 258, 135, 22);
+			jButton2.setBounds(737, 17, 35, 22);
 			jButton2.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					jButton2ActionPerformed(evt);
@@ -819,16 +826,26 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		}
 		return jButton2;
 	}
-	
+
 	/**
 	 * Actualiza la tabla de prestamos
+	 * 
 	 * @param evt
 	 */
 	private void jButton2ActionPerformed(ActionEvent evt) {
-		
+
 		jTablePrestamos = new JTable();
 		jTablePrestamos.setModel(actualizaTablaPrestamos());
 		jScrollReportes.setViewportView(jTablePrestamos);
+	}
+
+	private JLabel getJLabelEmpresaResult() {
+		if(jLabelEmpresaResult == null) {
+			jLabelEmpresaResult = new JLabel();
+			jLabelEmpresaResult.setText("Empresa");
+			jLabelEmpresaResult.setBounds(425, 229, 134, 15);
+		}
+		return jLabelEmpresaResult;
 	}
 
 }
