@@ -755,9 +755,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				public void actionPerformed(ActionEvent evt) {
 					try {
 						jButtonCalcularActionPerformed(evt);
-					} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
 					}
 				}
 			});
@@ -766,7 +765,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	}
 
 	private void jButtonCalcularActionPerformed(ActionEvent evt)
-			throws ParseException {
+			throws Exception {
 
 		float montoPrestamo = Float.parseFloat(jTextMonto.getText());
 		int tasaInteres = Integer.parseInt(jTextTasaInteres.getText());
