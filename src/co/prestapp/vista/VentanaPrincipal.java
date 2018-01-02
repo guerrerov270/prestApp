@@ -771,25 +771,31 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private void jButtonCalcularActionPerformed(ActionEvent evt)
 			throws ParseException {
 
-		float montoPrestamo = Float.parseFloat(jTextMonto.getText());
-		int tasaInteres = Integer.parseInt(jTextTasaInteres.getText());
+	//	float montoPrestamo = Float.parseFloat(jTextMonto.getText());
+	//	int tasaInteres = Integer.parseInt(jTextTasaInteres.getText());
 		String tipoPlazo = (String) jComboPlazo.getSelectedItem();
 		int numeroCuotas = Integer.parseInt(jTextNumeroCuotas.getText());
 		Date fechaInicio = calendarioPrestamos.getDate();
-		java.sql.Date fechaFormateada = new java.sql.Date(fechaInicio.getTime());
-		DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
-		System.out.println(montoPrestamo);
-		System.out.println(tasaInteres);
-		System.out.println(tipoPlazo);
-		System.out.println(numeroCuotas);
-		System.out.println(fechaFormateada);
-		System.out.println("Sumando dias a la fecha");
-		Date nuevaFecha = sumarRestarDiasFecha(fechaFormateada, 15);
-		java.sql.Date fechaNuevaFormateada = new java.sql.Date(
-				nuevaFecha.getTime());
-		System.out.println(fechaNuevaFormateada);
-		System.out.println(formato.format(fechaNuevaFormateada));
-	}
+	//	java.sql.Date fechaFormateada = new java.sql.Date(fechaInicio.getTime());
+	//	DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
+		
+		PrestamoDAO miPrestamo= new PrestamoDAO();
+		miPrestamo.calcularFechasPago(tipoPlazo, numeroCuotas, fechaInicio);
+		
+		
+//		System.out.println(montoPrestamo);
+//		System.out.println(tasaInteres);
+//		System.out.println(tipoPlazo);
+//		System.out.println(numeroCuotas);
+//		System.out.println(fechaFormateada);
+//		System.out.println("Sumando dias a la fecha");
+//		Date nuevaFecha = sumarRestarDiasFecha(fechaFormateada, 15);
+//		java.sql.Date fechaNuevaFormateada = new java.sql.Date(
+//				nuevaFecha.getTime());
+//		System.out.println(fechaNuevaFormateada);
+//		System.out.println(formato.format(fechaNuevaFormateada));
+		
+	}// Fin método jButtonCalcularActionPerformed
 
 	// Suma los días recibidos a la fecha
 	public Date sumarRestarDiasFecha(Date fecha, int dias) {

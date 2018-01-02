@@ -4,7 +4,12 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Calendar;
+import java.util.Iterator;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -94,5 +99,97 @@ public class PrestamoDAO {
 				"Pagado", "Inicio", "Fin", "Cliente", "Estado" };
 		return encabezados;
 	}// Fin getColumnas
+
+	public void calcularPrestamo(double monto, int tasa, String tipoPlazo,
+			int cuotas, java.sql.Date fechaInicio) {
+
+	}
+
+	public void calcularFechasPago(String tipoPlazo, int cuotas,
+			Date fechaInicio) {
+
+		ArrayList<Date> fechasPago;
+
+		switch (tipoPlazo) {
+		case "Mensual":
+
+			fechasPago = new ArrayList<Date>();
+			for (int i = 1; i <= cuotas; i++) {
+				fechasPago.add(sumarRestarMesesFecha(fechaInicio, i));
+			}
+
+			System.out.println("Lista de fechas que contiene" + " "
+					+ fechasPago.size() + " " + "elementos");
+			Iterator it = fechasPago.iterator();
+			while (it.hasNext()) {
+				Date fechaSalida = (Date) it.next();
+				System.out.println(fechaSalida);
+			}
+
+			break;
+		case "Quincenal":
+			fechasPago = new ArrayList<Date>();
+
+			for (int i = 1; i <= cuotas; i++) {
+				Date fechaInicioNueva = sumarRestarQuincenaFecha(fechaInicio, i);
+				fechasPago.add(sumarRestarQuincenaFecha(fechaInicioNueva, i));
+			}
+
+			System.out.println("Lista de fechas que contiene" + " "
+					+ fechasPago.size() + " " + "elementos");
+			Iterator it2 = fechasPago.iterator();
+			while (it2.hasNext()) {
+				Date fechaSalida = (Date) it2.next();
+				System.out.println(fechaSalida);
+			}
+
+			break;
+		case "Semanal":
+
+			break;
+
+		default:
+			break;
+		}
+	}
+
+	// Suma los días recibidos a la fecha
+	public Date sumarRestarDiasFecha(Date fecha, int dias) {
+
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fecha); // Configuramos la fecha que se recibe
+		calendar.add(Calendar.DAY_OF_YEAR, dias); // numero de días a añadir, o
+													// restar en caso de días<0
+
+		return calendar.getTime(); // Devuelve el objeto Date con los nuevos
+									// días añadidos
+
+	}
+
+	// Suma los meses recibidos a la fecha
+	public Date sumarRestarMesesFecha(Date fecha, int meses) {
+
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fecha); // Configuramos la fecha que se recibe
+		calendar.add(Calendar.MONTH, meses); // numero de meses a añadir, o
+												// restar
+
+		return calendar.getTime(); // Devuelve el objeto Date con los nuevos
+									// días añadidos
+
+	}
+
+	// Suma los días recibidos a la fecha
+	public Date sumarRestarQuincenaFecha(Date fecha, int dias) {
+
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fecha); // Configuramos la fecha que se recibe
+		calendar.add(Calendar.DAY_OF_YEAR, 14); // numero de días a añadir, o
+												// restar en caso de días<0
+
+		return calendar.getTime(); // Devuelve el objeto Date con los nuevos
+									// días añadidos
+
+	}
 
 }// Fin clase
