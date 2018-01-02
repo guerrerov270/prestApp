@@ -93,10 +93,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelTotalPago;
 	private JLabel jLabelCliente;
 	private JButton jButtonAceptar;
-	private JLabel jLabelFechaFinResultado;
 	private JComboBox jComboPlazo;
 	private JLabel jLabelTipoPlazo;
-	private JLabel jLabelFechaFin;
 	private JLabel jLabelDiaCobro;
 	private JLabel jLabelFechaInicio;
 	private JTextField jTextNumeroCuotas;
@@ -119,6 +117,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JButton jButtonCalcular;
 	private JButton jButtonActualizar;
 	private JButton jButtonCancelar;
+	private JButton jButtonCancelarPrestamo;
 	private JButton jButtonGuardarCliente;
 	private JTextField jTextNombre;
 	private JLabel jLabelEmpresa;
@@ -275,27 +274,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jLabelFechaInicio.setBounds(15, 132, 178, 15);
 						}
 						{
-							jLabelFechaFin = new JLabel();
-							jPanelEntradasPrestamo.add(jLabelFechaFin,
-									new GridBagConstraints(1, 2, 1, 1, 0.0,
-											0.0, GridBagConstraints.CENTER,
-											GridBagConstraints.NONE,
-											new Insets(0, 0, 0, 0), 0, 0));
-							jLabelFechaFin.setText("Fecha finalización:");
-							jLabelFechaFin.setBounds(17, 217, 150, 15);
-						}
-						{
-							jLabelFechaFinResultado = new JLabel();
-							jPanelEntradasPrestamo.add(jLabelFechaFinResultado,
-									new GridBagConstraints(2, 2, 1, 1, 0.0,
-											0.0, GridBagConstraints.CENTER,
-											GridBagConstraints.NONE,
-											new Insets(0, 0, 0, 0), 0, 0));
-							jLabelFechaFinResultado.setText("Fecha en formato");
-							jLabelFechaFinResultado
-									.setBounds(201, 217, 135, 15);
-						}
-						{
 							jLabelTipoPlazo = new JLabel();
 							jPanelEntradasPrestamo.add(jLabelTipoPlazo,
 									new GridBagConstraints(3, 2, 1, 1, 0.0,
@@ -308,7 +286,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						{
 							ComboBoxModel jComboPlazoModel = new DefaultComboBoxModel(
 									new String[] { "Seleccione uno", "Mensual",
-											"Quincenal", "Semanal", "Otro" });
+											"Quincenal", "Semanal" });
 							jComboPlazo = new JComboBox();
 							jPanelEntradasPrestamo.add(jComboPlazo,
 									new GridBagConstraints(0, 3, 1, 1, 0.0,
@@ -326,10 +304,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 											GridBagConstraints.NONE,
 											new Insets(0, 0, 0, 0), 0, 0));
 							{
-								final JButton jButtonCancelar = new JButton();
-								jPanelEntradasPrestamo.add(jButtonCancelar);
-								jButtonCancelar.setText("Cancelar");
-								jButtonCancelar.setBounds(575, 253, 135, 32);
+								JButton jButtonCancelarPrestamo = new JButton();
+								jPanelEntradasPrestamo
+										.add(jButtonCancelarPrestamo);
+								jButtonCancelarPrestamo.setText("Cancelar");
+								jButtonCancelarPrestamo.setBounds(201, 259,
+										135, 32);
+								jButtonCancelarPrestamo
+										.addActionListener(new ActionListener() {
+											public void actionPerformed(
+													ActionEvent evt) {
+												jButtonCancelarPrestamoActionPerformed(evt);
+											}
+										});
 
 							}
 							{
@@ -342,21 +329,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jLabelTotalPago = new JLabel();
 								jPanelEntradasPrestamo.add(jLabelTotalPago);
 								jLabelTotalPago.setText("Total a pagar:");
-								jLabelTotalPago.setBounds(17, 261, 116, 15);
+								jLabelTotalPago.setBounds(17, 214, 116, 15);
 							}
 							{
 								jLabelTotalFormato = new JLabel();
 								jPanelEntradasPrestamo.add(jLabelTotalFormato);
 								jLabelTotalFormato.setText("Total en formato");
-								jLabelTotalFormato.setBounds(201, 261, 135, 15);
+								jLabelTotalFormato.setBounds(201, 214, 135, 15);
 							}
 							{
 								jButtonClienteExiste = new JButton();
 								jPanelEntradasPrestamo
 										.add(jButtonClienteExiste);
 								jButtonClienteExiste.setText("Buscar");
-								jButtonClienteExiste
-										.setBounds(487, 172, 59, 22);
+								jButtonClienteExiste.setBounds(487, 172, 118,
+										22);
 								jButtonClienteExiste
 										.addActionListener(new ActionListener() {
 											public void actionPerformed(
@@ -401,7 +388,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							}
 
 							jButtonAceptar.setText("Guardar");
-							jButtonAceptar.setBounds(424, 253, 131, 32);
+							jButtonAceptar.setBounds(15, 259, 131, 32);
 							jButtonAceptar
 									.addActionListener(new ActionListener() {
 										public void actionPerformed(
@@ -650,12 +637,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		}
 	}
 
-	private void jButtonClienteNuevoActionPerformed(ActionEvent evt) {
-
-		// obtener los datos ingresados en el dialogo, guardar cliente en bd y
-		// adjuntarlo a prestamo actual
-	}
-
 	private void jButtonClienteExisteActionPerformed(ActionEvent evt) {
 
 		try {
@@ -697,6 +678,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private void jButtonCancelarActionPerformed(ActionEvent evt) {
 
 		limpiarCamposCliente();
+	}
+
+	private void jButtonCancelarPrestamoActionPerformed(ActionEvent evt) {
+
+		limpiarCamposPrestamo();
 	}
 
 	public DefaultTableModel actualizaTablaClientes() {
@@ -749,6 +735,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
+	public void limpiarCamposPrestamo() {
+
+		jTextMonto.setText("");
+		jTextTasaInteres.setText("");
+		DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+		jComboFechasCobro.setModel(modelo);
+		jTextNumeroCuotas.setText("");
+		jLabelTotalFormato.setText("");
+
+	}
+
 	private JButton getJButtonCalcular() {
 		if (jButtonCalcular == null) {
 			jButtonCalcular = new JButton();
@@ -771,8 +768,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private void jButtonCalcularActionPerformed(ActionEvent evt)
 			throws ParseException {
 
-		// float montoPrestamo = Float.parseFloat(jTextMonto.getText());
-		// int tasaInteres = Integer.parseInt(jTextTasaInteres.getText());
+		float montoPrestamo = Float.parseFloat(jTextMonto.getText());
+		int tasaInteres = Integer.parseInt(jTextTasaInteres.getText());
 		String tipoPlazo = (String) jComboPlazo.getSelectedItem();
 		int numeroCuotas = Integer.parseInt(jTextNumeroCuotas.getText());
 		Date fechaInicio = calendarioPrestamos.getDate();
@@ -783,9 +780,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		PrestamoDAO miPrestamo = new PrestamoDAO();
 		ArrayList<Date> fechasPago = miPrestamo.calcularFechasPago(tipoPlazo,
 				numeroCuotas, fechaInicio);
-		DefaultComboBoxModel modeloNuevo= new DefaultComboBoxModel();
-		modeloNuevo=llenaComboPlazos(fechasPago);
+		DefaultComboBoxModel modeloNuevo = new DefaultComboBoxModel();
+		modeloNuevo = llenaComboPlazos(fechasPago);
 		jComboFechasCobro.setModel(modeloNuevo);
+
+		double totalPagar = miPrestamo.calcularPrestamo(montoPrestamo,
+				tasaInteres, tipoPlazo, numeroCuotas);
+		jLabelTotalFormato.setText(totalPagar + "");
 
 		// System.out.println(montoPrestamo);
 		// System.out.println(tasaInteres);
@@ -827,7 +828,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jButton2 == null) {
 			jButton2 = new JButton();
 			jButton2.setText("Actualizar");
-			jButton2.setBounds(737, 17, 35, 22);
+			jButton2.setBounds(597, 260, 119, 30);
 			jButton2.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					jButton2ActionPerformed(evt);
@@ -864,12 +865,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		Iterator it = fechasPago.iterator();
 		while (it.hasNext()) {
 			Date fechaSalida = (Date) it.next();
-			//Añadimos la fecha al modelo
-			 java.sql.Date fechaFormateada = new
-			 java.sql.Date(fechaSalida.getTime());
-			 DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
-			 modelo.addElement(formato.format(fechaSalida));
-			
+			// Añadimos la fecha al modelo
+			java.sql.Date fechaFormateada = new java.sql.Date(
+					fechaSalida.getTime());
+			DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
+			modelo.addElement(formato.format(fechaSalida));
+
 		}
 		return modelo;
 

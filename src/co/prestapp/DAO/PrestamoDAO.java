@@ -100,8 +100,33 @@ public class PrestamoDAO {
 		return encabezados;
 	}// Fin getColumnas
 
-	public void calcularPrestamo(double monto, int tasa, String tipoPlazo,
-			int cuotas, java.sql.Date fechaInicio) {
+	public double calcularPrestamo(double monto, int tasa, String tipoPlazo,
+			int cuotas) {
+
+		double totalPagar = 0;
+		switch (tipoPlazo) {
+		case "Mensual":
+			totalPagar = (monto * tasa) / 100;
+			totalPagar = totalPagar * cuotas;
+			totalPagar = totalPagar + monto;
+
+			return totalPagar;
+
+		case "Quincenal":
+			totalPagar = (monto * tasa) / 100;
+			totalPagar = totalPagar * (cuotas / 2);
+			totalPagar = totalPagar + monto;
+
+			return totalPagar;
+
+		case "Semanal":
+			totalPagar = (monto * tasa) / 100;
+			totalPagar = totalPagar * (cuotas / 4);
+			totalPagar = totalPagar + monto;
+			return totalPagar;
+
+		}
+		return totalPagar;
 
 	}
 
@@ -118,13 +143,13 @@ public class PrestamoDAO {
 				fechasPago.add(sumarRestarMesesFecha(fechaInicio, i));
 			}
 
-//			System.out.println("Lista de fechas que contiene" + " "
-//					+ fechasPago.size() + " " + "elementos");
-//			Iterator it = fechasPago.iterator();
-//			while (it.hasNext()) {
-//				Date fechaSalida = (Date) it.next();
-//				System.out.println(fechaSalida);
-//			}
+			// System.out.println("Lista de fechas que contiene" + " "
+			// + fechasPago.size() + " " + "elementos");
+			// Iterator it = fechasPago.iterator();
+			// while (it.hasNext()) {
+			// Date fechaSalida = (Date) it.next();
+			// System.out.println(fechaSalida);
+			// }
 			return fechasPago;
 
 		case "Quincenal":
@@ -135,13 +160,13 @@ public class PrestamoDAO {
 				fechasPago.add(sumarRestarQuincenaFecha(fechaInicio, i));
 			}
 
-//			System.out.println("Lista de fechas que contiene" + " "
-//					+ fechasPago.size() + " " + "elementos");
-//			Iterator it2 = fechasPago.iterator();
-//			while (it2.hasNext()) {
-//				Date fechaSalida = (Date) it2.next();
-//				System.out.println(fechaSalida);
-//			}
+			// System.out.println("Lista de fechas que contiene" + " "
+			// + fechasPago.size() + " " + "elementos");
+			// Iterator it2 = fechasPago.iterator();
+			// while (it2.hasNext()) {
+			// Date fechaSalida = (Date) it2.next();
+			// System.out.println(fechaSalida);
+			// }
 
 			return fechasPago;
 		case "Semanal":
@@ -152,31 +177,18 @@ public class PrestamoDAO {
 				fechasPago.add(sumarRestarSemanaFecha(fechaInicio, i));
 			}
 
-//			System.out.println("Lista de fechas que contiene" + " "
-//					+ fechasPago.size() + " " + "elementos");
-//			Iterator it3 = fechasPago.iterator();
-//			while (it3.hasNext()) {
-//				Date fechaSalida = (Date) it3.next();
-//				System.out.println(fechaSalida);
-//			}
+			// System.out.println("Lista de fechas que contiene" + " "
+			// + fechasPago.size() + " " + "elementos");
+			// Iterator it3 = fechasPago.iterator();
+			// while (it3.hasNext()) {
+			// Date fechaSalida = (Date) it3.next();
+			// System.out.println(fechaSalida);
+			// }
 
 			return fechasPago;
 
 		}
 		return fechasPago;
-
-	}
-
-	// Suma los días recibidos a la fecha
-	public Date sumarRestarDiasFecha(Date fecha, int dias) {
-
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(fecha); // Configuramos la fecha que se recibe
-		calendar.add(Calendar.DAY_OF_YEAR, dias); // numero de días a añadir, o
-													// restar en caso de días<0
-
-		return calendar.getTime(); // Devuelve el objeto Date con los nuevos
-									// días añadidos
 
 	}
 
