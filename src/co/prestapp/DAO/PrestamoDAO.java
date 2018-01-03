@@ -17,9 +17,9 @@ import co.prestapp.connection.DBConnection;
 
 public class PrestamoDAO {
 
-	public void agregarPrestamo(float montoPrestamo, int tasaInteresPrestamo,
-			int numeroCuotasPrestamo, float saldoPendientePrestamo,
-			float saldoPagadoPrestamo, Date fechaInicioPrestamo,
+	public void agregarPrestamo(double montoPrestamo, int tasaInteresPrestamo,
+			int numeroCuotasPrestamo, double saldoPendientePrestamo,
+			double saldoPagadoPrestamo, Date fechaInicioPrestamo,
 			Date fechaFinPrestamo, String tipoPlazoPrestamo, int idClienteFK,
 			String estadoPrestamo) {
 
@@ -33,11 +33,11 @@ public class PrestamoDAO {
 		try {
 			CallableStatement miProcedimiento = conexion
 					.prepareCall("{call agregar_prestamo(?,?,?,?,?,?,?,?,?,?)}");
-			miProcedimiento.setFloat(1, montoPrestamo);
+			miProcedimiento.setDouble(1, montoPrestamo);
 			miProcedimiento.setInt(2, tasaInteresPrestamo);
 			miProcedimiento.setInt(3, numeroCuotasPrestamo);
-			miProcedimiento.setFloat(4, saldoPendientePrestamo);
-			miProcedimiento.setFloat(5, saldoPagadoPrestamo);
+			miProcedimiento.setDouble(4, saldoPendientePrestamo);
+			miProcedimiento.setDouble(5, saldoPagadoPrestamo);
 			miProcedimiento.setDate(6, fechaInicioFormateada);
 			miProcedimiento.setDate(7, fechaFinFormateada);
 			miProcedimiento.setString(8, tipoPlazoPrestamo);
@@ -50,6 +50,7 @@ public class PrestamoDAO {
 			System.out
 					.println("Error al ejecutar consulta para agregar préstamo");
 			System.out.println(e.getMessage());
+		e.printStackTrace();
 		}
 
 	}// Fin agregar prestamo
@@ -96,7 +97,7 @@ public class PrestamoDAO {
 	private String[] getColumnas() {
 
 		String encabezados[] = { "Código", "Monto", "Tasa", "#Cuotas", "Debe",
-				"Pagado", "Inicio", "Fin", "Cliente", "Estado" };
+				"Pagado", "Inicio", "Fin","Plazo", "Cliente", "Estado" };
 		return encabezados;
 	}// Fin getColumnas
 
@@ -143,13 +144,6 @@ public class PrestamoDAO {
 				fechasPago.add(sumarRestarMesesFecha(fechaInicio, i));
 			}
 
-			// System.out.println("Lista de fechas que contiene" + " "
-			// + fechasPago.size() + " " + "elementos");
-			// Iterator it = fechasPago.iterator();
-			// while (it.hasNext()) {
-			// Date fechaSalida = (Date) it.next();
-			// System.out.println(fechaSalida);
-			// }
 			return fechasPago;
 
 		case "Quincenal":
@@ -160,14 +154,6 @@ public class PrestamoDAO {
 				fechasPago.add(sumarRestarQuincenaFecha(fechaInicio, i));
 			}
 
-			// System.out.println("Lista de fechas que contiene" + " "
-			// + fechasPago.size() + " " + "elementos");
-			// Iterator it2 = fechasPago.iterator();
-			// while (it2.hasNext()) {
-			// Date fechaSalida = (Date) it2.next();
-			// System.out.println(fechaSalida);
-			// }
-
 			return fechasPago;
 		case "Semanal":
 			fechasPago = new ArrayList<Date>();
@@ -176,14 +162,6 @@ public class PrestamoDAO {
 
 				fechasPago.add(sumarRestarSemanaFecha(fechaInicio, i));
 			}
-
-			// System.out.println("Lista de fechas que contiene" + " "
-			// + fechasPago.size() + " " + "elementos");
-			// Iterator it3 = fechasPago.iterator();
-			// while (it3.hasNext()) {
-			// Date fechaSalida = (Date) it3.next();
-			// System.out.println(fechaSalida);
-			// }
 
 			return fechasPago;
 

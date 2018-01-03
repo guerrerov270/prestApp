@@ -821,6 +821,47 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	 */
 	private void jButtonAceptarActionPerformed(ActionEvent evt) {
 
+		PrestamoDAO miPrestamo = new PrestamoDAO();
+		// Recojo los datos necesarios
+		float montoPrestamo = Float.parseFloat(jTextMonto.getText());
+		int tasaInteres = Integer.parseInt(jTextTasaInteres.getText());
+		int numeroCuotas = Integer.parseInt(jTextNumeroCuotas.getText());
+		String tipoPlazo = (String) jComboPlazo.getSelectedItem();
+		String tipoPlazoMayus=tipoPlazo.toUpperCase();
+		// El saldo pendiente
+		double totalPagar = miPrestamo.calcularPrestamo(montoPrestamo,
+				tasaInteres, tipoPlazo, numeroCuotas);
+		// El saldo pagado
+		double totalPagado = 0;
+		Date fechaInicio = calendarioPrestamos.getDate();
+		// Fecha de fin
+		ArrayList<Date> fechasPago = miPrestamo.calcularFechasPago(tipoPlazo,
+				numeroCuotas, fechaInicio);
+		// La ultima fecha del arreglo
+		int tamañoArray = fechasPago.size();
+		Date fechaFin = fechasPago.get(tamañoArray-1);
+
+		// Busco el cliente de nuevo
+		int codigoCliente = Integer.parseInt(JOptionPane
+				.showInputDialog("Verifique código del cliente"));
+		// Busco el código en la bd y lo adjunto al prestamo
+		ClienteDAO miCliente = new ClienteDAO();
+		ClienteVO cliente = miCliente.buscarCliente(codigoCliente);
+
+		// Cambio valores de etiquetas en la vista
+		jLabelNombreCliente.setText(cliente.getNombreCliente());
+		jLabelCodigo.setForeground(Color.RED);
+		jLabelCodigo.setText(cliente.getCodigoCliente() + "");
+		jLabelEmpresaResult.setText(cliente.getEmpresaCliente());
+
+		// El estado del prestamo
+		String estadoPrestamo = "PENDIENTE";
+
+		// Agrego el prestamo
+		miPrestamo.agregarPrestamo(montoPrestamo, tasaInteres, numeroCuotas,
+				totalPagar, totalPagado, fechaInicio, fechaFin, tipoPlazoMayus,
+				codigoCliente, estadoPrestamo);
+
 	}
 
 	private JButton getJButton2() {
