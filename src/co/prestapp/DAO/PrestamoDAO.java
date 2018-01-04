@@ -17,6 +17,20 @@ import co.prestapp.connection.DBConnection;
 
 public class PrestamoDAO {
 
+	/**
+	 * Agrega los prestamos llamando a un procedimiento almacenado en BD
+	 * 
+	 * @param montoPrestamo
+	 * @param tasaInteresPrestamo
+	 * @param numeroCuotasPrestamo
+	 * @param saldoPendientePrestamo
+	 * @param saldoPagadoPrestamo
+	 * @param fechaInicioPrestamo
+	 * @param fechaFinPrestamo
+	 * @param tipoPlazoPrestamo
+	 * @param idClienteFK
+	 * @param estadoPrestamo
+	 */
 	public void agregarPrestamo(double montoPrestamo, int tasaInteresPrestamo,
 			int numeroCuotasPrestamo, double saldoPendientePrestamo,
 			double saldoPagadoPrestamo, Date fechaInicioPrestamo,
@@ -50,7 +64,7 @@ public class PrestamoDAO {
 			System.out
 					.println("Error al ejecutar consulta para agregar préstamo");
 			System.out.println(e.getMessage());
-		e.printStackTrace();
+			e.printStackTrace();
 		}
 
 	}// Fin agregar prestamo
@@ -97,7 +111,7 @@ public class PrestamoDAO {
 	private String[] getColumnas() {
 
 		String encabezados[] = { "Código", "Monto", "Tasa", "#Cuotas", "Debe",
-				"Pagado", "Inicio", "Fin","Plazo", "Cliente", "Estado" };
+				"Pagado", "Inicio", "Fin", "Plazo", "Cliente", "Estado" };
 		return encabezados;
 	}// Fin getColumnas
 
