@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.table.DefaultTableModel;
@@ -13,25 +14,28 @@ import co.prestapp.connection.DBConnection;
 
 public class AbonoDAO {
 
-	public void agregarAbono(double montoAbono, int completoAbono,
-			Date fechaAbono, int abonoPrestamo, int puntualAbono,
-			String estadoAbono, int numeroAbono) {
+	public void agregarAbono(double montoACobrar, double montoPagado,
+			int completoAbono, Date fechaCobro, String abonoPrestamoFK,
+			int puntualAbono, String estadoAbono, int numeroAbono) {
 
-		java.sql.Date fechaAbonoFormateada = new java.sql.Date(
-				fechaAbono.getTime());
+		java.sql.Date fechaCobroFormateada = new java.sql.Date(
+				fechaCobro.getTime());
 
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
+		String codigoAbono = recuperarCodigoAbono();
 		try {
 			CallableStatement miProcedimiento = conexion
-					.prepareCall("{call agregar_abono(?,?,?,?,?,?,?)}");
-			miProcedimiento.setDouble(1, montoAbono);
-			miProcedimiento.setInt(2, completoAbono);
-			miProcedimiento.setDate(3, fechaAbonoFormateada);
-			miProcedimiento.setInt(4, abonoPrestamo);
-			miProcedimiento.setInt(5, puntualAbono);
-			miProcedimiento.setString(6, estadoAbono);
-			miProcedimiento.setInt(7, numeroAbono);
+					.prepareCall("{call agregar_abono(?,?,?,?,?,?,?,?,?)}");
+			miProcedimiento.setString(1, codigoAbono);
+			miProcedimiento.setDouble(2, montoACobrar);
+			miProcedimiento.setDouble(3, montoPagado);
+			miProcedimiento.setInt(4, completoAbono);
+			miProcedimiento.setDate(5, fechaCobroFormateada);
+			miProcedimiento.setString(6, abonoPrestamoFK);
+			miProcedimiento.setInt(7, puntualAbono);
+			miProcedimiento.setString(8, estadoAbono);
+			miProcedimiento.setInt(9, numeroAbono);
 			miProcedimiento.execute();
 			conexion.close();
 
@@ -55,7 +59,7 @@ public class AbonoDAO {
 
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
-		Object datos[] = new Object[8];
+		Object datos[] = new Object[10];
 
 		try {
 			CallableStatement miProcedimiento = conexion
@@ -64,7 +68,7 @@ public class AbonoDAO {
 
 			while (miRs.next()) {
 
-				for (int i = 0; i < 8; i++) {
+				for (int i = 0; i < 10; i++) {
 					datos[i] = miRs.getObject(i + 1);
 
 				}
@@ -83,8 +87,9 @@ public class AbonoDAO {
 
 	private String[] getColumnas() {
 
-		String encabezados[] = { "Código abono", "Monto", "Completo", "Fecha",
-				"Código préstamo", "Puntual", "Estado", "Abono#" };
+		String encabezados[] = { "ID", "Código", "Monto cobro", "Monto pago ",
+				"Completo", "Fecha cobro", "Fecha pago", "Préstamo", "Puntual",
+				"Estado", "Abono#" };
 		return encabezados;
 	}// Fin getColumnas
 
@@ -110,5 +115,24 @@ public class AbonoDAO {
 		return codigoAbono;
 
 	}// Fin recuperarCodigoAbono
+
+	public void crearAbonosPrestamo(double totalAPagar, int numeroCuotas,
+			ArrayList<Date> fechasPago, String codigoPrestamo) {
+
+		double montoACobrar = totalAPagar / numeroCuotas;
+		double montoPagado = 0;
+		int completoAbono = 0;
+		// fecha de Pago no voy a enviar
+		int puntualAbono = 0;
+		String estadoAbono = "PENDIENTE";
+
+		for (int i = 0; i < fechasPago.size(); i++) {
+
+			agregarAbono(montoACobrar, montoPagado, completoAbono,
+					fechasPago.get(i), codigoPrestamo, puntualAbono,
+					estadoAbono, i);
+		}
+
+	}// Fin crearAbonosPrestamo
 
 }

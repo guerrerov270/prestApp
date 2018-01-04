@@ -4,15 +4,20 @@ import java.sql.Date;
 
 public class AbonoVO {
 
+	private int IDAbono;
+	private String codigoAbono;
 	private double montoAbono;
-	private Date fechaAbono;
-	private int abonoPrestamo;
 	private boolean completoAbono;
+	private Date fechaACobrar;
+	private Date fechaPago;
+	private String abonoPrestamoFK;
 	private boolean puntualAbono;
 
 	private enum estadoAbono {
-		PENDIENTE, PAGADO
+		PENDIENTE, PAGADO, ERROR
 	}
+
+	private int numeroAbono;
 
 	public double getMontoAbono() {
 		return montoAbono;
@@ -22,20 +27,20 @@ public class AbonoVO {
 		this.montoAbono = montoAbono;
 	}
 
-	public Date getFechaAbono() {
-		return fechaAbono;
+	public Date getFechaPago() {
+		return fechaPago;
 	}
 
-	public void setFechaAbono(Date fechaAbono) {
-		this.fechaAbono = fechaAbono;
+	public void setFechaPago(Date fechaPago) {
+		this.fechaPago = fechaPago;
 	}
 
-	public int getAbonoPrestamo() {
-		return abonoPrestamo;
+	public String getAbonoPrestamo() {
+		return abonoPrestamoFK;
 	}
 
-	public void setAbonoPrestamo(int abonoPrestamo) {
-		this.abonoPrestamo = abonoPrestamo;
+	public void setAbonoPrestamo(String abonoPrestamo) {
+		this.abonoPrestamoFK = abonoPrestamo;
 	}
 
 	public boolean isCompletoAbono() {
@@ -52,6 +57,38 @@ public class AbonoVO {
 
 	public void setPuntualAbono(boolean puntualAbono) {
 		this.puntualAbono = puntualAbono;
+	}
+
+	public int getIDAbono() {
+		return IDAbono;
+	}
+
+	public void setIDAbono(int iDAbono) {
+		IDAbono = iDAbono;
+	}
+
+	public String getCodigoAbono() {
+		return codigoAbono;
+	}
+
+	public void setCodigoAbono(String codigoAbono) {
+		this.codigoAbono = codigoAbono;
+	}
+
+	public Date getFechaACobrar() {
+		return fechaACobrar;
+	}
+
+	public void setFechaACobrar(Date fechaACobrar) {
+		this.fechaACobrar = fechaACobrar;
+	}
+
+	public int getNumeroAbono() {
+		return numeroAbono;
+	}
+
+	public void setNumeroAbono(int numeroAbono) {
+		this.numeroAbono = numeroAbono;
 	};
 
 }

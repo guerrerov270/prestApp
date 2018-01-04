@@ -462,15 +462,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jPanelAgregarAbono.setLayout(null);
 						{
 							jScrollAbonosRecibidos = new JScrollPane();
-							jPanelAgregarAbono.add(jScrollAbonosRecibidos);
+							jPanelAgregarAbono.add(jScrollAbonosRecibidos,
+									BorderLayout.SOUTH);
 							jScrollAbonosRecibidos.setBounds(5, 212, 767, 410);
 							{
-								jTableAbonosRecibidos = new JTable();
-								jScrollAbonosRecibidos
-										.setViewportView(jTableAbonosRecibidos);
-								jTableAbonosRecibidos
-										.setFont(new java.awt.Font("Arial", 0,
-												16));
 
 							}
 						}
@@ -747,6 +742,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
+	public DefaultTableModel actualizaTablaAbonos() {
+
+		AbonoDAO miAbono = new AbonoDAO();
+		DefaultTableModel modelo = miAbono.llenaTablaAbonos();
+		return modelo;
+
+	}
+
 	public DefaultTableModel actualizaTablaPrestamos() {
 
 		PrestamoDAO miPrestamo = new PrestamoDAO();
@@ -921,17 +924,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String estadoPrestamo = "PENDIENTE";
 
 		// Agrego el prestamo
-		String codigoPrestamo=miPrestamo.agregarPrestamo(montoPrestamo, tasaInteres, numeroCuotas,
-				totalPagar, totalPagado, fechaInicio, fechaFin, tipoPlazoMayus,
-				codigoCliente, estadoPrestamo);
+		String codigoPrestamo = miPrestamo.agregarPrestamo(montoPrestamo,
+				tasaInteres, numeroCuotas, totalPagar, totalPagado,
+				fechaInicio, fechaFin, tipoPlazoMayus, codigoCliente,
+				estadoPrestamo);
 
 		// Creo los abonos correspondientes a ese préstamo
-		double montoAbono = 0;
-		int completoAbono = 0;
-		Date fechaAbono;
-		int puntualAbono = 0;
-		String estadoAbono = "PENDIENTE";
-		int numeroAbono;
+		miAbono.crearAbonosPrestamo(totalPagar, numeroCuotas, fechasPago,
+				codigoPrestamo);
 
 		limpiarCamposPrestamo();
 
@@ -1010,6 +1010,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jButtonActualizarAbonos.setText("Actualizar");
 			jButtonActualizarAbonos.setBounds(604, 29, 146, 23);
 			jButtonActualizarAbonos.setFont(new java.awt.Font("Arial", 0, 16));
+			jButtonActualizarAbonos.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+					jButtonActualizarAbonosActionPerformed(evt);
+				}
+			});
 		}
 		return jButtonActualizarAbonos;
 	}
@@ -1030,6 +1035,23 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jTextFieldCodigoAbono.setBounds(604, 71, 146, 23);
 		}
 		return jTextFieldCodigoAbono;
+	}
+
+	/**
+	 * Actualiza la tabla de abonos
+	 * 
+	 * @param evt
+	 */
+	private void jButtonActualizarAbonosActionPerformed(ActionEvent evt) {
+
+		jTableAbonosRecibidos = new JTable();
+		jTableAbonosRecibidos.setModel(actualizaTablaAbonos());
+		jScrollAbonosRecibidos.setViewportView(jTableAbonosRecibidos);
+		jTableAbonosRecibidos.setFont(new java.awt.Font("Arial", 0, 16));
+		jTableAbonosRecibidos
+				.setPreferredSize(new java.awt.Dimension(764, 394));
+		JTableHeader th = jTableAbonosRecibidos.getTableHeader();
+		th.setFont(new java.awt.Font("Arial", 0, 16));
 	}
 
 }

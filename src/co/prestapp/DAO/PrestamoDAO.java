@@ -36,7 +36,7 @@ public class PrestamoDAO {
 			int tasaInteresPrestamo, int numeroCuotasPrestamo,
 			double saldoPendientePrestamo, double saldoPagadoPrestamo,
 			Date fechaInicioPrestamo, Date fechaFinPrestamo,
-			String tipoPlazoPrestamo, String idClienteFK, String estadoPrestamo) {
+			String tipoPlazoPrestamo, String codigoClienteFK, String estadoPrestamo) {
 
 		java.sql.Date fechaInicioFormateada = new java.sql.Date(
 				fechaInicioPrestamo.getTime());
@@ -58,7 +58,7 @@ public class PrestamoDAO {
 			miProcedimiento.setDate(7, fechaInicioFormateada);
 			miProcedimiento.setDate(8, fechaFinFormateada);
 			miProcedimiento.setString(9, tipoPlazoPrestamo);
-			miProcedimiento.setString(10, idClienteFK);
+			miProcedimiento.setString(10, codigoClienteFK);
 			miProcedimiento.setString(11, estadoPrestamo);
 			miProcedimiento.execute();
 			conexion.close();
@@ -85,7 +85,7 @@ public class PrestamoDAO {
 
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
-		Object datos[] = new Object[11];
+		Object datos[] = new Object[12];
 
 		try {
 			CallableStatement miProcedimiento = conexion
@@ -94,7 +94,7 @@ public class PrestamoDAO {
 
 			while (miRs.next()) {
 
-				for (int i = 0; i < 11; i++) {
+				for (int i = 0; i < 12; i++) {
 					datos[i] = miRs.getObject(i + 1);
 
 				}
@@ -114,7 +114,7 @@ public class PrestamoDAO {
 
 	private String[] getColumnas() {
 
-		String encabezados[] = { "Código", "Monto", "Tasa", "#Cuotas", "Debe",
+		String encabezados[] = { "ID","Código", "Monto", "Tasa", "#Cuotas", "Debe",
 				"Pagado", "Inicio", "Fin", "Plazo", "Cliente", "Estado" };
 		return encabezados;
 	}// Fin getColumnas
