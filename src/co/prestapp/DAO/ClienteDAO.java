@@ -19,12 +19,14 @@ public class ClienteDAO {
 
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
+		String codigoCliente=recuperarCodigoCliente();
 		try {
 			CallableStatement miProcedimiento = conexion
-					.prepareCall("{call agregar_cliente(?,?,?)}");
-			miProcedimiento.setString(1, nombre);
-			miProcedimiento.setString(2, empresa);
-			miProcedimiento.setString(3, referencia);
+					.prepareCall("{call agregar_cliente(?,?,?,?)}");
+			miProcedimiento.setString(1, codigoCliente);
+			miProcedimiento.setString(2, nombre);
+			miProcedimiento.setString(3, empresa);
+			miProcedimiento.setString(4, referencia);
 			miProcedimiento.execute();
 			conexion.close();
 
@@ -76,7 +78,7 @@ public class ClienteDAO {
 
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
-		Object datos[] = new Object[4];
+		Object datos[] = new Object[5];
 
 		try {
 			CallableStatement miProcedimiento = conexion
@@ -85,7 +87,7 @@ public class ClienteDAO {
 
 			while (miRs.next()) {
 
-				for (int i = 0; i < 4; i++) {
+				for (int i = 0; i < 5; i++) {
 					datos[i] = miRs.getObject(i + 1);
 
 				}
@@ -105,27 +107,9 @@ public class ClienteDAO {
 
 	private String[] getColumnas() {
 
-		String encabezados[] = { "Código", "Nombre", "Empresa", "Referencia" };
+		String encabezados[] = {"ID", "Código", "Nombre", "Empresa", "Referencia" };
 		return encabezados;
 	}// Fin getColumnas
-
-	public void eliminarCliente(int idCliente) {
-
-		DBConnection miConexion = new DBConnection();
-		Connection conexion = miConexion.darConexion();
-		try {
-			CallableStatement miProcedimiento = conexion
-					.prepareCall("{call eliminar_cliente(?)}");
-			miProcedimiento.setInt(1, idCliente);
-			miProcedimiento.execute();
-			conexion.close();
-
-		} catch (SQLException e) {
-			System.out
-					.println("Error al ejecutar consulta para eliminar cliente");
-			System.out.println(e.getMessage());
-		}
-	}// Fin eliminarCliente
 
 	public String recuperarCodigoCliente() {
 
