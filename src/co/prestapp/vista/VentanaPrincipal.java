@@ -690,8 +690,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private void jButtonClienteExisteActionPerformed(ActionEvent evt) {
 
 		try {
-			int codigoCliente = Integer.parseInt(JOptionPane
-					.showInputDialog("Ingrese código del cliente"));
+			String codigoCliente = JOptionPane
+					.showInputDialog("Ingrese código del cliente");
 			// Busco el código en la bd y lo adjunto al prestamo
 			ClienteDAO miCliente = new ClienteDAO();
 			ClienteVO cliente = miCliente.buscarCliente(codigoCliente);
@@ -905,8 +905,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		Date fechaFin = fechasPago.get(tamañoArray - 1);
 
 		// Busco el cliente de nuevo
-		int codigoCliente = Integer.parseInt(JOptionPane
-				.showInputDialog("Verifique código del cliente"));
+		String codigoCliente = JOptionPane
+				.showInputDialog("Verifique código del cliente");
 		// Busco el código en la bd y lo adjunto al prestamo
 		ClienteDAO miCliente = new ClienteDAO();
 		ClienteVO cliente = miCliente.buscarCliente(codigoCliente);

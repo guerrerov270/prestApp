@@ -34,8 +34,8 @@ public class PrestamoDAO {
 	public void agregarPrestamo(double montoPrestamo, int tasaInteresPrestamo,
 			int numeroCuotasPrestamo, double saldoPendientePrestamo,
 			double saldoPagadoPrestamo, Date fechaInicioPrestamo,
-			Date fechaFinPrestamo, String tipoPlazoPrestamo, int idClienteFK,
-			String estadoPrestamo) {
+			Date fechaFinPrestamo, String tipoPlazoPrestamo,
+			String idClienteFK, String estadoPrestamo) {
 
 		java.sql.Date fechaInicioFormateada = new java.sql.Date(
 				fechaInicioPrestamo.getTime());
@@ -55,7 +55,7 @@ public class PrestamoDAO {
 			miProcedimiento.setDate(6, fechaInicioFormateada);
 			miProcedimiento.setDate(7, fechaFinFormateada);
 			miProcedimiento.setString(8, tipoPlazoPrestamo);
-			miProcedimiento.setInt(9, idClienteFK);
+			miProcedimiento.setString(9, idClienteFK);
 			miProcedimiento.setString(10, estadoPrestamo);
 			miProcedimiento.execute();
 			conexion.close();

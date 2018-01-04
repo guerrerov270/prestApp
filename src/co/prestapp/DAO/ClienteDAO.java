@@ -38,7 +38,7 @@ public class ClienteDAO {
 
 	}// Fin agregar cliente
 
-	public ClienteVO buscarCliente(int codigoCliente) {
+	public ClienteVO buscarCliente(String codigoCliente) {
 
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
@@ -46,10 +46,11 @@ public class ClienteDAO {
 		try {
 			CallableStatement miProcedimiento = conexion
 					.prepareCall("{call buscar_cliente(?)}");
-			miProcedimiento.setInt(1, codigoCliente);
+			miProcedimiento.setString(1, codigoCliente);
 			ResultSet miRs = miProcedimiento.executeQuery();
 			if (miRs.next()) {
-				miCliente.setCodigoCliente(miRs.getInt("idCliente"));
+				miCliente.setIDCliente(miRs.getInt("idCliente"));
+				miCliente.setCodigoCliente(miRs.getString("codigoCliente"));
 				miCliente.setNombreCliente(miRs.getString("nombreCliente"));
 				miCliente.setEmpresaCliente(miRs.getString("empresaCliente"));
 				miCliente.setReferenciaCliente(miRs
