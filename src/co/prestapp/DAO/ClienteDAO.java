@@ -4,6 +4,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -124,5 +125,28 @@ public class ClienteDAO {
 					.println("Error al ejecutar consulta para eliminar cliente");
 			System.out.println(e.getMessage());
 		}
-	}
+	}// Fin eliminarCliente
+
+	public String recuperarCodigoCliente() {
+
+		String codigoCliente = "";
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		try {
+			CallableStatement miProcedimiento = conexion
+					.prepareCall("{call generar_codigo_cliente(?)}");
+			miProcedimiento.registerOutParameter(1, Types.VARCHAR);
+			miProcedimiento.executeQuery();
+			codigoCliente = miProcedimiento.getString(1);
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out
+					.println("Error al ejecutar consulta para generar codigo de cliente");
+			System.out.println(e.getMessage());
+		}
+
+		return codigoCliente;
+
+	}// Fin setFilas
 }

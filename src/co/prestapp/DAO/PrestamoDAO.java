@@ -205,8 +205,7 @@ public class PrestamoDAO {
 		calendar.add(Calendar.WEEK_OF_MONTH, dias);
 		calendar.add(Calendar.WEEK_OF_MONTH, dias);
 
-		return calendar.getTime(); // Devuelve el objeto Date con los nuevos
-									// días añadidos
+		return calendar.getTime();
 
 	}
 
@@ -219,9 +218,7 @@ public class PrestamoDAO {
 													// o
 													// restar en caso de días<0
 
-		return calendar.getTime(); // Devuelve el objeto Date con los nuevos
-									// días añadidos
-
+		return calendar.getTime();
 	}
 
 }// Fin clase
