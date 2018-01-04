@@ -451,6 +451,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					}
 					jTabPestañas.addTab("Abonos", jPanelAbonos);
 					{
+						jScrollAbonosRecibidos = new JScrollPane();
+						jPanelAbonos.add(jScrollAbonosRecibidos, BorderLayout.SOUTH);
+						jScrollAbonosRecibidos.setBounds(5, 212, 767, 410);
+						jScrollAbonosRecibidos.setPreferredSize(new java.awt.Dimension(777, 414));
+						{
+							
+						}
+					}
+					{
 						jPanelAgregarAbono = new JPanel();
 						jPanelAbonos
 								.add(jPanelAgregarAbono, BorderLayout.NORTH);
@@ -460,15 +469,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jPanelAgregarAbono.setBorder(BorderFactory
 								.createTitledBorder("Agregar abono"));
 						jPanelAgregarAbono.setLayout(null);
-						{
-							jScrollAbonosRecibidos = new JScrollPane();
-							jPanelAgregarAbono.add(jScrollAbonosRecibidos,
-									BorderLayout.SOUTH);
-							jScrollAbonosRecibidos.setBounds(5, 212, 767, 410);
-							{
-
-							}
-						}
 						{
 							jLabelMonto = new JLabel();
 							jPanelAgregarAbono.add(jLabelMonto);
@@ -1048,8 +1048,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		jTableAbonosRecibidos.setModel(actualizaTablaAbonos());
 		jScrollAbonosRecibidos.setViewportView(jTableAbonosRecibidos);
 		jTableAbonosRecibidos.setFont(new java.awt.Font("Arial", 0, 16));
-		jTableAbonosRecibidos
-				.setPreferredSize(new java.awt.Dimension(764, 394));
 		JTableHeader th = jTableAbonosRecibidos.getTableHeader();
 		th.setFont(new java.awt.Font("Arial", 0, 16));
 	}
