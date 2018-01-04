@@ -4,6 +4,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,11 +32,11 @@ public class PrestamoDAO {
 	 * @param idClienteFK
 	 * @param estadoPrestamo
 	 */
-	public void agregarPrestamo(double montoPrestamo, int tasaInteresPrestamo,
-			int numeroCuotasPrestamo, double saldoPendientePrestamo,
-			double saldoPagadoPrestamo, Date fechaInicioPrestamo,
-			Date fechaFinPrestamo, String tipoPlazoPrestamo,
-			String idClienteFK, String estadoPrestamo) {
+	public String agregarPrestamo(double montoPrestamo,
+			int tasaInteresPrestamo, int numeroCuotasPrestamo,
+			double saldoPendientePrestamo, double saldoPagadoPrestamo,
+			Date fechaInicioPrestamo, Date fechaFinPrestamo,
+			String tipoPlazoPrestamo, String idClienteFK, String estadoPrestamo) {
 
 		java.sql.Date fechaInicioFormateada = new java.sql.Date(
 				fechaInicioPrestamo.getTime());
@@ -44,19 +45,21 @@ public class PrestamoDAO {
 
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
+		String codigoPrestamo = recuperarCodigoPrestamo();
 		try {
 			CallableStatement miProcedimiento = conexion
-					.prepareCall("{call agregar_prestamo(?,?,?,?,?,?,?,?,?,?)}");
-			miProcedimiento.setDouble(1, montoPrestamo);
-			miProcedimiento.setInt(2, tasaInteresPrestamo);
-			miProcedimiento.setInt(3, numeroCuotasPrestamo);
-			miProcedimiento.setDouble(4, saldoPendientePrestamo);
-			miProcedimiento.setDouble(5, saldoPagadoPrestamo);
-			miProcedimiento.setDate(6, fechaInicioFormateada);
-			miProcedimiento.setDate(7, fechaFinFormateada);
-			miProcedimiento.setString(8, tipoPlazoPrestamo);
-			miProcedimiento.setString(9, idClienteFK);
-			miProcedimiento.setString(10, estadoPrestamo);
+					.prepareCall("{call agregar_prestamo(?,?,?,?,?,?,?,?,?,?,?)}");
+			miProcedimiento.setString(1, codigoPrestamo);
+			miProcedimiento.setDouble(2, montoPrestamo);
+			miProcedimiento.setInt(3, tasaInteresPrestamo);
+			miProcedimiento.setInt(4, numeroCuotasPrestamo);
+			miProcedimiento.setDouble(5, saldoPendientePrestamo);
+			miProcedimiento.setDouble(6, saldoPagadoPrestamo);
+			miProcedimiento.setDate(7, fechaInicioFormateada);
+			miProcedimiento.setDate(8, fechaFinFormateada);
+			miProcedimiento.setString(9, tipoPlazoPrestamo);
+			miProcedimiento.setString(10, idClienteFK);
+			miProcedimiento.setString(11, estadoPrestamo);
 			miProcedimiento.execute();
 			conexion.close();
 
@@ -66,6 +69,7 @@ public class PrestamoDAO {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
+		return codigoPrestamo;
 
 	}// Fin agregar prestamo
 
@@ -207,7 +211,7 @@ public class PrestamoDAO {
 
 		return calendar.getTime();
 
-	}
+	}// Fin sumarRestarQuincenaFecha
 
 	// Suma los días recibidos a la fecha
 	public Date sumarRestarSemanaFecha(Date fecha, int dias) {
@@ -219,6 +223,29 @@ public class PrestamoDAO {
 													// restar en caso de días<0
 
 		return calendar.getTime();
-	}
+	}// Fin sumarRestarSemanaFecha
+
+	public String recuperarCodigoPrestamo() {
+
+		String codigoPrestamo = "";
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		try {
+			CallableStatement miProcedimiento = conexion
+					.prepareCall("{call generar_codigo_prestamo(?)}");
+			miProcedimiento.registerOutParameter(1, Types.VARCHAR);
+			miProcedimiento.executeQuery();
+			codigoPrestamo = miProcedimiento.getString(1);
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out
+					.println("Error al ejecutar consulta para generar codigo de préstamo");
+			System.out.println(e.getMessage());
+		}
+
+		return codigoPrestamo;
+
+	}// Fin recuperarCodigoPrestamo
 
 }// Fin clase

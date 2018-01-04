@@ -921,7 +921,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String estadoPrestamo = "PENDIENTE";
 
 		// Agrego el prestamo
-		miPrestamo.agregarPrestamo(montoPrestamo, tasaInteres, numeroCuotas,
+		String codigoPrestamo=miPrestamo.agregarPrestamo(montoPrestamo, tasaInteres, numeroCuotas,
 				totalPagar, totalPagado, fechaInicio, fechaFin, tipoPlazoMayus,
 				codigoCliente, estadoPrestamo);
 
@@ -929,7 +929,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		double montoAbono = 0;
 		int completoAbono = 0;
 		Date fechaAbono;
-		int codigoPrestamo;
 		int puntualAbono = 0;
 		String estadoAbono = "PENDIENTE";
 		int numeroAbono;

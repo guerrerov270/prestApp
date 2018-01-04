@@ -133,5 +133,5 @@ public class ClienteDAO {
 
 		return codigoCliente;
 
-	}// Fin setFilas
+	}// Fin recuperarCodigoCliente
 }

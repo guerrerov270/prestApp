@@ -4,6 +4,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.Date;
 
 import javax.swing.table.DefaultTableModel;
@@ -86,5 +87,28 @@ public class AbonoDAO {
 				"Código préstamo", "Puntual", "Estado", "Abono#" };
 		return encabezados;
 	}// Fin getColumnas
+
+	public String recuperarCodigoAbono() {
+
+		String codigoAbono = "";
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		try {
+			CallableStatement miProcedimiento = conexion
+					.prepareCall("{call generar_codigo_abono(?)}");
+			miProcedimiento.registerOutParameter(1, Types.VARCHAR);
+			miProcedimiento.executeQuery();
+			codigoAbono = miProcedimiento.getString(1);
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out
+					.println("Error al ejecutar consulta para generar codigo de abono");
+			System.out.println(e.getMessage());
+		}
+
+		return codigoAbono;
+
+	}// Fin recuperarCodigoAbono
 
 }

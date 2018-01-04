@@ -26,16 +26,18 @@ DROP TABLE IF EXISTS `Abono`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Abono` (
   `idAbono` int(11) NOT NULL AUTO_INCREMENT,
+  `codigoAbono` varchar(10) NOT NULL,
   `montoAbono` decimal(10,0) NOT NULL,
   `completoAbono` tinyint(1) NOT NULL,
   `fechaAbono` date DEFAULT NULL,
-  `abonoPrestamo` int(11) NOT NULL,
+  `abonoPrestamo` varchar(10) NOT NULL,
   `puntualAbono` tinyint(1) NOT NULL,
-  `estadoAbono` enum('PENDIENTE','PAGADO') NOT NULL,
+  `estadoAbono` enum('PENDIENTE','PAGADO','ERROR') NOT NULL,
   `numeroAbono` int(3) NOT NULL,
-  PRIMARY KEY (`idAbono`,`abonoPrestamo`),
+  PRIMARY KEY (`idAbono`),
+  UNIQUE KEY `codigoAbono_UNIQUE` (`codigoAbono`),
   KEY `fk_abono_prestamo` (`abonoPrestamo`),
-  CONSTRAINT `fk_abono_prestamo` FOREIGN KEY (`abonoPrestamo`) REFERENCES `Prestamo` (`idPrestamo`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_abono_prestamo` FOREIGN KEY (`abonoPrestamo`) REFERENCES `Prestamo` (`codigoPrestamo`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -56,12 +58,15 @@ DROP TABLE IF EXISTS `Cliente`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Cliente` (
-  `idCliente` int(16) NOT NULL AUTO_INCREMENT,
+  `idCliente` int(11) NOT NULL AUTO_INCREMENT,
+  `codigoCliente` varchar(10) NOT NULL,
   `nombreCliente` varchar(45) NOT NULL,
   `empresaCliente` varchar(45) NOT NULL,
   `referenciaCliente` varchar(45) NOT NULL,
-  PRIMARY KEY (`idCliente`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+  `estadoCliente` enum('RECOMENDADO','ERROR','NO RECOMENDADO') DEFAULT NULL,
+  PRIMARY KEY (`idCliente`),
+  UNIQUE KEY `codigoCliente_UNIQUE` (`codigoCliente`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,7 +75,7 @@ CREATE TABLE `Cliente` (
 
 LOCK TABLES `Cliente` WRITE;
 /*!40000 ALTER TABLE `Cliente` DISABLE KEYS */;
-INSERT INTO `Cliente` VALUES (1,'','',''),(2,'','',''),(3,'','',''),(4,'','',''),(5,'','',''),(6,'','',''),(7,'','',''),(8,'','',''),(9,'','',''),(10,'','',''),(11,'','',''),(12,'','',''),(13,'','',''),(14,'','',''),(15,'','',''),(16,'','',''),(17,'','',''),(18,'','',''),(19,'','',''),(20,'','',''),(21,'','',''),(22,'','',''),(23,'Julian','NextU','Ingeniero');
+INSERT INTO `Cliente` VALUES (1,'C001','Julian Guerrero','NextU','Ingeniero',NULL);
 /*!40000 ALTER TABLE `Cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,6 +88,7 @@ DROP TABLE IF EXISTS `Prestamo`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Prestamo` (
   `idPrestamo` int(11) NOT NULL AUTO_INCREMENT,
+  `codigoPrestamo` varchar(10) NOT NULL,
   `montoPrestamo` decimal(10,0) NOT NULL,
   `tasaInteresPrestamo` int(11) NOT NULL,
   `numeroCuotasPrestamo` int(11) NOT NULL,
@@ -91,11 +97,12 @@ CREATE TABLE `Prestamo` (
   `fechaInicioPrestamo` date NOT NULL,
   `fechaFinPrestamo` date NOT NULL,
   `tipoPlazoPrestamo` enum('MENSUAL','QUINCENAL','SEMANAL','OTRO') NOT NULL,
-  `idClienteFK` int(11) NOT NULL,
-  `estadoPrestamo` enum('PENDIENTE','PAGADO','REFINANCIADO') NOT NULL,
+  `codigoClienteFK` varchar(10) NOT NULL,
+  `estadoPrestamo` enum('PENDIENTE','PAGADO','REFINANCIADO','ERROR') NOT NULL,
   PRIMARY KEY (`idPrestamo`),
-  KEY `fk_prestamo_cliente` (`idClienteFK`),
-  CONSTRAINT `fk_prestamo_cliente` FOREIGN KEY (`idClienteFK`) REFERENCES `Cliente` (`idCliente`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  UNIQUE KEY `codigoPrestamo_UNIQUE` (`codigoPrestamo`),
+  KEY `fk_prestamo_cliente` (`codigoClienteFK`),
+  CONSTRAINT `fk_prestamo_cliente` FOREIGN KEY (`codigoClienteFK`) REFERENCES `Cliente` (`codigoCliente`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -142,8 +149,8 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `agregar_cliente`(nombreCliente VARCHAR(45),empresaCliente VARCHAR(45),referenciaCliente VARCHAR(45))
-INSERT INTO `test`.`Cliente` (`nombreCliente`, `empresaCliente`,`referenciaCliente`) VALUES (nombreCliente, empresaCliente, referenciaCliente) ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `agregar_cliente`(codigoCliente VARCHAR(10),nombreCliente VARCHAR(45),empresaCliente VARCHAR(45),referenciaCliente VARCHAR(45))
+INSERT INTO `test`.`Cliente` (`codigoCliente`,`nombreCliente`, `empresaCliente`,`referenciaCliente`) VALUES (codigoCliente, nombreCliente, empresaCliente, referenciaCliente) ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -159,8 +166,8 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `agregar_prestamo`(montoPrestamo DECIMAL,tasaInteresPrestamo INT,numeroCuotasPrestamo INT,saldoPendientePrestamo DECIMAL, saldoPagadoPrestamo DECIMAL, fechaInicioFormateada DATE, fechaFinFormateada DATE, tipoPlazoPrestamo ENUM('MENSUAL','QUINCENAL','SEMANAL','OTRO'), idClienteFK INT, estadoPrestamo ENUM('PENDIENTE','PAGADO','REFINANCIADO'))
-INSERT INTO `test`.`Prestamo` (`montoPrestamo`, `tasaInteresPrestamo`,`numeroCuotasPrestamo`,`saldoPendientePrestamo`,`saldoPagadoPrestamo`,`fechaInicioPrestamo`,`fechaFinPrestamo`,`tipoPlazoPrestamo`,`idClienteFK`, `estadoPrestamo`) VALUES (montoPrestamo, tasaInteresPrestamo, numeroCuotasPrestamo,saldoPendientePrestamo, saldoPagadoPrestamo, fechaInicioFormateada, fechaFinFormateada, tipoPlazoPrestamo, idClienteFK, estadoPrestamo) ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `agregar_prestamo`(codigoPrestamo VARCHAR(10),montoPrestamo DECIMAL,tasaInteresPrestamo INT,numeroCuotasPrestamo INT,saldoPendientePrestamo DECIMAL, saldoPagadoPrestamo DECIMAL, fechaInicioFormateada DATE, fechaFinFormateada DATE, tipoPlazoPrestamo ENUM('MENSUAL','QUINCENAL','SEMANAL','OTRO'), idClienteFK INT, estadoPrestamo ENUM('PENDIENTE','PAGADO','REFINANCIADO'))
+INSERT INTO `test`.`Prestamo` (`codigoPrestamo`,`montoPrestamo`, `tasaInteresPrestamo`,`numeroCuotasPrestamo`,`saldoPendientePrestamo`,`saldoPagadoPrestamo`,`fechaInicioPrestamo`,`fechaFinPrestamo`,`tipoPlazoPrestamo`,`idClienteFK`, `estadoPrestamo`) VALUES (codigoPrestamo, montoPrestamo, tasaInteresPrestamo, numeroCuotasPrestamo,saldoPendientePrestamo, saldoPagadoPrestamo, fechaInicioFormateada, fechaFinFormateada, tipoPlazoPrestamo, idClienteFK, estadoPrestamo) ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -176,14 +183,14 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `buscar_cliente`(idClienteE INT)
-SELECT idCliente,nombreCliente,empresaCliente,referenciaCliente FROM `test`.`Cliente` WHERE idCliente=idClienteE ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `buscar_cliente`(codigoClienteE VARCHAR(10))
+SELECT idCliente,codigoCliente,nombreCliente,empresaCliente,referenciaCliente FROM `test`.`Cliente` WHERE codigoCliente=codigoClienteE ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `contar_abonos` */;
+/*!50003 DROP PROCEDURE IF EXISTS `generar_codigo_abono` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -193,59 +200,36 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `contar_abonos`()
-SELECT COUNT(*) FROM Abono ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `contar_clientes` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `contar_clientes`()
-SELECT COUNT(*) FROM Cliente ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `contar_prestamos` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `contar_prestamos`()
-SELECT COUNT(*) FROM Prestamo ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `eliminar_cliente` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminar_cliente`(idCliente INT)
-DELETE FROM `test`.`Cliente` WHERE idCliente=idCliente ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `generar_codigo_abono`(OUT codigo_secundario VARCHAR(4))
+BEGIN   
+     DECLARE contador INT;
+  DECLARE cantidadAbonos INT;
+	BEGIN
+    SET cantidadAbonos=(SELECT COUNT(*) FROM Abono);
+    IF(cantidadAbonos=0) THEN
+		SET contador=1;
+        IF(contador<10)THEN
+            SET codigo_secundario= CONCAT('A00',contador);
+            ELSE IF(contador<100) THEN
+                SET codigo_secundario= CONCAT('A0',contador);
+                ELSE IF(contador<1000)THEN
+                    SET codigo_secundario= CONCAT('A',contador);
+                END IF;
+            END IF;
+        END IF;
+    END IF;
+    SET contador= (SELECT MAX(idAbono)+1 FROM Abono);
+    IF(contador<10)THEN
+            SET codigo_secundario= CONCAT('A00',contador);
+            ELSE IF(contador<100) THEN
+                SET codigo_secundario= CONCAT('A0',contador);
+                ELSE IF(contador<1000)THEN
+                    SET codigo_secundario= CONCAT('A',contador);
+                END IF;
+            END IF;
+        END IF;
+    END;
+  end ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -264,8 +248,22 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `generar_codigo_cliente`(OUT codigo_secundario VARCHAR(4))
 BEGIN  
   DECLARE contador INT;
+  DECLARE cantidadClientes INT;
 	BEGIN
-    SET contador= (SELECT COUNT(*)+1 FROM Cliente);
+    SET cantidadClientes=(SELECT COUNT(*) FROM Cliente);
+    IF(cantidadClientes=0) THEN
+		SET contador=1;
+        IF(contador<10)THEN
+            SET codigo_secundario= CONCAT('C00',contador);
+            ELSE IF(contador<100) THEN
+                SET codigo_secundario= CONCAT('C0',contador);
+                ELSE IF(contador<1000)THEN
+                    SET codigo_secundario= CONCAT('C',contador);
+                END IF;
+            END IF;
+        END IF;
+    END IF;
+    SET contador= (SELECT MAX(idCliente)+1 FROM Cliente);
     IF(contador<10)THEN
             SET codigo_secundario= CONCAT('C00',contador);
             ELSE IF(contador<100) THEN
@@ -277,6 +275,51 @@ BEGIN
         END IF;
     END;
   END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `generar_codigo_prestamo` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `generar_codigo_prestamo`(OUT codigo_secundario VARCHAR(4))
+BEGIN   
+     DECLARE contador INT;
+  DECLARE cantidadPrestamos INT;
+	BEGIN
+    SET cantidadPrestamos=(SELECT COUNT(*) FROM Prestamo);
+    IF(cantidadPrestamos=0) THEN
+		SET contador=1;
+        IF(contador<10)THEN
+            SET codigo_secundario= CONCAT('P00',contador);
+            ELSE IF(contador<100) THEN
+                SET codigo_secundario= CONCAT('P0',contador);
+                ELSE IF(contador<1000)THEN
+                    SET codigo_secundario= CONCAT('P',contador);
+                END IF;
+            END IF;
+        END IF;
+    END IF;
+    SET contador= (SELECT MAX(idPrestamo)+1 FROM Prestamo);
+    IF(contador<10)THEN
+            SET codigo_secundario= CONCAT('P00',contador);
+            ELSE IF(contador<100) THEN
+                SET codigo_secundario= CONCAT('P0',contador);
+                ELSE IF(contador<1000)THEN
+                    SET codigo_secundario= CONCAT('P',contador);
+                END IF;
+            END IF;
+        END IF;
+    END;
+  end ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -343,4 +386,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-01-04 10:25:29
+-- Dump completed on 2018-01-04 12:35:46
