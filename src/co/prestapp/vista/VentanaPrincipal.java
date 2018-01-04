@@ -201,7 +201,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 											GridBagConstraints.NONE,
 											new Insets(0, 0, 0, 0), 0, 0));
 							jLabelMontoPrestamo.setText("Monto préstamo:");
-							jLabelMontoPrestamo.setBounds(14, 35, 178, 23);
+							jLabelMontoPrestamo.setBounds(40, 35, 178, 23);
 							jLabelMontoPrestamo.setFont(new java.awt.Font(
 									"Arial", 0, 16));
 						}
@@ -212,7 +212,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 											0.0, GridBagConstraints.CENTER,
 											GridBagConstraints.NONE,
 											new Insets(0, 0, 0, 0), 0, 0));
-							jTextMonto.setBounds(203, 35, 178, 23);
+							jTextMonto.setBounds(250, 35, 178, 23);
 							jTextMonto
 									.setFont(new java.awt.Font("Arial", 0, 16));
 						}
@@ -224,7 +224,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 											GridBagConstraints.NONE,
 											new Insets(0, 0, 0, 0), 0, 0));
 							jLabelTasaInteres.setText("Tasa interés:");
-							jLabelTasaInteres.setBounds(476, 35, 178, 23);
+							jLabelTasaInteres.setBounds(498, 35, 178, 23);
 							jLabelTasaInteres.setFont(new java.awt.Font(
 									"Arial", 0, 16));
 						}
@@ -235,7 +235,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 											0.0, GridBagConstraints.CENTER,
 											GridBagConstraints.NONE,
 											new Insets(0, 0, 0, 0), 0, 0));
-							jTextTasaInteres.setBounds(642, 35, 119, 23);
+							jTextTasaInteres.setBounds(676, 35, 119, 23);
 							jTextTasaInteres.setFont(new java.awt.Font("Arial",
 									0, 16));
 						}
@@ -247,7 +247,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 											GridBagConstraints.NONE,
 											new Insets(0, 0, 0, 0), 0, 0));
 							jLabelPocentaje.setText("%");
-							jLabelPocentaje.setBounds(577, 35, 64, 23);
+							jLabelPocentaje.setBounds(604, 35, 64, 23);
 						}
 						{
 							jLabelNumeroCuotas = new JLabel();
@@ -257,7 +257,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 											GridBagConstraints.NONE,
 											new Insets(0, 0, 0, 0), 0, 0));
 							jLabelNumeroCuotas.setText("Número cuotas:");
-							jLabelNumeroCuotas.setBounds(476, 79, 178, 23);
+							jLabelNumeroCuotas.setBounds(498, 79, 178, 23);
 							jLabelNumeroCuotas.setFont(new java.awt.Font(
 									"Arial", 0, 16));
 						}
@@ -268,7 +268,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 											0.0, GridBagConstraints.CENTER,
 											GridBagConstraints.NONE,
 											new Insets(0, 0, 0, 0), 0, 0));
-							jTextNumeroCuotas.setBounds(642, 79, 119, 23);
+							jTextNumeroCuotas.setBounds(676, 79, 119, 23);
 							jTextNumeroCuotas.setFont(new java.awt.Font(
 									"Arial", 0, 16));
 						}
@@ -280,7 +280,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 											GridBagConstraints.NONE,
 											new Insets(0, 0, 0, 0), 0, 0));
 							jLabelDiaCobro.setText("Días de cobro:");
-							jLabelDiaCobro.setBounds(15, 175, 178, 23);
+							jLabelDiaCobro.setBounds(41, 175, 178, 23);
 							jLabelDiaCobro.setFont(new java.awt.Font("Arial",
 									0, 16));
 						}
@@ -292,7 +292,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 											GridBagConstraints.NONE,
 											new Insets(0, 0, 0, 0), 0, 0));
 							jLabelFechaInicio.setText("Fecha de inicio:");
-							jLabelFechaInicio.setBounds(15, 124, 178, 23);
+							jLabelFechaInicio.setBounds(41, 124, 178, 23);
 							jLabelFechaInicio.setFont(new java.awt.Font(
 									"Arial", 0, 16));
 						}
@@ -304,7 +304,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 											GridBagConstraints.NONE,
 											new Insets(0, 0, 0, 0), 0, 0));
 							jLabelTipoPlazo.setText("Tipo de plazo:");
-							jLabelTipoPlazo.setBounds(14, 79, 178, 23);
+							jLabelTipoPlazo.setBounds(40, 79, 178, 23);
 							jLabelTipoPlazo.setFont(new java.awt.Font("Arial",
 									0, 16));
 						}
@@ -319,7 +319,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 											GridBagConstraints.NONE,
 											new Insets(0, 0, 0, 0), 0, 0));
 							jComboPlazo.setModel(jComboPlazoModel);
-							jComboPlazo.setBounds(201, 79, 178, 23);
+							jComboPlazo.setBounds(248, 79, 178, 23);
 							jComboPlazo.setFont(new java.awt.Font("Arial", 0,
 									16));
 						}
@@ -335,8 +335,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jPanelEntradasPrestamo
 										.add(jButtonCancelarPrestamo);
 								jButtonCancelarPrestamo.setText("Cancelar");
-								jButtonCancelarPrestamo.setBounds(202, 253,
-										178, 23);
+								jButtonCancelarPrestamo.setBounds(249, 253, 178, 23);
 								jButtonCancelarPrestamo
 										.setFont(new java.awt.Font("Arial", 0,
 												16));
@@ -353,7 +352,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jLabelCliente = new JLabel();
 								jPanelEntradasPrestamo.add(jLabelCliente);
 								jLabelCliente.setText("Cliente:");
-								jLabelCliente.setBounds(476, 175, 178, 23);
+								jLabelCliente.setBounds(498, 175, 178, 23);
 								jLabelCliente.setFont(new java.awt.Font(
 										"Arial", 0, 16));
 							}
@@ -361,7 +360,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jLabelTotalPago = new JLabel();
 								jPanelEntradasPrestamo.add(jLabelTotalPago);
 								jLabelTotalPago.setText("Total a pagar:");
-								jLabelTotalPago.setBounds(16, 214, 178, 30);
+								jLabelTotalPago.setBounds(42, 214, 178, 30);
 								jLabelTotalPago.setFont(new java.awt.Font(
 										"Arial", 0, 16));
 							}
@@ -369,7 +368,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jLabelTotalFormato = new JLabel();
 								jPanelEntradasPrestamo.add(jLabelTotalFormato);
 								jLabelTotalFormato.setText("Total en formato");
-								jLabelTotalFormato.setBounds(202, 214, 178, 30);
+								jLabelTotalFormato.setBounds(249, 214, 178, 30);
 								jLabelTotalFormato.setFont(new java.awt.Font(
 										"Arial", 0, 16));
 							}
@@ -378,8 +377,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jPanelEntradasPrestamo
 										.add(jButtonClienteExiste);
 								jButtonClienteExiste.setText("Buscar");
-								jButtonClienteExiste.setBounds(642, 175, 119,
-										23);
+								jButtonClienteExiste.setBounds(676, 175, 119, 23);
 								jButtonClienteExiste.setFont(new java.awt.Font(
 										"Arial", 0, 16));
 								jButtonClienteExiste
@@ -397,8 +395,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								calendarioPrestamos
 										.setDateFormatString("dd/MM/yyyy");
 								jPanelEntradasPrestamo.add(calendarioPrestamos);
-								calendarioPrestamos
-										.setBounds(201, 124, 178, 23);
+								calendarioPrestamos.setBounds(248, 124, 178, 23);
 								calendarioPrestamos.setFont(new java.awt.Font(
 										"Arial", 0, 16));
 							}
@@ -406,8 +403,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jLabelNombreCliente = new JLabel();
 								jPanelEntradasPrestamo.add(jLabelNombreCliente);
 								jLabelNombreCliente.setText("nombre");
-								jLabelNombreCliente
-										.setBounds(476, 214, 178, 23);
+								jLabelNombreCliente.setBounds(498, 214, 178, 23);
 								jLabelNombreCliente.setFont(new java.awt.Font(
 										"Arial", 0, 16));
 							}
@@ -415,7 +411,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jLabelCodigo = new JLabel();
 								jPanelEntradasPrestamo.add(jLabelCodigo);
 								jLabelCodigo.setText("Código");
-								jLabelCodigo.setBounds(642, 214, 178, 23);
+								jLabelCodigo.setBounds(676, 214, 178, 23);
 								jLabelCodigo.setFont(new java.awt.Font("Arial",
 										0, 16));
 							}
@@ -431,13 +427,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jPanelEntradasPrestamo.add(getJButton2());
 								jPanelEntradasPrestamo
 										.add(getJLabelEmpresaResult());
-								jComboFechasCobro.setBounds(204, 175, 178, 23);
+								jComboFechasCobro.setBounds(251, 175, 178, 23);
 								jComboFechasCobro.setFont(new java.awt.Font(
 										"Arial", 0, 16));
 							}
 
 							jButtonAceptar.setText("Guardar");
-							jButtonAceptar.setBounds(17, 253, 178, 23);
+							jButtonAceptar.setBounds(43, 253, 178, 23);
 							jButtonAceptar.setFont(new java.awt.Font("Arial",
 									0, 16));
 							jButtonAceptar
@@ -473,14 +469,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jLabelMonto = new JLabel();
 							jPanelAgregarAbono.add(jLabelMonto);
 							jLabelMonto.setText("Monto:");
-							jLabelMonto.setBounds(16, 116, 146, 23);
+							jLabelMonto.setBounds(45, 115, 146, 23);
 							jLabelMonto.setFont(new java.awt.Font("Arial", 0,
 									16));
 						}
 						{
 							jTextField1 = new JTextField();
 							jPanelAgregarAbono.add(jTextField1);
-							jTextField1.setBounds(174, 116, 146, 23);
+							jTextField1.setBounds(240, 116, 146, 23);
 							jTextField1.setFont(new java.awt.Font("Arial", 0,
 									16));
 						}
@@ -488,14 +484,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jLabelFecha = new JLabel();
 							jPanelAgregarAbono.add(jLabelFecha);
 							jLabelFecha.setText("Fecha:");
-							jLabelFecha.setBounds(14, 73, 146, 23);
+							jLabelFecha.setBounds(43, 72, 146, 23);
 							jLabelFecha.setFont(new java.awt.Font("Arial", 0,
 									16));
 						}
 						{
 							calendarioAbonos = new JDateChooser();
 							jPanelAgregarAbono.add(calendarioAbonos);
-							calendarioAbonos.setBounds(174, 74, 146, 23);
+							calendarioAbonos.setBounds(240, 74, 146, 23);
 							calendarioAbonos.setFont(new java.awt.Font("Arial",
 									0, 16));
 						}
@@ -503,14 +499,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jLabelCodigoPrestamo = new JLabel();
 							jPanelAgregarAbono.add(jLabelCodigoPrestamo);
 							jLabelCodigoPrestamo.setText("Código préstamo:");
-							jLabelCodigoPrestamo.setBounds(15, 30, 146, 23);
+							jLabelCodigoPrestamo.setBounds(44, 29, 146, 23);
 							jLabelCodigoPrestamo.setFont(new java.awt.Font(
 									"Arial", 0, 16));
 						}
 						{
 							jTextCodigoPrestamo = new JTextField();
 							jPanelAgregarAbono.add(jTextCodigoPrestamo);
-							jTextCodigoPrestamo.setBounds(174, 32, 146, 23);
+							jTextCodigoPrestamo.setBounds(240, 32, 146, 23);
 							jTextCodigoPrestamo.setFont(new java.awt.Font(
 									"Arial", 0, 16));
 						}
@@ -518,7 +514,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jLabelEsCompleto = new JLabel();
 							jPanelAgregarAbono.add(jLabelEsCompleto);
 							jLabelEsCompleto.setText("¿Abono completo?");
-							jLabelEsCompleto.setBounds(391, 157, 146, 23);
+							jLabelEsCompleto.setBounds(457, 157, 146, 23);
 							jLabelEsCompleto.setFont(new java.awt.Font("Arial",
 									0, 16));
 						}
@@ -526,7 +522,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jLabelEsPuntual = new JLabel();
 							jPanelAgregarAbono.add(jLabelEsPuntual);
 							jLabelEsPuntual.setText("¿Abono puntual?");
-							jLabelEsPuntual.setBounds(17, 160, 146, 23);
+							jLabelEsPuntual.setBounds(46, 159, 146, 23);
 							jLabelEsPuntual.setFont(new java.awt.Font("Arial",
 									0, 16));
 						}
@@ -534,7 +530,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jLabel1EsCompletoR = new JLabel();
 							jPanelAgregarAbono.add(jLabel1EsCompletoR);
 							jLabel1EsCompletoR.setText("Sí");
-							jLabel1EsCompletoR.setBounds(604, 157, 146, 23);
+							jLabel1EsCompletoR.setBounds(653, 157, 146, 23);
 							jLabel1EsCompletoR.setFont(new java.awt.Font(
 									"Arial", 0, 16));
 						}
@@ -542,7 +538,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jLabelEsPuntualR = new JLabel();
 							jPanelAgregarAbono.add(jLabelEsPuntualR);
 							jLabelEsPuntualR.setText("Sí");
-							jLabelEsPuntualR.setBounds(174, 159, 146, 23);
+							jLabelEsPuntualR.setBounds(240, 159, 146, 23);
 							jLabelEsPuntualR.setFont(new java.awt.Font("Arial",
 									0, 16));
 						}
@@ -550,7 +546,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jButtonGuardar = new JButton();
 							jPanelAgregarAbono.add(jButtonGuardar);
 							jButtonGuardar.setText("Guardar");
-							jButtonGuardar.setBounds(391, 114, 146, 23);
+							jButtonGuardar.setBounds(457, 114, 146, 23);
 							jButtonGuardar.setFont(new java.awt.Font("Arial",
 									0, 16));
 						}
@@ -563,7 +559,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jPanelAgregarAbono.add(getJLabelCodigoAbono());
 							jPanelAgregarAbono.add(getJTextFieldCodigoAbono());
 							jButton1.setText("Cancelar");
-							jButton1.setBounds(604, 114, 146, 23);
+							jButton1.setBounds(653, 114, 146, 23);
 							jButton1.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 					}
@@ -675,7 +671,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				}
 			}
 			pack();
-			this.setSize(792, 684);
+			this.setSize(885, 681);
 		} catch (Exception e) {
 			// add your error handling code here
 			e.printStackTrace();
@@ -814,7 +810,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jButtonCalcular == null) {
 			jButtonCalcular = new JButton();
 			jButtonCalcular.setText("Calcular");
-			jButtonCalcular.setBounds(476, 124, 131, 23);
+			jButtonCalcular.setBounds(498, 124, 131, 23);
 			jButtonCalcular.setFont(new java.awt.Font("Arial", 0, 16));
 			jButtonCalcular.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
@@ -941,7 +937,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jButton2 == null) {
 			jButton2 = new JButton();
 			jButton2.setText("Actualizar");
-			jButton2.setBounds(642, 253, 119, 23);
+			jButton2.setBounds(676, 253, 119, 23);
 			jButton2.setFont(new java.awt.Font("Arial", 0, 16));
 			jButton2.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
@@ -971,7 +967,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jLabelEmpresaResult == null) {
 			jLabelEmpresaResult = new JLabel();
 			jLabelEmpresaResult.setText("Empresa");
-			jLabelEmpresaResult.setBounds(476, 253, 134, 23);
+			jLabelEmpresaResult.setBounds(498, 253, 134, 23);
 			jLabelEmpresaResult.setFont(new java.awt.Font("Arial", 0, 16));
 		}
 		return jLabelEmpresaResult;
@@ -998,7 +994,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jButtonBuscarPrestamo == null) {
 			jButtonBuscarPrestamo = new JButton();
 			jButtonBuscarPrestamo.setText("Buscar");
-			jButtonBuscarPrestamo.setBounds(391, 29, 146, 23);
+			jButtonBuscarPrestamo.setBounds(457, 29, 146, 23);
 			jButtonBuscarPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
 		}
 		return jButtonBuscarPrestamo;
@@ -1008,7 +1004,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jButtonActualizarAbonos == null) {
 			jButtonActualizarAbonos = new JButton();
 			jButtonActualizarAbonos.setText("Actualizar");
-			jButtonActualizarAbonos.setBounds(604, 29, 146, 23);
+			jButtonActualizarAbonos.setBounds(653, 29, 146, 23);
 			jButtonActualizarAbonos.setFont(new java.awt.Font("Arial", 0, 16));
 			jButtonActualizarAbonos.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
@@ -1023,7 +1019,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jLabelCodigoAbono == null) {
 			jLabelCodigoAbono = new JLabel();
 			jLabelCodigoAbono.setText("Código abono:");
-			jLabelCodigoAbono.setBounds(391, 71, 146, 23);
+			jLabelCodigoAbono.setBounds(457, 71, 146, 23);
 			jLabelCodigoAbono.setFont(new java.awt.Font("Arial", 0, 16));
 		}
 		return jLabelCodigoAbono;
@@ -1032,7 +1028,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField getJTextFieldCodigoAbono() {
 		if (jTextFieldCodigoAbono == null) {
 			jTextFieldCodigoAbono = new JTextField();
-			jTextFieldCodigoAbono.setBounds(604, 71, 146, 23);
+			jTextFieldCodigoAbono.setBounds(653, 71, 146, 23);
 		}
 		return jTextFieldCodigoAbono;
 	}

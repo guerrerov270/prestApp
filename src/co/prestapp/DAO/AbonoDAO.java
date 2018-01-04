@@ -59,7 +59,7 @@ public class AbonoDAO {
 
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
-		Object datos[] = new Object[10];
+		Object datos[] = new Object[11];
 
 		try {
 			CallableStatement miProcedimiento = conexion
@@ -68,7 +68,7 @@ public class AbonoDAO {
 
 			while (miRs.next()) {
 
-				for (int i = 0; i < 10; i++) {
+				for (int i = 0; i < 11; i++) {
 					datos[i] = miRs.getObject(i + 1);
 
 				}
