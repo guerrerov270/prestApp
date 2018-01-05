@@ -34,6 +34,7 @@ import javax.swing.SwingUtilities;
 import co.prestapp.DAO.AbonoDAO;
 import co.prestapp.DAO.ClienteDAO;
 import co.prestapp.DAO.PrestamoDAO;
+import co.prestapp.VO.AbonoVO;
 import co.prestapp.VO.ClienteVO;
 
 import com.toedter.calendar.JDateChooser;
@@ -62,7 +63,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JPanel jPanelAgregarCliente;
 	private JTable jTableClientes;
 	private JScrollPane jScrollPaneClientes;
-	private JButton jButtonGuardarAbono;
+	private JButton jButtonCancelarAbono;
 	private JButton jButtonGuardar;
 	private JLabel jLabelEsPuntualR;
 	private JLabel jLabel1EsCompletoR;
@@ -552,29 +553,29 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 									.addActionListener(new ActionListener() {
 										public void actionPerformed(
 												ActionEvent evt) {
-											jButtonGuardarActionPerformed(evt);
+											jButtonGuardarAbonoActionPerformed(evt);
 										}
 									});
 						}
 						{
-							jButtonGuardarAbono = new JButton();
-							jPanelAgregarAbono.add(jButtonGuardarAbono);
+							jButtonCancelarAbono = new JButton();
+							jPanelAgregarAbono.add(jButtonCancelarAbono);
 							jPanelAgregarAbono.add(getJButtonBuscarPrestamo());
 							jPanelAgregarAbono
 									.add(getJButtonActualizarAbonos());
 							jPanelAgregarAbono.add(getJLabelCodigoAbono());
 							jPanelAgregarAbono.add(getJTextFieldCodigoAbono());
-							jButtonGuardarAbono.setText("Cancelar");
-							jButtonGuardarAbono.setBounds(653, 114, 146, 23);
-							jButtonGuardarAbono.setFont(new java.awt.Font(
+							jButtonCancelarAbono.setText("Cancelar");
+							jButtonCancelarAbono.setBounds(653, 114, 146, 23);
+							jButtonCancelarAbono.setFont(new java.awt.Font(
 									"Arial", 0, 16));
-							jButtonGuardarAbono
+							jButtonCancelarAbono
 									.addActionListener(new ActionListener() {
 
 										@Override
 										public void actionPerformed(
 												ActionEvent e) {
-											jButtonGuardarAbonoActionPerformed(e);
+											jButtonCancelarAbonoActionPerformed(e);
 
 										}
 									});
@@ -647,7 +648,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 									.addActionListener(new ActionListener() {
 										public void actionPerformed(
 												ActionEvent evt) {
-											jButtonGuardarActionPerformed(evt);
+											jButtonGuardarClienteActionPerformed(evt);
 										}
 									});
 						}
@@ -722,7 +723,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	 * 
 	 * @param evt
 	 */
-	private void jButtonGuardarActionPerformed(ActionEvent evt) {
+	private void jButtonGuardarClienteActionPerformed(ActionEvent evt) {
 
 		String nombre = jTextNombre.getText();
 		String empresa = jTextEmpresa.getText();
@@ -1103,6 +1104,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private void jButtonGuardarAbonoActionPerformed(ActionEvent e) {
 		System.out.println("Guardo los abonos");
+		AbonoDAO miAbono = new AbonoDAO();
+		miAbono.pagarAbono(miAbono.buscarAbono(jTextFieldCodigoAbono.getText()));
+
+	}
+
+	private void jButtonCancelarAbonoActionPerformed(ActionEvent e) {
+		System.out.println("Cancelo los abonos");
 	}
 
 }
