@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -104,10 +105,10 @@ public class ClienteDAO {
 
 	}// Fin setFilas
 
-	private String[] getColumnas() {
+	public String[] getColumnas() {
 
 		String encabezados[] = { "#", "Código", "Nombre", "Empresa",
-				"Referencia" };
+				"Referencia", "Estado" };
 		return encabezados;
 	}// Fin getColumnas
 
@@ -133,4 +134,61 @@ public class ClienteDAO {
 		return codigoCliente;
 
 	}// Fin recuperarCodigoCliente
-}
+
+	// ------------------------------------------------------VO-------------------------------------------
+
+	public ArrayList<ClienteVO> buscarClientesConMatriz() {
+
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		ArrayList<ClienteVO> listaClientes = new ArrayList<ClienteVO>();
+		ClienteVO miCliente;
+		;
+		try {
+			CallableStatement miProcedimiento = conexion
+					.prepareCall("{call listar_clientes}");
+			ResultSet miRs = miProcedimiento.executeQuery();
+
+			while (miRs.next()) {
+				miCliente = new ClienteVO();
+				miCliente.setIDCliente(miRs.getInt("IdCliente"));
+				miCliente.setCodigoCliente(miRs.getString("codigoCliente"));
+				miCliente.setNombreCliente(miRs.getString("nombreCliente"));
+				miCliente.setEmpresaCliente(miRs.getString("empresaCliente"));
+				miCliente.setReferenciaCliente(miRs
+						.getString("referenciaCliente"));
+				miCliente.setEstadoCliente(miRs.getString("estadoCliente"));
+
+				listaClientes.add(miCliente);
+			}
+			miRs.close();
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out
+					.println("Error al ejecutar consulta para listar clientes");
+			System.out.println(e.getMessage());
+
+		}
+		return listaClientes;
+	}// Fin buscarClientesConMatriz
+
+	public String[][] obtenerMatrizClientes() {
+
+		ArrayList<ClienteVO> listaClientes = buscarClientesConMatriz();
+
+		String matrizInfo[][] = new String[listaClientes.size()][6];
+
+		for (int i = 0; i < listaClientes.size(); i++) {
+			matrizInfo[i][0] = listaClientes.get(i).getIDCliente() + "";
+			matrizInfo[i][1] = listaClientes.get(i).getCodigoCliente() + "";
+			matrizInfo[i][2] = listaClientes.get(i).getNombreCliente() + "";
+			matrizInfo[i][3] = listaClientes.get(i).getEmpresaCliente() + "";
+			matrizInfo[i][4] = listaClientes.get(i).getReferenciaCliente() + "";
+			matrizInfo[i][5] = listaClientes.get(i).getEstadoCliente() + "";
+		}
+
+		return matrizInfo;
+	}
+
+}// Fin clase

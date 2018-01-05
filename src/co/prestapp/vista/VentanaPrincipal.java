@@ -6,16 +6,12 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 
 import javax.swing.BorderFactory;
@@ -23,12 +19,9 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -36,7 +29,6 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableModel;
 import javax.swing.SwingUtilities;
 
 import co.prestapp.DAO.AbonoDAO;
@@ -335,7 +327,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jPanelEntradasPrestamo
 										.add(jButtonCancelarPrestamo);
 								jButtonCancelarPrestamo.setText("Cancelar");
-								jButtonCancelarPrestamo.setBounds(249, 253, 178, 23);
+								jButtonCancelarPrestamo.setBounds(249, 253,
+										178, 23);
 								jButtonCancelarPrestamo
 										.setFont(new java.awt.Font("Arial", 0,
 												16));
@@ -377,7 +370,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jPanelEntradasPrestamo
 										.add(jButtonClienteExiste);
 								jButtonClienteExiste.setText("Buscar");
-								jButtonClienteExiste.setBounds(676, 175, 119, 23);
+								jButtonClienteExiste.setBounds(676, 175, 119,
+										23);
 								jButtonClienteExiste.setFont(new java.awt.Font(
 										"Arial", 0, 16));
 								jButtonClienteExiste
@@ -395,7 +389,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								calendarioPrestamos
 										.setDateFormatString("dd/MM/yyyy");
 								jPanelEntradasPrestamo.add(calendarioPrestamos);
-								calendarioPrestamos.setBounds(248, 124, 178, 23);
+								calendarioPrestamos
+										.setBounds(248, 124, 178, 23);
 								calendarioPrestamos.setFont(new java.awt.Font(
 										"Arial", 0, 16));
 							}
@@ -403,7 +398,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jLabelNombreCliente = new JLabel();
 								jPanelEntradasPrestamo.add(jLabelNombreCliente);
 								jLabelNombreCliente.setText("nombre");
-								jLabelNombreCliente.setBounds(498, 214, 178, 23);
+								jLabelNombreCliente
+										.setBounds(498, 214, 178, 23);
 								jLabelNombreCliente.setFont(new java.awt.Font(
 										"Arial", 0, 16));
 							}
@@ -448,11 +444,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					jTabPestañas.addTab("Abonos", jPanelAbonos);
 					{
 						jScrollAbonosRecibidos = new JScrollPane();
-						jPanelAbonos.add(jScrollAbonosRecibidos, BorderLayout.SOUTH);
+						jPanelAbonos.add(jScrollAbonosRecibidos,
+								BorderLayout.SOUTH);
 						jScrollAbonosRecibidos.setBounds(5, 212, 767, 410);
-						jScrollAbonosRecibidos.setPreferredSize(new java.awt.Dimension(777, 414));
+						jScrollAbonosRecibidos
+								.setPreferredSize(new java.awt.Dimension(777,
+										414));
 						{
-							
+
 						}
 					}
 					{
@@ -777,8 +776,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	 */
 	private void jButtonActualizarActionPerformed(ActionEvent evt) {
 
-		jTableClientes = new JTable();
-		jTableClientes.setModel(actualizaTablaClientes());
+		// jTableClientes = new JTable();
+		// jTableClientes.setModel(actualizaTablaClientes());
+		ClienteDAO miCliente = new ClienteDAO();
+		String informacionClientes[][] = miCliente.obtenerMatrizClientes();
+		String titulos[] = miCliente.getColumnas();
+		jTableClientes = new JTable(informacionClientes, titulos);
+
 		jScrollPaneClientes.setViewportView(jTableClientes);
 		jTableClientes.setFont(new java.awt.Font("Arial", 0, 16));
 		JTableHeader th = jTableClientes.getTableHeader();
