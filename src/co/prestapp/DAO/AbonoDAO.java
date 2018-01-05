@@ -87,8 +87,8 @@ public class AbonoDAO {
 
 	private String[] getColumnas() {
 
-		String encabezados[] = { "ID", "Código", "Monto cobro", "Monto pago ",
-				"Completo", "Fecha cobro", "Fecha pago", "Préstamo", "Puntual",
+		String encabezados[] = { "#", "Código", "Cobrar", "Pagado",
+				"Completo", "Cobrar", "Pagado", "Préstamo", "Puntual",
 				"Estado", "Abono#" };
 		return encabezados;
 	}// Fin getColumnas
@@ -130,7 +130,7 @@ public class AbonoDAO {
 
 			agregarAbono(montoACobrar, montoPagado, completoAbono,
 					fechasPago.get(i), codigoPrestamo, puntualAbono,
-					estadoAbono, i);
+					estadoAbono, i+1);
 		}
 
 	}// Fin crearAbonosPrestamo

@@ -5,12 +5,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
-import java.util.Iterator;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -36,7 +33,8 @@ public class PrestamoDAO {
 			int tasaInteresPrestamo, int numeroCuotasPrestamo,
 			double saldoPendientePrestamo, double saldoPagadoPrestamo,
 			Date fechaInicioPrestamo, Date fechaFinPrestamo,
-			String tipoPlazoPrestamo, String codigoClienteFK, String estadoPrestamo) {
+			String tipoPlazoPrestamo, String codigoClienteFK,
+			String estadoPrestamo) {
 
 		java.sql.Date fechaInicioFormateada = new java.sql.Date(
 				fechaInicioPrestamo.getTime());
@@ -114,8 +112,8 @@ public class PrestamoDAO {
 
 	private String[] getColumnas() {
 
-		String encabezados[] = { "ID","Código", "Monto", "Tasa", "#Cuotas", "Debe",
-				"Pagado", "Inicio", "Fin", "Plazo", "Cliente", "Estado" };
+		String encabezados[] = { "#", "Código", "Monto", "Tasa", "#Cuotas",
+				"Debe", "Pagado", "Inicio", "Fin", "Plazo", "Cliente", "Estado" };
 		return encabezados;
 	}// Fin getColumnas
 

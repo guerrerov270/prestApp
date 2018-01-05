@@ -5,8 +5,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.ArrayList;
-import java.util.Vector;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -19,7 +17,7 @@ public class ClienteDAO {
 
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
-		String codigoCliente=recuperarCodigoCliente();
+		String codigoCliente = recuperarCodigoCliente();
 		try {
 			CallableStatement miProcedimiento = conexion
 					.prepareCall("{call agregar_cliente(?,?,?,?)}");
@@ -108,7 +106,8 @@ public class ClienteDAO {
 
 	private String[] getColumnas() {
 
-		String encabezados[] = {"ID", "Código", "Nombre", "Empresa", "Referencia" };
+		String encabezados[] = { "#", "Código", "Nombre", "Empresa",
+				"Referencia" };
 		return encabezados;
 	}// Fin getColumnas
 
