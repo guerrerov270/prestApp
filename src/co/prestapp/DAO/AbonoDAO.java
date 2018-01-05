@@ -5,13 +5,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.swing.table.DefaultTableModel;
-
 import co.prestapp.VO.AbonoVO;
-import co.prestapp.VO.PrestamoVO;
 import co.prestapp.connection.DBConnection;
 
 public class AbonoDAO {
@@ -148,6 +147,7 @@ public class AbonoDAO {
 			CallableStatement miProcedimiento = conexion
 					.prepareCall("{call listar_abonos}");
 			ResultSet miRs = miProcedimiento.executeQuery();
+			DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
 
 			while (miRs.next()) {
 				miAbono = new AbonoVO();
@@ -156,7 +156,7 @@ public class AbonoDAO {
 				miAbono.setMontoACobrar(miRs.getDouble("montoACobrar"));
 				miAbono.setMontoPagado(miRs.getDouble("montoPagado"));
 				miAbono.setCompletoAbono(miRs.getString("completoAbono"));
-				miAbono.setFechaACobrar(miRs.getDate("fechaACobrar"));
+				miAbono.setFechaACobrar(formato.format(miRs.getDate("fechaACobrar")));
 				miAbono.setFechaPago(miRs.getDate("fechaPago"));
 				miAbono.setAbonoPrestamo(miRs.getString("abonoPrestamo"));
 				miAbono.setPuntualAbono(miRs.getString("puntualAbono"));
@@ -178,8 +178,7 @@ public class AbonoDAO {
 
 	public String[][] obtenerMatrizAbonos() {
 
-		ArrayList<AbonoVO> listaAbonos = buscarAbonosConMatriz();
-
+		ArrayList<AbonoVO> listaAbonos = buscarAbonosConMatriz();		
 		String matrizInfo[][] = new String[listaAbonos.size()][11];
 
 		for (int i = 0; i < listaAbonos.size(); i++) {

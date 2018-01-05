@@ -9,7 +9,7 @@ public class AbonoVO {
 	private double montoACobrar;
 	private double montoPagado;
 	private String completoAbono; // SI, NO
-	private Date fechaACobrar;
+	private String fechaACobrar;
 	private Date fechaPago;
 	private String abonoPrestamoFK;
 	private String puntualAbono; // SI, NO
@@ -48,11 +48,11 @@ public class AbonoVO {
 		this.codigoAbono = codigoAbono;
 	}
 
-	public Date getFechaACobrar() {
+	public String getFechaACobrar() {
 		return fechaACobrar;
 	}
 
-	public void setFechaACobrar(Date fechaACobrar) {
+	public void setFechaACobrar(String fechaACobrar) {
 		this.fechaACobrar = fechaACobrar;
 	}
 
