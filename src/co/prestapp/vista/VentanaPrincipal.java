@@ -62,7 +62,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JPanel jPanelAgregarCliente;
 	private JTable jTableClientes;
 	private JScrollPane jScrollPaneClientes;
-	private JButton jButton1;
+	private JButton jButtonGuardarAbono;
 	private JButton jButtonGuardar;
 	private JLabel jLabelEsPuntualR;
 	private JLabel jLabel1EsCompletoR;
@@ -548,18 +548,36 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jButtonGuardar.setBounds(457, 114, 146, 23);
 							jButtonGuardar.setFont(new java.awt.Font("Arial",
 									0, 16));
+							jButtonGuardar
+									.addActionListener(new ActionListener() {
+										public void actionPerformed(
+												ActionEvent evt) {
+											jButtonGuardarActionPerformed(evt);
+										}
+									});
 						}
 						{
-							jButton1 = new JButton();
-							jPanelAgregarAbono.add(jButton1);
+							jButtonGuardarAbono = new JButton();
+							jPanelAgregarAbono.add(jButtonGuardarAbono);
 							jPanelAgregarAbono.add(getJButtonBuscarPrestamo());
 							jPanelAgregarAbono
 									.add(getJButtonActualizarAbonos());
 							jPanelAgregarAbono.add(getJLabelCodigoAbono());
 							jPanelAgregarAbono.add(getJTextFieldCodigoAbono());
-							jButton1.setText("Cancelar");
-							jButton1.setBounds(653, 114, 146, 23);
-							jButton1.setFont(new java.awt.Font("Arial", 0, 16));
+							jButtonGuardarAbono.setText("Cancelar");
+							jButtonGuardarAbono.setBounds(653, 114, 146, 23);
+							jButtonGuardarAbono.setFont(new java.awt.Font(
+									"Arial", 0, 16));
+							jButtonGuardarAbono
+									.addActionListener(new ActionListener() {
+
+										@Override
+										public void actionPerformed(
+												ActionEvent e) {
+											jButtonGuardarAbonoActionPerformed(e);
+
+										}
+									});
 						}
 					}
 					jTabPestañas.addTab("Clientes", jPanelClientes);
@@ -1003,6 +1021,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jButtonBuscarPrestamo.setText("Buscar");
 			jButtonBuscarPrestamo.setBounds(457, 29, 146, 23);
 			jButtonBuscarPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
+			jButtonBuscarPrestamo.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+					jButtonBuscarPrestamoActionPerformed(evt);
+				}
+			});
 		}
 		return jButtonBuscarPrestamo;
 	}
@@ -1047,8 +1070,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	 */
 	private void jButtonActualizarAbonosActionPerformed(ActionEvent evt) {
 
-		// jTableAbonosRecibidos = new JTable();
-		// jTableAbonosRecibidos.setModel(actualizaTablaAbonos());
 		AbonoDAO miAbono = new AbonoDAO();
 		String informacionAbonos[][] = miAbono.obtenerMatrizAbonos();
 		String titulos[] = miAbono.getColumnas();
@@ -1057,6 +1078,31 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		jTableAbonosRecibidos.setFont(new java.awt.Font("Arial", 0, 16));
 		JTableHeader th = jTableAbonosRecibidos.getTableHeader();
 		th.setFont(new java.awt.Font("Arial", 0, 16));
+
+	}
+
+	private void jButtonBuscarPrestamoActionPerformed(ActionEvent evt) {
+
+		AbonoDAO miAbono = new AbonoDAO();
+		String abonoPrestamo = jTextCodigoPrestamo.getText();
+		String informacionAbonos[][] = miAbono
+				.obtenerMatrizAbonosBusqueda(abonoPrestamo);
+		if (informacionAbonos != null) {
+			String titulos[] = miAbono.getColumnas();
+			jTableAbonosRecibidos = new JTable(informacionAbonos, titulos);
+			jScrollAbonosRecibidos.setViewportView(jTableAbonosRecibidos);
+			jTableAbonosRecibidos.setFont(new java.awt.Font("Arial", 0, 16));
+			JTableHeader th = jTableAbonosRecibidos.getTableHeader();
+			th.setFont(new java.awt.Font("Arial", 0, 16));
+			System.out.println("Resultados actualizados");
+		} else {
+			System.out.println("Lista de abonos no encontrada");
+		}
+
+	}
+
+	private void jButtonGuardarAbonoActionPerformed(ActionEvent e) {
+		System.out.println("Guardo los abonos");
 	}
 
 }

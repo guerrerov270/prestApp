@@ -156,7 +156,8 @@ public class AbonoDAO {
 				miAbono.setMontoACobrar(miRs.getDouble("montoACobrar"));
 				miAbono.setMontoPagado(miRs.getDouble("montoPagado"));
 				miAbono.setCompletoAbono(miRs.getString("completoAbono"));
-				miAbono.setFechaACobrar(formato.format(miRs.getDate("fechaACobrar")));
+				miAbono.setFechaACobrar(formato.format(miRs
+						.getDate("fechaACobrar")));
 				miAbono.setFechaPago(miRs.getDate("fechaPago"));
 				miAbono.setAbonoPrestamo(miRs.getString("abonoPrestamo"));
 				miAbono.setPuntualAbono(miRs.getString("puntualAbono"));
@@ -178,7 +179,7 @@ public class AbonoDAO {
 
 	public String[][] obtenerMatrizAbonos() {
 
-		ArrayList<AbonoVO> listaAbonos = buscarAbonosConMatriz();		
+		ArrayList<AbonoVO> listaAbonos = buscarAbonosConMatriz();
 		String matrizInfo[][] = new String[listaAbonos.size()][11];
 
 		for (int i = 0; i < listaAbonos.size(); i++) {
@@ -197,5 +198,102 @@ public class AbonoDAO {
 
 		return matrizInfo;
 	}// Fin obtenerMatrizAbonos
+
+	// -------------------------VO
+	// BUSQUEDA-----------------------------------------------------------------
+	public ArrayList<AbonoVO> buscarAbonosPrestamo(String abonoPrestamo) {
+
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		ArrayList<AbonoVO> listaAbonos = new ArrayList<AbonoVO>();
+		AbonoVO miAbono;
+		;
+		try {
+			CallableStatement miProcedimiento = conexion
+					.prepareCall("{call buscar_abono_prestamo(?)}");
+			miProcedimiento.setString(1, abonoPrestamo);
+			ResultSet miRs = miProcedimiento.executeQuery();
+			DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
+
+			while (miRs.next()) {
+				miAbono = new AbonoVO();
+				miAbono.setIDAbono(miRs.getInt("idAbono"));
+				miAbono.setCodigoAbono(miRs.getString("codigoAbono"));
+				miAbono.setMontoACobrar(miRs.getDouble("montoACobrar"));
+				miAbono.setMontoPagado(miRs.getDouble("montoPagado"));
+				miAbono.setCompletoAbono(miRs.getString("completoAbono"));
+				miAbono.setFechaACobrar(formato.format(miRs
+						.getDate("fechaACobrar")));
+				miAbono.setFechaPago(miRs.getDate("fechaPago"));
+				miAbono.setAbonoPrestamo(miRs.getString("abonoPrestamo"));
+				miAbono.setPuntualAbono(miRs.getString("puntualAbono"));
+				miAbono.setEstadoAbono(miRs.getString("estadoAbono"));
+				miAbono.setNumeroAbono(miRs.getInt("numeroAbono"));
+
+				listaAbonos.add(miAbono);
+			}
+			miRs.close();
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out
+					.println("Error al ejecutar consulta para buscar abono por codigo de prestamo");
+			System.out.println(e.getMessage());
+
+		}
+		return listaAbonos;
+	}// Fin buscarPrestamosConMatriz
+
+	public String[][] obtenerMatrizAbonosBusqueda(String abonoPrestamo) {
+
+		ArrayList<AbonoVO> listaAbonos = buscarAbonosPrestamo(abonoPrestamo);
+		String matrizInfo[][] = new String[listaAbonos.size()][11];
+
+		for (int i = 0; i < listaAbonos.size(); i++) {
+			matrizInfo[i][0] = listaAbonos.get(i).getIDAbono() + "";
+			matrizInfo[i][1] = listaAbonos.get(i).getCodigoAbono() + "";
+			matrizInfo[i][2] = listaAbonos.get(i).getMontoACobrar() + "";
+			matrizInfo[i][3] = listaAbonos.get(i).getMontoPagado() + "";
+			matrizInfo[i][4] = listaAbonos.get(i).getCompletoAbono() + "";
+			matrizInfo[i][5] = listaAbonos.get(i).getFechaACobrar() + "";
+			matrizInfo[i][6] = listaAbonos.get(i).getFechaPago() + "";
+			matrizInfo[i][7] = listaAbonos.get(i).getAbonoPrestamo() + "";
+			matrizInfo[i][8] = listaAbonos.get(i).getPuntualAbono() + "";
+			matrizInfo[i][9] = listaAbonos.get(i).getEstadoAbono() + "";
+			matrizInfo[i][10] = listaAbonos.get(i).getNumeroAbono() + "";
+		}
+
+		return matrizInfo;
+	}// Fin obtenerMatrizAbonos
+
+	// -----------------------------------PAGO
+	// ABONO--------------------------------------------------
+	public void pagarAbono(Date fechaPago, String codigoAbono,
+			double montoPagado) {
+
+		// Procedimiento almacenado que me actualice los parámetros del abono
+		// Buscar el abono
+		// comparar fechas para saber si puntual
+		// Comparar monto para ver si completo
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		java.sql.Date fechaPagoFormateada = new java.sql.Date(
+				fechaPago.getTime());
+		try {
+			CallableStatement miProcedimiento = conexion
+					.prepareCall("{call pagar_abono(?,?,?)}");
+			miProcedimiento.setString(1, codigoAbono);
+			miProcedimiento.setDate(2, fechaPagoFormateada);
+			miProcedimiento.setDouble(3, montoPagado);
+			miProcedimiento.execute();
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar el pago del abono");
+			System.out.println(e.getMessage());
+
+		}
+
+	}// Fin pagarAbono
 
 } // Fin AbonoDAO
