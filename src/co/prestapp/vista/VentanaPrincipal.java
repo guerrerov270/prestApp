@@ -1103,9 +1103,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	}
 
 	private void jButtonGuardarAbonoActionPerformed(ActionEvent e) {
-		System.out.println("Guardo los abonos");
+		
 		AbonoDAO miAbono = new AbonoDAO();
-		miAbono.pagarAbono(miAbono.buscarAbono(jTextFieldCodigoAbono.getText()));
+		Date fechaPago=calendarioAbonos.getDate();
+		String codigoAbono=jTextFieldCodigoAbono.getText();
+		double montoPagado=Double.parseDouble(jTextField1.getText());
+		miAbono.pagarAbono(codigoAbono, fechaPago, montoPagado);
+		
 
 	}
 
