@@ -737,13 +737,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	//
 	// }
 
-	public DefaultTableModel actualizaTablaAbonos() {
-
-		AbonoDAO miAbono = new AbonoDAO();
-		DefaultTableModel modelo = miAbono.llenaTablaAbonos();
-		return modelo;
-
-	}
+	// public DefaultTableModel actualizaTablaAbonos() {
+	//
+	// AbonoDAO miAbono = new AbonoDAO();
+	// DefaultTableModel modelo = miAbono.llenaTablaAbonos();
+	// return modelo;
+	//
+	// }
 
 	// public DefaultTableModel actualizaTablaPrestamos() {
 	//
@@ -1047,8 +1047,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	 */
 	private void jButtonActualizarAbonosActionPerformed(ActionEvent evt) {
 
-		jTableAbonosRecibidos = new JTable();
-		jTableAbonosRecibidos.setModel(actualizaTablaAbonos());
+		// jTableAbonosRecibidos = new JTable();
+		// jTableAbonosRecibidos.setModel(actualizaTablaAbonos());
+		AbonoDAO miAbono = new AbonoDAO();
+		String informacionAbonos[][] = miAbono.obtenerMatrizAbonos();
+		String titulos[] = miAbono.getColumnas();
+		jTableAbonosRecibidos = new JTable(informacionAbonos, titulos);
 		jScrollAbonosRecibidos.setViewportView(jTableAbonosRecibidos);
 		jTableAbonosRecibidos.setFont(new java.awt.Font("Arial", 0, 16));
 		JTableHeader th = jTableAbonosRecibidos.getTableHeader();

@@ -10,6 +10,8 @@ import java.util.Date;
 
 import javax.swing.table.DefaultTableModel;
 
+import co.prestapp.VO.AbonoVO;
+import co.prestapp.VO.PrestamoVO;
 import co.prestapp.connection.DBConnection;
 
 public class AbonoDAO {
@@ -47,49 +49,48 @@ public class AbonoDAO {
 
 	}// Fin agregar abono
 
-	public DefaultTableModel llenaTablaAbonos() {
+	// public DefaultTableModel llenaTablaAbonos() {
+	//
+	// DefaultTableModel modeloTablaAbonos;
+	// modeloTablaAbonos = new DefaultTableModel(null, getColumnas());
+	// return setFilas(modeloTablaAbonos);
+	//
+	// }// Fin llenaTablaAbonos
 
-		DefaultTableModel modeloTablaAbonos;
-		modeloTablaAbonos = new DefaultTableModel(null, getColumnas());
-		return setFilas(modeloTablaAbonos);
+	// private DefaultTableModel setFilas(DefaultTableModel modeloTablaAbonos) {
+	//
+	// DBConnection miConexion = new DBConnection();
+	// Connection conexion = miConexion.darConexion();
+	// Object datos[] = new Object[11];
+	//
+	// try {
+	// CallableStatement miProcedimiento = conexion
+	// .prepareCall("{call listar_abonos}");
+	// ResultSet miRs = miProcedimiento.executeQuery();
+	//
+	// while (miRs.next()) {
+	//
+	// for (int i = 0; i < 11; i++) {
+	// datos[i] = miRs.getObject(i + 1);
+	//
+	// }
+	// modeloTablaAbonos.addRow(datos);
+	//
+	// }
+	// miRs.close();
+	// conexion.close();
+	// } catch (SQLException e) {
+	// System.out.println("Error al ejecutar consulta para listar abonos");
+	// System.out.println(e.getMessage());
+	// }
+	// return modeloTablaAbonos;
+	//
+	// }// Fin setFilas
 
-	}// Fin llenaTablaAbonos
+	public String[] getColumnas() {
 
-	private DefaultTableModel setFilas(DefaultTableModel modeloTablaAbonos) {
-
-		DBConnection miConexion = new DBConnection();
-		Connection conexion = miConexion.darConexion();
-		Object datos[] = new Object[11];
-
-		try {
-			CallableStatement miProcedimiento = conexion
-					.prepareCall("{call listar_abonos}");
-			ResultSet miRs = miProcedimiento.executeQuery();
-
-			while (miRs.next()) {
-
-				for (int i = 0; i < 11; i++) {
-					datos[i] = miRs.getObject(i + 1);
-
-				}
-				modeloTablaAbonos.addRow(datos);
-
-			}
-			miRs.close();
-			conexion.close();
-		} catch (SQLException e) {
-			System.out.println("Error al ejecutar consulta para listar abonos");
-			System.out.println(e.getMessage());
-		}
-		return modeloTablaAbonos;
-
-	}// Fin setFilas
-
-	private String[] getColumnas() {
-
-		String encabezados[] = { "#", "Código", "Cobrar", "Pagado",
-				"Completo", "Cobrar", "Pagado", "Préstamo", "Puntual",
-				"Estado", "Abono#" };
+		String encabezados[] = { "#", "Código", "Cobrar", "Pagado", "Completo",
+				"Cobrar", "Pagado", "Préstamo", "Puntual", "Estado", "Abono#" };
 		return encabezados;
 	}// Fin getColumnas
 
@@ -130,9 +131,72 @@ public class AbonoDAO {
 
 			agregarAbono(montoACobrar, montoPagado, completoAbono,
 					fechasPago.get(i), codigoPrestamo, puntualAbono,
-					estadoAbono, i+1);
+					estadoAbono, i + 1);
 		}
 
 	}// Fin crearAbonosPrestamo
 
-}
+	// ----------------------------------------------VO-----------------------------------------------------
+	public ArrayList<AbonoVO> buscarAbonosConMatriz() {
+
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		ArrayList<AbonoVO> listaAbonos = new ArrayList<AbonoVO>();
+		AbonoVO miAbono;
+		;
+		try {
+			CallableStatement miProcedimiento = conexion
+					.prepareCall("{call listar_abonos}");
+			ResultSet miRs = miProcedimiento.executeQuery();
+
+			while (miRs.next()) {
+				miAbono = new AbonoVO();
+				miAbono.setIDAbono(miRs.getInt("idAbono"));
+				miAbono.setCodigoAbono(miRs.getString("codigoAbono"));
+				miAbono.setMontoACobrar(miRs.getDouble("montoACobrar"));
+				miAbono.setMontoPagado(miRs.getDouble("montoPagado"));
+				miAbono.setCompletoAbono(miRs.getString("completoAbono"));
+				miAbono.setFechaACobrar(miRs.getDate("fechaACobrar"));
+				miAbono.setFechaPago(miRs.getDate("fechaPago"));
+				miAbono.setAbonoPrestamo(miRs.getString("abonoPrestamo"));
+				miAbono.setPuntualAbono(miRs.getString("puntualAbono"));
+				miAbono.setEstadoAbono(miRs.getString("estadoAbono"));
+				miAbono.setNumeroAbono(miRs.getInt("numeroAbono"));
+
+				listaAbonos.add(miAbono);
+			}
+			miRs.close();
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para listar abonos");
+			System.out.println(e.getMessage());
+
+		}
+		return listaAbonos;
+	}// Fin buscarPrestamosConMatriz
+
+	public String[][] obtenerMatrizAbonos() {
+
+		ArrayList<AbonoVO> listaAbonos = buscarAbonosConMatriz();
+
+		String matrizInfo[][] = new String[listaAbonos.size()][11];
+
+		for (int i = 0; i < listaAbonos.size(); i++) {
+			matrizInfo[i][0] = listaAbonos.get(i).getIDAbono() + "";
+			matrizInfo[i][1] = listaAbonos.get(i).getCodigoAbono() + "";
+			matrizInfo[i][2] = listaAbonos.get(i).getMontoACobrar() + "";
+			matrizInfo[i][3] = listaAbonos.get(i).getMontoPagado() + "";
+			matrizInfo[i][4] = listaAbonos.get(i).getCompletoAbono() + "";
+			matrizInfo[i][5] = listaAbonos.get(i).getFechaACobrar() + "";
+			matrizInfo[i][6] = listaAbonos.get(i).getFechaPago() + "";
+			matrizInfo[i][7] = listaAbonos.get(i).getAbonoPrestamo() + "";
+			matrizInfo[i][8] = listaAbonos.get(i).getPuntualAbono() + "";
+			matrizInfo[i][9] = listaAbonos.get(i).getEstadoAbono() + "";
+			matrizInfo[i][10] = listaAbonos.get(i).getNumeroAbono() + "";
+		}
+
+		return matrizInfo;
+	}// Fin obtenerMatrizAbonos
+
+} // Fin AbonoDAO

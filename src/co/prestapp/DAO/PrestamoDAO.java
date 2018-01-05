@@ -8,10 +8,6 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
-
-import javax.swing.table.DefaultTableModel;
-
-import co.prestapp.VO.ClienteVO;
 import co.prestapp.VO.PrestamoVO;
 import co.prestapp.connection.DBConnection;
 
@@ -73,44 +69,45 @@ public class PrestamoDAO {
 
 	}// Fin agregar prestamo
 
-	public DefaultTableModel llenaTablaPrestamos() {
+	// public DefaultTableModel llenaTablaPrestamos() {
+	//
+	// DefaultTableModel modeloTablaPrestamos;
+	// modeloTablaPrestamos = new DefaultTableModel(null, getColumnas());
+	// return setFilas(modeloTablaPrestamos);
+	//
+	// }// Fin llenaTablaPrestamos
 
-		DefaultTableModel modeloTablaPrestamos;
-		modeloTablaPrestamos = new DefaultTableModel(null, getColumnas());
-		return setFilas(modeloTablaPrestamos);
-
-	}// Fin llenaTablaPrestamos
-
-	private DefaultTableModel setFilas(DefaultTableModel modeloTablaPrestamos) {
-
-		DBConnection miConexion = new DBConnection();
-		Connection conexion = miConexion.darConexion();
-		Object datos[] = new Object[12];
-
-		try {
-			CallableStatement miProcedimiento = conexion
-					.prepareCall("{call listar_prestamos}");
-			ResultSet miRs = miProcedimiento.executeQuery();
-
-			while (miRs.next()) {
-
-				for (int i = 0; i < 12; i++) {
-					datos[i] = miRs.getObject(i + 1);
-
-				}
-				modeloTablaPrestamos.addRow(datos);
-
-			}
-			miRs.close();
-			conexion.close();
-		} catch (SQLException e) {
-			System.out
-					.println("Error al ejecutar consulta para listar préstamos");
-			System.out.println(e.getMessage());
-		}
-		return modeloTablaPrestamos;
-
-	}// Fin setFilas
+	// private DefaultTableModel setFilas(DefaultTableModel
+	// modeloTablaPrestamos) {
+	//
+	// DBConnection miConexion = new DBConnection();
+	// Connection conexion = miConexion.darConexion();
+	// Object datos[] = new Object[12];
+	//
+	// try {
+	// CallableStatement miProcedimiento = conexion
+	// .prepareCall("{call listar_prestamos}");
+	// ResultSet miRs = miProcedimiento.executeQuery();
+	//
+	// while (miRs.next()) {
+	//
+	// for (int i = 0; i < 12; i++) {
+	// datos[i] = miRs.getObject(i + 1);
+	//
+	// }
+	// modeloTablaPrestamos.addRow(datos);
+	//
+	// }
+	// miRs.close();
+	// conexion.close();
+	// } catch (SQLException e) {
+	// System.out
+	// .println("Error al ejecutar consulta para listar préstamos");
+	// System.out.println(e.getMessage());
+	// }
+	// return modeloTablaPrestamos;
+	//
+	// }// Fin setFilas
 
 	public String[] getColumnas() {
 
