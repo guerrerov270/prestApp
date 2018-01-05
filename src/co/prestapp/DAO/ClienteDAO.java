@@ -6,9 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
-
-import javax.swing.table.DefaultTableModel;
-
 import co.prestapp.VO.ClienteVO;
 import co.prestapp.connection.DBConnection;
 
@@ -66,44 +63,45 @@ public class ClienteDAO {
 		return miCliente;
 	}
 
-	public DefaultTableModel llenaTablaClientes() {
+	// public DefaultTableModel llenaTablaClientes() {
+	//
+	// DefaultTableModel modeloTablaClientes;
+	// modeloTablaClientes = new DefaultTableModel(null, getColumnas());
+	// return setFilas(modeloTablaClientes);
+	//
+	// }// Fin llenaTablaClientes
 
-		DefaultTableModel modeloTablaClientes;
-		modeloTablaClientes = new DefaultTableModel(null, getColumnas());
-		return setFilas(modeloTablaClientes);
-
-	}// Fin llenaTablaClientes
-
-	private DefaultTableModel setFilas(DefaultTableModel modeloTablaClientes) {
-
-		DBConnection miConexion = new DBConnection();
-		Connection conexion = miConexion.darConexion();
-		Object datos[] = new Object[5];
-
-		try {
-			CallableStatement miProcedimiento = conexion
-					.prepareCall("{call listar_clientes}");
-			ResultSet miRs = miProcedimiento.executeQuery();
-
-			while (miRs.next()) {
-
-				for (int i = 0; i < 5; i++) {
-					datos[i] = miRs.getObject(i + 1);
-
-				}
-				modeloTablaClientes.addRow(datos);
-
-			}
-			miRs.close();
-			conexion.close();
-		} catch (SQLException e) {
-			System.out
-					.println("Error al ejecutar consulta para listar clientes");
-			System.out.println(e.getMessage());
-		}
-		return modeloTablaClientes;
-
-	}// Fin setFilas
+	// private DefaultTableModel setFilas(DefaultTableModel modeloTablaClientes)
+	// {
+	//
+	// DBConnection miConexion = new DBConnection();
+	// Connection conexion = miConexion.darConexion();
+	// Object datos[] = new Object[5];
+	//
+	// try {
+	// CallableStatement miProcedimiento = conexion
+	// .prepareCall("{call listar_clientes}");
+	// ResultSet miRs = miProcedimiento.executeQuery();
+	//
+	// while (miRs.next()) {
+	//
+	// for (int i = 0; i < 5; i++) {
+	// datos[i] = miRs.getObject(i + 1);
+	//
+	// }
+	// modeloTablaClientes.addRow(datos);
+	//
+	// }
+	// miRs.close();
+	// conexion.close();
+	// } catch (SQLException e) {
+	// System.out
+	// .println("Error al ejecutar consulta para listar clientes");
+	// System.out.println(e.getMessage());
+	// }
+	// return modeloTablaClientes;
+	//
+	// }// Fin setFilas
 
 	public String[] getColumnas() {
 
@@ -151,7 +149,7 @@ public class ClienteDAO {
 
 			while (miRs.next()) {
 				miCliente = new ClienteVO();
-				miCliente.setIDCliente(miRs.getInt("IdCliente"));
+				miCliente.setIDCliente(miRs.getInt("idCliente"));
 				miCliente.setCodigoCliente(miRs.getString("codigoCliente"));
 				miCliente.setNombreCliente(miRs.getString("nombreCliente"));
 				miCliente.setEmpresaCliente(miRs.getString("empresaCliente"));
@@ -189,6 +187,6 @@ public class ClienteDAO {
 		}
 
 		return matrizInfo;
-	}
+	}// Fin obtenerMatrizClientes
 
 }// Fin clase

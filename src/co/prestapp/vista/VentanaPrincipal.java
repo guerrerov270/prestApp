@@ -693,7 +693,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jLabelEmpresaResult.setText(cliente.getEmpresaCliente());
 
 		} catch (NumberFormatException e) {
-			// TODO: handle exception
+
 			System.out.println(e.getMessage());
 		}
 
@@ -729,13 +729,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		limpiarCamposPrestamo();
 	}
 
-	public DefaultTableModel actualizaTablaClientes() {
-
-		ClienteDAO miCliente = new ClienteDAO();
-		DefaultTableModel modelo = miCliente.llenaTablaClientes();
-		return modelo;
-
-	}
+	// public DefaultTableModel actualizaTablaClientes() {
+	//
+	// ClienteDAO miCliente = new ClienteDAO();
+	// DefaultTableModel modelo = miCliente.llenaTablaClientes();
+	// return modelo;
+	//
+	// }
 
 	public DefaultTableModel actualizaTablaAbonos() {
 
@@ -745,13 +745,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
-	public DefaultTableModel actualizaTablaPrestamos() {
-
-		PrestamoDAO miPrestamo = new PrestamoDAO();
-		DefaultTableModel modelo = miPrestamo.llenaTablaPrestamos();
-		return modelo;
-
-	}
+	// public DefaultTableModel actualizaTablaPrestamos() {
+	//
+	// PrestamoDAO miPrestamo = new PrestamoDAO();
+	// DefaultTableModel modelo = miPrestamo.llenaTablaPrestamos();
+	// return modelo;
+	//
+	// }
 
 	private JButton getJButtonActualizar() {
 		if (jButtonActualizar == null) {
@@ -782,7 +782,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String informacionClientes[][] = miCliente.obtenerMatrizClientes();
 		String titulos[] = miCliente.getColumnas();
 		jTableClientes = new JTable(informacionClientes, titulos);
-
 		jScrollPaneClientes.setViewportView(jTableClientes);
 		jTableClientes.setFont(new java.awt.Font("Arial", 0, 16));
 		JTableHeader th = jTableClientes.getTableHeader();
@@ -959,8 +958,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	 */
 	private void jButton2ActionPerformed(ActionEvent evt) {
 
-		jTablePrestamos = new JTable();
-		jTablePrestamos.setModel(actualizaTablaPrestamos());
+		// jTablePrestamos = new JTable();
+		// jTablePrestamos.setModel(actualizaTablaPrestamos());
+		PrestamoDAO miPrestamo = new PrestamoDAO();
+		String informacionPrestamos[][] = miPrestamo.obtenerMatrizPrestamos();
+		String titulos[] = miPrestamo.getColumnas();
+		jTablePrestamos = new JTable(informacionPrestamos, titulos);
 		jScrollReportes.setViewportView(jTablePrestamos);
 		jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 16));
 		JTableHeader th = jTablePrestamos.getTableHeader();
