@@ -6,26 +6,15 @@ public class AbonoVO {
 
 	private int IDAbono;
 	private String codigoAbono;
-	private double montoAbono;
-	private boolean completoAbono;
+	private double montoACobrar;
+	private double montoPagado;
+	private String completoAbono; // SI, NO
 	private Date fechaACobrar;
 	private Date fechaPago;
 	private String abonoPrestamoFK;
-	private boolean puntualAbono;
-
-	private enum estadoAbono {
-		PENDIENTE, PAGADO, ERROR
-	}
-
+	private String puntualAbono; // SI, NO
+	private String estadoAbono; // PENDIENTE, PAGADO, ERROR
 	private int numeroAbono;
-
-	public double getMontoAbono() {
-		return montoAbono;
-	}
-
-	public void setMontoAbono(double montoAbono) {
-		this.montoAbono = montoAbono;
-	}
 
 	public Date getFechaPago() {
 		return fechaPago;
@@ -41,22 +30,6 @@ public class AbonoVO {
 
 	public void setAbonoPrestamo(String abonoPrestamo) {
 		this.abonoPrestamoFK = abonoPrestamo;
-	}
-
-	public boolean isCompletoAbono() {
-		return completoAbono;
-	}
-
-	public void setCompletoAbono(boolean completoAbono) {
-		this.completoAbono = completoAbono;
-	}
-
-	public boolean isPuntualAbono() {
-		return puntualAbono;
-	}
-
-	public void setPuntualAbono(boolean puntualAbono) {
-		this.puntualAbono = puntualAbono;
 	}
 
 	public int getIDAbono() {
@@ -89,6 +62,46 @@ public class AbonoVO {
 
 	public void setNumeroAbono(int numeroAbono) {
 		this.numeroAbono = numeroAbono;
+	}
+
+	public double getMontoACobrar() {
+		return montoACobrar;
+	}
+
+	public void setMontoACobrar(double montoACobrar) {
+		this.montoACobrar = montoACobrar;
+	}
+
+	public double getMontoPagado() {
+		return montoPagado;
+	}
+
+	public void setMontoPagado(double montoPagado) {
+		this.montoPagado = montoPagado;
+	}
+
+	public String getCompletoAbono() {
+		return completoAbono;
+	}
+
+	public void setCompletoAbono(String completoAbono) {
+		this.completoAbono = completoAbono;
+	}
+
+	public String getPuntualAbono() {
+		return puntualAbono;
+	}
+
+	public void setPuntualAbono(String puntualAbono) {
+		this.puntualAbono = puntualAbono;
+	}
+
+	public String getEstadoAbono() {
+		return estadoAbono;
+	}
+
+	public void setEstadoAbono(String estadoAbono) {
+		this.estadoAbono = estadoAbono;
 	};
 
 }

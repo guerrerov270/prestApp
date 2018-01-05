@@ -5,10 +5,9 @@ public class ClienteVO {
 	private int IDCliente;
 	private String codigoCliente;
 	private String nombreCliente;
-	private String direccionCliente;
 	private String empresaCliente;
-	private String telefonoCliente;
 	private String referenciaCliente;
+	private String estadoCliente; // RECOMENDADO, NO RECOMENDADO, ERROR
 
 	public String getNombreCliente() {
 		return nombreCliente;
@@ -18,28 +17,12 @@ public class ClienteVO {
 		this.nombreCliente = nombreCliente;
 	}
 
-	public String getDireccionCliente() {
-		return direccionCliente;
-	}
-
-	public void setDireccionCliente(String direccionCliente) {
-		this.direccionCliente = direccionCliente;
-	}
-
 	public String getEmpresaCliente() {
 		return empresaCliente;
 	}
 
 	public void setEmpresaCliente(String empresaCliente) {
 		this.empresaCliente = empresaCliente;
-	}
-
-	public String getTelefonoCliente() {
-		return telefonoCliente;
-	}
-
-	public void setTelefonoCliente(String telefonoCliente) {
-		this.telefonoCliente = telefonoCliente;
 	}
 
 	public String getReferenciaCliente() {
@@ -64,6 +47,14 @@ public class ClienteVO {
 
 	public void setIDCliente(int iDCliente) {
 		IDCliente = iDCliente;
+	}
+
+	public String getEstadoCliente() {
+		return estadoCliente;
+	}
+
+	public void setEstadoCliente(String estadoCliente) {
+		this.estadoCliente = estadoCliente;
 	}
 
 }

@@ -4,22 +4,20 @@ import java.sql.Date;
 
 public class PrestamoVO {
 
+	private int idPrestamo;
+	private String codigoPrestamo;
 	private double montoPrestamo;
 	private int tasaInteresPrestamo;
+	private int numeroCuotasPrestamo;
 	private double saldoPendienteprestamo;
 	private double saldoPagadoPrestamo;
 	private Date fechaInicioPrestamo;
 	private Date fechafinPrestamo;
+	private String tipoPlazoPrestamo; // MENSUAL, QUINCENAL, SEMANAL, OTRO
+	private String codigoClienteFK;
+	private String estadoPrestamo; // PENDIENTE, PAGADO, REFINANCIADO, ERROR
+		
 
-	private enum tipoPlazoPrestamo {
-		MENSUAL, QUINCENAL, SEMANAL, OTRO
-	};
-
-	private int idCliente;
-
-	private enum estadoPrestamo {
-		PENDIENTE, PAGADO, REFINANCIADO
-	}
 
 	public double getMontoPrestamo() {
 		return montoPrestamo;
@@ -69,12 +67,52 @@ public class PrestamoVO {
 		this.fechafinPrestamo = fechafinPrestamo;
 	}
 
-	public int getIdCliente() {
-		return idCliente;
+	public String getIcodigoClienteFK() {
+		return codigoClienteFK;
 	}
 
-	public void setIdCliente(int idCliente) {
-		this.idCliente = idCliente;
+	public void setcodigoClienteFK(String codigoClienteFK) {
+		this.codigoClienteFK = codigoClienteFK;
+	}
+
+	public int getIdPrestamo() {
+		return idPrestamo;
+	}
+
+	public void setIdPrestamo(int idPrestamo) {
+		this.idPrestamo = idPrestamo;
+	}
+
+	public String getCodigoPrestamo() {
+		return codigoPrestamo;
+	}
+
+	public void setCodigoPrestamo(String codigoPrestamo) {
+		this.codigoPrestamo = codigoPrestamo;
+	}
+
+	public int getNumeroCuotasPrestamo() {
+		return numeroCuotasPrestamo;
+	}
+
+	public void setNumeroCuotasPrestamo(int numeroCuotasPrestamo) {
+		this.numeroCuotasPrestamo = numeroCuotasPrestamo;
+	}
+
+	public String getTipoPlazoPrestamo() {
+		return tipoPlazoPrestamo;
+	}
+
+	public void setTipoPlazoPrestamo(String tipoPlazoPrestamo) {
+		this.tipoPlazoPrestamo = tipoPlazoPrestamo;
+	}
+
+	public String getEstadoPrestamo() {
+		return estadoPrestamo;
+	}
+
+	public void setEstadoPrestamo(String estadoPrestamo) {
+		this.estadoPrestamo = estadoPrestamo;
 	};
 
 }
