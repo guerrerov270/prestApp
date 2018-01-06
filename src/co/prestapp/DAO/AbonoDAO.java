@@ -276,7 +276,7 @@ public class AbonoDAO {
 		int puntualAbono = 0;
 		AbonoVO miAbono = buscarAbono(codigoAbono);
 		// Verifico si puntual y si completo
-		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
 		Date fechaCobro = null;
 		try {
 
@@ -288,18 +288,18 @@ public class AbonoDAO {
 
 		}
 		// Comparo fechas
-		if(fechaPago.before(fechaCobro)){
-			puntualAbono=1;
-		}else{
-			puntualAbono=0;
+		if (fechaPago.before(fechaCobro)) {
+			puntualAbono = 1;
+		} else {
+			puntualAbono = 0;
 		}
-		
-		if(montoPagado<miAbono.getMontoACobrar()){
-			completoAbono=0;
-		}else if(montoPagado>=miAbono.getMontoACobrar()){
-			completoAbono=1;
+
+		if (montoPagado < miAbono.getMontoACobrar()) {
+			completoAbono = 0;
+		} else if (montoPagado >= miAbono.getMontoACobrar()) {
+			completoAbono = 1;
 		}
-		
+
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
 		java.sql.Date fechaPagoFormateada = new java.sql.Date(
