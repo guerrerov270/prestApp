@@ -226,6 +226,7 @@ public class PrestamoDAO {
 				miPrestamo.setIdPrestamo(miRs.getInt("idPrestamo"));
 				miPrestamo.setCodigoPrestamo(miRs.getString("codigoPrestamo"));
 				sumarPagosAbonados(miRs.getString("codigoPrestamo"));
+				verificarPrestamoPagado(miRs.getString("codigoPrestamo"));
 				miPrestamo.setMontoPrestamo(miRs.getDouble("montoPrestamo"));
 				miPrestamo.setTasaInteresPrestamo(miRs
 						.getInt("tasaInteresPrestamo"));
@@ -265,8 +266,26 @@ public class PrestamoDAO {
 		return listaPrestamos;
 	}// Fin buscarPrestamosConMatriz
 
-	private void sumarPagosAbonados(String codigoPrestamo) {
+	private void verificarPrestamoPagado(String codigoPrestamo) {
 
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		try {
+			CallableStatement miProcedimiento = conexion
+					.prepareCall("{call verificar_prestamo_pagado(?)}");
+			miProcedimiento.setString(1, codigoPrestamo);
+			miProcedimiento.executeQuery();
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out
+					.println("Error al ejecutar consulta para verificar prestamos pagados");
+			System.out.println(e.getMessage());
+		}
+
+	}
+
+	private void sumarPagosAbonados(String codigoPrestamo) {
 
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
