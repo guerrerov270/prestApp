@@ -72,46 +72,6 @@ public class PrestamoDAO {
 
 	}// Fin agregar prestamo
 
-	// public DefaultTableModel llenaTablaPrestamos() {
-	//
-	// DefaultTableModel modeloTablaPrestamos;
-	// modeloTablaPrestamos = new DefaultTableModel(null, getColumnas());
-	// return setFilas(modeloTablaPrestamos);
-	//
-	// }// Fin llenaTablaPrestamos
-
-	// private DefaultTableModel setFilas(DefaultTableModel
-	// modeloTablaPrestamos) {
-	//
-	// DBConnection miConexion = new DBConnection();
-	// Connection conexion = miConexion.darConexion();
-	// Object datos[] = new Object[12];
-	//
-	// try {
-	// CallableStatement miProcedimiento = conexion
-	// .prepareCall("{call listar_prestamos}");
-	// ResultSet miRs = miProcedimiento.executeQuery();
-	//
-	// while (miRs.next()) {
-	//
-	// for (int i = 0; i < 12; i++) {
-	// datos[i] = miRs.getObject(i + 1);
-	//
-	// }
-	// modeloTablaPrestamos.addRow(datos);
-	//
-	// }
-	// miRs.close();
-	// conexion.close();
-	// } catch (SQLException e) {
-	// System.out
-	// .println("Error al ejecutar consulta para listar préstamos");
-	// System.out.println(e.getMessage());
-	// }
-	// return modeloTablaPrestamos;
-	//
-	// }// Fin setFilas
-
 	public String[] getColumnas() {
 
 		String encabezados[] = { "#", "Código", "Monto", "Tasa", "#Cuotas",
@@ -265,6 +225,7 @@ public class PrestamoDAO {
 				miPrestamo = new PrestamoVO();
 				miPrestamo.setIdPrestamo(miRs.getInt("idPrestamo"));
 				miPrestamo.setCodigoPrestamo(miRs.getString("codigoPrestamo"));
+				sumarPagosAbonados(miRs.getString("codigoPrestamo"));
 				miPrestamo.setMontoPrestamo(miRs.getDouble("montoPrestamo"));
 				miPrestamo.setTasaInteresPrestamo(miRs
 						.getInt("tasaInteresPrestamo"));
@@ -300,8 +261,29 @@ public class PrestamoDAO {
 			System.out.println(e.getMessage());
 
 		}
+
 		return listaPrestamos;
 	}// Fin buscarPrestamosConMatriz
+
+	private void sumarPagosAbonados(String codigoPrestamo) {
+
+
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		try {
+			CallableStatement miProcedimiento = conexion
+					.prepareCall("{call sumar_pagos_abono(?)}");
+			miProcedimiento.setString(1, codigoPrestamo);
+			miProcedimiento.executeQuery();
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out
+					.println("Error al ejecutar consulta para sumar pagos abonados");
+			System.out.println(e.getMessage());
+		}
+
+	}
 
 	public String[][] obtenerMatrizPrestamos() {
 

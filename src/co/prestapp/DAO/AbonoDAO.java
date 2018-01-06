@@ -285,10 +285,6 @@ public class AbonoDAO {
 
 		}
 
-		// Luego de pagar el abono debo sumar los valores pagados de cada cuota
-		// y
-		// modificar el valor pagado del prestamo
-
 	}// Fin pagarAbono
 
 	public AbonoVO buscarAbono(String codigoAbono) {
