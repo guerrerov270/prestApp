@@ -5,9 +5,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
+
 import co.prestapp.VO.PrestamoVO;
 import co.prestapp.connection.DBConnection;
 
@@ -252,7 +255,7 @@ public class PrestamoDAO {
 		Connection conexion = miConexion.darConexion();
 		ArrayList<PrestamoVO> listaPrestamos = new ArrayList<PrestamoVO>();
 		PrestamoVO miPrestamo;
-		;
+		DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
 		try {
 			CallableStatement miProcedimiento = conexion
 					.prepareCall("{call listar_prestamos}");
@@ -271,10 +274,15 @@ public class PrestamoDAO {
 						.getDouble("saldoPendientePrestamo"));
 				miPrestamo.setSaldoPagadoPrestamo(miRs
 						.getDouble("saldoPagadoPrestamo"));
-				miPrestamo.setFechaInicioPrestamo(miRs
-						.getDate("fechaInicioPrestamo"));
-				miPrestamo
-						.setFechafinPrestamo(miRs.getDate("fechaFinPrestamo"));
+				if (miRs.getDate("fechaInicioPrestamo") != null) {
+					miPrestamo.setFechaInicioPrestamo(formato.format(miRs
+							.getDate("fechaInicioPrestamo")));
+				}
+				if (miRs.getDate("fechaFinPrestamo") != null) {
+					miPrestamo.setFechafinPrestamo(formato.format(miRs
+							.getDate("fechaFinPrestamo")));
+				}
+
 				miPrestamo.setTipoPlazoPrestamo(miRs
 						.getString("tipoPlazoPrestamo"));
 				miPrestamo

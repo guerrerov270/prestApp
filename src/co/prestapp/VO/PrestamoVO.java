@@ -11,8 +11,8 @@ public class PrestamoVO {
 	private int numeroCuotasPrestamo;
 	private double saldoPendienteprestamo;
 	private double saldoPagadoPrestamo;
-	private Date fechaInicioPrestamo;
-	private Date fechafinPrestamo;
+	private String fechaInicioPrestamo;
+	private String fechafinPrestamo;
 	private String tipoPlazoPrestamo; // MENSUAL, QUINCENAL, SEMANAL, OTRO
 	private String codigoClienteFK;
 	private String estadoPrestamo; // PENDIENTE, PAGADO, REFINANCIADO, ERROR
@@ -51,19 +51,19 @@ public class PrestamoVO {
 		this.saldoPagadoPrestamo = saldoPagadoPrestamo;
 	}
 
-	public Date getFechaInicioPrestamo() {
+	public String getFechaInicioPrestamo() {
 		return fechaInicioPrestamo;
 	}
 
-	public void setFechaInicioPrestamo(Date fechaInicioPrestamo) {
+	public void setFechaInicioPrestamo(String fechaInicioPrestamo) {
 		this.fechaInicioPrestamo = fechaInicioPrestamo;
 	}
 
-	public Date getFechafinPrestamo() {
+	public String getFechafinPrestamo() {
 		return fechafinPrestamo;
 	}
 
-	public void setFechafinPrestamo(Date fechafinPrestamo) {
+	public void setFechafinPrestamo(String fechafinPrestamo) {
 		this.fechafinPrestamo = fechafinPrestamo;
 	}
 

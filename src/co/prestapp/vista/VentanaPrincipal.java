@@ -65,10 +65,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JScrollPane jScrollPaneClientes;
 	private JButton jButtonCancelarAbono;
 	private JButton jButtonGuardar;
-	private JLabel jLabelEsPuntualR;
-	private JLabel jLabel1EsCompletoR;
-	private JLabel jLabelEsPuntual;
-	private JLabel jLabelEsCompleto;
 	private JTextField jTextCodigoPrestamo;
 	private JLabel jLabelCodigoPrestamo;
 	private JLabel jLabelFecha;
@@ -103,6 +99,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField jTextEmpresa;
 	private JLabel jLabelReferencia;
 	private JTextField jTextReferencia;
+	private JButton jButtonAbonosPendientes;
+	private JButton jButtonAbonosPagados;
 	private JTextField jTextFieldCodigoAbono;
 	private JLabel jLabelCodigoAbono;
 	private JButton jButtonActualizarAbonos;
@@ -511,38 +509,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 									"Arial", 0, 16));
 						}
 						{
-							jLabelEsCompleto = new JLabel();
-							jPanelAgregarAbono.add(jLabelEsCompleto);
-							jLabelEsCompleto.setText("¿Abono completo?");
-							jLabelEsCompleto.setBounds(457, 157, 146, 23);
-							jLabelEsCompleto.setFont(new java.awt.Font("Arial",
-									0, 16));
-						}
-						{
-							jLabelEsPuntual = new JLabel();
-							jPanelAgregarAbono.add(jLabelEsPuntual);
-							jLabelEsPuntual.setText("¿Abono puntual?");
-							jLabelEsPuntual.setBounds(46, 159, 146, 23);
-							jLabelEsPuntual.setFont(new java.awt.Font("Arial",
-									0, 16));
-						}
-						{
-							jLabel1EsCompletoR = new JLabel();
-							jPanelAgregarAbono.add(jLabel1EsCompletoR);
-							jLabel1EsCompletoR.setText("Sí");
-							jLabel1EsCompletoR.setBounds(653, 157, 146, 23);
-							jLabel1EsCompletoR.setFont(new java.awt.Font(
-									"Arial", 0, 16));
-						}
-						{
-							jLabelEsPuntualR = new JLabel();
-							jPanelAgregarAbono.add(jLabelEsPuntualR);
-							jLabelEsPuntualR.setText("Sí");
-							jLabelEsPuntualR.setBounds(240, 159, 146, 23);
-							jLabelEsPuntualR.setFont(new java.awt.Font("Arial",
-									0, 16));
-						}
-						{
 							jButtonGuardar = new JButton();
 							jPanelAgregarAbono.add(jButtonGuardar);
 							jButtonGuardar.setText("Guardar");
@@ -565,6 +531,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 									.add(getJButtonActualizarAbonos());
 							jPanelAgregarAbono.add(getJLabelCodigoAbono());
 							jPanelAgregarAbono.add(getJTextFieldCodigoAbono());
+							jPanelAgregarAbono.add(getJButtonAbonosPagados());
+							jPanelAgregarAbono.add(getJButtonAbonosPendientes());
 							jButtonCancelarAbono.setText("Cancelar");
 							jButtonCancelarAbono.setBounds(653, 114, 146, 23);
 							jButtonCancelarAbono.setFont(new java.awt.Font(
@@ -1115,6 +1083,48 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private void jButtonCancelarAbonoActionPerformed(ActionEvent e) {
 		System.out.println("Cancelo los abonos");
+	}
+	
+	private JButton getJButtonAbonosPagados() {
+		if(jButtonAbonosPagados == null) {
+			jButtonAbonosPagados = new JButton();
+			jButtonAbonosPagados.setText("Solo pagados");
+			jButtonAbonosPagados.setBounds(457, 161, 146, 22);
+			jButtonAbonosPagados.setFont(new java.awt.Font("Arial",0,16));
+			jButtonAbonosPagados.setSize(146, 23);
+			jButtonAbonosPagados.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+					jButtonAbonosPagadosActionPerformed(evt);
+				}
+			});
+		}
+		return jButtonAbonosPagados;
+	}
+	
+	private JButton getJButtonAbonosPendientes() {
+		if(jButtonAbonosPendientes == null) {
+			jButtonAbonosPendientes = new JButton();
+			jButtonAbonosPendientes.setText("Solo pendientes");
+			jButtonAbonosPendientes.setBounds(653, 161, 146, 22);
+			jButtonAbonosPendientes.setFont(new java.awt.Font("Arial",0,16));
+			jButtonAbonosPendientes.setSize(146, 23);
+			jButtonAbonosPendientes.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+					jButtonAbonosPendientesActionPerformed(evt);
+				}
+			});
+		}
+		return jButtonAbonosPendientes;
+	}
+	
+	private void jButtonAbonosPagadosActionPerformed(ActionEvent evt) {
+		System.out.println("jButtonAbonosPagados.actionPerformed, event="+evt);
+		//TODO add your code for jButtonAbonosPagados.actionPerformed
+	}
+	
+	private void jButtonAbonosPendientesActionPerformed(ActionEvent evt) {
+		System.out.println("jButtonAbonosPendientes.actionPerformed, event="+evt);
+		//TODO add your code for jButtonAbonosPendientes.actionPerformed
 	}
 
 }

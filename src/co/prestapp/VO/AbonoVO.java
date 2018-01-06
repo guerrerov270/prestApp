@@ -10,17 +10,17 @@ public class AbonoVO {
 	private double montoPagado;
 	private String completoAbono; // SI, NO
 	private String fechaACobrar;
-	private Date fechaPago;
+	private String fechaPago;
 	private String abonoPrestamoFK;
 	private String puntualAbono; // SI, NO
 	private String estadoAbono; // PENDIENTE, PAGADO, ERROR
 	private int numeroAbono;
 
-	public Date getFechaPago() {
+	public String getFechaPago() {
 		return fechaPago;
 	}
 
-	public void setFechaPago(Date fechaPago) {
+	public void setFechaPago(String fechaPago) {
 		this.fechaPago = fechaPago;
 	}
 

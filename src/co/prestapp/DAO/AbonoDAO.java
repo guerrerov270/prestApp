@@ -17,8 +17,8 @@ import co.prestapp.connection.DBConnection;
 public class AbonoDAO {
 
 	public void agregarAbono(double montoACobrar, double montoPagado,
-			int completoAbono, Date fechaCobro, String abonoPrestamoFK,
-			int puntualAbono, String estadoAbono, int numeroAbono) {
+			String completoAbono, Date fechaCobro, String abonoPrestamoFK,
+			String puntualAbono, String estadoAbono, int numeroAbono) {
 
 		java.sql.Date fechaCobroFormateada = new java.sql.Date(
 				fechaCobro.getTime());
@@ -32,10 +32,10 @@ public class AbonoDAO {
 			miProcedimiento.setString(1, codigoAbono);
 			miProcedimiento.setDouble(2, montoACobrar);
 			miProcedimiento.setDouble(3, montoPagado);
-			miProcedimiento.setInt(4, completoAbono);
+			miProcedimiento.setString(4, completoAbono);
 			miProcedimiento.setDate(5, fechaCobroFormateada);
 			miProcedimiento.setString(6, abonoPrestamoFK);
-			miProcedimiento.setInt(7, puntualAbono);
+			miProcedimiento.setString(7, puntualAbono);
 			miProcedimiento.setString(8, estadoAbono);
 			miProcedimiento.setInt(9, numeroAbono);
 			miProcedimiento.execute();
@@ -48,44 +48,6 @@ public class AbonoDAO {
 		}
 
 	}// Fin agregar abono
-
-	// public DefaultTableModel llenaTablaAbonos() {
-	//
-	// DefaultTableModel modeloTablaAbonos;
-	// modeloTablaAbonos = new DefaultTableModel(null, getColumnas());
-	// return setFilas(modeloTablaAbonos);
-	//
-	// }// Fin llenaTablaAbonos
-
-	// private DefaultTableModel setFilas(DefaultTableModel modeloTablaAbonos) {
-	//
-	// DBConnection miConexion = new DBConnection();
-	// Connection conexion = miConexion.darConexion();
-	// Object datos[] = new Object[11];
-	//
-	// try {
-	// CallableStatement miProcedimiento = conexion
-	// .prepareCall("{call listar_abonos}");
-	// ResultSet miRs = miProcedimiento.executeQuery();
-	//
-	// while (miRs.next()) {
-	//
-	// for (int i = 0; i < 11; i++) {
-	// datos[i] = miRs.getObject(i + 1);
-	//
-	// }
-	// modeloTablaAbonos.addRow(datos);
-	//
-	// }
-	// miRs.close();
-	// conexion.close();
-	// } catch (SQLException e) {
-	// System.out.println("Error al ejecutar consulta para listar abonos");
-	// System.out.println(e.getMessage());
-	// }
-	// return modeloTablaAbonos;
-	//
-	// }// Fin setFilas
 
 	public String[] getColumnas() {
 
@@ -122,9 +84,9 @@ public class AbonoDAO {
 
 		double montoACobrar = totalAPagar / numeroCuotas;
 		double montoPagado = 0;
-		int completoAbono = 0;
+		String completoAbono = "NO";
 		// fecha de Pago no voy a enviar
-		int puntualAbono = 0;
+		String puntualAbono = "NO";
 		String estadoAbono = "PENDIENTE";
 
 		for (int i = 0; i < fechasPago.size(); i++) {
@@ -159,7 +121,10 @@ public class AbonoDAO {
 				miAbono.setCompletoAbono(miRs.getString("completoAbono"));
 				miAbono.setFechaACobrar(formato.format(miRs
 						.getDate("fechaACobrar")));
-				miAbono.setFechaPago(miRs.getDate("fechaPago"));
+				if (miRs.getDate("fechaPago") != null) {
+					miAbono.setFechaPago(formato.format(miRs
+							.getDate("fechaPago")));
+				}
 				miAbono.setAbonoPrestamo(miRs.getString("abonoPrestamo"));
 				miAbono.setPuntualAbono(miRs.getString("puntualAbono"));
 				miAbono.setEstadoAbono(miRs.getString("estadoAbono"));
@@ -225,7 +190,10 @@ public class AbonoDAO {
 				miAbono.setCompletoAbono(miRs.getString("completoAbono"));
 				miAbono.setFechaACobrar(formato.format(miRs
 						.getDate("fechaACobrar")));
-				miAbono.setFechaPago(miRs.getDate("fechaPago"));
+				if (miRs.getDate("fechaPago") != null) {
+					miAbono.setFechaPago(formato.format(miRs
+							.getDate("fechaPago")));
+				}
 				miAbono.setAbonoPrestamo(miRs.getString("abonoPrestamo"));
 				miAbono.setPuntualAbono(miRs.getString("puntualAbono"));
 				miAbono.setEstadoAbono(miRs.getString("estadoAbono"));
@@ -272,8 +240,8 @@ public class AbonoDAO {
 	public void pagarAbono(String codigoAbono, Date fechaPago,
 			double montoPagado) {
 
-		int completoAbono = 0;
-		int puntualAbono = 0;
+		String completoAbono = "NO";
+		String puntualAbono = "NO";
 		AbonoVO miAbono = buscarAbono(codigoAbono);
 		// Verifico si puntual y si completo
 		SimpleDateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
@@ -289,15 +257,11 @@ public class AbonoDAO {
 		}
 		// Comparo fechas
 		if (fechaPago.before(fechaCobro)) {
-			puntualAbono = 1;
-		} else {
-			puntualAbono = 0;
+			puntualAbono = "SI";
 		}
 
-		if (montoPagado < miAbono.getMontoACobrar()) {
-			completoAbono = 0;
-		} else if (montoPagado >= miAbono.getMontoACobrar()) {
-			completoAbono = 1;
+		if (montoPagado >= miAbono.getMontoACobrar()) {
+			completoAbono = "SI";
 		}
 
 		DBConnection miConexion = new DBConnection();
@@ -310,8 +274,8 @@ public class AbonoDAO {
 			miProcedimiento.setString(1, codigoAbono);
 			miProcedimiento.setDate(2, fechaPagoFormateada);
 			miProcedimiento.setDouble(3, montoPagado);
-			miProcedimiento.setInt(4, completoAbono);
-			miProcedimiento.setInt(5, puntualAbono);
+			miProcedimiento.setString(4, completoAbono);
+			miProcedimiento.setString(5, puntualAbono);
 			miProcedimiento.execute();
 			conexion.close();
 
@@ -320,6 +284,10 @@ public class AbonoDAO {
 			System.out.println(e.getMessage());
 
 		}
+
+		// Luego de pagar el abono debo sumar los valores pagados de cada cuota
+		// y
+		// modificar el valor pagado del prestamo
 
 	}// Fin pagarAbono
 
@@ -345,7 +313,10 @@ public class AbonoDAO {
 				miAbono.setCompletoAbono(miRs.getString("completoAbono"));
 				miAbono.setFechaACobrar(formato.format(miRs
 						.getDate("fechaACobrar")));
-				miAbono.setFechaPago(miRs.getDate("fechaPago"));
+				if (miRs.getDate("fechaPago") != null) {
+					miAbono.setFechaPago(formato.format(miRs
+							.getDate("fechaPago")));
+				}
 				miAbono.setAbonoPrestamo(miRs.getString("abonoPrestamo"));
 				miAbono.setPuntualAbono(miRs.getString("puntualAbono"));
 				miAbono.setEstadoAbono(miRs.getString("estadoAbono"));
