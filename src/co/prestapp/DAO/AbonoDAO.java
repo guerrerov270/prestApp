@@ -311,7 +311,7 @@ public class AbonoDAO {
 			miProcedimiento.setDate(2, fechaPagoFormateada);
 			miProcedimiento.setDouble(3, montoPagado);
 			miProcedimiento.setInt(4, completoAbono);
-			miProcedimiento.setInt(4, puntualAbono);
+			miProcedimiento.setInt(5, puntualAbono);
 			miProcedimiento.execute();
 			conexion.close();
 
