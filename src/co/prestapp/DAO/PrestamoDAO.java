@@ -6,10 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
+import java.util.Locale;
 
 import co.prestapp.VO.PrestamoVO;
 import co.prestapp.connection.DBConnection;
@@ -215,7 +217,10 @@ public class PrestamoDAO {
 		Connection conexion = miConexion.darConexion();
 		ArrayList<PrestamoVO> listaPrestamos = new ArrayList<PrestamoVO>();
 		PrestamoVO miPrestamo;
-		DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
+		DateFormat formatoFecha = new SimpleDateFormat("dd MMMM yyyy");
+		Locale locale = new Locale("es", "CO");
+		NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
+
 		try {
 			CallableStatement miProcedimientoListar = conexion
 					.prepareCall("{call listar_prestamos}");
@@ -225,21 +230,22 @@ public class PrestamoDAO {
 				miPrestamo = new PrestamoVO();
 				miPrestamo.setIdPrestamo(miRs.getInt("idPrestamo"));
 				miPrestamo.setCodigoPrestamo(miRs.getString("codigoPrestamo"));
-				miPrestamo.setMontoPrestamo(miRs.getDouble("montoPrestamo"));
+				miPrestamo.setMontoPrestamo(formatoMoneda.format(miRs
+						.getDouble("montoPrestamo")));
 				miPrestamo.setTasaInteresPrestamo(miRs
 						.getInt("tasaInteresPrestamo"));
 				miPrestamo.setNumeroCuotasPrestamo(miRs
 						.getInt("numeroCuotasprestamo"));
-				miPrestamo.setSaldoPendienteprestamo(miRs
-						.getDouble("saldoPendientePrestamo"));
-				miPrestamo.setSaldoPagadoPrestamo(miRs
-						.getDouble("saldoPagadoPrestamo"));
+				miPrestamo.setSaldoPendienteprestamo(formatoMoneda.format(miRs
+						.getDouble("saldoPendientePrestamo")));
+				miPrestamo.setSaldoPagadoPrestamo(formatoMoneda.format(miRs
+						.getDouble("saldoPagadoPrestamo")));
 				if (miRs.getDate("fechaInicioPrestamo") != null) {
-					miPrestamo.setFechaInicioPrestamo(formato.format(miRs
+					miPrestamo.setFechaInicioPrestamo(formatoFecha.format(miRs
 							.getDate("fechaInicioPrestamo")));
 				}
 				if (miRs.getDate("fechaFinPrestamo") != null) {
-					miPrestamo.setFechafinPrestamo(formato.format(miRs
+					miPrestamo.setFechafinPrestamo(formatoFecha.format(miRs
 							.getDate("fechaFinPrestamo")));
 				}
 

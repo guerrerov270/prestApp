@@ -6,8 +6,8 @@ public class AbonoVO {
 
 	private int IDAbono;
 	private String codigoAbono;
-	private double montoACobrar;
-	private double montoPagado;
+	private String montoACobrar;
+	private String montoPagado;
 	private String completoAbono; // SI, NO
 	private String fechaACobrar;
 	private String fechaPago;
@@ -64,19 +64,19 @@ public class AbonoVO {
 		this.numeroAbono = numeroAbono;
 	}
 
-	public double getMontoACobrar() {
+	public String getMontoACobrar() {
 		return montoACobrar;
 	}
 
-	public void setMontoACobrar(double montoACobrar) {
+	public void setMontoACobrar(String montoACobrar) {
 		this.montoACobrar = montoACobrar;
 	}
 
-	public double getMontoPagado() {
+	public String getMontoPagado() {
 		return montoPagado;
 	}
 
-	public void setMontoPagado(double montoPagado) {
+	public void setMontoPagado(String montoPagado) {
 		this.montoPagado = montoPagado;
 	}
 

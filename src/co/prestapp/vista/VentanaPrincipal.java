@@ -7,6 +7,8 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -133,7 +135,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		initGUI();
 		actualizaPrestamos();
 		actualizaAbonos();
-		actualizaClientes();
+		actualizaClientes();		
 
 	}
 

@@ -6,24 +6,22 @@ public class PrestamoVO {
 
 	private int idPrestamo;
 	private String codigoPrestamo;
-	private double montoPrestamo;
+	private String montoPrestamo;
 	private int tasaInteresPrestamo;
 	private int numeroCuotasPrestamo;
-	private double saldoPendienteprestamo;
-	private double saldoPagadoPrestamo;
+	private String saldoPendienteprestamo;
+	private String saldoPagadoPrestamo;
 	private String fechaInicioPrestamo;
 	private String fechafinPrestamo;
 	private String tipoPlazoPrestamo; // MENSUAL, QUINCENAL, SEMANAL, OTRO
 	private String codigoClienteFK;
 	private String estadoPrestamo; // PENDIENTE, PAGADO, REFINANCIADO, ERROR
-		
 
-
-	public double getMontoPrestamo() {
+	public String getMontoPrestamo() {
 		return montoPrestamo;
 	}
 
-	public void setMontoPrestamo(double montoPrestamo) {
+	public void setMontoPrestamo(String montoPrestamo) {
 		this.montoPrestamo = montoPrestamo;
 	}
 
@@ -35,19 +33,19 @@ public class PrestamoVO {
 		this.tasaInteresPrestamo = tasaInteresPrestamo;
 	}
 
-	public double getSaldoPendienteprestamo() {
+	public String getSaldoPendienteprestamo() {
 		return saldoPendienteprestamo;
 	}
 
-	public void setSaldoPendienteprestamo(double saldoPendienteprestamo) {
+	public void setSaldoPendienteprestamo(String saldoPendienteprestamo) {
 		this.saldoPendienteprestamo = saldoPendienteprestamo;
 	}
 
-	public double getSaldoPagadoPrestamo() {
+	public String getSaldoPagadoPrestamo() {
 		return saldoPagadoPrestamo;
 	}
 
-	public void setSaldoPagadoPrestamo(double saldoPagadoPrestamo) {
+	public void setSaldoPagadoPrestamo(String saldoPagadoPrestamo) {
 		this.saldoPagadoPrestamo = saldoPagadoPrestamo;
 	}
 
