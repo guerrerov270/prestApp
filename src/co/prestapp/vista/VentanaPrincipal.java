@@ -137,7 +137,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		initGUI();
 		actualizaPrestamos();
 		actualizaAbonos();
-		actualizaClientes();		
+		actualizaClientes();
 
 	}
 
@@ -168,13 +168,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					jTabPestañas.setBounds(8, 5, 782, 553);
 
 					jTabPestañas.addTab("Préstamos", jPanelPrestamos);
-					jPanelPrestamos.setPreferredSize(new java.awt.Dimension(921, 547));
+					jPanelPrestamos.setPreferredSize(new java.awt.Dimension(
+							921, 547));
 					{
 						jScrollReportes = new JScrollPane();
 						jPanelPrestamos
 								.add(jScrollReportes, BorderLayout.SOUTH);
 						jScrollReportes.setBounds(8, 263, 777, 381);
-						jScrollReportes.setPreferredSize(new java.awt.Dimension(911, 354));
+						jScrollReportes
+								.setPreferredSize(new java.awt.Dimension(911,
+										354));
 						{
 
 						}
@@ -186,7 +189,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jPanelEntradasPrestamo.setBorder(BorderFactory
 								.createTitledBorder("Datos préstamo"));
 						jPanelEntradasPrestamo.setLayout(null);
-						jPanelEntradasPrestamo.setPreferredSize(new java.awt.Dimension(921, 204));
+						jPanelEntradasPrestamo
+								.setPreferredSize(new java.awt.Dimension(921,
+										204));
 						{
 							jLabelMontoPrestamo = new JLabel();
 							jPanelEntradasPrestamo.add(jLabelMontoPrestamo,
@@ -200,7 +205,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 									"Arial", 0, 16));
 						}
 						{
-							//MaskFormatter formatoMoneda= new MaskFormatter("$ ###,###");
+							// MaskFormatter formatoMoneda= new
+							// MaskFormatter("$ ###,###");
 							jTextMonto = new JFormattedTextField();
 							jPanelEntradasPrestamo.add(jTextMonto,
 									new GridBagConstraints(1, 0, 1, 1, 0.0,
@@ -330,7 +336,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jPanelEntradasPrestamo
 										.add(jButtonCancelarPrestamo);
 								jButtonCancelarPrestamo.setText("Cancelar");
-								jButtonCancelarPrestamo.setBounds(162, 161, 119, 23);
+								jButtonCancelarPrestamo.setBounds(162, 161,
+										119, 23);
 								jButtonCancelarPrestamo
 										.setFont(new java.awt.Font("Arial", 0,
 												16));
@@ -371,7 +378,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jPanelEntradasPrestamo
 										.add(jButtonClienteExiste);
 								jButtonClienteExiste.setText("Buscar cliente");
-								jButtonClienteExiste.setBounds(726, 78, 180, 23);
+								jButtonClienteExiste
+										.setBounds(726, 78, 180, 23);
 								jButtonClienteExiste.setFont(new java.awt.Font(
 										"Arial", 0, 16));
 								jButtonClienteExiste
@@ -397,7 +405,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jLabelNombreCliente = new JLabel();
 								jPanelEntradasPrestamo.add(jLabelNombreCliente);
 								jLabelNombreCliente.setText("nombre");
-								jLabelNombreCliente.setBounds(726, 121, 178, 23);
+								jLabelNombreCliente
+										.setBounds(726, 121, 178, 23);
 								jLabelNombreCliente.setFont(new java.awt.Font(
 										"Arial", 0, 16));
 							}
@@ -444,10 +453,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jScrollAbonosRecibidos = new JScrollPane();
 						jPanelAbonos.add(jScrollAbonosRecibidos,
 								BorderLayout.SOUTH);
-						jScrollAbonosRecibidos.setBounds(5, 212, 767, 410);
+						jScrollAbonosRecibidos.setBounds(8, 263, 777, 381);
 						jScrollAbonosRecibidos
-								.setPreferredSize(new java.awt.Dimension(777,
-										414));
+								.setPreferredSize(new java.awt.Dimension(911,
+										354));
 						{
 
 						}
@@ -559,9 +568,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jScrollPaneClientes = new JScrollPane();
 						jPanelClientes.add(jScrollPaneClientes,
 								BorderLayout.SOUTH);
+						jScrollPaneClientes.setBounds(8, 263, 777, 381);
 						jScrollPaneClientes
-								.setPreferredSize(new java.awt.Dimension(767,
-										405));
+								.setPreferredSize(new java.awt.Dimension(911,
+										354));
 						{
 
 						}
@@ -1059,12 +1069,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	}
 
 	private void jButtonAbonosPagadosActionPerformed(ActionEvent evt) {
-		
+
 		actualizaAbonosPagados();
 	}
 
 	private void jButtonAbonosPendientesActionPerformed(ActionEvent evt) {
-		
+
 		actualizaAbonosPendientes();
 	}
 
