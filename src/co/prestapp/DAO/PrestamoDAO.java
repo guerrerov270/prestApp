@@ -217,16 +217,14 @@ public class PrestamoDAO {
 		PrestamoVO miPrestamo;
 		DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
 		try {
-			CallableStatement miProcedimiento = conexion
+			CallableStatement miProcedimientoListar = conexion
 					.prepareCall("{call listar_prestamos}");
-			ResultSet miRs = miProcedimiento.executeQuery();
+			ResultSet miRs = miProcedimientoListar.executeQuery();
 
 			while (miRs.next()) {
 				miPrestamo = new PrestamoVO();
 				miPrestamo.setIdPrestamo(miRs.getInt("idPrestamo"));
 				miPrestamo.setCodigoPrestamo(miRs.getString("codigoPrestamo"));
-				sumarPagosAbonados(miRs.getString("codigoPrestamo"));
-				verificarPrestamoPagado(miRs.getString("codigoPrestamo"));
 				miPrestamo.setMontoPrestamo(miRs.getDouble("montoPrestamo"));
 				miPrestamo.setTasaInteresPrestamo(miRs
 						.getInt("tasaInteresPrestamo"));
@@ -266,40 +264,39 @@ public class PrestamoDAO {
 		return listaPrestamos;
 	}// Fin buscarPrestamosConMatriz
 
-	private void verificarPrestamoPagado(String codigoPrestamo) {
+	public void actualizaPagos() {
 
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
 		try {
-			CallableStatement miProcedimiento = conexion
-					.prepareCall("{call verificar_prestamo_pagado(?)}");
-			miProcedimiento.setString(1, codigoPrestamo);
-			miProcedimiento.executeQuery();
-			conexion.close();
-
-		} catch (SQLException e) {
-			System.out
-					.println("Error al ejecutar consulta para verificar prestamos pagados");
-			System.out.println(e.getMessage());
-		}
-
-	}
-
-	private void sumarPagosAbonados(String codigoPrestamo) {
-
-		DBConnection miConexion = new DBConnection();
-		Connection conexion = miConexion.darConexion();
-		try {
-			CallableStatement miProcedimiento = conexion
+			CallableStatement miProcedimientoListar = conexion
+					.prepareCall("{call listar_prestamos}");
+			CallableStatement miProcedimientoSumar = conexion
 					.prepareCall("{call sumar_pagos_abono(?)}");
-			miProcedimiento.setString(1, codigoPrestamo);
-			miProcedimiento.executeQuery();
+			CallableStatement miProcedimientoVerificar = conexion
+					.prepareCall("{call verificar_prestamo_pagado(?)}");
+			ResultSet miRs = miProcedimientoListar.executeQuery();
+
+			while (miRs.next()) {
+
+				// Procedimientos de suma y verificación de montos de abonos y
+				// préstamos
+				miProcedimientoSumar.setString(1,
+						miRs.getString("codigoPrestamo"));
+				miProcedimientoVerificar.setString(1,
+						miRs.getString("codigoPrestamo"));
+				miProcedimientoSumar.execute();
+				miProcedimientoVerificar.execute();
+
+			}
+			miRs.close();
 			conexion.close();
 
 		} catch (SQLException e) {
 			System.out
-					.println("Error al ejecutar consulta para sumar pagos abonados");
+					.println("Error al ejecutar consulta para actualizar pagos");
 			System.out.println(e.getMessage());
+
 		}
 
 	}
