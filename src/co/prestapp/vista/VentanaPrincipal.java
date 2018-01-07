@@ -704,6 +704,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		ClienteDAO miCliente = new ClienteDAO();
 		miCliente.agregarCliente(nombre, empresa, referencia);
 		limpiarCamposCliente();
+		actualizaClientes();
 
 	}
 
@@ -720,30 +721,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 		limpiarCamposPrestamo();
 	}
-
-	// public DefaultTableModel actualizaTablaClientes() {
-	//
-	// ClienteDAO miCliente = new ClienteDAO();
-	// DefaultTableModel modelo = miCliente.llenaTablaClientes();
-	// return modelo;
-	//
-	// }
-
-	// public DefaultTableModel actualizaTablaAbonos() {
-	//
-	// AbonoDAO miAbono = new AbonoDAO();
-	// DefaultTableModel modelo = miAbono.llenaTablaAbonos();
-	// return modelo;
-	//
-	// }
-
-	// public DefaultTableModel actualizaTablaPrestamos() {
-	//
-	// PrestamoDAO miPrestamo = new PrestamoDAO();
-	// DefaultTableModel modelo = miPrestamo.llenaTablaPrestamos();
-	// return modelo;
-	//
-	// }
 
 	private JButton getJButtonActualizar() {
 		if (jButtonActualizar == null) {
@@ -916,6 +893,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				codigoPrestamo);
 
 		limpiarCamposPrestamo();
+		actualizaPrestamos();
 
 	}
 
@@ -1032,21 +1010,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private void jButtonBuscarPrestamoActionPerformed(ActionEvent evt) {
 
-		AbonoDAO miAbono = new AbonoDAO();
-		String abonoPrestamo = jTextCodigoPrestamo.getText();
-		String informacionAbonos[][] = miAbono
-				.obtenerMatrizAbonosBusqueda(abonoPrestamo);
-		if (informacionAbonos != null) {
-			String titulos[] = miAbono.getColumnas();
-			jTableAbonosRecibidos = new JTable(informacionAbonos, titulos);
-			jScrollAbonosRecibidos.setViewportView(jTableAbonosRecibidos);
-			jTableAbonosRecibidos.setFont(new java.awt.Font("Arial", 0, 16));
-			JTableHeader th = jTableAbonosRecibidos.getTableHeader();
-			th.setFont(new java.awt.Font("Arial", 0, 16));
-			System.out.println("Resultados actualizados");
-		} else {
-			System.out.println("Lista de abonos no encontrada");
-		}
+		actualizaPrestamoBuscado();
 
 	}
 
@@ -1057,6 +1021,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String codigoAbono = jTextFieldCodigoAbono.getText();
 		double montoPagado = Double.parseDouble(jTextField1.getText());
 		miAbono.pagarAbono(codigoAbono, fechaPago, montoPagado);
+		actualizaAbonos();
+		actualizaPrestamoBuscado();
+		actualizaPrestamos();
 
 	}
 
@@ -1097,15 +1064,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	}
 
 	private void jButtonAbonosPagadosActionPerformed(ActionEvent evt) {
-		System.out
-				.println("jButtonAbonosPagados.actionPerformed, event=" + evt);
-		// TODO add your code for jButtonAbonosPagados.actionPerformed
+		
+		actualizaAbonosPagados();
 	}
 
 	private void jButtonAbonosPendientesActionPerformed(ActionEvent evt) {
-		System.out.println("jButtonAbonosPendientes.actionPerformed, event="
-				+ evt);
-		// TODO add your code for jButtonAbonosPendientes.actionPerformed
+		
+		actualizaAbonosPendientes();
 	}
 
 	// -----------------Tablas------------------------------------------------------
@@ -1113,6 +1078,30 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 		AbonoDAO miAbono = new AbonoDAO();
 		String informacionAbonos[][] = miAbono.obtenerMatrizAbonos();
+		String titulos[] = miAbono.getColumnas();
+		jTableAbonosRecibidos = new JTable(informacionAbonos, titulos);
+		jScrollAbonosRecibidos.setViewportView(jTableAbonosRecibidos);
+		jTableAbonosRecibidos.setFont(new java.awt.Font("Arial", 0, 16));
+		JTableHeader th = jTableAbonosRecibidos.getTableHeader();
+		th.setFont(new java.awt.Font("Arial", 0, 16));
+	}
+
+	private void actualizaAbonosPendientes() {
+
+		AbonoDAO miAbono = new AbonoDAO();
+		String informacionAbonos[][] = miAbono.obtenerMatrizAbonosPendientes();
+		String titulos[] = miAbono.getColumnas();
+		jTableAbonosRecibidos = new JTable(informacionAbonos, titulos);
+		jScrollAbonosRecibidos.setViewportView(jTableAbonosRecibidos);
+		jTableAbonosRecibidos.setFont(new java.awt.Font("Arial", 0, 16));
+		JTableHeader th = jTableAbonosRecibidos.getTableHeader();
+		th.setFont(new java.awt.Font("Arial", 0, 16));
+	}
+
+	private void actualizaAbonosPagados() {
+
+		AbonoDAO miAbono = new AbonoDAO();
+		String informacionAbonos[][] = miAbono.obtenerMatrizAbonosPagados();
 		String titulos[] = miAbono.getColumnas();
 		jTableAbonosRecibidos = new JTable(informacionAbonos, titulos);
 		jScrollAbonosRecibidos.setViewportView(jTableAbonosRecibidos);
@@ -1144,6 +1133,25 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		jTableClientes.setFont(new java.awt.Font("Arial", 0, 16));
 		JTableHeader th = jTableClientes.getTableHeader();
 		th.setFont(new java.awt.Font("Arial", 0, 16));
+	}
+
+	private void actualizaPrestamoBuscado() {
+
+		AbonoDAO miAbono = new AbonoDAO();
+		String abonoPrestamo = jTextCodigoPrestamo.getText();
+		String informacionAbonos[][] = miAbono
+				.obtenerMatrizAbonosBusqueda(abonoPrestamo);
+		if (informacionAbonos != null) {
+			String titulos[] = miAbono.getColumnas();
+			jTableAbonosRecibidos = new JTable(informacionAbonos, titulos);
+			jScrollAbonosRecibidos.setViewportView(jTableAbonosRecibidos);
+			jTableAbonosRecibidos.setFont(new java.awt.Font("Arial", 0, 16));
+			JTableHeader th = jTableAbonosRecibidos.getTableHeader();
+			th.setFont(new java.awt.Font("Arial", 0, 16));
+			System.out.println("Resultados actualizados");
+		} else {
+			System.out.println("Lista de abonos no encontrada");
+		}
 	}
 
 }
