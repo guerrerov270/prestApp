@@ -21,6 +21,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -31,6 +32,7 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.text.MaskFormatter;
 import javax.swing.SwingUtilities;
 
 import co.prestapp.DAO.AbonoDAO;
@@ -91,7 +93,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelPocentaje;
 	private JTextField jTextTasaInteres;
 	private JLabel jLabelTasaInteres;
-	private JTextField jTextMonto;
+	private JFormattedTextField jTextMonto;
 	private JPanel jPanelEntradasPrestamo;
 	private JTable jTablePrestamos;
 	private JScrollPane jScrollReportes;
@@ -203,7 +205,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 									"Arial", 0, 16));
 						}
 						{
-							jTextMonto = new JTextField();
+							//MaskFormatter formatoMoneda= new MaskFormatter("$ ###,###");
+							jTextMonto = new JFormattedTextField();
 							jPanelEntradasPrestamo.add(jTextMonto,
 									new GridBagConstraints(1, 0, 1, 1, 0.0,
 											0.0, GridBagConstraints.CENTER,
