@@ -3,6 +3,7 @@ package co.prestapp.vista;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -623,7 +624,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jButtonGuardarCliente = new JButton();
 							jPanelAgregarCliente.add(jButtonGuardarCliente);
 							jButtonGuardarCliente.setText("Guardar");
-							jButtonGuardarCliente.setBounds(14, 147, 140, 21);
+							jButtonGuardarCliente.setBounds(14, 144, 140, 21);
 							jButtonGuardarCliente.setFont(new java.awt.Font(
 									"Arial", 0, 16));
 							jButtonGuardarCliente
@@ -638,7 +639,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jButtonCancelar = new JButton();
 							jPanelAgregarCliente.add(jButtonCancelar);
 							jButtonCancelar.setText("Cancelar");
-							jButtonCancelar.setBounds(196, 147, 140, 21);
+							jButtonCancelar.setBounds(196, 144, 140, 21);
 							jButtonCancelar.setFont(new java.awt.Font("Arial",
 									0, 16));
 							jButtonCancelar
@@ -735,7 +736,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jButtonActualizar == null) {
 			jButtonActualizar = new JButton();
 			jButtonActualizar.setText("Actualizar");
-			jButtonActualizar.setBounds(378, 147, 140, 21);
+			jButtonActualizar.setBounds(378, 144, 140, 21);
 			jButtonActualizar.setFont(new java.awt.Font("Arial", 0, 16));
 			jButtonActualizar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
@@ -1181,6 +1182,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			TableColumn columna = modeloColumnas.getColumn(col);
 			columna.setPreferredWidth(maxwidth);
 		}// col
+		tabla.setRowHeight(30);
 
 	}
 
