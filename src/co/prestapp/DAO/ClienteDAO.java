@@ -63,46 +63,6 @@ public class ClienteDAO {
 		return miCliente;
 	}
 
-	// public DefaultTableModel llenaTablaClientes() {
-	//
-	// DefaultTableModel modeloTablaClientes;
-	// modeloTablaClientes = new DefaultTableModel(null, getColumnas());
-	// return setFilas(modeloTablaClientes);
-	//
-	// }// Fin llenaTablaClientes
-
-	// private DefaultTableModel setFilas(DefaultTableModel modeloTablaClientes)
-	// {
-	//
-	// DBConnection miConexion = new DBConnection();
-	// Connection conexion = miConexion.darConexion();
-	// Object datos[] = new Object[5];
-	//
-	// try {
-	// CallableStatement miProcedimiento = conexion
-	// .prepareCall("{call listar_clientes}");
-	// ResultSet miRs = miProcedimiento.executeQuery();
-	//
-	// while (miRs.next()) {
-	//
-	// for (int i = 0; i < 5; i++) {
-	// datos[i] = miRs.getObject(i + 1);
-	//
-	// }
-	// modeloTablaClientes.addRow(datos);
-	//
-	// }
-	// miRs.close();
-	// conexion.close();
-	// } catch (SQLException e) {
-	// System.out
-	// .println("Error al ejecutar consulta para listar clientes");
-	// System.out.println(e.getMessage());
-	// }
-	// return modeloTablaClientes;
-	//
-	// }// Fin setFilas
-
 	public String[] getColumnas() {
 
 		String encabezados[] = { "#", "Código", "Nombre", "Empresa",

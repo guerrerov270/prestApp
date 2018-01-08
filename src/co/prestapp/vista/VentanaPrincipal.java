@@ -2,6 +2,7 @@ package co.prestapp.vista;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -32,6 +33,9 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import javax.swing.text.MaskFormatter;
 import javax.swing.SwingUtilities;
 
@@ -336,7 +340,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jPanelEntradasPrestamo
 										.add(jButtonCancelarPrestamo);
 								jButtonCancelarPrestamo.setText("Cancelar");
-								jButtonCancelarPrestamo.setBounds(162, 161, 137, 23);
+								jButtonCancelarPrestamo.setBounds(162, 161,
+										137, 23);
 								jButtonCancelarPrestamo
 										.setFont(new java.awt.Font("Arial", 0,
 												16));
@@ -377,7 +382,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jPanelEntradasPrestamo
 										.add(jButtonClienteExiste);
 								jButtonClienteExiste.setText("Buscar cliente");
-								jButtonClienteExiste.setBounds(726, 78, 132, 23);
+								jButtonClienteExiste
+										.setBounds(726, 78, 132, 23);
 								jButtonClienteExiste.setFont(new java.awt.Font(
 										"Arial", 0, 16));
 								jButtonClienteExiste
@@ -403,7 +409,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jLabelNombreCliente = new JLabel();
 								jPanelEntradasPrestamo.add(jLabelNombreCliente);
 								jLabelNombreCliente.setText("nombre");
-								jLabelNombreCliente.setBounds(726, 121, 173, 23);
+								jLabelNombreCliente
+										.setBounds(726, 121, 173, 23);
 								jLabelNombreCliente.setFont(new java.awt.Font(
 										"Arial", 0, 16));
 							}
@@ -463,8 +470,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jPanelAbonos
 								.add(jPanelAgregarAbono, BorderLayout.NORTH);
 						jPanelAgregarAbono
-								.setPreferredSize(new java.awt.Dimension(777,
-										208));
+								.setPreferredSize(new java.awt.Dimension(911,
+										204));
 						jPanelAgregarAbono.setBorder(BorderFactory
 								.createTitledBorder("Agregar abono"));
 						jPanelAgregarAbono.setLayout(null);
@@ -578,8 +585,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jPanelClientes.add(jPanelAgregarCliente,
 								BorderLayout.NORTH);
 						jPanelAgregarCliente
-								.setPreferredSize(new java.awt.Dimension(767,
-										191));
+								.setPreferredSize(new java.awt.Dimension(903,
+										182));
 						jPanelAgregarCliente.setLayout(null);
 						{
 							jLabelNombre = new JLabel();
@@ -616,7 +623,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jButtonGuardarCliente = new JButton();
 							jPanelAgregarCliente.add(jButtonGuardarCliente);
 							jButtonGuardarCliente.setText("Guardar");
-							jButtonGuardarCliente.setBounds(14, 161, 137, 23);
+							jButtonGuardarCliente.setBounds(14, 147, 140, 21);
 							jButtonGuardarCliente.setFont(new java.awt.Font(
 									"Arial", 0, 16));
 							jButtonGuardarCliente
@@ -631,7 +638,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jButtonCancelar = new JButton();
 							jPanelAgregarCliente.add(jButtonCancelar);
 							jButtonCancelar.setText("Cancelar");
-							jButtonCancelar.setBounds(197, 161, 137, 23);
+							jButtonCancelar.setBounds(196, 147, 140, 21);
 							jButtonCancelar.setFont(new java.awt.Font("Arial",
 									0, 16));
 							jButtonCancelar
@@ -728,7 +735,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jButtonActualizar == null) {
 			jButtonActualizar = new JButton();
 			jButtonActualizar.setText("Actualizar");
-			jButtonActualizar.setBounds(381, 161, 137, 23);
+			jButtonActualizar.setBounds(378, 147, 140, 21);
 			jButtonActualizar.setFont(new java.awt.Font("Arial", 0, 16));
 			jButtonActualizar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
@@ -1029,7 +1036,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	}
 
 	private void jButtonCancelarAbonoActionPerformed(ActionEvent e) {
-		
+
 	}
 
 	private JButton getJButtonAbonosPagados() {
@@ -1083,6 +1090,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		jTableAbonosRecibidos.setFont(new java.awt.Font("Arial", 0, 16));
 		JTableHeader th = jTableAbonosRecibidos.getTableHeader();
 		th.setFont(new java.awt.Font("Arial", 0, 16));
+		ajustaColumnasAContenido(jTableAbonosRecibidos);
 	}
 
 	private void actualizaAbonosPendientes() {
@@ -1095,6 +1103,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		jTableAbonosRecibidos.setFont(new java.awt.Font("Arial", 0, 16));
 		JTableHeader th = jTableAbonosRecibidos.getTableHeader();
 		th.setFont(new java.awt.Font("Arial", 0, 16));
+		ajustaColumnasAContenido(jTableAbonosRecibidos);
 	}
 
 	private void actualizaAbonosPagados() {
@@ -1107,6 +1116,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		jTableAbonosRecibidos.setFont(new java.awt.Font("Arial", 0, 16));
 		JTableHeader th = jTableAbonosRecibidos.getTableHeader();
 		th.setFont(new java.awt.Font("Arial", 0, 16));
+		ajustaColumnasAContenido(jTableAbonosRecibidos);
 	}
 
 	private void actualizaPrestamos() {
@@ -1120,6 +1130,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 16));
 		JTableHeader th = jTablePrestamos.getTableHeader();
 		th.setFont(new java.awt.Font("Arial", 0, 16));
+		ajustaColumnasAContenido(jTablePrestamos);
 	}
 
 	private void actualizaClientes() {
@@ -1132,6 +1143,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		jTableClientes.setFont(new java.awt.Font("Arial", 0, 16));
 		JTableHeader th = jTableClientes.getTableHeader();
 		th.setFont(new java.awt.Font("Arial", 0, 16));
+		ajustaColumnasAContenido(jTableClientes);
+
 	}
 
 	private void actualizaPrestamoBuscado() {
@@ -1147,9 +1160,28 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jTableAbonosRecibidos.setFont(new java.awt.Font("Arial", 0, 16));
 			JTableHeader th = jTableAbonosRecibidos.getTableHeader();
 			th.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(jTableAbonosRecibidos);
 		} else {
 			System.out.println("Lista de abonos no encontrada");
 		}
+	}
+
+	public void ajustaColumnasAContenido(JTable tabla) {
+
+		TableColumnModel modeloColumnas = tabla.getColumnModel();
+		for (int col = 0; col < tabla.getColumnCount(); col++) {
+			int maxwidth = 0;
+			for (int row = 0; row < tabla.getRowCount(); row++) {
+				TableCellRenderer rend = tabla.getCellRenderer(row, col);
+				Object value = tabla.getValueAt(row, col);
+				Component comp = rend.getTableCellRendererComponent(tabla,
+						value, false, false, row, col);
+				maxwidth = Math.max(comp.getPreferredSize().width, maxwidth);
+			}// row
+			TableColumn columna = modeloColumnas.getColumn(col);
+			columna.setPreferredWidth(maxwidth);
+		}// col
+
 	}
 
 }
