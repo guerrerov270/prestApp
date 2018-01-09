@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+
 import co.prestapp.VO.ClienteVO;
 import co.prestapp.connection.DBConnection;
 
@@ -60,6 +63,12 @@ public class ClienteDAO {
 					.println("Error al ejecutar consulta para buscar cliente");
 			System.out.println(e.getMessage());
 		}
+
+		if (miCliente == null) {
+			JOptionPane.showMessageDialog(null, "Cliente no encontrado",
+					"Alerta", JOptionPane.WARNING_MESSAGE);
+		}
+		
 		return miCliente;
 	}
 

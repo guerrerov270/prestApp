@@ -854,55 +854,77 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	 */
 	private void jButtonAceptarActionPerformed(ActionEvent evt) {
 
-		PrestamoDAO miPrestamo = new PrestamoDAO();
-		AbonoDAO miAbono = new AbonoDAO();
-		// Recojo los datos necesarios
-		float montoPrestamo = Float.parseFloat(jTextMonto.getText());
-		int tasaInteres = Integer.parseInt(jTextTasaInteres.getText());
-		int numeroCuotas = Integer.parseInt(jTextNumeroCuotas.getText());
-		String tipoPlazo = (String) jComboPlazo.getSelectedItem();
-		String tipoPlazoMayus = tipoPlazo.toUpperCase();
-		// El saldo pendiente
-		double totalPagar = miPrestamo.calcularPrestamo(montoPrestamo,
-				tasaInteres, tipoPlazo, numeroCuotas);
-		// El saldo pagado
-		double totalPagado = 0;
-		Date fechaInicio = calendarioPrestamos.getDate();
-		// Fecha de fin
-		ArrayList<Date> fechasPago = miPrestamo.calcularFechasPago(tipoPlazo,
-				numeroCuotas, fechaInicio);
-		// La ultima fecha del arreglo
-		int tamañoArray = fechasPago.size();
-		Date fechaFin = fechasPago.get(tamañoArray - 1);
+		if (validarCamposPrestamo()) {
 
-		// Busco el cliente de nuevo
-		String codigoCliente = JOptionPane
-				.showInputDialog("Verifique código del cliente");
-		// Busco el código en la bd y lo adjunto al prestamo
-		ClienteDAO miCliente = new ClienteDAO();
-		ClienteVO cliente = miCliente.buscarCliente(codigoCliente);
+			PrestamoDAO miPrestamo = new PrestamoDAO();
+			AbonoDAO miAbono = new AbonoDAO();
+			float montoPrestamo = 0;
+			int tasaInteres = 0;
+			int numeroCuotas = 0;
+			// Recojo los datos necesarios
+			try {
+				montoPrestamo = Float.parseFloat(jTextMonto.getText());
+				tasaInteres = Integer.parseInt(jTextTasaInteres.getText());
+				numeroCuotas = Integer.parseInt(jTextNumeroCuotas.getText());
+			} catch (NumberFormatException e) {
+				System.out.println(e.getMessage());
+			}
+			String tipoPlazo = (String) jComboPlazo.getSelectedItem();
+			String tipoPlazoMayus = tipoPlazo.toUpperCase();
+			// El saldo pendiente
+			double totalPagar = miPrestamo.calcularPrestamo(montoPrestamo,
+					tasaInteres, tipoPlazo, numeroCuotas);
+			// El saldo pagado
+			double totalPagado = 0;
+			Date fechaInicio = calendarioPrestamos.getDate();
+			// Fecha de fin
+			ArrayList<Date> fechasPago = miPrestamo.calcularFechasPago(
+					tipoPlazo, numeroCuotas, fechaInicio);
+			// La ultima fecha del arreglo
+			int tamañoArray = 0;
+			Date fechaFin = null;
+			String codigoCliente = "";
+			try {
+				tamañoArray = fechasPago.size();
+				fechaFin = fechasPago.get(tamañoArray - 1);
+				// Busco el cliente de nuevo
+				codigoCliente = JOptionPane
+						.showInputDialog("Verifique código del cliente");
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
 
-		// Cambio valores de etiquetas en la vista
-		jLabelNombreCliente.setText(cliente.getNombreCliente());
-		jLabelCodigo.setForeground(Color.RED);
-		jLabelCodigo.setText(cliente.getCodigoCliente() + "");
-		jLabelEmpresaResult.setText(cliente.getEmpresaCliente());
+			// Busco el código en la bd y lo adjunto al prestamo
+			ClienteDAO miCliente = new ClienteDAO();
+			ClienteVO cliente = miCliente.buscarCliente(codigoCliente);
+			if (cliente == null) {
+				JOptionPane.showMessageDialog(this, "Cliente no encontrado",
+						"Alerta", JOptionPane.WARNING_MESSAGE);
+			} else {
+				// Cambio valores de etiquetas en la vista
+				jLabelNombreCliente.setText(cliente.getNombreCliente());
+				jLabelCodigo.setForeground(Color.RED);
+				jLabelCodigo.setText(cliente.getCodigoCliente() + "");
+				jLabelEmpresaResult.setText(cliente.getEmpresaCliente());
 
-		// El estado del prestamo
-		String estadoPrestamo = "PENDIENTE";
+				// El estado del prestamo
+				String estadoPrestamo = "PENDIENTE";
 
-		// Agrego el prestamo
-		String codigoPrestamo = miPrestamo.agregarPrestamo(montoPrestamo,
-				tasaInteres, numeroCuotas, totalPagar, totalPagado,
-				fechaInicio, fechaFin, tipoPlazoMayus, codigoCliente,
-				estadoPrestamo);
+				// Agrego el prestamo
+				String codigoPrestamo = miPrestamo.agregarPrestamo(
+						montoPrestamo, tasaInteres, numeroCuotas, totalPagar,
+						totalPagado, fechaInicio, fechaFin, tipoPlazoMayus,
+						codigoCliente, estadoPrestamo);
 
-		// Creo los abonos correspondientes a ese préstamo
-		miAbono.crearAbonosPrestamo(totalPagar, numeroCuotas, fechasPago,
-				codigoPrestamo);
+				// Creo los abonos correspondientes a ese préstamo
+				miAbono.crearAbonosPrestamo(totalPagar, numeroCuotas,
+						fechasPago, codigoPrestamo);
 
-		limpiarCamposPrestamo();
-		actualizaPrestamos();
+				limpiarCamposPrestamo();
+				actualizaPrestamos();
+			}
+
+		}
 
 	}
 
@@ -1184,6 +1206,65 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		}// col
 		tabla.setRowHeight(30);
 
-	}
+	}// Fin ajustaColumnasAContenido
+
+	public boolean validarCamposPrestamo() {
+
+		boolean resultado = false;
+
+		if (jTextMonto.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(this,
+					"Debe especificar un monto para el préstamo", "Alerta",
+					JOptionPane.WARNING_MESSAGE);
+		} else {
+			if (jTextTasaInteres.getText().isEmpty()) {
+				JOptionPane
+						.showMessageDialog(
+								this,
+								"Debe especificar una tasa de interés para el préstamo",
+								"Alerta", JOptionPane.WARNING_MESSAGE);
+			} else {
+				if (jComboPlazo.getSelectedIndex() == 0) {
+					JOptionPane
+							.showMessageDialog(
+									this,
+									"Debe especificar un tipo de plazo para el préstamo",
+									"Alerta", JOptionPane.WARNING_MESSAGE);
+				} else {
+					if (calendarioPrestamos.getDate() == null) {
+						JOptionPane
+								.showMessageDialog(
+										this,
+										"Debe especificar una fecha de inicio para el préstamo",
+										"Alerta", JOptionPane.WARNING_MESSAGE);
+					} else {
+						if (jTextNumeroCuotas.getText().isEmpty()) {
+							JOptionPane
+									.showMessageDialog(
+											this,
+											"Debe especificar un número de cuotas para el préstamo",
+											"Alerta",
+											JOptionPane.WARNING_MESSAGE);
+						} else {
+							resultado = true;
+
+						}
+					}
+				}
+			}
+
+		}
+
+		return resultado;
+
+	}// Fin validarCamposPrestamo
+
+	public void validarCamposCliente() {
+
+	}// Fin validarCamposPrestamo
+
+	public void validarCamposAbonoPrestamo() {
+
+	}// Fin validarCamposPrestamo
 
 }
