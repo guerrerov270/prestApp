@@ -1,7 +1,5 @@
 package co.prestapp.VO;
 
-import java.sql.Date;
-
 public class PrestamoVO {
 
 	private int idPrestamo;

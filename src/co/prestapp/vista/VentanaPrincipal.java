@@ -29,12 +29,10 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import javax.swing.text.MaskFormatter;
 import javax.swing.SwingUtilities;
 
 import co.prestapp.DAO.AbonoDAO;
@@ -68,6 +66,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelMonto;
 	private JTable jTableAbonosRecibidos;
 	private JScrollPane jScrollAbonosRecibidos;
+	@SuppressWarnings("rawtypes")
 	private JComboBox jComboFechasCobro;
 	public JLabel jLabelCodigo;
 	public JLabel jLabelNombreCliente;
@@ -76,6 +75,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelTotalPago;
 	private JLabel jLabelCliente;
 	private JButton jButtonAceptar;
+	@SuppressWarnings("rawtypes")
 	private JComboBox jComboPlazo;
 	private JLabel jLabelTipoPlazo;
 	private JLabel jLabelDiaCobro;
@@ -106,6 +106,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JButton jButtonCalcular;
 	private JButton jButtonActualizar;
 	private JButton jButtonCancelar;
+	@SuppressWarnings("unused")
 	private JButton jButtonCancelarPrestamo;
 	private JButton jButtonGuardarCliente;
 	private JTextField jTextNombre;
@@ -133,6 +134,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void initGUI() {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -640,10 +642,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public void limpiarCamposPrestamo() {
 
 		jTextMonto.setText("");
 		jTextTasaInteres.setText("");
+		@SuppressWarnings("rawtypes")
 		DefaultComboBoxModel modelo = new DefaultComboBoxModel();
 		modelo.addElement("Nada para mostrar");
 		jComboFechasCobro.setModel(modelo);
@@ -675,6 +679,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		return jButtonCalcular;
 	}
 
+	@SuppressWarnings("unchecked")
 	private void jButtonCalcularActionPerformed(ActionEvent evt) throws Exception {
 
 		float montoPrestamo = Float.parseFloat(jTextMonto.getText());
@@ -688,6 +693,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 		PrestamoDAO miPrestamo = new PrestamoDAO();
 		ArrayList<Date> fechasPago = miPrestamo.calcularFechasPago(tipoPlazo, numeroCuotas, fechaInicio);
+		@SuppressWarnings("rawtypes")
 		DefaultComboBoxModel modeloNuevo = new DefaultComboBoxModel();
 		modeloNuevo = llenaComboPlazos(fechasPago);
 		jComboFechasCobro.setModel(modeloNuevo);
@@ -827,6 +833,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		return jLabelEmpresaResult;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private DefaultComboBoxModel llenaComboPlazos(ArrayList<Date> fechasPago) {
 
 		DefaultComboBoxModel modelo = new DefaultComboBoxModel();
@@ -834,6 +841,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		while (it.hasNext()) {
 			Date fechaSalida = (Date) it.next();
 			// Aniadimos la fecha al modelo
+			@SuppressWarnings("unused")
 			java.sql.Date fechaFormateada = new java.sql.Date(fechaSalida.getTime());
 			DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
 			modelo.addElement(formato.format(fechaSalida));
