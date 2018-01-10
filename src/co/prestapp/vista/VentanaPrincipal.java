@@ -66,7 +66,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JPanel jPanelAbonos;
 	private JPanel jPanelClientes;
 	private JPanel jPanelReportes;
-	private JTabbedPane jTabPestañas;
+	private JTabbedPane jTabPestanias;
 	private JLabel jLabelMontoPrestamo;
 	private JPanel jPanelAgregarAbono;
 	private JPanel jPanelAgregarCliente;
@@ -168,11 +168,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				getContentPane().add(jPanelContenedor, BorderLayout.CENTER);
 				jPanelContenedor.setLayout(jPanelContenedorLayout);
 				{
-					jTabPestañas = new JTabbedPane();
-					jPanelContenedor.add(jTabPestañas, BorderLayout.CENTER);
-					jTabPestañas.setBounds(8, 5, 782, 553);
+					jTabPestanias = new JTabbedPane();
+					jPanelContenedor.add(jTabPestanias, BorderLayout.CENTER);
+					jTabPestanias.setBounds(8, 5, 782, 553);
 
-					jTabPestañas.addTab("Préstamos", jPanelPrestamos);
+					jTabPestanias.addTab("Préstamos", jPanelPrestamos);
 					jPanelPrestamos.setPreferredSize(new java.awt.Dimension(
 							921, 547));
 					{
@@ -453,7 +453,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 									});
 						}
 					}
-					jTabPestañas.addTab("Abonos", jPanelAbonos);
+					jTabPestanias.addTab("Abonos", jPanelAbonos);
 					{
 						jScrollAbonosRecibidos = new JScrollPane();
 						jPanelAbonos.add(jScrollAbonosRecibidos,
@@ -563,7 +563,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 									});
 						}
 					}
-					jTabPestañas.addTab("Clientes", jPanelClientes);
+					jTabPestanias.addTab("Clientes", jPanelClientes);
 					jPanelClientes.setBorder(BorderFactory
 							.createTitledBorder("Datos de clientes"));
 					jPanelClientes.setPreferredSize(new java.awt.Dimension(767,
@@ -667,7 +667,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 									0, 16));
 						}
 					}
-					jTabPestañas.addTab("Reportes", jPanelReportes);
+					jTabPestanias.addTab("Reportes", jPanelReportes);
 
 				}
 			}
@@ -842,11 +842,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(fecha); // Configuramos la fecha que se recibe
-		calendar.add(Calendar.DAY_OF_YEAR, dias); // numero de días a añadir, o
+		calendar.add(Calendar.DAY_OF_YEAR, dias); // numero de días a aniadir, o
 													// restar en caso de días<0
 
 		return calendar.getTime(); // Devuelve el objeto Date con los nuevos
-									// días añadidos
+									// días aniadidos
 
 	}
 
@@ -867,7 +867,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		double totalPagar = 0;
 		double totalPagado = 0;
 		Date fechaInicio = null;
-		int tamañoArray = 0;
+		int tamanioArray = 0;
 		// La ultima fecha del arreglo
 		Date fechaFin = null;
 		String codigoCliente = "";
@@ -895,8 +895,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			fechasPago = miPrestamo.calcularFechasPago(tipoPlazo, numeroCuotas,
 					fechaInicio);
 			try {
-				tamañoArray = fechasPago.size();
-				fechaFin = fechasPago.get(tamañoArray - 1);
+				tamanioArray = fechasPago.size();
+				fechaFin = fechasPago.get(tamanioArray - 1);
 				// Busco el cliente de nuevo
 				codigoCliente = JOptionPane
 						.showInputDialog("Verifique código del cliente");
@@ -981,7 +981,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		Iterator it = fechasPago.iterator();
 		while (it.hasNext()) {
 			Date fechaSalida = (Date) it.next();
-			// Añadimos la fecha al modelo
+			// Aniadimos la fecha al modelo
 			java.sql.Date fechaFormateada = new java.sql.Date(
 					fechaSalida.getTime());
 			DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
