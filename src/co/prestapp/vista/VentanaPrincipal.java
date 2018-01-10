@@ -71,6 +71,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTable jTableClientes;
 	private JScrollPane jScrollPaneClientes;
 	private JButton jButtonCancelarAbono;
+	private JButton jButtonPrestamosPendientes;
 	private JButton jButtonGuardar;
 	private JTextField jTextCodigoPrestamo;
 	private JLabel jLabelCodigoPrestamo;
@@ -180,7 +181,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jScrollReportes = new JScrollPane();
 						jPanelPrestamos.add(jScrollReportes, BorderLayout.SOUTH);
 						jScrollReportes.setBounds(8, 263, 777, 381);
-						jScrollReportes.setPreferredSize(new java.awt.Dimension(911, 304));
+						jScrollReportes.setPreferredSize(new java.awt.Dimension(911, 354));
 						{
 
 						}
@@ -285,7 +286,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 							ImageIcon otroicon = new ImageIcon(otraimg);
 							jButtonAceptar = new JButton(otroicon);
-							jButtonAceptar.setBounds(12, 152, 130, 30);
+							jButtonAceptar.setBounds(9, 157, 130, 30);
 							jPanelEntradasPrestamo.add(jButtonAceptar);
 							{
 								ImageIcon icono1 = new ImageIcon("res/cancelar.png");
@@ -295,7 +296,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								JButton jButtonCancelarPrestamo = new JButton(otroicon1);
 								jPanelEntradasPrestamo.add(jButtonCancelarPrestamo);
 								jButtonCancelarPrestamo.setText("Cancelar");
-								jButtonCancelarPrestamo.setBounds(174, 152, 145, 30);
+								jButtonCancelarPrestamo.setBounds(145, 157, 145, 30);
 								jButtonCancelarPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
 								jButtonCancelarPrestamo.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
@@ -308,7 +309,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jLabelCliente = new JLabel();
 								jPanelEntradasPrestamo.add(jLabelCliente);
 								jLabelCliente.setText("Cliente:");
-								jLabelCliente.setBounds(579, 121, 132, 23);
+								jLabelCliente.setBounds(591, 121, 132, 23);
 								jLabelCliente.setFont(new java.awt.Font("Arial", 0, 16));
 							}
 							{
@@ -321,7 +322,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							{
 								jLabelTotalFormato = new JLabel();
 								jPanelEntradasPrestamo.add(jLabelTotalFormato);
-								jLabelTotalFormato.setBounds(476, 121, 178, 23);
+								jLabelTotalFormato.setBounds(478, 122, 178, 23);
 								jLabelTotalFormato.setFont(new java.awt.Font("Arial", 0, 16));
 							}
 							{
@@ -359,7 +360,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jLabelCodigo = new JLabel();
 								jPanelEntradasPrestamo.add(jLabelCodigo);
 								jLabelCodigo.setText("Código");
-								jLabelCodigo.setBounds(579, 161, 121, 23);
+								jLabelCodigo.setBounds(593, 161, 121, 23);
 								jLabelCodigo.setFont(new java.awt.Font("Arial", 0, 16));
 							}
 							{
@@ -372,6 +373,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jPanelEntradasPrestamo.add(getJButtonCalcular());
 								jPanelEntradasPrestamo.add(getJButton2());
 								jPanelEntradasPrestamo.add(getJLabelEmpresaResult());
+								jPanelEntradasPrestamo.add(getJButtonPrestamosPendientes());
 								jComboFechasCobro.setBounds(162, 121, 178, 23);
 								jComboFechasCobro.setFont(new java.awt.Font("Arial", 0, 16));
 							}
@@ -390,7 +392,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jScrollAbonosRecibidos = new JScrollPane();
 						jPanelAbonos.add(jScrollAbonosRecibidos, BorderLayout.SOUTH);
 						jScrollAbonosRecibidos.setBounds(8, 263, 777, 381);
-						jScrollAbonosRecibidos.setPreferredSize(new java.awt.Dimension(911, 304));
+						jScrollAbonosRecibidos.setPreferredSize(new java.awt.Dimension(911, 354));
 						{
 
 						}
@@ -490,7 +492,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jScrollPaneClientes = new JScrollPane();
 						jPanelClientes.add(jScrollPaneClientes, BorderLayout.SOUTH);
 						jScrollPaneClientes.setBounds(8, 263, 777, 381);
-						jScrollPaneClientes.setPreferredSize(new java.awt.Dimension(911, 304));
+						jScrollPaneClientes.setPreferredSize(new java.awt.Dimension(911, 354));
 						{
 
 						}
@@ -524,7 +526,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						{
 							jTextEmpresa = new JTextField();
 							jPanelAgregarCliente.add(jTextEmpresa);
-							jTextEmpresa.setBounds(301, 19, 178, 23);
+							jTextEmpresa.setBounds(403, 19, 178, 23);
 							jTextEmpresa.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
@@ -854,7 +856,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			ImageIcon otroicon = new ImageIcon(otraimg);
 			jButton2 = new JButton(otroicon);
 			jButton2.setText("Todos");
-			jButton2.setBounds(330, 152, 130, 30);
+			jButton2.setBounds(296, 157, 130, 30);
 			jButton2.setFont(new java.awt.Font("Arial", 0, 16));
 			jButton2.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
@@ -1152,6 +1154,25 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		}
 	}
 
+	private void actualizaPrestamoVencido() {
+
+		PrestamoDAO miPrestamo = new PrestamoDAO();
+		String informacionAbonos[][] = miPrestamo.obtenerMatrizPrestamosVencidos();
+		if (informacionAbonos != null) {
+			String titulos[] = miPrestamo.getColumnas();
+			jTablePrestamos = new JTable(informacionAbonos, titulos);
+			jScrollReportes.setViewportView(jTablePrestamos);
+			jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 16));
+			JTableHeader th = jTablePrestamos.getTableHeader();
+			th.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(jTablePrestamos);
+
+		} else {
+			System.out.println("Lista de abonos no encontrada");
+			JOptionPane.showMessageDialog(this, "Préstamos no encontrados", "Alerta", JOptionPane.WARNING_MESSAGE);
+		}
+	}
+
 	public void ajustaColumnasAContenido(JTable tabla) {
 
 		TableColumnModel modeloColumnas = tabla.getColumnModel();
@@ -1259,5 +1280,29 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		return resultado;
 
 	}// Fin validarCamposPrestamo
+
+	private JButton getJButtonPrestamosPendientes() {
+		if (jButtonPrestamosPendientes == null) {
+			ImageIcon icono = new ImageIcon("res/noPagado.png");
+			Image img = icono.getImage();
+			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+			ImageIcon otroicon = new ImageIcon(otraimg);
+			jButtonPrestamosPendientes = new JButton(otroicon);
+			jButtonPrestamosPendientes.setText("Vencidos");
+			jButtonPrestamosPendientes.setFont(new java.awt.Font("Arial", 0, 16));
+			jButtonPrestamosPendientes.setBounds(431, 157, 150, 30);
+			jButtonPrestamosPendientes.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+					jButtonPrestamosPendientesActionPerformed(evt);
+				}
+			});
+		}
+		return jButtonPrestamosPendientes;
+	}
+
+	private void jButtonPrestamosPendientesActionPerformed(ActionEvent evt) {
+
+		actualizaPrestamoVencido();
+	}
 
 }
