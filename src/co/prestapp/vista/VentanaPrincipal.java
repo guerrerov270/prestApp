@@ -715,13 +715,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	 */
 	private void jButtonGuardarClienteActionPerformed(ActionEvent evt) {
 
-		String nombre = jTextNombre.getText();
-		String empresa = jTextEmpresa.getText();
-		String referencia = jTextReferencia.getText();
-		ClienteDAO miCliente = new ClienteDAO();
-		miCliente.agregarCliente(nombre, empresa, referencia);
-		limpiarCamposCliente();
-		actualizaClientes();
+		if (validarCamposCliente()) {
+			String nombre = jTextNombre.getText();
+			String empresa = jTextEmpresa.getText();
+			String referencia = jTextReferencia.getText();
+			ClienteDAO miCliente = new ClienteDAO();
+			miCliente.agregarCliente(nombre, empresa, referencia);
+			JOptionPane.showMessageDialog(this, "Cliente guardado con éxito",
+					"Información", JOptionPane.INFORMATION_MESSAGE);
+			limpiarCamposCliente();
+			actualizaClientes();
+
+		}
 
 	}
 
@@ -1048,15 +1053,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private void jButtonBuscarPrestamoActionPerformed(ActionEvent evt) {
 
-		if(jTextCodigoPrestamo.getText().isEmpty()){
+		if (jTextCodigoPrestamo.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(this,
 					"Debe especificar un código de préstamo", "Alerta",
 					JOptionPane.WARNING_MESSAGE);
-		}else{
+		} else {
 			actualizaPrestamoBuscado();
 		}
-		
-		
 
 	}
 
@@ -1320,8 +1323,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}// Fin validarCamposPrestamo
 
-	public void validarCamposCliente() {
+	public boolean validarCamposCliente() {
 
+		boolean resultado = false;
+
+		if (jTextNombre.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(this,
+					"Debe especificar un nombre para el cliente", "Alerta",
+					JOptionPane.WARNING_MESSAGE);
+		} else {
+			resultado = true;
+		}
+
+		return resultado;
 	}// Fin validarCamposPrestamo
 
 	public boolean validarCamposAbonoPrestamo() {
