@@ -17,8 +17,7 @@ public class ClienteDAO {
 		Connection conexion = miConexion.darConexion();
 		String codigoCliente = recuperarCodigoCliente();
 		try {
-			CallableStatement miProcedimiento = conexion
-					.prepareCall("{call agregar_cliente(?,?,?,?)}");
+			CallableStatement miProcedimiento = conexion.prepareCall("{call agregar_cliente(?,?,?,?)}");
 			miProcedimiento.setString(1, codigoCliente);
 			miProcedimiento.setString(2, nombre);
 			miProcedimiento.setString(3, empresa);
@@ -27,8 +26,7 @@ public class ClienteDAO {
 			conexion.close();
 
 		} catch (SQLException e) {
-			System.out
-					.println("Error al ejecutar consulta para agregar cliente");
+			System.out.println("Error al ejecutar consulta para agregar cliente");
 			System.out.println(e.getMessage());
 		}
 
@@ -40,8 +38,7 @@ public class ClienteDAO {
 		Connection conexion = miConexion.darConexion();
 		ClienteVO miCliente = new ClienteVO();
 		try {
-			CallableStatement miProcedimiento = conexion
-					.prepareCall("{call buscar_cliente(?)}");
+			CallableStatement miProcedimiento = conexion.prepareCall("{call buscar_cliente(?)}");
 			miProcedimiento.setString(1, codigoCliente);
 			ResultSet miRs = miProcedimiento.executeQuery();
 			if (miRs.next()) {
@@ -49,15 +46,13 @@ public class ClienteDAO {
 				miCliente.setCodigoCliente(miRs.getString("codigoCliente"));
 				miCliente.setNombreCliente(miRs.getString("nombreCliente"));
 				miCliente.setEmpresaCliente(miRs.getString("empresaCliente"));
-				miCliente.setReferenciaCliente(miRs
-						.getString("referenciaCliente"));
+				miCliente.setReferenciaCliente(miRs.getString("referenciaCliente"));
 			}
 
 			conexion.close();
 
 		} catch (SQLException e) {
-			System.out
-					.println("Error al ejecutar consulta para buscar cliente");
+			System.out.println("Error al ejecutar consulta para buscar cliente");
 			System.out.println(e.getMessage());
 		}
 
@@ -66,8 +61,7 @@ public class ClienteDAO {
 
 	public String[] getColumnas() {
 
-		String encabezados[] = { "#", "Código", "Nombre", "Empresa",
-				"Referencia", "Estado" };
+		String encabezados[] = { "#", "Código", "Nombre", "Empresa", "Referencia", "Estado" };
 		return encabezados;
 	}// Fin getColumnas
 
@@ -77,22 +71,61 @@ public class ClienteDAO {
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
 		try {
-			CallableStatement miProcedimiento = conexion
-					.prepareCall("{call generar_codigo_cliente(?)}");
+			CallableStatement miProcedimiento = conexion.prepareCall("{call generar_codigo_cliente(?)}");
 			miProcedimiento.registerOutParameter(1, Types.VARCHAR);
 			miProcedimiento.executeQuery();
 			codigoCliente = miProcedimiento.getString(1);
 			conexion.close();
 
 		} catch (SQLException e) {
-			System.out
-					.println("Error al ejecutar consulta para generar codigo de cliente");
+			System.out.println("Error al ejecutar consulta para generar codigo de cliente");
 			System.out.println(e.getMessage());
 		}
 
 		return codigoCliente;
 
 	}// Fin recuperarCodigoCliente
+
+	public int contarClientesRegistrados() {
+
+		int totalRegistrados = 0;
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		try {
+			CallableStatement miProcedimiento = conexion.prepareCall("{call contar_clientes_registrados(?)}");
+			miProcedimiento.registerOutParameter(1, Types.NUMERIC);
+			miProcedimiento.executeQuery();
+			totalRegistrados = miProcedimiento.getInt(1);
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para contar clientes registrados");
+			System.out.println(e.getMessage());
+		}
+
+		return totalRegistrados;
+
+	}
+
+	public int contarClientesActivos() {
+
+		int totalActivos = 0;
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		try {
+			CallableStatement miProcedimiento = conexion.prepareCall("{call contar_clientes_activos(?)}");
+			miProcedimiento.registerOutParameter(1, Types.NUMERIC);
+			miProcedimiento.executeQuery();
+			totalActivos = miProcedimiento.getInt(1);
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para contar clientes activos");
+			System.out.println(e.getMessage());
+		}
+
+		return totalActivos;
+	}
 
 	// ------------------------------------------------------VO-------------------------------------------
 
@@ -104,8 +137,7 @@ public class ClienteDAO {
 		ClienteVO miCliente;
 		;
 		try {
-			CallableStatement miProcedimiento = conexion
-					.prepareCall("{call listar_clientes}");
+			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_clientes}");
 			ResultSet miRs = miProcedimiento.executeQuery();
 
 			while (miRs.next()) {
@@ -114,8 +146,7 @@ public class ClienteDAO {
 				miCliente.setCodigoCliente(miRs.getString("codigoCliente"));
 				miCliente.setNombreCliente(miRs.getString("nombreCliente"));
 				miCliente.setEmpresaCliente(miRs.getString("empresaCliente"));
-				miCliente.setReferenciaCliente(miRs
-						.getString("referenciaCliente"));
+				miCliente.setReferenciaCliente(miRs.getString("referenciaCliente"));
 				miCliente.setEstadoCliente(miRs.getString("estadoCliente"));
 
 				listaClientes.add(miCliente);
@@ -124,8 +155,7 @@ public class ClienteDAO {
 			conexion.close();
 
 		} catch (SQLException e) {
-			System.out
-					.println("Error al ejecutar consulta para listar clientes");
+			System.out.println("Error al ejecutar consulta para listar clientes");
 			System.out.println(e.getMessage());
 
 		}
