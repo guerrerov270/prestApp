@@ -71,6 +71,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTable jTableClientes;
 	private JScrollPane jScrollPaneClientes;
 	private JButton jButtonCancelarAbono;
+	private JTextField jTextIntersesePendientesRecaudo;
+	private JLabel jLabelInteresesPendientesRecaudo;
+	private JTextField jTextTotalrecaudoPendiente;
+	private JLabel jLabelTotalRecaudoPendiente;
 	private JTextField jTextTotalAbonosPendientes;
 	private JTextField jTextTotalAbonosCobrados;
 	private JLabel jLabelTotalAbonosPendientes;
@@ -1226,6 +1230,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		float totalPrestado = 0;
 		float totalRecaudado = 0;
 		float interesesRecaudados = 0;
+		float intersesARecaudar = 0;
+		float totalRecaudoPendiente = 0;
 		int totalPrestamosActivos = 0;
 		int totalPrestamosFinalizados = 0;
 		int totalPrestamosVencidos = 0;
@@ -1250,14 +1256,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 			totalPrestado = miPrestamo.calcularTotalPrestado();
 			totalRecaudado = miPrestamo.calcularTotalRecaudado();
-			interesesRecaudados = miPrestamo.calcularInteresesRecaudados();
+			interesesRecaudados = miPrestamo.calcularInteresesPendientesRecaudo();
+			intersesARecaudar = miPrestamo.calcularInteresesRecaudados();
+			totalRecaudoPendiente = miPrestamo.calcularRecaudoPendiente();
 			jTextTotalPrestado.setText(totalPrestado + "");
 			jTextTotalRecaudado.setText(totalRecaudado + "");
 			jTextInteresesRecaudados.setText(interesesRecaudados + "");
+			jTextTotalrecaudoPendiente.setText(totalRecaudoPendiente + "");
+			jTextIntersesePendientesRecaudo.setText(intersesARecaudar + "");
 
 			totalPrestamosActivos = miPrestamo.contarPrestamosActivos();
 			totalPrestamosFinalizados = miPrestamo.contarPrestamosFinalizados();
 			totalPrestamosVencidos = miPrestamo.contarPrestamosVencidos();
+
 			jTextTotalPrestamosActivos.setText(totalPrestamosActivos + "");
 			jTextTotalPrestamosFinalizados.setText(totalPrestamosFinalizados + "");
 			jTextTotalprestamosVencidos.setText(totalPrestamosVencidos + "");
@@ -1464,6 +1475,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jPanelCifras.add(getJLabelTotalAbonosPendientes());
 			jPanelCifras.add(getJTextTotalAbonosCobrados());
 			jPanelCifras.add(getJTextTotalAbonosPendientes());
+			jPanelCifras.add(getJLabelTotalRecaudoPendiente());
+			jPanelCifras.add(getJTextTotalrecaudoPendiente());
+			jPanelCifras.add(getJLabelInteresesPendientesRecaudo());
+			jPanelCifras.add(getJTextIntersesePendientesRecaudo());
 		}
 		return jPanelCifras;
 	}
@@ -1481,7 +1496,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jLabelTotalPrestado == null) {
 			jLabelTotalPrestado = new JLabel();
 			jLabelTotalPrestado.setText("Total prestado:");
-			jLabelTotalPrestado.setBounds(15, 30, 211, 23);
+			jLabelTotalPrestado.setBounds(17, 30, 211, 23);
 			jLabelTotalPrestado.setFont(new java.awt.Font("Arial", 0, 16));
 		}
 		return jLabelTotalPrestado;
@@ -1491,7 +1506,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jLabelTotalrecibido == null) {
 			jLabelTotalrecibido = new JLabel();
 			jLabelTotalrecibido.setText("Total recaudado:");
-			jLabelTotalrecibido.setBounds(15, 73, 211, 23);
+			jLabelTotalrecibido.setBounds(17, 116, 211, 23);
 			jLabelTotalrecibido.setFont(new java.awt.Font("Arial", 0, 16));
 		}
 		return jLabelTotalrecibido;
@@ -1510,7 +1525,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField getJTextTotalRecaudado() {
 		if (jTextTotalRecaudado == null) {
 			jTextTotalRecaudado = new JTextField();
-			jTextTotalRecaudado.setBounds(226, 73, 178, 23);
+			jTextTotalRecaudado.setBounds(226, 116, 178, 23);
 			jTextTotalRecaudado.setFont(new java.awt.Font("Arial", 0, 16));
 			jTextTotalRecaudado.setEditable(false);
 		}
@@ -1521,7 +1536,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jLabelInteresesRecaudados == null) {
 			jLabelInteresesRecaudados = new JLabel();
 			jLabelInteresesRecaudados.setText("Intereses recaudados:");
-			jLabelInteresesRecaudados.setBounds(16, 116, 210, 23);
+			jLabelInteresesRecaudados.setBounds(17, 159, 210, 23);
 			jLabelInteresesRecaudados.setFont(new java.awt.Font("Arial", 0, 16));
 		}
 		return jLabelInteresesRecaudados;
@@ -1530,7 +1545,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField getJTextInteresesRecaudados() {
 		if (jTextInteresesRecaudados == null) {
 			jTextInteresesRecaudados = new JTextField();
-			jTextInteresesRecaudados.setBounds(226, 116, 178, 23);
+			jTextInteresesRecaudados.setBounds(226, 159, 178, 23);
 			jTextInteresesRecaudados.setFont(new java.awt.Font("Arial", 0, 16));
 			jTextInteresesRecaudados.setEditable(false);
 		}
@@ -1541,7 +1556,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jLabelTotalPrestamosActivos == null) {
 			jLabelTotalPrestamosActivos = new JLabel();
 			jLabelTotalPrestamosActivos.setText("Total préstamos activos:");
-			jLabelTotalPrestamosActivos.setBounds(16, 159, 210, 23);
+			jLabelTotalPrestamosActivos.setBounds(17, 246, 210, 23);
 			jLabelTotalPrestamosActivos.setFont(new java.awt.Font("Arial", 0, 16));
 		}
 		return jLabelTotalPrestamosActivos;
@@ -1550,7 +1565,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField getJTextTotalPrestamosActivos() {
 		if (jTextTotalPrestamosActivos == null) {
 			jTextTotalPrestamosActivos = new JTextField();
-			jTextTotalPrestamosActivos.setBounds(226, 159, 178, 23);
+			jTextTotalPrestamosActivos.setBounds(226, 246, 178, 23);
 			jTextTotalPrestamosActivos.setFont(new java.awt.Font("Arial", 0, 16));
 			jTextTotalPrestamosActivos.setEditable(false);
 		}
@@ -1561,7 +1576,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jLabelTotalPrestamosFinalizados == null) {
 			jLabelTotalPrestamosFinalizados = new JLabel();
 			jLabelTotalPrestamosFinalizados.setText("Total préstamos finalizados:");
-			jLabelTotalPrestamosFinalizados.setBounds(17, 202, 209, 23);
+			jLabelTotalPrestamosFinalizados.setBounds(448, 30, 209, 23);
 			jLabelTotalPrestamosFinalizados.setFont(new java.awt.Font("Arial", 0, 16));
 		}
 		return jLabelTotalPrestamosFinalizados;
@@ -1570,7 +1585,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField getJTextTotalPrestamosFinalizados() {
 		if (jTextTotalPrestamosFinalizados == null) {
 			jTextTotalPrestamosFinalizados = new JTextField();
-			jTextTotalPrestamosFinalizados.setBounds(226, 202, 178, 23);
+			jTextTotalPrestamosFinalizados.setBounds(710, 30, 178, 23);
 			jTextTotalPrestamosFinalizados.setFont(new java.awt.Font("Arial", 0, 16));
 			jTextTotalPrestamosFinalizados.setEditable(false);
 		}
@@ -1581,7 +1596,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jLabelTotalPrestamosVencidos == null) {
 			jLabelTotalPrestamosVencidos = new JLabel();
 			jLabelTotalPrestamosVencidos.setText("Total préstamos vencidos:");
-			jLabelTotalPrestamosVencidos.setBounds(15, 246, 212, 23);
+			jLabelTotalPrestamosVencidos.setBounds(448, 73, 212, 23);
 			jLabelTotalPrestamosVencidos.setFont(new java.awt.Font("Arial", 0, 16));
 		}
 		return jLabelTotalPrestamosVencidos;
@@ -1590,7 +1605,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField getJTextTotalprestamosVencidos() {
 		if (jTextTotalprestamosVencidos == null) {
 			jTextTotalprestamosVencidos = new JTextField();
-			jTextTotalprestamosVencidos.setBounds(227, 246, 178, 23);
+			jTextTotalprestamosVencidos.setBounds(710, 73, 178, 23);
 			jTextTotalprestamosVencidos.setFont(new java.awt.Font("Arial", 0, 16));
 			jTextTotalprestamosVencidos.setEditable(false);
 		}
@@ -1601,7 +1616,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jLabelTotalclientesRegistrados == null) {
 			jLabelTotalclientesRegistrados = new JLabel();
 			jLabelTotalclientesRegistrados.setText("Total clientes registrados:");
-			jLabelTotalclientesRegistrados.setBounds(448, 116, 178, 23);
+			jLabelTotalclientesRegistrados.setBounds(448, 202, 178, 23);
 			jLabelTotalclientesRegistrados.setFont(new java.awt.Font("Arial", 0, 16));
 		}
 		return jLabelTotalclientesRegistrados;
@@ -1610,7 +1625,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField getJTextTotalClientesactivos() {
 		if (jTextTotalClientesactivos == null) {
 			jTextTotalClientesactivos = new JTextField();
-			jTextTotalClientesactivos.setBounds(710, 159, 178, 23);
+			jTextTotalClientesactivos.setBounds(710, 246, 178, 23);
 			jTextTotalClientesactivos.setFont(new java.awt.Font("Arial", 0, 16));
 			jTextTotalClientesactivos.setEditable(false);
 		}
@@ -1620,7 +1635,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField getJTextTotalclientesRegistrados() {
 		if (jTextTotalclientesRegistrados == null) {
 			jTextTotalclientesRegistrados = new JTextField();
-			jTextTotalclientesRegistrados.setBounds(710, 116, 178, 23);
+			jTextTotalclientesRegistrados.setBounds(710, 202, 178, 23);
 			jTextTotalclientesRegistrados.setFont(new java.awt.Font("Arial", 0, 16));
 			jTextTotalclientesRegistrados.setEditable(false);
 		}
@@ -1631,7 +1646,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jLabelTotalClientesactivos == null) {
 			jLabelTotalClientesactivos = new JLabel();
 			jLabelTotalClientesactivos.setText("Total clientes activos:");
-			jLabelTotalClientesactivos.setBounds(448, 159, 178, 23);
+			jLabelTotalClientesactivos.setBounds(448, 246, 178, 23);
 			jLabelTotalClientesactivos.setFont(new java.awt.Font("Arial", 0, 16));
 		}
 		return jLabelTotalClientesactivos;
@@ -1641,7 +1656,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jLabelTotalAbonosCobrados == null) {
 			jLabelTotalAbonosCobrados = new JLabel();
 			jLabelTotalAbonosCobrados.setText("Total abonos cobrados:");
-			jLabelTotalAbonosCobrados.setBounds(448, 30, 178, 23);
+			jLabelTotalAbonosCobrados.setBounds(448, 116, 178, 23);
 			jLabelTotalAbonosCobrados.setFont(new java.awt.Font("Arial", 0, 16));
 		}
 		return jLabelTotalAbonosCobrados;
@@ -1651,7 +1666,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jLabelTotalAbonosPendientes == null) {
 			jLabelTotalAbonosPendientes = new JLabel();
 			jLabelTotalAbonosPendientes.setText("Total abonos pendientes:");
-			jLabelTotalAbonosPendientes.setBounds(448, 73, 178, 23);
+			jLabelTotalAbonosPendientes.setBounds(448, 159, 178, 23);
 			jLabelTotalAbonosPendientes.setFont(new java.awt.Font("Arial", 0, 16));
 		}
 		return jLabelTotalAbonosPendientes;
@@ -1660,7 +1675,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField getJTextTotalAbonosCobrados() {
 		if (jTextTotalAbonosCobrados == null) {
 			jTextTotalAbonosCobrados = new JTextField();
-			jTextTotalAbonosCobrados.setBounds(710, 30, 178, 23);
+			jTextTotalAbonosCobrados.setBounds(710, 116, 178, 23);
 			jTextTotalAbonosCobrados.setFont(new java.awt.Font("Arial", 0, 16));
 			jTextTotalAbonosCobrados.setEditable(false);
 		}
@@ -1670,11 +1685,51 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField getJTextTotalAbonosPendientes() {
 		if (jTextTotalAbonosPendientes == null) {
 			jTextTotalAbonosPendientes = new JTextField();
-			jTextTotalAbonosPendientes.setBounds(710, 73, 178, 23);
+			jTextTotalAbonosPendientes.setBounds(710, 159, 178, 23);
 			jTextTotalAbonosPendientes.setFont(new java.awt.Font("Arial", 0, 16));
 			jTextTotalAbonosPendientes.setEditable(false);
 		}
 		return jTextTotalAbonosPendientes;
+	}
+
+	private JLabel getJLabelTotalRecaudoPendiente() {
+		if (jLabelTotalRecaudoPendiente == null) {
+			jLabelTotalRecaudoPendiente = new JLabel();
+			jLabelTotalRecaudoPendiente.setText("Total recaudo pendiente:");
+			jLabelTotalRecaudoPendiente.setBounds(17, 77, 178, 23);
+			jLabelTotalRecaudoPendiente.setFont(new java.awt.Font("Arial", 0, 16));
+		}
+		return jLabelTotalRecaudoPendiente;
+	}
+
+	private JTextField getJTextTotalrecaudoPendiente() {
+		if (jTextTotalrecaudoPendiente == null) {
+			jTextTotalrecaudoPendiente = new JTextField();
+			jTextTotalrecaudoPendiente.setBounds(226, 74, 178, 23);
+			jTextTotalrecaudoPendiente.setFont(new java.awt.Font("Arial", 0, 16));
+			jTextTotalrecaudoPendiente.setEditable(false);
+		}
+		return jTextTotalrecaudoPendiente;
+	}
+
+	private JLabel getJLabelInteresesPendientesRecaudo() {
+		if (jLabelInteresesPendientesRecaudo == null) {
+			jLabelInteresesPendientesRecaudo = new JLabel();
+			jLabelInteresesPendientesRecaudo.setText("Interses a recaudar");
+			jLabelInteresesPendientesRecaudo.setBounds(17, 206, 178, 23);
+			jLabelInteresesPendientesRecaudo.setFont(new java.awt.Font("Arial", 0, 16));
+		}
+		return jLabelInteresesPendientesRecaudo;
+	}
+
+	private JTextField getJTextIntersesePendientesRecaudo() {
+		if (jTextIntersesePendientesRecaudo == null) {
+			jTextIntersesePendientesRecaudo = new JTextField();
+			jTextIntersesePendientesRecaudo.setBounds(226, 203, 178, 23);
+			jTextIntersesePendientesRecaudo.setFont(new java.awt.Font("Arial", 0, 16));
+			jTextIntersesePendientesRecaudo.setEditable(false);
+		}
+		return jTextIntersesePendientesRecaudo;
 	}
 
 }
