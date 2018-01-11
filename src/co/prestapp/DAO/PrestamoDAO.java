@@ -259,6 +259,9 @@ public class PrestamoDAO {
 			CallableStatement miProcedimientoVerificar = conexion.prepareCall("{call verificar_prestamo_pagado(?)}");
 			CallableStatement miProcedimientoVerificarClientes = conexion
 					.prepareCall("{call verificar_estado_clientes(?)}");
+
+			// De los reportes
+
 			ResultSet miRs = miProcedimientoListar.executeQuery();
 
 			while (miRs.next()) {
@@ -383,18 +386,81 @@ public class PrestamoDAO {
 	}
 
 	public float calcularTotalPrestado() {
-		// TODO Auto-generated method stub
-		return 0;
+
+		float totalPrestado = 0;
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		try {
+			CallableStatement miProcedimientoListar = conexion.prepareCall("{call listar_prestamos}");
+			CallableStatement miProcedimiento = conexion.prepareCall("{call calcular_total_prestado(?,?)}");
+			miProcedimiento.registerOutParameter(1, Types.NUMERIC);
+			ResultSet miRs = miProcedimientoListar.executeQuery();
+
+			while (miRs.next()) {
+				miProcedimiento.setString(2, miRs.getString("codigoPrestamo"));
+				miProcedimiento.executeQuery();
+				totalPrestado = totalPrestado + miProcedimiento.getFloat(1);
+			}
+
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para calcular total prestado");
+			System.out.println(e.getMessage());
+		}
+
+		return totalPrestado;
 	}
 
 	public float calcularTotalRecaudado() {
-		// TODO Auto-generated method stub
-		return 0;
+
+		float totalRecaudado = 0;
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		try {
+			CallableStatement miProcedimientoListar = conexion.prepareCall("{call listar_prestamos}");
+			CallableStatement miProcedimiento = conexion.prepareCall("{call calcular_total_recaudado(?,?)}");
+			miProcedimiento.registerOutParameter(1, Types.NUMERIC);
+			ResultSet miRs = miProcedimientoListar.executeQuery();
+			while (miRs.next()) {
+				miProcedimiento.setString(2, miRs.getString("codigoPrestamo"));
+				miProcedimiento.executeQuery();
+				totalRecaudado = totalRecaudado + miProcedimiento.getFloat(1);
+			}
+
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para calcular total recaudado");
+			System.out.println(e.getMessage());
+		}
+
+		return totalRecaudado;
 	}
 
 	public float calcularInteresesRecaudados() {
-		// TODO Auto-generated method stub
-		return 0;
+
+		float interesesRecaudados = 0;
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		try {
+			CallableStatement miProcedimientoListar = conexion.prepareCall("{call listar_prestamos}");
+			CallableStatement miProcedimiento = conexion.prepareCall("{call calcular_intereses_recaudados(?,?)}");
+			miProcedimiento.registerOutParameter(1, Types.NUMERIC);
+			ResultSet miRs = miProcedimientoListar.executeQuery();
+			while (miRs.next()) {
+				miProcedimiento.setString(2, miRs.getString("codigoPrestamo"));
+				miProcedimiento.executeQuery();
+				interesesRecaudados = interesesRecaudados + miProcedimiento.getFloat(1);
+			}
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para calcular intereses recaudados");
+			System.out.println(e.getMessage());
+		}
+
+		return interesesRecaudados;
 	}
 
 	public int contarPrestamosActivos() {
