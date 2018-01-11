@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -30,7 +31,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
@@ -71,6 +71,28 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTable jTableClientes;
 	private JScrollPane jScrollPaneClientes;
 	private JButton jButtonCancelarAbono;
+	private JTextField jTextTotalAbonosPendientes;
+	private JTextField jTextTotalAbonosCobrados;
+	private JLabel jLabelTotalAbonosPendientes;
+	private JLabel jLabelTotalAbonosCobrados;
+	private JLabel jLabelTotalClientesactivos;
+	private JTextField jTextTotalclientesRegistrados;
+	private JTextField jTextTotalClientesactivos;
+	private JLabel jLabelTotalclientesRegistrados;
+	private JTextField jTextTotalprestamosVencidos;
+	private JLabel jLabelTotalPrestamosVencidos;
+	private JTextField jTextTotalPrestamosFinalizados;
+	private JLabel jLabelTotalPrestamosFinalizados;
+	private JTextField jTextTotalPrestamosActivos;
+	private JLabel jLabelTotalPrestamosActivos;
+	private JTextField jTextInteresesRecaudados;
+	private JLabel jLabelInteresesRecaudados;
+	private JTextField jTextTotalRecaudado;
+	private JTextField jTextTotalPrestado;
+	private JLabel jLabelTotalrecibido;
+	private JLabel jLabelTotalPrestado;
+	private JPanel jPanelEstadisticas;
+	private JPanel jPanelCifras;
 	private JButton jButtonPrestamosPendientes;
 	private JButton jButtonGuardar;
 	private JTextField jTextCodigoPrestamo;
@@ -167,6 +189,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				jPanelPrestamos.setLayout(jPanelPrestamosLayout);
 
 				jPanelReportes = new JPanel();
+				BorderLayout jPanelReportesLayout = new BorderLayout();
+				jPanelReportes.setLayout(jPanelReportesLayout);
 
 				getContentPane().add(jPanelContenedor, BorderLayout.CENTER);
 				jPanelContenedor.setLayout(jPanelContenedorLayout);
@@ -707,6 +731,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						}
 					}
 					jTabPestanias.addTab("Reportes", jPanelReportes);
+					jPanelReportes.add(getJPanelCifras(), BorderLayout.NORTH);
+					jPanelReportes.add(getJPanelEstadisticas(), BorderLayout.SOUTH);
 
 				}
 			}
@@ -1553,6 +1579,235 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private void jButtonPrestamosPendientesActionPerformed(ActionEvent evt) {
 
 		actualizaPrestamoVencido();
+	}
+	
+	private JPanel getJPanelCifras() {
+		if(jPanelCifras == null) {
+			jPanelCifras = new JPanel();
+			jPanelCifras.setLayout(null);
+			jPanelCifras.setBorder(BorderFactory.createTitledBorder("Cifras"));
+			jPanelCifras.setPreferredSize(new java.awt.Dimension(905, 289));
+			jPanelCifras.add(getJLabelTotalPrestado());
+			jPanelCifras.add(getJLabelTotalrecibido());
+			jPanelCifras.add(getJTextTotalPrestado());
+			jPanelCifras.add(getJTextTotalRecaudado());
+			jPanelCifras.add(getJLabelInteresesRecaudados());
+			jPanelCifras.add(getJTextInteresesRecaudados());
+			jPanelCifras.add(getJLabelTotalPrestamosActivos());
+			jPanelCifras.add(getJTextTotalPrestamosActivos());
+			jPanelCifras.add(getJLabelTotalPrestamosFinalizados());
+			jPanelCifras.add(getJTextTotalPrestamosFinalizados());
+			jPanelCifras.add(getJLabelTotalPrestamosVencidos());
+			jPanelCifras.add(getJTextTotalprestamosVencidos());
+			jPanelCifras.add(getJLabelTotalclientesRegistrados());
+			jPanelCifras.add(getJTextTotalClientesactivos());
+			jPanelCifras.add(getJTextTotalclientesRegistrados());
+			jPanelCifras.add(getJLabelTotalClientesactivos());
+			jPanelCifras.add(getJLabelTotalAbonosCobrados());
+			jPanelCifras.add(getJLabelTotalAbonosPendientes());
+			jPanelCifras.add(getJTextTotalAbonosCobrados());
+			jPanelCifras.add(getJTextTotalAbonosPendientes());
+		}
+		return jPanelCifras;
+	}
+	
+	private JPanel getJPanelEstadisticas() {
+		if(jPanelEstadisticas == null) {
+			jPanelEstadisticas = new JPanel();
+			jPanelEstadisticas.setBorder(BorderFactory.createTitledBorder("Estadísticas"));
+			jPanelEstadisticas.setPreferredSize(new java.awt.Dimension(905, 258));
+		}
+		return jPanelEstadisticas;
+	}
+	
+	private JLabel getJLabelTotalPrestado() {
+		if(jLabelTotalPrestado == null) {
+			jLabelTotalPrestado = new JLabel();
+			jLabelTotalPrestado.setText("Total prestado:");
+			jLabelTotalPrestado.setBounds(17, 37, 150, 40);
+			jLabelTotalPrestado.setFont(new java.awt.Font("Arial", 0, 16));
+		}
+		return jLabelTotalPrestado;
+	}
+	
+	private JLabel getJLabelTotalrecibido() {
+		if(jLabelTotalrecibido == null) {
+			jLabelTotalrecibido = new JLabel();
+			jLabelTotalrecibido.setText("Total recaudado:");
+			jLabelTotalrecibido.setBounds(17, 109, 89, 16);
+			jLabelTotalrecibido.setFont(new java.awt.Font("Arial", 0, 16));
+		}
+		return jLabelTotalrecibido;
+	}
+	
+	private JTextField getJTextTotalPrestado() {
+		if(jTextTotalPrestado == null) {
+			jTextTotalPrestado = new JTextField();
+			jTextTotalPrestado.setBounds(185, 46, 128, 23);
+			jTextTotalPrestado.setFont(new java.awt.Font("Arial", 0, 16));
+		}
+		return jTextTotalPrestado;
+	}
+	
+	private JTextField getJTextTotalRecaudado() {
+		if(jTextTotalRecaudado == null) {
+			jTextTotalRecaudado = new JTextField();
+			jTextTotalRecaudado.setBounds(185, 106, 128, 23);
+			jTextTotalRecaudado.setFont(new java.awt.Font("Arial", 0, 16));
+		}
+		return jTextTotalRecaudado;
+	}
+	
+	private JLabel getJLabelInteresesRecaudados() {
+		if(jLabelInteresesRecaudados == null) {
+			jLabelInteresesRecaudados = new JLabel();
+			jLabelInteresesRecaudados.setText("Intereses recaudados:");
+			jLabelInteresesRecaudados.setBounds(17, 167, 113, 16);
+			jLabelInteresesRecaudados.setFont(new java.awt.Font("Arial", 0, 16));
+		}
+		return jLabelInteresesRecaudados;
+	}
+	
+	private JTextField getJTextInteresesRecaudados() {
+		if(jTextInteresesRecaudados == null) {
+			jTextInteresesRecaudados = new JTextField();
+			jTextInteresesRecaudados.setBounds(185, 164, 128, 23);
+			jTextInteresesRecaudados.setFont(new java.awt.Font("Arial", 0, 16));
+		}
+		return jTextInteresesRecaudados;
+	}
+	
+	private JLabel getJLabelTotalPrestamosActivos() {
+		if(jLabelTotalPrestamosActivos == null) {
+			jLabelTotalPrestamosActivos = new JLabel();
+			jLabelTotalPrestamosActivos.setText("Total préstamos activos:");
+			jLabelTotalPrestamosActivos.setBounds(17, 226, 128, 16);
+			jLabelTotalPrestamosActivos.setFont(new java.awt.Font("Arial", 0, 16));
+		}
+		return jLabelTotalPrestamosActivos;
+	}
+	
+	private JTextField getJTextTotalPrestamosActivos() {
+		if(jTextTotalPrestamosActivos == null) {
+			jTextTotalPrestamosActivos = new JTextField();
+			jTextTotalPrestamosActivos.setBounds(185, 223, 128, 23);
+			jTextTotalPrestamosActivos.setFont(new java.awt.Font("Arial", 0, 16));
+		}
+		return jTextTotalPrestamosActivos;
+	}
+	
+	private JLabel getJLabelTotalPrestamosFinalizados() {
+		if(jLabelTotalPrestamosFinalizados == null) {
+			jLabelTotalPrestamosFinalizados = new JLabel();
+			jLabelTotalPrestamosFinalizados.setText("Total préstamos finalizados:");
+			jLabelTotalPrestamosFinalizados.setBounds(343, 46, 151, 16);
+			jLabelTotalPrestamosFinalizados.setFont(new java.awt.Font("Arial", 0, 16));
+		}
+		return jLabelTotalPrestamosFinalizados;
+	}
+	
+	private JTextField getJTextTotalPrestamosFinalizados() {
+		if(jTextTotalPrestamosFinalizados == null) {
+			jTextTotalPrestamosFinalizados = new JTextField();
+			jTextTotalPrestamosFinalizados.setBounds(517, 46, 67, 23);
+			jTextTotalPrestamosFinalizados.setFont(new java.awt.Font("Arial", 0, 16));
+		}
+		return jTextTotalPrestamosFinalizados;
+	}
+	
+	private JLabel getJLabelTotalPrestamosVencidos() {
+		if(jLabelTotalPrestamosVencidos == null) {
+			jLabelTotalPrestamosVencidos = new JLabel();
+			jLabelTotalPrestamosVencidos.setText("Total préstamos vencidos:");
+			jLabelTotalPrestamosVencidos.setBounds(343, 106, 138, 16);
+			jLabelTotalPrestamosVencidos.setFont(new java.awt.Font("Arial", 0, 16));
+		}
+		return jLabelTotalPrestamosVencidos;
+	}
+	
+	private JTextField getJTextTotalprestamosVencidos() {
+		if(jTextTotalprestamosVencidos == null) {
+			jTextTotalprestamosVencidos = new JTextField();
+			jTextTotalprestamosVencidos.setBounds(517, 110, 67, 23);
+			jTextTotalprestamosVencidos.setFont(new java.awt.Font("Arial", 0, 16));
+		}
+		return jTextTotalprestamosVencidos;
+	}
+	
+	private JLabel getJLabelTotalclientesRegistrados() {
+		if(jLabelTotalclientesRegistrados == null) {
+			jLabelTotalclientesRegistrados = new JLabel();
+			jLabelTotalclientesRegistrados.setText("Total clientes registrados:");
+			jLabelTotalclientesRegistrados.setBounds(635, 164, 134, 16);
+			jLabelTotalclientesRegistrados.setFont(new java.awt.Font("Arial", 0, 16));
+		}
+		return jLabelTotalclientesRegistrados;
+	}
+	
+	private JTextField getJTextTotalClientesactivos() {
+		if(jTextTotalClientesactivos == null) {
+			jTextTotalClientesactivos = new JTextField();
+			jTextTotalClientesactivos.setBounds(799, 220, 67, 23);
+			jTextTotalClientesactivos.setFont(new java.awt.Font("Arial", 0, 16));
+		}
+		return jTextTotalClientesactivos;
+	}
+	
+	private JTextField getJTextTotalclientesRegistrados() {
+		if(jTextTotalclientesRegistrados == null) {
+			jTextTotalclientesRegistrados = new JTextField();
+			jTextTotalclientesRegistrados.setBounds(799, 157, 67, 23);
+			jTextTotalclientesRegistrados.setFont(new java.awt.Font("Arial", 0, 16));
+		}
+		return jTextTotalclientesRegistrados;
+	}
+	
+	private JLabel getJLabelTotalClientesactivos() {
+		if(jLabelTotalClientesactivos == null) {
+			jLabelTotalClientesactivos = new JLabel();
+			jLabelTotalClientesactivos.setText("Total clientes activos:");
+			jLabelTotalClientesactivos.setBounds(635, 223, 113, 16);
+			jLabelTotalClientesactivos.setFont(new java.awt.Font("Arial", 0, 16));
+		}
+		return jLabelTotalClientesactivos;
+	}
+	
+	private JLabel getJLabelTotalAbonosCobrados() {
+		if(jLabelTotalAbonosCobrados == null) {
+			jLabelTotalAbonosCobrados = new JLabel();
+			jLabelTotalAbonosCobrados.setText("Total abonos cobrados:");
+			jLabelTotalAbonosCobrados.setBounds(635, 49, 124, 16);
+			jLabelTotalAbonosCobrados.setFont(new java.awt.Font("Arial", 0, 16));
+		}
+		return jLabelTotalAbonosCobrados;
+	}
+	
+	private JLabel getJLabelTotalAbonosPendientes() {
+		if(jLabelTotalAbonosPendientes == null) {
+			jLabelTotalAbonosPendientes = new JLabel();
+			jLabelTotalAbonosPendientes.setText("Total abonos pendientes:");
+			jLabelTotalAbonosPendientes.setBounds(635, 113, 133, 16);
+			jLabelTotalAbonosPendientes.setFont(new java.awt.Font("Arial", 0, 16));
+		}
+		return jLabelTotalAbonosPendientes;
+	}
+	
+	private JTextField getJTextTotalAbonosCobrados() {
+		if(jTextTotalAbonosCobrados == null) {
+			jTextTotalAbonosCobrados = new JTextField();
+			jTextTotalAbonosCobrados.setBounds(792, 46, 72, 23);
+			jTextTotalAbonosCobrados.setFont(new java.awt.Font("Arial", 0, 16));
+		}
+		return jTextTotalAbonosCobrados;
+	}
+	
+	private JTextField getJTextTotalAbonosPendientes() {
+		if(jTextTotalAbonosPendientes == null) {
+			jTextTotalAbonosPendientes = new JTextField();
+			jTextTotalAbonosPendientes.setBounds(792, 103, 74, 23);
+			jTextTotalAbonosPendientes.setFont(new java.awt.Font("Arial", 0, 16));
+		}
+		return jTextTotalAbonosPendientes;
 	}
 
 }
