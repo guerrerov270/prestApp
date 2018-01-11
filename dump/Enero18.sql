@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `test` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `test`;
 -- MySQL dump 10.13  Distrib 5.7.12, for Win32 (AMD64)
 --
 -- Host: 127.0.0.1    Database: test
@@ -66,10 +64,10 @@ CREATE TABLE `cliente` (
   `nombreCliente` varchar(45) NOT NULL,
   `empresaCliente` varchar(45) NOT NULL,
   `referenciaCliente` varchar(45) NOT NULL,
-  `estadoCliente` enum('RECOMENDADO','ERROR','NO RECOMENDADO') DEFAULT NULL,
+  `estadoCliente` enum('ACTIVO','NO_ACTIVO','NO RECOMENDADO') DEFAULT 'NO_ACTIVO',
   PRIMARY KEY (`idCliente`),
   UNIQUE KEY `codigoCliente_UNIQUE` (`codigoCliente`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -78,7 +76,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (1,'C001','Julian Guerrero','NextU','Ingeniero',NULL),(2,'C002','Andres Sandoval','PSL','Tester',NULL),(3,'C003','Jorge Sanchez','Chispa','Domicilio',NULL),(4,'C004','','','',NULL),(5,'C005','','','',NULL),(6,'C006','','','',NULL),(7,'C007','','','',NULL),(8,'C008','','','',NULL),(9,'C009','','','',NULL),(10,'C010','','','',NULL),(11,'C011','','','',NULL),(12,'C012','','','',NULL),(13,'C013','','','',NULL),(14,'C014','','','',NULL),(15,'C015','','','',NULL),(16,'C016','','','',NULL),(17,'C017','','','',NULL),(18,'C018','','','',NULL),(19,'C019','','','',NULL),(20,'C020','','','',NULL),(21,'C021','','','',NULL),(22,'C022','Andres Herrera','ARA','Cajero',NULL),(23,'C023','Andres Perez','D1','Cajero',NULL),(24,'C024','','','',NULL),(25,'C025','','','',NULL),(26,'C026','','','',NULL),(27,'C027','Julian andres guerrero ome','','',NULL),(28,'C028','','','Es el hermano de tal y pascual y eso',NULL),(29,'C029','Andres Sandoval','','',NULL);
+INSERT INTO `cliente` VALUES (1,'C001','Julian Guerrero','NextU','Ingeniero','ACTIVO'),(2,'C002','Andres Sandoval','PSL','Tester','ACTIVO'),(3,'C003','Jorge Sanchez','Chispa','Domicilio',NULL),(4,'C004','','','',NULL),(5,'C005','','','',NULL),(6,'C006','','','',NULL),(7,'C007','','','',NULL),(8,'C008','','','',NULL),(9,'C009','','','',NULL),(10,'C010','','','',NULL),(11,'C011','','','',NULL),(12,'C012','','','',NULL),(13,'C013','','','',NULL),(14,'C014','','','',NULL),(15,'C015','','','',NULL),(16,'C016','','','',NULL),(17,'C017','','','',NULL),(18,'C018','','','',NULL),(19,'C019','','','',NULL),(20,'C020','','','',NULL),(21,'C021','','','',NULL),(22,'C022','Andres Herrera','ARA','Cajero','ACTIVO'),(23,'C023','Andres Perez','D1','Cajero',NULL),(24,'C024','','','',NULL),(25,'C025','','','',NULL),(26,'C026','','','',NULL),(27,'C027','Julian andres guerrero ome','','',NULL),(28,'C028','','','Es el hermano de tal y pascual y eso',NULL),(29,'C029','Andres Sandoval','','',NULL),(30,'C030','tEST','','','NO_ACTIVO');
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -525,6 +523,29 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `verificar_estado_clientes` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `verificar_estado_clientes`(codigoClienteE VARCHAR(10))
+BEGIN
+	DECLARE contadorPrestamos INT;
+    SET contadorPrestamos=(SELECT COUNT(*) FROM prestamo WHERE codigoClienteFK=codigoClienteE);
+    IF(contadorPrestamos>=1) THEN
+    UPDATE `test`.`cliente` SET estadoCliente='ACTIVO' WHERE codigoCliente=codigoClienteE; 
+    END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `verificar_prestamo_pagado` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -597,4 +618,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-01-10 20:01:16
+-- Dump completed on 2018-01-10 20:40:56

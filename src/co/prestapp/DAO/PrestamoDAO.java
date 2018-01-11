@@ -257,6 +257,8 @@ public class PrestamoDAO {
 			CallableStatement miProcedimientoSumar = conexion.prepareCall("{call sumar_pagos_abono(?)}");
 			CallableStatement miProcedimientoVencidos = conexion.prepareCall("{call verificar_prestamo_vencido(?)}");
 			CallableStatement miProcedimientoVerificar = conexion.prepareCall("{call verificar_prestamo_pagado(?)}");
+			CallableStatement miProcedimientoVerificarClientes = conexion
+					.prepareCall("{call verificar_estado_clientes(?)}");
 			ResultSet miRs = miProcedimientoListar.executeQuery();
 
 			while (miRs.next()) {
@@ -266,9 +268,11 @@ public class PrestamoDAO {
 				miProcedimientoSumar.setString(1, miRs.getString("codigoPrestamo"));
 				miProcedimientoVerificar.setString(1, miRs.getString("codigoPrestamo"));
 				miProcedimientoVencidos.setString(1, miRs.getString("codigoPrestamo"));
+				miProcedimientoVerificarClientes.setString(1, miRs.getString("codigoClienteFK"));
 				miProcedimientoSumar.execute();
 				miProcedimientoVerificar.execute();
 				miProcedimientoVencidos.execute();
+				miProcedimientoVerificarClientes.execute();
 
 			}
 			miRs.close();
