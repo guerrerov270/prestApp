@@ -18,19 +18,16 @@ import co.prestapp.connection.DBConnection;
 
 public class AbonoDAO {
 
-	public void agregarAbono(double montoACobrar, double montoPagado,
-			String completoAbono, Date fechaCobro, String abonoPrestamoFK,
-			String puntualAbono, String estadoAbono, int numeroAbono) {
+	public void agregarAbono(double montoACobrar, double montoPagado, String completoAbono, Date fechaCobro,
+			String abonoPrestamoFK, String puntualAbono, String estadoAbono, int numeroAbono) {
 
-		java.sql.Date fechaCobroFormateada = new java.sql.Date(
-				fechaCobro.getTime());
+		java.sql.Date fechaCobroFormateada = new java.sql.Date(fechaCobro.getTime());
 
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
 		String codigoAbono = recuperarCodigoAbono();
 		try {
-			CallableStatement miProcedimiento = conexion
-					.prepareCall("{call agregar_abono(?,?,?,?,?,?,?,?,?)}");
+			CallableStatement miProcedimiento = conexion.prepareCall("{call agregar_abono(?,?,?,?,?,?,?,?,?)}");
 			miProcedimiento.setString(1, codigoAbono);
 			miProcedimiento.setDouble(2, montoACobrar);
 			miProcedimiento.setDouble(3, montoPagado);
@@ -53,8 +50,8 @@ public class AbonoDAO {
 
 	public String[] getColumnas() {
 
-		String encabezados[] = { "#", "Código", "Cobrar", "Pagado", "Completo",
-				"Cobrar", "Pagado", "Préstamo", "Puntual", "Estado", "Abono#" };
+		String encabezados[] = { "#", "Código", "Cobrar", "Pagado", "Completo", "Cobrar", "Pagado", "Préstamo",
+				"Puntual", "Estado", "Abono#" };
 		return encabezados;
 	}// Fin getColumnas
 
@@ -64,16 +61,14 @@ public class AbonoDAO {
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
 		try {
-			CallableStatement miProcedimiento = conexion
-					.prepareCall("{call generar_codigo_abono(?)}");
+			CallableStatement miProcedimiento = conexion.prepareCall("{call generar_codigo_abono(?)}");
 			miProcedimiento.registerOutParameter(1, Types.VARCHAR);
 			miProcedimiento.executeQuery();
 			codigoAbono = miProcedimiento.getString(1);
 			conexion.close();
 
 		} catch (SQLException e) {
-			System.out
-					.println("Error al ejecutar consulta para generar codigo de abono");
+			System.out.println("Error al ejecutar consulta para generar codigo de abono");
 			System.out.println(e.getMessage());
 		}
 
@@ -81,8 +76,8 @@ public class AbonoDAO {
 
 	}// Fin recuperarCodigoAbono
 
-	public void crearAbonosPrestamo(double totalAPagar, int numeroCuotas,
-			ArrayList<Date> fechasPago, String codigoPrestamo) {
+	public void crearAbonosPrestamo(double totalAPagar, int numeroCuotas, ArrayList<Date> fechasPago,
+			String codigoPrestamo) {
 
 		double montoACobrar = totalAPagar / numeroCuotas;
 		double montoPagado = 0;
@@ -93,8 +88,7 @@ public class AbonoDAO {
 
 		for (int i = 0; i < fechasPago.size(); i++) {
 
-			agregarAbono(montoACobrar, montoPagado, completoAbono,
-					fechasPago.get(i), codigoPrestamo, puntualAbono,
+			agregarAbono(montoACobrar, montoPagado, completoAbono, fechasPago.get(i), codigoPrestamo, puntualAbono,
 					estadoAbono, i + 1);
 		}
 
@@ -109,28 +103,22 @@ public class AbonoDAO {
 		AbonoVO miAbono;
 		;
 		try {
-			CallableStatement miProcedimiento = conexion
-					.prepareCall("{call listar_abonos}");
+			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_abonos}");
 			ResultSet miRs = miProcedimiento.executeQuery();
 			DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
 			Locale locale = new Locale("es", "CO");
-			NumberFormat formatoMoneda = NumberFormat
-					.getCurrencyInstance(locale);
+			NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
 
 			while (miRs.next()) {
 				miAbono = new AbonoVO();
 				miAbono.setIDAbono(miRs.getInt("idAbono"));
 				miAbono.setCodigoAbono(miRs.getString("codigoAbono"));
-				miAbono.setMontoACobrar(formatoMoneda.format(miRs
-						.getDouble("montoACobrar")));
-				miAbono.setMontoPagado(formatoMoneda.format(miRs
-						.getDouble("montoPagado")));
+				miAbono.setMontoACobrar(formatoMoneda.format(miRs.getDouble("montoACobrar")));
+				miAbono.setMontoPagado(formatoMoneda.format(miRs.getDouble("montoPagado")));
 				miAbono.setCompletoAbono(miRs.getString("completoAbono"));
-				miAbono.setFechaACobrar(formato.format(miRs
-						.getDate("fechaACobrar")));
+				miAbono.setFechaACobrar(formato.format(miRs.getDate("fechaACobrar")));
 				if (miRs.getDate("fechaPago") != null) {
-					miAbono.setFechaPago(formato.format(miRs
-							.getDate("fechaPago")));
+					miAbono.setFechaPago(formato.format(miRs.getDate("fechaPago")));
 				}
 				miAbono.setAbonoPrestamo(miRs.getString("abonoPrestamo"));
 				miAbono.setPuntualAbono(miRs.getString("puntualAbono"));
@@ -182,29 +170,23 @@ public class AbonoDAO {
 		AbonoVO miAbono;
 		;
 		try {
-			CallableStatement miProcedimiento = conexion
-					.prepareCall("{call buscar_abono_prestamo(?)}");
+			CallableStatement miProcedimiento = conexion.prepareCall("{call buscar_abono_prestamo(?)}");
 			miProcedimiento.setString(1, abonoPrestamo);
 			ResultSet miRs = miProcedimiento.executeQuery();
 			DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
 			Locale locale = new Locale("es", "CO");
-			NumberFormat formatoMoneda = NumberFormat
-					.getCurrencyInstance(locale);
+			NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
 
 			while (miRs.next()) {
 				miAbono = new AbonoVO();
 				miAbono.setIDAbono(miRs.getInt("idAbono"));
 				miAbono.setCodigoAbono(miRs.getString("codigoAbono"));
-				miAbono.setMontoACobrar(formatoMoneda.format(miRs
-						.getDouble("montoACobrar")));
-				miAbono.setMontoPagado(formatoMoneda.format(miRs
-						.getDouble("montoPagado")));
+				miAbono.setMontoACobrar(formatoMoneda.format(miRs.getDouble("montoACobrar")));
+				miAbono.setMontoPagado(formatoMoneda.format(miRs.getDouble("montoPagado")));
 				miAbono.setCompletoAbono(miRs.getString("completoAbono"));
-				miAbono.setFechaACobrar(formato.format(miRs
-						.getDate("fechaACobrar")));
+				miAbono.setFechaACobrar(formato.format(miRs.getDate("fechaACobrar")));
 				if (miRs.getDate("fechaPago") != null) {
-					miAbono.setFechaPago(formato.format(miRs
-							.getDate("fechaPago")));
+					miAbono.setFechaPago(formato.format(miRs.getDate("fechaPago")));
 				}
 				miAbono.setAbonoPrestamo(miRs.getString("abonoPrestamo"));
 				miAbono.setPuntualAbono(miRs.getString("puntualAbono"));
@@ -217,8 +199,7 @@ public class AbonoDAO {
 			conexion.close();
 
 		} catch (SQLException e) {
-			System.out
-					.println("Error al ejecutar consulta para buscar abono por codigo de prestamo");
+			System.out.println("Error al ejecutar consulta para buscar abono por codigo de prestamo");
 			System.out.println(e.getMessage());
 
 		}
@@ -249,8 +230,7 @@ public class AbonoDAO {
 
 	// -----------------------------------PAGO
 	// ABONO----------------------------------------------
-	public void pagarAbono(String codigoAbono, Date fechaPago,
-			double montoPagado) {
+	public void pagarAbono(String codigoAbono, Date fechaPago, double montoPagado) {
 
 		Locale locale = new Locale("es", "CO");
 		NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
@@ -275,8 +255,7 @@ public class AbonoDAO {
 		}
 
 		try {
-			if (montoPagado >= formatoMoneda.parse(miAbono.getMontoACobrar())
-					.doubleValue()) {
+			if (montoPagado >= formatoMoneda.parse(miAbono.getMontoACobrar()).doubleValue()) {
 				completoAbono = "SI";
 			}
 		} catch (Exception e1) {
@@ -286,11 +265,9 @@ public class AbonoDAO {
 
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
-		java.sql.Date fechaPagoFormateada = new java.sql.Date(
-				fechaPago.getTime());
+		java.sql.Date fechaPagoFormateada = new java.sql.Date(fechaPago.getTime());
 		try {
-			CallableStatement miProcedimiento = conexion
-					.prepareCall("{call pagar_abono(?,?,?,?,?)}");
+			CallableStatement miProcedimiento = conexion.prepareCall("{call pagar_abono(?,?,?,?,?)}");
 			miProcedimiento.setString(1, codigoAbono);
 			miProcedimiento.setDate(2, fechaPagoFormateada);
 			miProcedimiento.setDouble(3, montoPagado);
@@ -314,29 +291,23 @@ public class AbonoDAO {
 		AbonoVO miAbono = null;
 
 		try {
-			CallableStatement miProcedimiento = conexion
-					.prepareCall("{call buscar_abono(?)}");
+			CallableStatement miProcedimiento = conexion.prepareCall("{call buscar_abono(?)}");
 			miProcedimiento.setString(1, codigoAbono);
 			ResultSet miRs = miProcedimiento.executeQuery();
 			DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
 			Locale locale = new Locale("es", "CO");
-			NumberFormat formatoMoneda = NumberFormat
-					.getCurrencyInstance(locale);
+			NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
 
 			while (miRs.next()) {
 				miAbono = new AbonoVO();
 				miAbono.setIDAbono(miRs.getInt("idAbono"));
 				miAbono.setCodigoAbono(miRs.getString("codigoAbono"));
-				miAbono.setMontoACobrar(formatoMoneda.format(miRs
-						.getDouble("montoACobrar")));
-				miAbono.setMontoPagado(formatoMoneda.format(miRs
-						.getDouble("montoPagado")));
+				miAbono.setMontoACobrar(formatoMoneda.format(miRs.getDouble("montoACobrar")));
+				miAbono.setMontoPagado(formatoMoneda.format(miRs.getDouble("montoPagado")));
 				miAbono.setCompletoAbono(miRs.getString("completoAbono"));
-				miAbono.setFechaACobrar(formato.format(miRs
-						.getDate("fechaACobrar")));
+				miAbono.setFechaACobrar(formato.format(miRs.getDate("fechaACobrar")));
 				if (miRs.getDate("fechaPago") != null) {
-					miAbono.setFechaPago(formato.format(miRs
-							.getDate("fechaPago")));
+					miAbono.setFechaPago(formato.format(miRs.getDate("fechaPago")));
 				}
 				miAbono.setAbonoPrestamo(miRs.getString("abonoPrestamo"));
 				miAbono.setPuntualAbono(miRs.getString("puntualAbono"));
@@ -382,28 +353,22 @@ public class AbonoDAO {
 		AbonoVO miAbono;
 		;
 		try {
-			CallableStatement miProcedimiento = conexion
-					.prepareCall("{call listar_abonos_pendientes}");
+			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_abonos_pendientes}");
 			ResultSet miRs = miProcedimiento.executeQuery();
 			DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
 			Locale locale = new Locale("es", "CO");
-			NumberFormat formatoMoneda = NumberFormat
-					.getCurrencyInstance(locale);
+			NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
 
 			while (miRs.next()) {
 				miAbono = new AbonoVO();
 				miAbono.setIDAbono(miRs.getInt("idAbono"));
 				miAbono.setCodigoAbono(miRs.getString("codigoAbono"));
-				miAbono.setMontoACobrar(formatoMoneda.format(miRs
-						.getDouble("montoACobrar")));
-				miAbono.setMontoPagado(formatoMoneda.format(miRs
-						.getDouble("montoPagado")));
+				miAbono.setMontoACobrar(formatoMoneda.format(miRs.getDouble("montoACobrar")));
+				miAbono.setMontoPagado(formatoMoneda.format(miRs.getDouble("montoPagado")));
 				miAbono.setCompletoAbono(miRs.getString("completoAbono"));
-				miAbono.setFechaACobrar(formato.format(miRs
-						.getDate("fechaACobrar")));
+				miAbono.setFechaACobrar(formato.format(miRs.getDate("fechaACobrar")));
 				if (miRs.getDate("fechaPago") != null) {
-					miAbono.setFechaPago(formato.format(miRs
-							.getDate("fechaPago")));
+					miAbono.setFechaPago(formato.format(miRs.getDate("fechaPago")));
 				}
 				miAbono.setAbonoPrestamo(miRs.getString("abonoPrestamo"));
 				miAbono.setPuntualAbono(miRs.getString("puntualAbono"));
@@ -416,8 +381,7 @@ public class AbonoDAO {
 			conexion.close();
 
 		} catch (SQLException e) {
-			System.out
-					.println("Error al ejecutar consulta para listar abonos pendientes");
+			System.out.println("Error al ejecutar consulta para listar abonos pendientes");
 			System.out.println(e.getMessage());
 
 		}
@@ -452,28 +416,22 @@ public class AbonoDAO {
 		AbonoVO miAbono;
 		;
 		try {
-			CallableStatement miProcedimiento = conexion
-					.prepareCall("{call listar_abonos_pagados}");
+			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_abonos_pagados}");
 			ResultSet miRs = miProcedimiento.executeQuery();
 			DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
 			Locale locale = new Locale("es", "CO");
-			NumberFormat formatoMoneda = NumberFormat
-					.getCurrencyInstance(locale);
+			NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
 
 			while (miRs.next()) {
 				miAbono = new AbonoVO();
 				miAbono.setIDAbono(miRs.getInt("idAbono"));
 				miAbono.setCodigoAbono(miRs.getString("codigoAbono"));
-				miAbono.setMontoACobrar(formatoMoneda.format(miRs
-						.getDouble("montoACobrar")));
-				miAbono.setMontoPagado(formatoMoneda.format(miRs
-						.getDouble("montoPagado")));
+				miAbono.setMontoACobrar(formatoMoneda.format(miRs.getDouble("montoACobrar")));
+				miAbono.setMontoPagado(formatoMoneda.format(miRs.getDouble("montoPagado")));
 				miAbono.setCompletoAbono(miRs.getString("completoAbono"));
-				miAbono.setFechaACobrar(formato.format(miRs
-						.getDate("fechaACobrar")));
+				miAbono.setFechaACobrar(formato.format(miRs.getDate("fechaACobrar")));
 				if (miRs.getDate("fechaPago") != null) {
-					miAbono.setFechaPago(formato.format(miRs
-							.getDate("fechaPago")));
+					miAbono.setFechaPago(formato.format(miRs.getDate("fechaPago")));
 				}
 				miAbono.setAbonoPrestamo(miRs.getString("abonoPrestamo"));
 				miAbono.setPuntualAbono(miRs.getString("puntualAbono"));
@@ -486,12 +444,51 @@ public class AbonoDAO {
 			conexion.close();
 
 		} catch (SQLException e) {
-			System.out
-					.println("Error al ejecutar consulta para listar abonos pagados");
+			System.out.println("Error al ejecutar consulta para listar abonos pagados");
 			System.out.println(e.getMessage());
 
 		}
 		return listaAbonos;
+	}
+
+	public int contarAbonosCobrados() {
+
+		int totalAbonosCobrados = 0;
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		try {
+			CallableStatement miProcedimiento = conexion.prepareCall("{call contar_abonos_cobrados(?)}");
+			miProcedimiento.registerOutParameter(1, Types.NUMERIC);
+			miProcedimiento.executeQuery();
+			totalAbonosCobrados = miProcedimiento.getInt(1);
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para contar abonos cobrados");
+			System.out.println(e.getMessage());
+		}
+
+		return totalAbonosCobrados;
+	}
+
+	public int contarAbonosPendientes() {
+
+		int totalAbonosPendientes = 0;
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		try {
+			CallableStatement miProcedimiento = conexion.prepareCall("{call contar_abonos_pendientes(?)}");
+			miProcedimiento.registerOutParameter(1, Types.NUMERIC);
+			miProcedimiento.executeQuery();
+			totalAbonosPendientes = miProcedimiento.getInt(1);
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para contar abonos pendientes");
+			System.out.println(e.getMessage());
+		}
+
+		return totalAbonosPendientes;
 	}
 
 } // Fin AbonoDAO

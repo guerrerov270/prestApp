@@ -382,4 +382,79 @@ public class PrestamoDAO {
 		return listaPrestamos;
 	}
 
+	public float calcularTotalPrestado() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public float calcularTotalRecaudado() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public float calcularInteresesRecaudados() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int contarPrestamosActivos() {
+
+		int totalPrestamosActivos = 0;
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		try {
+			CallableStatement miProcedimiento = conexion.prepareCall("{call contar_prestamos_activos(?)}");
+			miProcedimiento.registerOutParameter(1, Types.NUMERIC);
+			miProcedimiento.executeQuery();
+			totalPrestamosActivos = miProcedimiento.getInt(1);
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para contar préstamos activos");
+			System.out.println(e.getMessage());
+		}
+
+		return totalPrestamosActivos;
+	}
+
+	public int contarPrestamosFinalizados() {
+
+		int totalPrestamosFinalizados = 0;
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		try {
+			CallableStatement miProcedimiento = conexion.prepareCall("{call contar_prestamos_finalizados(?)}");
+			miProcedimiento.registerOutParameter(1, Types.NUMERIC);
+			miProcedimiento.executeQuery();
+			totalPrestamosFinalizados = miProcedimiento.getInt(1);
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para contar préstamos finalizados");
+			System.out.println(e.getMessage());
+		}
+
+		return totalPrestamosFinalizados;
+	}
+
+	public int contarPrestamosVencidos() {
+
+		int totalPrestamosVencidos = 0;
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		try {
+			CallableStatement miProcedimiento = conexion.prepareCall("{call contar_prestamos_vencidos(?)}");
+			miProcedimiento.registerOutParameter(1, Types.NUMERIC);
+			miProcedimiento.executeQuery();
+			totalPrestamosVencidos = miProcedimiento.getInt(1);
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para contar préstamos vencidos");
+			System.out.println(e.getMessage());
+		}
+
+		return totalPrestamosVencidos;
+	}
+
 }// Fin clase

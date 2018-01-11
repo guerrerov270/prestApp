@@ -1220,6 +1220,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private void actualizaReportes() {
 
 		ClienteDAO miCliente = new ClienteDAO();
+		AbonoDAO miAbono = new AbonoDAO();
+		PrestamoDAO miPrestamo = new PrestamoDAO();
 
 		float totalPrestado = 0;
 		float totalRecaudado = 0;
@@ -1235,10 +1237,31 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		int totalClientesActivos = 0;
 
 		try {
+
+			totalAbonosCobrados = miAbono.contarAbonosCobrados();
+			totalAbonosPendientes = miAbono.contarAbonosPendientes();
+			jTextTotalAbonosCobrados.setText(totalAbonosCobrados + "");
+			jTextTotalAbonosPendientes.setText(totalAbonosPendientes + "");
+
 			totalClientesRegistrados = miCliente.contarClientesRegistrados();
 			totalClientesActivos = miCliente.contarClientesActivos();
 			jTextTotalclientesRegistrados.setText(totalClientesRegistrados + "");
 			jTextTotalClientesactivos.setText(totalClientesActivos + "");
+
+			totalPrestado = miPrestamo.calcularTotalPrestado();
+			totalRecaudado = miPrestamo.calcularTotalRecaudado();
+			interesesRecaudados = miPrestamo.calcularInteresesRecaudados();
+			jTextTotalPrestado.setText(totalPrestado + "");
+			jTextTotalRecaudado.setText(totalRecaudado + "");
+			jTextInteresesRecaudados.setText(interesesRecaudados + "");
+
+			totalPrestamosActivos = miPrestamo.contarPrestamosActivos();
+			totalPrestamosFinalizados = miPrestamo.contarPrestamosFinalizados();
+			totalPrestamosVencidos = miPrestamo.contarPrestamosVencidos();
+			jTextTotalPrestamosActivos.setText(totalPrestamosActivos + "");
+			jTextTotalPrestamosFinalizados.setText(totalPrestamosFinalizados + "");
+			jTextTotalprestamosVencidos.setText(totalPrestamosVencidos + "");
+
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
