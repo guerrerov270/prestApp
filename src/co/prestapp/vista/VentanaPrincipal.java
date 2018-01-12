@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -36,12 +35,10 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
 import javax.swing.SwingUtilities;
 
 import co.prestapp.DAO.AbonoDAO;
@@ -640,7 +637,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				}
 			}
 			pack();
-			this.setSize(926, 617);
+			this.setSize(920, 640);
 		} catch (Exception e) {
 			// add your error handling code here
 			e.printStackTrace();
@@ -1281,12 +1278,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		AbonoDAO miAbono = new AbonoDAO();
 		PrestamoDAO miPrestamo = new PrestamoDAO();
 
-		float totalPrestado = 0;
-		float totalRecaudado = 0;
-		float interesesRecaudados = 0;
-		float intersesARecaudar = 0;
-		float totalRecaudoPendiente = 0;
-		String totalPrestadoS = "";
+		String totalPrestado = "";
+		String totalRecaudado = "";
+		String interesesRecaudados = "";
+		String intersesARecaudar = "";
+		String totalRecaudoPendiente = "";
 		int totalPrestamosActivos = 0;
 		int totalPrestamosFinalizados = 0;
 		int totalPrestamosVencidos = 0;
@@ -1311,13 +1307,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jTextTotalclientesRegistrados.setText(totalClientesRegistrados + "");
 			jTextTotalClientesactivos.setText(totalClientesActivos + "");
 
-			totalPrestado = miPrestamo.calcularTotalPrestado();
-			totalPrestadoS = totalPrestado + "";
-			totalRecaudado = miPrestamo.calcularTotalRecaudado();
-			interesesRecaudados = miPrestamo.calcularInteresesPendientesRecaudo();
-			intersesARecaudar = miPrestamo.calcularInteresesRecaudados();
-			totalRecaudoPendiente = miPrestamo.calcularRecaudoPendiente();
-			jTextTotalPrestado.setText(totalPrestado + "");
+			totalPrestado = formatoMoneda.format(miPrestamo.calcularTotalPrestado());
+			totalRecaudado = formatoMoneda.format(miPrestamo.calcularTotalRecaudado());
+			interesesRecaudados = formatoMoneda.format(miPrestamo.calcularInteresesPendientesRecaudo());
+			intersesARecaudar = formatoMoneda.format(miPrestamo.calcularInteresesRecaudados());
+			totalRecaudoPendiente = formatoMoneda.format(miPrestamo.calcularRecaudoPendiente());
+			jTextTotalPrestado.setText(totalPrestado);
 			jTextTotalRecaudado.setText(totalRecaudado + "");
 			jTextInteresesRecaudados.setText(interesesRecaudados + "");
 			jTextTotalrecaudoPendiente.setText(totalRecaudoPendiente + "");
