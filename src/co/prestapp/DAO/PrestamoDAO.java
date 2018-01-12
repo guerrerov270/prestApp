@@ -410,7 +410,7 @@ public class PrestamoDAO {
 	}
 
 	private ArrayList<PrestamoVO> buscarPrestamosPorFecha(Date fechaSeleccionada) {
-		
+
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
 		ArrayList<PrestamoVO> listaPrestamos = new ArrayList<PrestamoVO>();
@@ -568,6 +568,8 @@ public class PrestamoDAO {
 		float interesesRecaudados = 0;
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
+		Locale locale = new Locale("es", "CO");
+		NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
 		try {
 			CallableStatement miProcedimientoListar = conexion.prepareCall("{call listar_prestamos}");
 			CallableStatement miProcedimiento = conexion.prepareCall("{call calcular_intereses_a_recaudar(?,?)}");
@@ -577,6 +579,7 @@ public class PrestamoDAO {
 				miProcedimiento.setString(2, miRs.getString("codigoPrestamo"));
 				miProcedimiento.executeQuery();
 				interesesRecaudados = interesesRecaudados + miProcedimiento.getFloat(1);
+
 			}
 			conexion.close();
 

@@ -10,6 +10,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -236,7 +237,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jLabelMontoPrestamo = new JLabel();
 							jPanelEntradasPrestamo.add(jLabelMontoPrestamo, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
 									GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-							jLabelMontoPrestamo.setText("Monto préstamo:");
+							jLabelMontoPrestamo.setText("Monto préstamo:  $");
 							jLabelMontoPrestamo.setBounds(17, 30, 178, 23);
 							jLabelMontoPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
 						}
@@ -269,7 +270,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jPanelEntradasPrestamo.add(jLabelPocentaje, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
 									GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 							jLabelPocentaje.setText("%");
-							jLabelPocentaje.setBounds(548, 36, 64, 23);
+							jLabelPocentaje.setBounds(547, 31, 64, 23);
+							jLabelPocentaje.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
 							jLabelNumeroCuotas = new JLabel();
@@ -355,7 +357,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							{
 								jLabelTotalPago = new JLabel();
 								jPanelEntradasPrestamo.add(jLabelTotalPago);
-								jLabelTotalPago.setText("Total a pagar:");
+								jLabelTotalPago.setText("Total a pagar:  $");
 								jLabelTotalPago.setBounds(362, 121, 116, 23);
 								jLabelTotalPago.setFont(new java.awt.Font("Arial", 0, 16));
 							}
@@ -677,6 +679,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					JOptionPane.INFORMATION_MESSAGE);
 			limpiarCamposCliente();
 			actualizaClientes();
+			actualizaReportes();
 
 		}
 
@@ -849,7 +852,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (validarCamposPrestamo()) {
 			// Recojo los datos necesarios
 			try {
-				montoPrestamo = Float.parseFloat(jTextMonto.getText());
+				montoPrestamo = Float.parseFloat(jTextMonto.getText()) * 1000;
 				tasaInteres = Integer.parseInt(jTextTasaInteres.getText());
 				numeroCuotas = Integer.parseInt(jTextNumeroCuotas.getText());
 			} catch (NumberFormatException e) {
@@ -901,6 +904,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					JOptionPane.INFORMATION_MESSAGE);
 			limpiarCamposPrestamo();
 			actualizaPrestamos();
+			actualizaReportes();
 		}
 
 	}
@@ -1051,7 +1055,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (validarCamposAbonoPrestamo()) {
 			fechaPago = calendarioAbonos.getDate();
 			codigoAbono = jTextFieldCodigoAbono.getText();
-			montoPagado = Double.parseDouble(jTextField1.getText());
+			montoPagado = Double.parseDouble(jTextField1.getText()) * 1000;
 			miAbonoVO = miAbono.buscarAbono(codigoAbono);
 			if (miAbonoVO == null) {
 				JOptionPane.showMessageDialog(this, "No se ha podido encontrar el abono", "Alerta",
@@ -1061,6 +1065,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				actualizaAbonos();
 				actualizaPrestamos();
 				actualizaAbonosPagados();
+				actualizaReportes();
 				JOptionPane.showMessageDialog(this, "Abono guardado correctamente", "Información",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
@@ -1162,10 +1167,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		th.setFont(new java.awt.Font("Arial", 0, 16));
 		ajustaColumnasAContenido(jTableAbonosRecibidos);
 	}
-	
+
 	private void actualizaPrestamosPorFecha() {
-		
-		Date fechaSeleccionada=calendarioPrestamosPorfecha.getDate();
+
+		Date fechaSeleccionada = calendarioPrestamosPorfecha.getDate();
 		PrestamoDAO miPrestamo = new PrestamoDAO();
 		String informacionPrestamosPorFecha[][] = miPrestamo.obtenerMatrizPrestamosPorFecha(fechaSeleccionada);
 		String titulos[] = miPrestamo.getColumnas();
@@ -1176,10 +1181,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		th.setFont(new java.awt.Font("Arial", 0, 16));
 		ajustaColumnasAContenido(jTableReportesPorFecha);
 	}
-	
+
 	private void actualizaAbonosPorFecha() {
-		
-		Date fechaSeleccionada=calendarioAbonosPorFecha.getDate();
+
+		Date fechaSeleccionada = calendarioAbonosPorFecha.getDate();
 		AbonoDAO miAbono = new AbonoDAO();
 		String informacionAbonosPorFecha[][] = miAbono.obtenerMatrizAbonosPorFecha(fechaSeleccionada);
 		String titulos[] = miAbono.getColumnas();
@@ -1269,6 +1274,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		float interesesRecaudados = 0;
 		float intersesARecaudar = 0;
 		float totalRecaudoPendiente = 0;
+		String totalPrestadoS = "";
 		int totalPrestamosActivos = 0;
 		int totalPrestamosFinalizados = 0;
 		int totalPrestamosVencidos = 0;
@@ -1278,6 +1284,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 		int totalClientesRegistrados = 0;
 		int totalClientesActivos = 0;
+		Locale locale = new Locale("es", "CO");
+		NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
 
 		try {
 
@@ -1292,6 +1300,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jTextTotalClientesactivos.setText(totalClientesActivos + "");
 
 			totalPrestado = miPrestamo.calcularTotalPrestado();
+			totalPrestadoS = totalPrestado + "";
 			totalRecaudado = miPrestamo.calcularTotalRecaudado();
 			interesesRecaudados = miPrestamo.calcularInteresesPendientesRecaudo();
 			intersesARecaudar = miPrestamo.calcularInteresesRecaudados();
@@ -1520,14 +1529,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jPanelCifras.add(getJLabelAbonosPorFecha());
 			jPanelCifras.add(getJButtonPrestamoPorFecha());
 			jPanelCifras.add(getJButtonAbonoPorFecha());
-			
+
 			calendarioPrestamosPorfecha = new JDateChooser();
 			calendarioPrestamosPorfecha.setLocale(new Locale("ES", "CO"));
 			calendarioPrestamosPorfecha.setDateFormatString("dd/MM/yyyy");
 			jPanelCifras.add(calendarioPrestamosPorfecha);
 			calendarioPrestamosPorfecha.setBounds(225, 291, 132, 23);
 			calendarioPrestamosPorfecha.setFont(new java.awt.Font("Arial", 0, 16));
-			
+
 			calendarioAbonosPorFecha = new JDateChooser();
 			calendarioAbonosPorFecha.setLocale(new Locale("ES", "CO"));
 			calendarioAbonosPorFecha.setDateFormatString("dd/MM/yyyy");
@@ -1552,7 +1561,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jLabelTotalrecibido == null) {
 			jLabelTotalrecibido = new JLabel();
 			jLabelTotalrecibido.setText("Total recaudado:");
-			jLabelTotalrecibido.setBounds(17, 116, 211, 23);
+			jLabelTotalrecibido.setBounds(17, 117, 211, 23);
 			jLabelTotalrecibido.setFont(new java.awt.Font("Arial", 0, 16));
 		}
 		return jLabelTotalrecibido;
@@ -1571,7 +1580,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField getJTextTotalRecaudado() {
 		if (jTextTotalRecaudado == null) {
 			jTextTotalRecaudado = new JTextField();
-			jTextTotalRecaudado.setBounds(226, 116, 178, 23);
+			jTextTotalRecaudado.setBounds(226, 117, 178, 23);
 			jTextTotalRecaudado.setFont(new java.awt.Font("Arial", 0, 16));
 			jTextTotalRecaudado.setEditable(false);
 		}
@@ -1582,7 +1591,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jLabelInteresesRecaudados == null) {
 			jLabelInteresesRecaudados = new JLabel();
 			jLabelInteresesRecaudados.setText("Intereses recaudados:");
-			jLabelInteresesRecaudados.setBounds(17, 159, 210, 23);
+			jLabelInteresesRecaudados.setBounds(17, 160, 210, 23);
 			jLabelInteresesRecaudados.setFont(new java.awt.Font("Arial", 0, 16));
 		}
 		return jLabelInteresesRecaudados;
@@ -1591,7 +1600,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField getJTextInteresesRecaudados() {
 		if (jTextInteresesRecaudados == null) {
 			jTextInteresesRecaudados = new JTextField();
-			jTextInteresesRecaudados.setBounds(226, 159, 178, 23);
+			jTextInteresesRecaudados.setBounds(226, 160, 178, 23);
 			jTextInteresesRecaudados.setFont(new java.awt.Font("Arial", 0, 16));
 			jTextInteresesRecaudados.setEditable(false);
 		}
@@ -1602,7 +1611,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jLabelTotalPrestamosActivos == null) {
 			jLabelTotalPrestamosActivos = new JLabel();
 			jLabelTotalPrestamosActivos.setText("Total préstamos activos:");
-			jLabelTotalPrestamosActivos.setBounds(17, 246, 210, 23);
+			jLabelTotalPrestamosActivos.setBounds(17, 247, 210, 23);
 			jLabelTotalPrestamosActivos.setFont(new java.awt.Font("Arial", 0, 16));
 		}
 		return jLabelTotalPrestamosActivos;
@@ -1611,7 +1620,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField getJTextTotalPrestamosActivos() {
 		if (jTextTotalPrestamosActivos == null) {
 			jTextTotalPrestamosActivos = new JTextField();
-			jTextTotalPrestamosActivos.setBounds(226, 246, 178, 23);
+			jTextTotalPrestamosActivos.setBounds(226, 247, 178, 23);
 			jTextTotalPrestamosActivos.setFont(new java.awt.Font("Arial", 0, 16));
 			jTextTotalPrestamosActivos.setEditable(false);
 		}
@@ -1662,7 +1671,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jLabelTotalclientesRegistrados == null) {
 			jLabelTotalclientesRegistrados = new JLabel();
 			jLabelTotalclientesRegistrados.setText("Total clientes registrados:");
-			jLabelTotalclientesRegistrados.setBounds(448, 202, 178, 23);
+			jLabelTotalclientesRegistrados.setBounds(448, 204, 178, 23);
 			jLabelTotalclientesRegistrados.setFont(new java.awt.Font("Arial", 0, 16));
 		}
 		return jLabelTotalclientesRegistrados;
@@ -1671,7 +1680,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField getJTextTotalClientesactivos() {
 		if (jTextTotalClientesactivos == null) {
 			jTextTotalClientesactivos = new JTextField();
-			jTextTotalClientesactivos.setBounds(710, 246, 178, 23);
+			jTextTotalClientesactivos.setBounds(710, 247, 178, 23);
 			jTextTotalClientesactivos.setFont(new java.awt.Font("Arial", 0, 16));
 			jTextTotalClientesactivos.setEditable(false);
 		}
@@ -1681,7 +1690,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField getJTextTotalclientesRegistrados() {
 		if (jTextTotalclientesRegistrados == null) {
 			jTextTotalclientesRegistrados = new JTextField();
-			jTextTotalclientesRegistrados.setBounds(710, 202, 178, 23);
+			jTextTotalclientesRegistrados.setBounds(710, 204, 178, 23);
 			jTextTotalclientesRegistrados.setFont(new java.awt.Font("Arial", 0, 16));
 			jTextTotalclientesRegistrados.setEditable(false);
 		}
@@ -1692,7 +1701,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jLabelTotalClientesactivos == null) {
 			jLabelTotalClientesactivos = new JLabel();
 			jLabelTotalClientesactivos.setText("Total clientes activos:");
-			jLabelTotalClientesactivos.setBounds(448, 246, 178, 23);
+			jLabelTotalClientesactivos.setBounds(448, 247, 178, 23);
 			jLabelTotalClientesactivos.setFont(new java.awt.Font("Arial", 0, 16));
 		}
 		return jLabelTotalClientesactivos;
@@ -1702,7 +1711,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jLabelTotalAbonosCobrados == null) {
 			jLabelTotalAbonosCobrados = new JLabel();
 			jLabelTotalAbonosCobrados.setText("Total abonos cobrados:");
-			jLabelTotalAbonosCobrados.setBounds(448, 116, 178, 23);
+			jLabelTotalAbonosCobrados.setBounds(448, 117, 178, 23);
 			jLabelTotalAbonosCobrados.setFont(new java.awt.Font("Arial", 0, 16));
 		}
 		return jLabelTotalAbonosCobrados;
@@ -1712,7 +1721,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jLabelTotalAbonosPendientes == null) {
 			jLabelTotalAbonosPendientes = new JLabel();
 			jLabelTotalAbonosPendientes.setText("Total abonos pendientes:");
-			jLabelTotalAbonosPendientes.setBounds(448, 159, 178, 23);
+			jLabelTotalAbonosPendientes.setBounds(448, 160, 178, 23);
 			jLabelTotalAbonosPendientes.setFont(new java.awt.Font("Arial", 0, 16));
 		}
 		return jLabelTotalAbonosPendientes;
@@ -1721,7 +1730,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField getJTextTotalAbonosCobrados() {
 		if (jTextTotalAbonosCobrados == null) {
 			jTextTotalAbonosCobrados = new JTextField();
-			jTextTotalAbonosCobrados.setBounds(710, 116, 178, 23);
+			jTextTotalAbonosCobrados.setBounds(710, 117, 178, 23);
 			jTextTotalAbonosCobrados.setFont(new java.awt.Font("Arial", 0, 16));
 			jTextTotalAbonosCobrados.setEditable(false);
 		}
@@ -1731,7 +1740,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField getJTextTotalAbonosPendientes() {
 		if (jTextTotalAbonosPendientes == null) {
 			jTextTotalAbonosPendientes = new JTextField();
-			jTextTotalAbonosPendientes.setBounds(710, 159, 178, 23);
+			jTextTotalAbonosPendientes.setBounds(710, 160, 178, 23);
 			jTextTotalAbonosPendientes.setFont(new java.awt.Font("Arial", 0, 16));
 			jTextTotalAbonosPendientes.setEditable(false);
 		}
@@ -1742,7 +1751,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jLabelTotalRecaudoPendiente == null) {
 			jLabelTotalRecaudoPendiente = new JLabel();
 			jLabelTotalRecaudoPendiente.setText("Total recaudo pendiente:");
-			jLabelTotalRecaudoPendiente.setBounds(17, 77, 178, 23);
+			jLabelTotalRecaudoPendiente.setBounds(17, 73, 178, 23);
 			jLabelTotalRecaudoPendiente.setFont(new java.awt.Font("Arial", 0, 16));
 		}
 		return jLabelTotalRecaudoPendiente;
@@ -1751,7 +1760,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField getJTextTotalrecaudoPendiente() {
 		if (jTextTotalrecaudoPendiente == null) {
 			jTextTotalrecaudoPendiente = new JTextField();
-			jTextTotalrecaudoPendiente.setBounds(226, 74, 178, 23);
+			jTextTotalrecaudoPendiente.setBounds(226, 73, 178, 23);
 			jTextTotalrecaudoPendiente.setFont(new java.awt.Font("Arial", 0, 16));
 			jTextTotalrecaudoPendiente.setEditable(false);
 		}
@@ -1762,7 +1771,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jLabelInteresesPendientesRecaudo == null) {
 			jLabelInteresesPendientesRecaudo = new JLabel();
 			jLabelInteresesPendientesRecaudo.setText("Interses a recaudar");
-			jLabelInteresesPendientesRecaudo.setBounds(17, 206, 178, 23);
+			jLabelInteresesPendientesRecaudo.setBounds(17, 204, 178, 23);
 			jLabelInteresesPendientesRecaudo.setFont(new java.awt.Font("Arial", 0, 16));
 		}
 		return jLabelInteresesPendientesRecaudo;
@@ -1771,7 +1780,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField getJTextIntersesePendientesRecaudo() {
 		if (jTextIntersesePendientesRecaudo == null) {
 			jTextIntersesePendientesRecaudo = new JTextField();
-			jTextIntersesePendientesRecaudo.setBounds(226, 203, 178, 23);
+			jTextIntersesePendientesRecaudo.setBounds(226, 204, 178, 23);
 			jTextIntersesePendientesRecaudo.setFont(new java.awt.Font("Arial", 0, 16));
 			jTextIntersesePendientesRecaudo.setEditable(false);
 		}
@@ -1794,9 +1803,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		}
 		return jTableReportesPorFecha;
 	}
-	
+
 	private JLabel getJLabelPrestadoPorFecha() {
-		if(jLabelPrestadoPorFecha == null) {
+		if (jLabelPrestadoPorFecha == null) {
 			jLabelPrestadoPorFecha = new JLabel();
 			jLabelPrestadoPorFecha.setText("Préstamos por fecha:");
 			jLabelPrestadoPorFecha.setBounds(17, 291, 209, 23);
@@ -1804,25 +1813,25 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		}
 		return jLabelPrestadoPorFecha;
 	}
-	
+
 	private JLabel getJLabelAbonosPorFecha() {
-		if(jLabelAbonosPorFecha == null) {
+		if (jLabelAbonosPorFecha == null) {
 			jLabelAbonosPorFecha = new JLabel();
-			jLabelAbonosPorFecha.setText("Abonos cobrados por fecha");
+			jLabelAbonosPorFecha.setText("Abonos pagados por fecha:");
 			jLabelAbonosPorFecha.setBounds(448, 291, 249, 23);
 			jLabelAbonosPorFecha.setFont(new java.awt.Font("Arial", 0, 16));
 		}
 		return jLabelAbonosPorFecha;
 	}
-	
+
 	private JButton getJButtonPrestamoPorFecha() {
-		if(jButtonPrestamoPorFecha == null) {
+		if (jButtonPrestamoPorFecha == null) {
 			ImageIcon icono1 = new ImageIcon("res/buscar.png");
 			Image img1 = icono1.getImage();
 			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 			ImageIcon otroicon1 = new ImageIcon(otraimg1);
 			jButtonPrestamoPorFecha = new JButton(otroicon1);
-			//jButtonPrestamoPorFecha.setText("Buscar");
+			// jButtonPrestamoPorFecha.setText("Buscar");
 			jButtonPrestamoPorFecha.setBounds(357, 282, 49, 38);
 			jButtonPrestamoPorFecha.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
@@ -1832,15 +1841,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		}
 		return jButtonPrestamoPorFecha;
 	}
-	
+
 	private JButton getJButtonAbonoPorFecha() {
-		if(jButtonAbonoPorFecha == null) {
+		if (jButtonAbonoPorFecha == null) {
 			ImageIcon icono1 = new ImageIcon("res/buscar.png");
 			Image img1 = icono1.getImage();
 			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 			ImageIcon otroicon1 = new ImageIcon(otraimg1);
 			jButtonAbonoPorFecha = new JButton(otroicon1);
-			//jButtonAbonoPorFecha.setText("Buscar");
+			// jButtonAbonoPorFecha.setText("Buscar");
 			jButtonAbonoPorFecha.setBounds(844, 281, 49, 38);
 			jButtonAbonoPorFecha.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
@@ -1850,15 +1859,29 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		}
 		return jButtonAbonoPorFecha;
 	}
-	
+
 	private void jButtonPrestamoPorFechaActionPerformed(ActionEvent evt) {
-		
-		actualizaPrestamosPorFecha();
+
+		Date fechaIngresada = calendarioPrestamosPorfecha.getDate();
+		if (fechaIngresada != null) {
+			actualizaPrestamosPorFecha();
+		} else {
+			JOptionPane.showMessageDialog(this, "Debe especificar una fecha para la búsqueda", "Alerta",
+					JOptionPane.WARNING_MESSAGE);
+		}
+
 	}
-	
+
 	private void jButtonAbonoPorFechaActionPerformed(ActionEvent evt) {
-		
-		actualizaAbonosPorFecha();
+
+		Date fechaIngresada = calendarioPrestamosPorfecha.getDate();
+		if (fechaIngresada != null) {
+			actualizaAbonosPorFecha();
+		} else {
+			JOptionPane.showMessageDialog(this, "Debe especificar una fecha para la búsqueda", "Alerta",
+					JOptionPane.WARNING_MESSAGE);
+		}
+
 	}
 
 }

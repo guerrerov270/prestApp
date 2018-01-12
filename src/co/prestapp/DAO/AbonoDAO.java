@@ -450,6 +450,73 @@ public class AbonoDAO {
 		}
 		return listaAbonos;
 	}
+	
+	public String[][] obtenerMatrizAbonosPorFecha(Date fechaSeleccionada) {
+		
+		ArrayList<AbonoVO> listaAbonos = buscarAbonosPagadosPorFechaConMatriz(fechaSeleccionada);
+		String matrizInfo[][] = new String[listaAbonos.size()][11];
+
+		for (int i = 0; i < listaAbonos.size(); i++) {
+			matrizInfo[i][0] = listaAbonos.get(i).getIDAbono() + "";
+			matrizInfo[i][1] = listaAbonos.get(i).getCodigoAbono() + "";
+			matrizInfo[i][2] = listaAbonos.get(i).getMontoACobrar() + "";
+			matrizInfo[i][3] = listaAbonos.get(i).getMontoPagado() + "";
+			matrizInfo[i][4] = listaAbonos.get(i).getCompletoAbono() + "";
+			matrizInfo[i][5] = listaAbonos.get(i).getFechaACobrar() + "";
+			matrizInfo[i][6] = listaAbonos.get(i).getFechaPago() + "";
+			matrizInfo[i][7] = listaAbonos.get(i).getAbonoPrestamo() + "";
+			matrizInfo[i][8] = listaAbonos.get(i).getPuntualAbono() + "";
+			matrizInfo[i][9] = listaAbonos.get(i).getEstadoAbono() + "";
+			matrizInfo[i][10] = listaAbonos.get(i).getNumeroAbono() + "";
+		}
+
+		return matrizInfo;
+	}
+
+	private ArrayList<AbonoVO> buscarAbonosPagadosPorFechaConMatriz(Date fechaSeleccionada) {
+		
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		ArrayList<AbonoVO> listaAbonos = new ArrayList<AbonoVO>();
+		AbonoVO miAbono;
+		java.sql.Date fechaSeleccionadaFormateada = new java.sql.Date(fechaSeleccionada.getTime());
+		
+		try {
+			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_abonos_pagados_por_fecha(?)}");
+			miProcedimiento.setDate(1, fechaSeleccionadaFormateada);
+			ResultSet miRs = miProcedimiento.executeQuery();
+			DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
+			Locale locale = new Locale("es", "CO");
+			NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
+
+			while (miRs.next()) {
+				miAbono = new AbonoVO();
+				miAbono.setIDAbono(miRs.getInt("idAbono"));
+				miAbono.setCodigoAbono(miRs.getString("codigoAbono"));
+				miAbono.setMontoACobrar(formatoMoneda.format(miRs.getDouble("montoACobrar")));
+				miAbono.setMontoPagado(formatoMoneda.format(miRs.getDouble("montoPagado")));
+				miAbono.setCompletoAbono(miRs.getString("completoAbono"));
+				miAbono.setFechaACobrar(formato.format(miRs.getDate("fechaACobrar")));
+				if (miRs.getDate("fechaPago") != null) {
+					miAbono.setFechaPago(formato.format(miRs.getDate("fechaPago")));
+				}
+				miAbono.setAbonoPrestamo(miRs.getString("abonoPrestamo"));
+				miAbono.setPuntualAbono(miRs.getString("puntualAbono"));
+				miAbono.setEstadoAbono(miRs.getString("estadoAbono"));
+				miAbono.setNumeroAbono(miRs.getInt("numeroAbono"));
+
+				listaAbonos.add(miAbono);
+			}
+			miRs.close();
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para listar abonos pagados por fecha");
+			System.out.println(e.getMessage());
+
+		}
+		return listaAbonos;
+	}
 
 	public int contarAbonosCobrados() {
 
@@ -490,5 +557,7 @@ public class AbonoDAO {
 
 		return totalAbonosPendientes;
 	}
+
+	
 
 } // Fin AbonoDAO
