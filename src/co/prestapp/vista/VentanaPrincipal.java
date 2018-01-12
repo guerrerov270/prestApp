@@ -195,6 +195,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			this.setTitle("PrestApp 1.0");
 			this.setFont(new java.awt.Font("Arial", 0, 16));
+			this.setResizable(false);
 			{
 				jMenuBarOpciones = new JMenuBar();
 				setJMenuBar(jMenuBarOpciones);
@@ -638,6 +639,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			}
 			pack();
 			this.setSize(920, 640);
+			
 		} catch (Exception e) {
 			// add your error handling code here
 			e.printStackTrace();
