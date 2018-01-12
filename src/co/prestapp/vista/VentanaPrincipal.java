@@ -32,10 +32,12 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
 import javax.swing.SwingUtilities;
 
 import co.prestapp.DAO.AbonoDAO;
@@ -71,6 +73,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTable jTableClientes;
 	private JScrollPane jScrollPaneClientes;
 	private JButton jButtonCancelarAbono;
+	private JButton jButtonAbonoPorFecha;
+	private JButton jButtonPrestamoPorFecha;
+	private JLabel jLabelAbonosPorFecha;
+	private JLabel jLabelPrestadoPorFecha;
+	private JTable jTableReportesPorFecha;
+	private JScrollPane jScrollPaneReportesPorFecha;
 	private JTextField jTextIntersesePendientesRecaudo;
 	private JLabel jLabelInteresesPendientesRecaudo;
 	private JTextField jTextTotalrecaudoPendiente;
@@ -95,7 +103,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField jTextTotalPrestado;
 	private JLabel jLabelTotalrecibido;
 	private JLabel jLabelTotalPrestado;
-	private JPanel jPanelEstadisticas;
 	private JPanel jPanelCifras;
 	private JButton jButtonPrestamosPendientes;
 	private JButton jButtonGuardar;
@@ -131,6 +138,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JScrollPane jScrollReportes;
 	private JDateChooser calendarioPrestamos;
 	private JDateChooser calendarioAbonos;
+	private JDateChooser calendarioPrestamosPorfecha;
+	private JDateChooser calendarioAbonosPorFecha;
 	private JLabel jLabelNombre;
 	private JTextField jTextEmpresa;
 	private JLabel jLabelReferencia;
@@ -611,8 +620,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					}
 					jTabPestanias.addTab("Reportes", jPanelReportes);
 					jPanelReportes.setFont(new java.awt.Font("Arial", 0, 16));
+					jPanelReportes.add(getJScrollPaneReportesPorFecha(), BorderLayout.SOUTH);
 					jPanelReportes.add(getJPanelCifras(), BorderLayout.NORTH);
-					jPanelReportes.add(getJPanelEstadisticas(), BorderLayout.SOUTH);
 
 				}
 			}
@@ -1153,6 +1162,32 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		th.setFont(new java.awt.Font("Arial", 0, 16));
 		ajustaColumnasAContenido(jTableAbonosRecibidos);
 	}
+	
+	private void actualizaPrestamosPorFecha() {
+		
+		PrestamoDAO miPrestamo = new PrestamoDAO();
+		String informacionPrestamos[][] = miPrestamo.obtenerMatrizPrestamos();
+		String titulos[] = miPrestamo.getColumnas();
+		jTablePrestamos = new JTable(informacionPrestamos, titulos);
+		jScrollReportes.setViewportView(jTablePrestamos);
+		jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 16));
+		JTableHeader th = jTablePrestamos.getTableHeader();
+		th.setFont(new java.awt.Font("Arial", 0, 16));
+		ajustaColumnasAContenido(jTablePrestamos);
+	}
+	
+	private void actualizaAbonosPorFecha() {
+		
+		AbonoDAO miAbono = new AbonoDAO();
+		String informacionAbonos[][] = miAbono.obtenerMatrizAbonosPagados();
+		String titulos[] = miAbono.getColumnas();
+		jTableAbonosRecibidos = new JTable(informacionAbonos, titulos);
+		jScrollAbonosRecibidos.setViewportView(jTableAbonosRecibidos);
+		jTableAbonosRecibidos.setFont(new java.awt.Font("Arial", 0, 16));
+		JTableHeader th = jTableAbonosRecibidos.getTableHeader();
+		th.setFont(new java.awt.Font("Arial", 0, 16));
+		ajustaColumnasAContenido(jTableAbonosRecibidos);
+	}
 
 	private void actualizaPrestamos() {
 
@@ -1454,7 +1489,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jPanelCifras = new JPanel();
 			jPanelCifras.setLayout(null);
 			jPanelCifras.setBorder(BorderFactory.createTitledBorder("Cifras"));
-			jPanelCifras.setPreferredSize(new java.awt.Dimension(905, 289));
+			jPanelCifras.setPreferredSize(new java.awt.Dimension(905, 335));
 			jPanelCifras.add(getJLabelTotalPrestado());
 			jPanelCifras.add(getJLabelTotalrecibido());
 			jPanelCifras.add(getJTextTotalPrestado());
@@ -1479,17 +1514,26 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jPanelCifras.add(getJTextTotalrecaudoPendiente());
 			jPanelCifras.add(getJLabelInteresesPendientesRecaudo());
 			jPanelCifras.add(getJTextIntersesePendientesRecaudo());
+			jPanelCifras.add(getJLabelPrestadoPorFecha());
+			jPanelCifras.add(getJLabelAbonosPorFecha());
+			jPanelCifras.add(getJButtonPrestamoPorFecha());
+			jPanelCifras.add(getJButtonAbonoPorFecha());
+			
+			calendarioPrestamosPorfecha = new JDateChooser();
+			calendarioPrestamosPorfecha.setLocale(new Locale("ES", "CO"));
+			calendarioPrestamosPorfecha.setDateFormatString("dd/MM/yyyy");
+			jPanelCifras.add(calendarioPrestamosPorfecha);
+			calendarioPrestamosPorfecha.setBounds(225, 291, 132, 23);
+			calendarioPrestamosPorfecha.setFont(new java.awt.Font("Arial", 0, 16));
+			
+			calendarioAbonosPorFecha = new JDateChooser();
+			calendarioAbonosPorFecha.setLocale(new Locale("ES", "CO"));
+			calendarioAbonosPorFecha.setDateFormatString("dd/MM/yyyy");
+			jPanelCifras.add(calendarioAbonosPorFecha);
+			calendarioAbonosPorFecha.setBounds(712, 291, 132, 23);
+			calendarioAbonosPorFecha.setFont(new java.awt.Font("Arial", 0, 16));
 		}
 		return jPanelCifras;
-	}
-
-	private JPanel getJPanelEstadisticas() {
-		if (jPanelEstadisticas == null) {
-			jPanelEstadisticas = new JPanel();
-			jPanelEstadisticas.setBorder(BorderFactory.createTitledBorder("Estadísticas"));
-			jPanelEstadisticas.setPreferredSize(new java.awt.Dimension(905, 258));
-		}
-		return jPanelEstadisticas;
 	}
 
 	private JLabel getJLabelTotalPrestado() {
@@ -1730,6 +1774,89 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jTextIntersesePendientesRecaudo.setEditable(false);
 		}
 		return jTextIntersesePendientesRecaudo;
+	}
+
+	private JScrollPane getJScrollPaneReportesPorFecha() {
+		if (jScrollPaneReportesPorFecha == null) {
+			jScrollPaneReportesPorFecha = new JScrollPane();
+			jScrollPaneReportesPorFecha.setBounds(82, 316, 740, 197);
+			jScrollPaneReportesPorFecha.setPreferredSize(new java.awt.Dimension(905, 214));
+			jScrollPaneReportesPorFecha.setViewportView(getJTableReportesPorFecha());
+		}
+		return jScrollPaneReportesPorFecha;
+	}
+
+	private JTable getJTableReportesPorFecha() {
+		if (jTableReportesPorFecha == null) {
+			jTableReportesPorFecha = new JTable();
+		}
+		return jTableReportesPorFecha;
+	}
+	
+	private JLabel getJLabelPrestadoPorFecha() {
+		if(jLabelPrestadoPorFecha == null) {
+			jLabelPrestadoPorFecha = new JLabel();
+			jLabelPrestadoPorFecha.setText("Préstamos por fecha:");
+			jLabelPrestadoPorFecha.setBounds(17, 291, 209, 23);
+			jLabelPrestadoPorFecha.setFont(new java.awt.Font("Arial", 0, 16));
+		}
+		return jLabelPrestadoPorFecha;
+	}
+	
+	private JLabel getJLabelAbonosPorFecha() {
+		if(jLabelAbonosPorFecha == null) {
+			jLabelAbonosPorFecha = new JLabel();
+			jLabelAbonosPorFecha.setText("Abonos cobrados por fecha");
+			jLabelAbonosPorFecha.setBounds(448, 291, 249, 23);
+			jLabelAbonosPorFecha.setFont(new java.awt.Font("Arial", 0, 16));
+		}
+		return jLabelAbonosPorFecha;
+	}
+	
+	private JButton getJButtonPrestamoPorFecha() {
+		if(jButtonPrestamoPorFecha == null) {
+			ImageIcon icono1 = new ImageIcon("res/buscar.png");
+			Image img1 = icono1.getImage();
+			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+			ImageIcon otroicon1 = new ImageIcon(otraimg1);
+			jButtonPrestamoPorFecha = new JButton(otroicon1);
+			//jButtonPrestamoPorFecha.setText("Buscar");
+			jButtonPrestamoPorFecha.setBounds(357, 282, 49, 38);
+			jButtonPrestamoPorFecha.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+					jButtonPrestamoPorFechaActionPerformed(evt);
+				}
+			});
+		}
+		return jButtonPrestamoPorFecha;
+	}
+	
+	private JButton getJButtonAbonoPorFecha() {
+		if(jButtonAbonoPorFecha == null) {
+			ImageIcon icono1 = new ImageIcon("res/buscar.png");
+			Image img1 = icono1.getImage();
+			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+			ImageIcon otroicon1 = new ImageIcon(otraimg1);
+			jButtonAbonoPorFecha = new JButton(otroicon1);
+			//jButtonAbonoPorFecha.setText("Buscar");
+			jButtonAbonoPorFecha.setBounds(844, 281, 49, 38);
+			jButtonAbonoPorFecha.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+					jButtonAbonoPorFechaActionPerformed(evt);
+				}
+			});
+		}
+		return jButtonAbonoPorFecha;
+	}
+	
+	private void jButtonPrestamoPorFechaActionPerformed(ActionEvent evt) {
+		
+		actualizaPrestamosPorFecha();
+	}
+	
+	private void jButtonAbonoPorFechaActionPerformed(ActionEvent evt) {
+		
+		actualizaAbonosPorFecha();
 	}
 
 }
