@@ -385,6 +385,80 @@ public class PrestamoDAO {
 		return listaPrestamos;
 	}
 
+	public String[][] obtenerMatrizPrestamosPorFecha(Date fechaSeleccionada) {
+
+		ArrayList<PrestamoVO> listaPrestamos = buscarPrestamosPorFecha(fechaSeleccionada);
+
+		String matrizInfo[][] = new String[listaPrestamos.size()][12];
+
+		for (int i = 0; i < listaPrestamos.size(); i++) {
+			matrizInfo[i][0] = listaPrestamos.get(i).getIdPrestamo() + "";
+			matrizInfo[i][1] = listaPrestamos.get(i).getCodigoPrestamo() + "";
+			matrizInfo[i][2] = listaPrestamos.get(i).getMontoPrestamo() + "";
+			matrizInfo[i][3] = listaPrestamos.get(i).getTasaInteresPrestamo() + "";
+			matrizInfo[i][4] = listaPrestamos.get(i).getNumeroCuotasPrestamo() + "";
+			matrizInfo[i][5] = listaPrestamos.get(i).getSaldoPendienteprestamo() + "";
+			matrizInfo[i][6] = listaPrestamos.get(i).getSaldoPagadoPrestamo() + "";
+			matrizInfo[i][7] = listaPrestamos.get(i).getFechaInicioPrestamo() + "";
+			matrizInfo[i][8] = listaPrestamos.get(i).getFechafinPrestamo() + "";
+			matrizInfo[i][9] = listaPrestamos.get(i).getTipoPlazoPrestamo() + "";
+			matrizInfo[i][10] = listaPrestamos.get(i).getIcodigoClienteFK() + "";
+			matrizInfo[i][11] = listaPrestamos.get(i).getEstadoPrestamo() + "";
+		}
+
+		return matrizInfo;
+	}
+
+	private ArrayList<PrestamoVO> buscarPrestamosPorFecha(Date fechaSeleccionada) {
+		
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		ArrayList<PrestamoVO> listaPrestamos = new ArrayList<PrestamoVO>();
+		PrestamoVO miPrestamo;
+		DateFormat formatoFecha = new SimpleDateFormat("dd MMMM yyyy");
+		Locale locale = new Locale("es", "CO");
+		NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
+		java.sql.Date fechaSeleccionadaFormateada = new java.sql.Date(fechaSeleccionada.getTime());
+
+		try {
+			CallableStatement miProcedimientoListar = conexion.prepareCall("{call listar_prestamos_por_fecha(?)}");
+			miProcedimientoListar.setDate(1, fechaSeleccionadaFormateada);
+			ResultSet miRs = miProcedimientoListar.executeQuery();
+
+			while (miRs.next()) {
+				miPrestamo = new PrestamoVO();
+				miPrestamo.setIdPrestamo(miRs.getInt("idPrestamo"));
+				miPrestamo.setCodigoPrestamo(miRs.getString("codigoPrestamo"));
+				miPrestamo.setMontoPrestamo(formatoMoneda.format(miRs.getDouble("montoPrestamo")));
+				miPrestamo.setTasaInteresPrestamo(miRs.getInt("tasaInteresPrestamo"));
+				miPrestamo.setNumeroCuotasPrestamo(miRs.getInt("numeroCuotasprestamo"));
+				miPrestamo.setSaldoPendienteprestamo(formatoMoneda.format(miRs.getDouble("saldoPendientePrestamo")));
+				miPrestamo.setSaldoPagadoPrestamo(formatoMoneda.format(miRs.getDouble("saldoPagadoPrestamo")));
+				if (miRs.getDate("fechaInicioPrestamo") != null) {
+					miPrestamo.setFechaInicioPrestamo(formatoFecha.format(miRs.getDate("fechaInicioPrestamo")));
+				}
+				if (miRs.getDate("fechaFinPrestamo") != null) {
+					miPrestamo.setFechafinPrestamo(formatoFecha.format(miRs.getDate("fechaFinPrestamo")));
+				}
+
+				miPrestamo.setTipoPlazoPrestamo(miRs.getString("tipoPlazoPrestamo"));
+				miPrestamo.setcodigoClienteFK(miRs.getString("codigoClienteFK"));
+				miPrestamo.setEstadoPrestamo(miRs.getString("estadoPrestamo"));
+
+				listaPrestamos.add(miPrestamo);
+			}
+			miRs.close();
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para listar prestamos");
+			System.out.println(e.getMessage());
+
+		}
+
+		return listaPrestamos;
+	}
+
 	public float calcularTotalPrestado() {
 
 		float totalPrestado = 0;
@@ -488,9 +562,9 @@ public class PrestamoDAO {
 
 		return interesesRecaudados;
 	}
-	
+
 	public float calcularInteresesPendientesRecaudo() {
-		
+
 		float interesesRecaudados = 0;
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
@@ -573,7 +647,5 @@ public class PrestamoDAO {
 
 		return totalPrestamosVencidos;
 	}
-
-	
 
 }// Fin clase

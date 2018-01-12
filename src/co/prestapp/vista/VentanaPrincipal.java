@@ -1165,28 +1165,30 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	
 	private void actualizaPrestamosPorFecha() {
 		
+		Date fechaSeleccionada=calendarioPrestamosPorfecha.getDate();
 		PrestamoDAO miPrestamo = new PrestamoDAO();
-		String informacionPrestamos[][] = miPrestamo.obtenerMatrizPrestamos();
+		String informacionPrestamosPorFecha[][] = miPrestamo.obtenerMatrizPrestamosPorFecha(fechaSeleccionada);
 		String titulos[] = miPrestamo.getColumnas();
-		jTablePrestamos = new JTable(informacionPrestamos, titulos);
-		jScrollReportes.setViewportView(jTablePrestamos);
-		jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 16));
-		JTableHeader th = jTablePrestamos.getTableHeader();
+		jTableReportesPorFecha = new JTable(informacionPrestamosPorFecha, titulos);
+		jScrollPaneReportesPorFecha.setViewportView(jTableReportesPorFecha);
+		jTableReportesPorFecha.setFont(new java.awt.Font("Arial", 0, 16));
+		JTableHeader th = jTableReportesPorFecha.getTableHeader();
 		th.setFont(new java.awt.Font("Arial", 0, 16));
-		ajustaColumnasAContenido(jTablePrestamos);
+		ajustaColumnasAContenido(jTableReportesPorFecha);
 	}
 	
 	private void actualizaAbonosPorFecha() {
 		
+		Date fechaSeleccionada=calendarioAbonosPorFecha.getDate();
 		AbonoDAO miAbono = new AbonoDAO();
-		String informacionAbonos[][] = miAbono.obtenerMatrizAbonosPagados();
+		String informacionAbonosPorFecha[][] = miAbono.obtenerMatrizAbonosPorFecha(fechaSeleccionada);
 		String titulos[] = miAbono.getColumnas();
-		jTableAbonosRecibidos = new JTable(informacionAbonos, titulos);
-		jScrollAbonosRecibidos.setViewportView(jTableAbonosRecibidos);
-		jTableAbonosRecibidos.setFont(new java.awt.Font("Arial", 0, 16));
-		JTableHeader th = jTableAbonosRecibidos.getTableHeader();
+		jTableReportesPorFecha = new JTable(informacionAbonosPorFecha, titulos);
+		jScrollPaneReportesPorFecha.setViewportView(jTableReportesPorFecha);
+		jTableReportesPorFecha.setFont(new java.awt.Font("Arial", 0, 16));
+		JTableHeader th = jTableReportesPorFecha.getTableHeader();
 		th.setFont(new java.awt.Font("Arial", 0, 16));
-		ajustaColumnasAContenido(jTableAbonosRecibidos);
+		ajustaColumnasAContenido(jTableReportesPorFecha);
 	}
 
 	private void actualizaPrestamos() {
