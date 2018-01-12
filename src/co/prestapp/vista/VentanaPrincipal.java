@@ -26,6 +26,9 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -46,6 +49,7 @@ import co.prestapp.DAO.ClienteDAO;
 import co.prestapp.DAO.PrestamoDAO;
 import co.prestapp.VO.AbonoVO;
 import co.prestapp.VO.ClienteVO;
+import co.prestapp.connection.DBBackup;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -89,6 +93,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelTotalAbonosPendientes;
 	private JLabel jLabelTotalAbonosCobrados;
 	private JLabel jLabelTotalClientesactivos;
+	private JMenuItem jMenuItemBackup;
+	private JMenu jMenuBackup;
+	private JMenuBar jMenuBarOpciones;
 	private JTextField jTextTotalclientesRegistrados;
 	private JTextField jTextTotalClientesactivos;
 	private JLabel jLabelTotalclientesRegistrados;
@@ -191,6 +198,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			this.setTitle("PrestApp 1.0");
 			this.setFont(new java.awt.Font("Arial", 0, 16));
+			{
+				jMenuBarOpciones = new JMenuBar();
+				setJMenuBar(jMenuBarOpciones);
+				jMenuBarOpciones.add(getJMenuBackup());
+			}
 			{
 				jPanelContenedor = new JPanel();
 				BorderLayout jPanelContenedorLayout = new BorderLayout();
@@ -1881,6 +1893,44 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			JOptionPane.showMessageDialog(this, "Debe especificar una fecha para la búsqueda", "Alerta",
 					JOptionPane.WARNING_MESSAGE);
 		}
+
+	}
+
+	private JMenu getJMenuBackup() {
+		if (jMenuBackup == null) {
+			jMenuBackup = new JMenu();
+			jMenuBackup.setText("Opciones");
+			jMenuBackup.add(getJMenuItemBackup());
+		}
+		return jMenuBackup;
+	}
+
+	private JMenuItem getJMenuItemBackup() {
+		if (jMenuItemBackup == null) {
+			jMenuItemBackup = new JMenuItem();
+			jMenuItemBackup.setText("Crear copia de seguridad");
+			jMenuItemBackup.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+					jMenuItemBackupActionPerformed(evt);
+				}
+			});
+		}
+		return jMenuItemBackup;
+	}
+
+	private void jMenuItemBackupActionPerformed(ActionEvent evt) {
+
+		// configuracion de la fecha actual
+		Calendar c = Calendar.getInstance();
+		String fecha = String.valueOf(c.get(Calendar.DATE));
+		fecha = fecha + "-" + String.valueOf(c.get(Calendar.MONTH));
+		fecha = fecha + "-" + String.valueOf(c.get(Calendar.YEAR));
+		fecha = fecha + "." + String.valueOf(c.get(Calendar.HOUR_OF_DAY));
+		fecha = fecha + "." + String.valueOf(c.get(Calendar.MINUTE));
+		fecha = fecha + "." + String.valueOf(c.get(Calendar.SECOND));
+		DBBackup backup = new DBBackup();
+		backup.CrearBackup("localhost", "3306", "root", "root", "test",
+				"C:\\Users\\root\\Documents\\dumps\\backup" + "_" + fecha + ".sql");
 
 	}
 
