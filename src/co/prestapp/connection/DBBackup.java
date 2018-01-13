@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 
+import javax.swing.JOptionPane;
+
 public class DBBackup {
 
 	private int BUFFER = 10485760;
@@ -40,12 +42,13 @@ public class DBBackup {
 			ok = true;
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
 		} finally {
 			try {
 				if (null != fichero)
 					fichero.close();
 			} catch (Exception e2) {
-				e2.printStackTrace();
+				JOptionPane.showMessageDialog(null, e2.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		return ok;

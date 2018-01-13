@@ -1929,8 +1929,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		fecha = fecha + "." + String.valueOf(c.get(Calendar.MINUTE));
 		fecha = fecha + "." + String.valueOf(c.get(Calendar.SECOND));
 		DBBackup backup = new DBBackup();
-		backup.CrearBackup("localhost", "3306", "root", "root", "test", "C:\\dumps\\backup" + "_" + fecha + ".sql");
-
+		boolean resultado = backup.CrearBackup("localhost", "3306", "root", "root", "test",
+				"C:\\PrestApp\\backup" + "_" + fecha + ".sql");
+		if (resultado) {
+			JOptionPane.showMessageDialog(this, "Copia de seguridad generada con éxito", "Información",
+					JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			JOptionPane.showMessageDialog(this,
+					"La copia de seguridad no pudo ser generada, contacte al administrador del sistema", "ERROR",
+					JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	private JMenuItem getJMenuItemReporteClientes() {

@@ -3,31 +3,16 @@ package co.prestapp.reports;
 import java.awt.Color;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Date;
-
-import com.lowagie.text.Anchor;
-import com.lowagie.text.BadElementException;
-import com.lowagie.text.Cell;
-import com.lowagie.text.Chapter;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Font;
-import com.lowagie.text.List;
-import com.lowagie.text.ListItem;
 import com.lowagie.text.Paragraph;
-import com.lowagie.text.Section;
-import com.lowagie.text.Table;
 import com.lowagie.text.Element;
 import com.lowagie.text.PageSize;
-
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfWriter;
-
 import co.prestapp.connection.DBConnection;
-
-import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfPTable;
-
 import com.lowagie.text.Image;
 
 import java.sql.*;
@@ -36,22 +21,14 @@ public class ReporteClientes {
 
 	private String strNombreDelPDF;
 
-	private Font fuenteNegra10 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD, Color.BLACK);
-	private Font fuente8 = new Font(Font.TIMES_ROMAN, 8, Font.NORMAL, Color.BLACK);
-	private Font fuenteAzul25 = new Font(Font.TIMES_ROMAN, 25, Font.BOLD, Color.BLUE);
+	private Font fuenteNegra10 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD, Color.BLACK);
+	private Font fuente8 = new Font(Font.TIMES_ROMAN, 10, Font.NORMAL, Color.BLACK);
+	private Font fuenteAzul25 = new Font(Font.TIMES_ROMAN, 14, Font.BOLD, Color.BLACK);
 
 	Color grisClaro = new Color(230, 230, 230);
 	Color azulClaro = new Color(124, 195, 255);
 
 	// ############# VARIABLES PARA MANEJO DE BASE DE DATOS ########################
-	// Guarda la consulta operacion a realizar
-	String strConsultaSQL;
-	// Apuntador a la conexion
-	Connection conexion = null;
-	// Para ejecutar operaciones SQL
-	Statement estSQL1;
-	// Para guardar los resultados de una operacion SELECT
-	ResultSet rs;
 	Document document;
 	PdfWriter writer;
 	String strRotuloPDF;
@@ -89,7 +66,7 @@ public class ReporteClientes {
 		Paragraph ParrafoHoja = new Paragraph();
 
 		// Agregamos una linea en blanco al principio del documento
-		agregarLineasEnBlanco(ParrafoHoja, 1);
+	//	agregarLineasEnBlanco(ParrafoHoja, 1);
 		// Colocar un encabezado (en mayusculas)
 		ParrafoHoja.add(new Paragraph(strRotuloPDF.toUpperCase(), fuenteAzul25));
 		agregarLineasEnBlanco(ParrafoHoja, 1);
@@ -98,14 +75,14 @@ public class ReporteClientes {
 		// Agregar 2 lineas en blanco
 		agregarLineasEnBlanco(ParrafoHoja, 2);
 		// 2.- AGREGAMOS LA IMAGEN
-		try {
-			Image im = Image.getInstance("logo_mysql.gif");
-			im.setAlignment(Image.ALIGN_CENTER | Image.TEXTWRAP);
-			im.setWidthPercentage(50);
-			ParrafoHoja.add(im);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//			Image im = Image.getInstance("logo_mysql.PNG");
+//			im.setAlignment(Image.ALIGN_CENTER | Image.TEXTWRAP);
+//			im.setWidthPercentage(50);
+//			ParrafoHoja.add(im);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 
 		document.add(ParrafoHoja);
 
@@ -114,17 +91,17 @@ public class ReporteClientes {
 	// Se conecta al DBMS MySQL , obtiene los datos de la tabla (SELECT) y los
 	// acomoda en una tabla JTable de iText.
 	// Espera como entrada el parrafo donde agregara la tabla
-	private void agregarTabla(Paragraph parrafo) throws BadElementException {
+	private void agregarTabla(Paragraph parrafo) {
 		// Anchos de las columnas
-		float anchosFilas[] = { 0.2f, 0.3f, 1f, 1f, 1f, 0.3f };
+		float anchosFilas[] = { 0.2f, 0.3f, 1f, 1f, 1f, 0.4f };
 		PdfPTable tabla = new PdfPTable(anchosFilas);
-		String rotulosColumnas[] = { "#", "Código", "Nombre", "Empresa", "Referencia", "Estado"};
+		String rotulosColumnas[] = { "#", "Código", "Nombre", "Empresa", "Referencia", "Estado" };
 		// Porcentaje que ocupa a lo ancho de la pagina del PDF
 		tabla.setWidthPercentage(100);
 		// Alineacion horizontal centrada
 		tabla.setHorizontalAlignment(Element.ALIGN_CENTER);
 		// agregar celda que ocupa las 9 columnas de los rotulos
-		PdfPCell cell = new PdfPCell(new Paragraph("Tabla: Clientes"));
+		PdfPCell cell = new PdfPCell(new Paragraph("Listado de clientes"));
 		cell.setColspan(9);
 		// Centrar contenido de celda
 		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -132,49 +109,46 @@ public class ReporteClientes {
 		cell.setBackgroundColor(azulClaro);
 		tabla.addCell(cell);
 
-		try {
-			if (ConectarBD()) {
-				// Mostrar los rotulos de las columnas
-				for (int i = 0; i < rotulosColumnas.length; i++) {
-					cell = new PdfPCell(new Paragraph(rotulosColumnas[i], fuenteNegra10));
-					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-					cell.setBackgroundColor(grisClaro);
-					tabla.addCell(cell);
-				}
-
-				// Consultar la tabla empleados
-				strConsultaSQL = "SELECT * FROM cliente";
-				// ejecutar consulta
-				rs = estSQL1.executeQuery(strConsultaSQL);
-
-				// Iterar Mientras haya una fila siguiente
-				while (rs.next()) { // Agregar 9 celdas
-					cell = new PdfPCell(new Paragraph(String.valueOf(rs.getInt("idCliente")), fuente8));
-					tabla.addCell(cell);
-					cell = new PdfPCell(new Paragraph(rs.getString("codigoCliente"), fuente8));
-					tabla.addCell(cell);
-					cell = new PdfPCell(new Paragraph(rs.getString("nombreCliente"), fuente8));
-					tabla.addCell(cell);
-					cell = new PdfPCell(new Paragraph(rs.getString("empresaCliente"), fuente8));
-					tabla.addCell(cell);
-					cell = new PdfPCell(new Paragraph(rs.getString("referenciaCliente"), fuente8));
-					tabla.addCell(cell);
-					cell = new PdfPCell(new Paragraph(rs.getString("estadoCliente"), fuente8));
-					tabla.addCell(cell);
-				}
-
-				// Cerrar los objetos de manejo de BD
-				rs.close(); // ResultSet
-				estSQL1.close();
-				conexion.close();
-			} // Fin de if que comprueba si se pudo conectar
-
-		} catch (Exception e) {
-			System.out.println("Excepcion al ejecutar CONSULTA!!!");
-			// Mostrar la traza de la pila
-			e.printStackTrace();
+		// Mostrar los rotulos de las columnas
+		for (int i = 0; i < rotulosColumnas.length; i++) {
+			cell = new PdfPCell(new Paragraph(rotulosColumnas[i], fuenteNegra10));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setBackgroundColor(grisClaro);
+			tabla.addCell(cell);
 		}
+
+		try {
+
+			DBConnection miConexion = new DBConnection();
+			Connection conexion = miConexion.darConexion();
+			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_clientes}");
+			ResultSet rs = miProcedimiento.executeQuery();
+
+			// Iterar Mientras haya una fila siguiente
+			while (rs.next()) { // Agregar 9 celdas
+				cell = new PdfPCell(new Paragraph(String.valueOf(rs.getInt("idCliente")), fuente8));
+				tabla.addCell(cell);
+				cell = new PdfPCell(new Paragraph(rs.getString("codigoCliente"), fuente8));
+				tabla.addCell(cell);
+				cell = new PdfPCell(new Paragraph(rs.getString("nombreCliente"), fuente8));
+				tabla.addCell(cell);
+				cell = new PdfPCell(new Paragraph(rs.getString("empresaCliente"), fuente8));
+				tabla.addCell(cell);
+				cell = new PdfPCell(new Paragraph(rs.getString("referenciaCliente"), fuente8));
+				tabla.addCell(cell);
+				cell = new PdfPCell(new Paragraph(rs.getString("estadoCliente"), fuente8));
+				tabla.addCell(cell);
+			}
+
+			// Cerrar los objetos de manejo de BD
+			rs.close(); // ResultSet
+			// estSQL1.close();
+			conexion.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
 		// Agregar la tabla con los datos al parrafo que nos llego como entrada
 		parrafo.add(tabla);
 	} // Fin del metodo que crea la tabla
@@ -191,38 +165,7 @@ public class ReporteClientes {
 		document.addTitle("Documento con datos de tabla MySQL");
 		document.addSubject("Usando iText y MySQL");
 		document.addKeywords("Java, PDF, iText");
-		document.addAuthor("Gonzalo Silverio");
-		document.addCreator("https://gonzasilve.wordpress.com");
-	}
-
-	// devuelve true en caso de que si se pudo conectar
-	// devuelve false sino se logro conectar
-	public boolean ConectarBD() throws Exception {
-		try {
-			// Aqui se instancia a la otra clase --> CrearConexion.java
-			// y se le mandan en el constructor los datos de conexion
-			DBConnection miConexion = new DBConnection();
-			Connection conexion = miConexion.darConexion();
-
-			// Comprobar si hay una refencia valida
-			if (conexion != null) {
-				// Mostrar MSG al usuario de la conexion se ha establecido
-				System.out.println("Conexion establecida");
-				// Se prepara para ejecutar sentencias en la conexion recien abierta
-				estSQL1 = conexion.createStatement();
-				return true;
-			} else
-				return false;
-
-		} catch (SQLException e) {
-
-			// the above drop statements will throw exceptions
-			// if the types and tables did not exist before. Just ingore it.
-			System.out.println("Error en la conexion!!!");
-			e.printStackTrace();
-			return false;
-		}
-
+		document.addAuthor("PrestApp");
 	}
 
 	// Abre el documento PDF
