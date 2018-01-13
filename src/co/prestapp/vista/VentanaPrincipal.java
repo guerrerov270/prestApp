@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.Locale;
 
@@ -48,6 +49,7 @@ import co.prestapp.VO.AbonoVO;
 import co.prestapp.VO.ClienteVO;
 import co.prestapp.connection.DBBackup;
 import co.prestapp.reports.ReporteClientes;
+import co.prestapp.reports.ReportePrestamos;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -91,6 +93,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelTotalAbonosPendientes;
 	private JLabel jLabelTotalAbonosCobrados;
 	private JLabel jLabelTotalClientesactivos;
+	private JMenuItem jMenuItemReportePrestamos;
 	private JMenuItem jMenuItemReporteClientes;
 	private JMenuItem jMenuItemBackup;
 	private JMenu jMenuBackup;
@@ -1901,6 +1904,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jMenuBackup.setText("Opciones");
 			jMenuBackup.add(getJMenuItemBackup());
 			jMenuBackup.add(getJMenuItemReporteClientes());
+			jMenuBackup.add(getJMenuItemReportePrestamos());
 		}
 		return jMenuBackup;
 	}
@@ -1923,12 +1927,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		// configuracion de la fecha actual
 		Calendar c = Calendar.getInstance();
 		String fecha = String.valueOf(c.get(Calendar.DATE));
-		fecha = fecha + "-" + String.valueOf(c.get(Calendar.MONTH)+1);
+		fecha = fecha + "-" + String.valueOf(c.get(Calendar.MONTH) + 1);
 		fecha = fecha + "-" + String.valueOf(c.get(Calendar.YEAR));
 		fecha = fecha + "." + String.valueOf(c.get(Calendar.HOUR_OF_DAY));
 		fecha = fecha + "." + String.valueOf(c.get(Calendar.MINUTE));
 		fecha = fecha + "." + String.valueOf(c.get(Calendar.SECOND));
-		
+
 		DBBackup backup = new DBBackup();
 		boolean resultado = backup.CrearBackup("localhost", "3306", "root", "root", "test",
 				"C:\\PrestApp\\backup" + "_" + fecha + ".sql");
@@ -1956,9 +1960,27 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	}
 
 	private void jMenuItemReporteClientesActionPerformed(ActionEvent evt) {
-
+		// configuracion de la fecha actual
+		// Creamos un objeto de la clase Calendar.
+		Calendar fecha = new GregorianCalendar();
+		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
+		// Usando el método get y el parámetro correspondiente.
+		int anio = fecha.get(Calendar.YEAR);
+		int mes = fecha.get(Calendar.MONTH);
+		int dia = fecha.get(Calendar.DAY_OF_MONTH);
+		int hora = fecha.get(Calendar.HOUR_OF_DAY);
+		int minuto = fecha.get(Calendar.MINUTE);
+		int segundo = fecha.get(Calendar.SECOND);
+		
+		String mesS=concatenaCero(mes+1);
+		String diaS=concatenaCero(dia);
+		String horaS=concatenaCero(hora);
+		String minutoS=concatenaCero(minuto);
+		String segundoS=concatenaCero(segundo);
+		
 		String strNombrePDF = "ReporteClientes";
-		String strTituloPDF = "Test de reporte";
+		String strTituloPDF = "Reporte de clientes registrados, generado el: " + diaS + "/" + mesS + "/" + anio
+				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReporteClientes ejemplo = new ReporteClientes(strTituloPDF, strNombrePDF);
 		// Preguntar al usuario si desea abrir el documento PDF
 		int respuesta = JOptionPane.showConfirmDialog(null,
@@ -1967,6 +1989,63 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		// Si la respuesta es SI, abrirlo
 		if (respuesta == JOptionPane.YES_OPTION)
 			ejemplo.abrirPDF();
+	}
+
+	public String concatenaCero(int parametro) {
+		String resultado = "";
+		if (parametro < 10) {
+			resultado ="0"+parametro+"";
+		}else {
+			resultado=parametro+"";
+		}
+		return resultado;
+	}
+	
+	private JMenuItem getJMenuItemReportePrestamos() {
+		if(jMenuItemReportePrestamos == null) {
+			jMenuItemReportePrestamos = new JMenuItem();
+			jMenuItemReportePrestamos.setText("Reporte de préstamos");
+			jMenuItemReportePrestamos.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+					jMenuItemReportePrestamosActionPerformed(evt);
+				}
+			});
+		}
+		return jMenuItemReportePrestamos;
+	}
+	
+	private void jMenuItemReportePrestamosActionPerformed(ActionEvent evt) {
+		
+		// configuracion de la fecha actual
+				// Creamos un objeto de la clase Calendar.
+				Calendar fecha = new GregorianCalendar();
+				// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
+				// Usando el método get y el parámetro correspondiente.
+				int anio = fecha.get(Calendar.YEAR);
+				int mes = fecha.get(Calendar.MONTH);
+				int dia = fecha.get(Calendar.DAY_OF_MONTH);
+				int hora = fecha.get(Calendar.HOUR_OF_DAY);
+				int minuto = fecha.get(Calendar.MINUTE);
+				int segundo = fecha.get(Calendar.SECOND);
+				
+				String mesS=concatenaCero(mes+1);
+				String diaS=concatenaCero(dia);
+				String horaS=concatenaCero(hora);
+				String minutoS=concatenaCero(minuto);
+				String segundoS=concatenaCero(segundo);
+				
+				String strNombrePDF = "ReportePrestamos";
+				String strTituloPDF = "Reporte de préstamos registrados, generado el: " + diaS + "/" + mesS + "/" + anio
+						+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+				ReportePrestamos ejemplo = new ReportePrestamos(strTituloPDF, strNombrePDF);
+				// Preguntar al usuario si desea abrir el documento PDF
+				int respuesta = JOptionPane.showConfirmDialog(null,
+						"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				// Si la respuesta es SI, abrirlo
+				if (respuesta == JOptionPane.YES_OPTION)
+					ejemplo.abrirPDF();
+		
 	}
 
 }

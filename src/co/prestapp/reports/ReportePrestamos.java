@@ -10,14 +10,18 @@ import com.lowagie.text.Element;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfWriter;
-import co.prestapp.DAO.ClienteDAO;
+import co.prestapp.DAO.PrestamoDAO;
 import co.prestapp.connection.DBConnection;
 import com.lowagie.text.pdf.PdfPTable;
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
-public class ReporteClientes {
+public class ReportePrestamos {
 
-	ClienteDAO miCliente = new ClienteDAO();
+	PrestamoDAO miPrestamo = new PrestamoDAO();
 	private String strNombreDelPDF;
 	Color grisClaro = new Color(230, 230, 230);
 	Color azulClaro = new Color(124, 195, 255);
@@ -28,7 +32,7 @@ public class ReporteClientes {
 	String strRotuloPDF;
 
 	// Metodo principal del ejemplo
-	public ReporteClientes(String titulo, String nomPDF) {
+	public ReportePrestamos(String titulo, String nomPDF) {
 		strRotuloPDF = titulo;
 		strNombreDelPDF = nomPDF;
 		try { // Hoja tamanio carta, rotarla (cambiar a horizontal)
@@ -63,7 +67,7 @@ public class ReporteClientes {
 		// agregarLineasEnBlanco(ParrafoHoja, 1);
 		// Colocar un encabezado (en mayusculas)
 		ParrafoHoja.add(new Paragraph(strRotuloPDF));
-		//agregarLineasEnBlanco(ParrafoHoja, 1);
+		// agregarLineasEnBlanco(ParrafoHoja, 1);
 		// 1.- AGREGAMOS LA TABLA
 		agregarTabla(ParrafoHoja);
 		// Agregar 2 lineas en blanco
@@ -86,24 +90,27 @@ public class ReporteClientes {
 	// acomoda en una tabla JTable de iText.
 	// Espera como entrada el parrafo donde agregara la tabla
 	private void agregarTabla(Paragraph parrafo) {
-		
 
 		// Anchos de las columnas
-		float anchosFilas[] = { 0.2f, 0.3f, 1f, 1f, 1f, 0.4f };
+		float anchosFilas[] = { 0.2f, 0.4f, 0.8f, 0.3f, 0.4f, 0.8f, 0.8f, 0.7f, 0.7f, 0.7f, 0.4f, 0.6f };
 		PdfPTable tabla = new PdfPTable(anchosFilas);
-		String rotulosColumnas[] = miCliente.getColumnas();
+		String rotulosColumnas[] = miPrestamo.getColumnas();
 		// Porcentaje que ocupa a lo ancho de la pagina del PDF
 		tabla.setWidthPercentage(100);
 		// Alineacion horizontal centrada
 		tabla.setHorizontalAlignment(Element.ALIGN_CENTER);
 		// agregar celda que ocupa las 9 columnas de los rotulos
-		PdfPCell cell = new PdfPCell(new Paragraph("Listado de clientes"));
-		cell.setColspan(6);
+		PdfPCell cell = new PdfPCell(new Paragraph("Listado de préstamos"));
+		cell.setColspan(12);
 		// Centrar contenido de celda
 		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		// Color de fondo de la celda
 		cell.setBackgroundColor(azulClaro);
 		tabla.addCell(cell);
+
+		DateFormat formatoFecha = new SimpleDateFormat("dd MMMM yyyy");
+		Locale locale = new Locale("es", "CO");
+		NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
 
 		// Mostrar los rotulos de las columnas
 		for (int i = 0; i < rotulosColumnas.length; i++) {
@@ -118,23 +125,46 @@ public class ReporteClientes {
 
 			DBConnection miConexion = new DBConnection();
 			Connection conexion = miConexion.darConexion();
-			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_clientes}");
+			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_prestamos}");
 			ResultSet rs = miProcedimiento.executeQuery();
 
 			// Iterar Mientras haya una fila siguiente
 			while (rs.next()) { // Agregar 9 celdas
-				cell = new PdfPCell(new Paragraph(String.valueOf(rs.getInt("idCliente"))));
+				cell = new PdfPCell(new Paragraph(String.valueOf(rs.getInt("idPrestamo"))));
 				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(rs.getString("codigoCliente")));
+				cell = new PdfPCell(new Paragraph(rs.getString("codigoPrestamo")));
 				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(rs.getString("nombreCliente")));
+				cell = new PdfPCell(new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("montoPrestamo")))));
 				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(rs.getString("empresaCliente")));
+				cell = new PdfPCell(new Paragraph(String.valueOf(rs.getInt("tasaInteresPrestamo"))));
 				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(rs.getString("referenciaCliente")));
+				cell = new PdfPCell(new Paragraph(String.valueOf(rs.getInt("numeroCuotasprestamo"))));
 				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(rs.getString("estadoCliente")));
+				cell = new PdfPCell(
+						new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("saldoPendientePrestamo")))));
 				tabla.addCell(cell);
+				cell = new PdfPCell(
+						new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("saldoPagadoPrestamo")))));
+				tabla.addCell(cell);
+				if (rs.getDate("fechaInicioPrestamo") != null) {
+					cell = new PdfPCell(
+							new Paragraph(String.valueOf(formatoFecha.format(rs.getDate("fechaInicioPrestamo")))));
+					tabla.addCell(cell);
+				}
+
+				if (rs.getDate("fechaFinPrestamo") != null) {
+					cell = new PdfPCell(
+							new Paragraph(String.valueOf(formatoFecha.format(rs.getDate("fechaFinPrestamo")))));
+					tabla.addCell(cell);
+				}
+
+				cell = new PdfPCell(new Paragraph(rs.getString("tipoPlazoPrestamo")));
+				tabla.addCell(cell);
+				cell = new PdfPCell(new Paragraph(rs.getString("codigoClienteFK")));
+				tabla.addCell(cell);
+				cell = new PdfPCell(new Paragraph(rs.getString("estadoPrestamo")));
+				tabla.addCell(cell);
+
 			}
 
 			// Cerrar los objetos de manejo de BD
