@@ -19,7 +19,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-public class ReporteAbonos {
+public class ReporteAbonosPendientes {
 
 	AbonoDAO miAbono = new AbonoDAO();
 	private String strNombreDelPDF;
@@ -32,7 +32,7 @@ public class ReporteAbonos {
 	String strRotuloPDF;
 
 	// Metodo principal del ejemplo
-	public ReporteAbonos(String titulo, String nomPDF) {
+	public ReporteAbonosPendientes(String titulo, String nomPDF) {
 		strRotuloPDF = titulo;
 		strNombreDelPDF = nomPDF;
 		try { // Hoja tamanio carta, rotarla (cambiar a horizontal)
@@ -100,7 +100,7 @@ public class ReporteAbonos {
 		// Alineacion horizontal centrada
 		tabla.setHorizontalAlignment(Element.ALIGN_CENTER);
 		// agregar celda que ocupa las 9 columnas de los rotulos
-		PdfPCell cell = new PdfPCell(new Paragraph("Listado de abonos"));
+		PdfPCell cell = new PdfPCell(new Paragraph("Listado de abonos pendientes"));
 		cell.setColspan(11);
 		// Centrar contenido de celda
 		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -125,7 +125,7 @@ public class ReporteAbonos {
 
 			DBConnection miConexion = new DBConnection();
 			Connection conexion = miConexion.darConexion();
-			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_abonos}");
+			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_abonos_pendientes}");
 			ResultSet rs = miProcedimiento.executeQuery();
 
 			// Iterar Mientras haya una fila siguiente
