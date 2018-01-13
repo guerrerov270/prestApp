@@ -47,6 +47,7 @@ import co.prestapp.DAO.PrestamoDAO;
 import co.prestapp.VO.AbonoVO;
 import co.prestapp.VO.ClienteVO;
 import co.prestapp.connection.DBBackup;
+import co.prestapp.reports.ReporteClientes;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -90,6 +91,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelTotalAbonosPendientes;
 	private JLabel jLabelTotalAbonosCobrados;
 	private JLabel jLabelTotalClientesactivos;
+	private JMenuItem jMenuItemReporteClientes;
 	private JMenuItem jMenuItemBackup;
 	private JMenu jMenuBackup;
 	private JMenuBar jMenuBarOpciones;
@@ -639,7 +641,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			}
 			pack();
 			this.setSize(920, 640);
-			
+
 		} catch (Exception e) {
 			// add your error handling code here
 			e.printStackTrace();
@@ -1898,6 +1900,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jMenuBackup = new JMenu();
 			jMenuBackup.setText("Opciones");
 			jMenuBackup.add(getJMenuItemBackup());
+			jMenuBackup.add(getJMenuItemReporteClientes());
 		}
 		return jMenuBackup;
 	}
@@ -1926,9 +1929,35 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		fecha = fecha + "." + String.valueOf(c.get(Calendar.MINUTE));
 		fecha = fecha + "." + String.valueOf(c.get(Calendar.SECOND));
 		DBBackup backup = new DBBackup();
-		backup.CrearBackup("localhost", "3306", "root", "root", "test",
-				"C:\\Users\\root\\Documents\\dumps\\backup" + "_" + fecha + ".sql");
+		backup.CrearBackup("localhost", "3306", "root", "root", "test", "C:\\dumps\\backup" + "_" + fecha + ".sql");
 
+	}
+
+	private JMenuItem getJMenuItemReporteClientes() {
+		if (jMenuItemReporteClientes == null) {
+			jMenuItemReporteClientes = new JMenuItem();
+			jMenuItemReporteClientes.setText("Reporte de clientes");
+			jMenuItemReporteClientes.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+					jMenuItemReporteClientesActionPerformed(evt);
+				}
+			});
+		}
+		return jMenuItemReporteClientes;
+	}
+
+	private void jMenuItemReporteClientesActionPerformed(ActionEvent evt) {
+
+		String strNombrePDF = "ReporteClientes";
+		String strTituloPDF = "Test de reporte";
+		ReporteClientes ejemplo = new ReporteClientes(strTituloPDF, strNombrePDF);
+		// Preguntar al usuario si desea abrir el documento PDF
+		int respuesta = JOptionPane.showConfirmDialog(null,
+				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		// Si la respuesta es SI, abrirlo
+		if (respuesta == JOptionPane.YES_OPTION)
+			ejemplo.abrirPDF();
 	}
 
 }
