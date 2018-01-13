@@ -136,7 +136,7 @@ public class ClienteDAO {
 		ArrayList<ClienteVO> listaClientes = new ArrayList<ClienteVO>();
 		ClienteVO miCliente;
 		try {
-			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_clientes}");
+			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_clientes_alfa}");
 			ResultSet miRs = miProcedimiento.executeQuery();
 
 			while (miRs.next()) {

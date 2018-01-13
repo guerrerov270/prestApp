@@ -1923,11 +1923,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		// configuracion de la fecha actual
 		Calendar c = Calendar.getInstance();
 		String fecha = String.valueOf(c.get(Calendar.DATE));
-		fecha = fecha + "-" + String.valueOf(c.get(Calendar.MONTH));
+		fecha = fecha + "-" + String.valueOf(c.get(Calendar.MONTH)+1);
 		fecha = fecha + "-" + String.valueOf(c.get(Calendar.YEAR));
 		fecha = fecha + "." + String.valueOf(c.get(Calendar.HOUR_OF_DAY));
 		fecha = fecha + "." + String.valueOf(c.get(Calendar.MINUTE));
 		fecha = fecha + "." + String.valueOf(c.get(Calendar.SECOND));
+		
 		DBBackup backup = new DBBackup();
 		boolean resultado = backup.CrearBackup("localhost", "3306", "root", "root", "test",
 				"C:\\PrestApp\\backup" + "_" + fecha + ".sql");

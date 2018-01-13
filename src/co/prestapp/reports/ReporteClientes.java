@@ -5,26 +5,20 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
-import com.lowagie.text.Font;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Element;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfWriter;
+import co.prestapp.DAO.ClienteDAO;
 import co.prestapp.connection.DBConnection;
 import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.Image;
-
 import java.sql.*;
 
 public class ReporteClientes {
 
+	ClienteDAO miCliente= new ClienteDAO();
 	private String strNombreDelPDF;
-
-	private Font fuenteNegra10 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD, Color.BLACK);
-	private Font fuente8 = new Font(Font.TIMES_ROMAN, 10, Font.NORMAL, Color.BLACK);
-	private Font fuenteAzul25 = new Font(Font.TIMES_ROMAN, 14, Font.BOLD, Color.BLACK);
-
 	Color grisClaro = new Color(230, 230, 230);
 	Color azulClaro = new Color(124, 195, 255);
 
@@ -66,23 +60,23 @@ public class ReporteClientes {
 		Paragraph ParrafoHoja = new Paragraph();
 
 		// Agregamos una linea en blanco al principio del documento
-	//	agregarLineasEnBlanco(ParrafoHoja, 1);
+		// agregarLineasEnBlanco(ParrafoHoja, 1);
 		// Colocar un encabezado (en mayusculas)
-		ParrafoHoja.add(new Paragraph(strRotuloPDF.toUpperCase(), fuenteAzul25));
+		ParrafoHoja.add(new Paragraph(strRotuloPDF.toUpperCase()));
 		agregarLineasEnBlanco(ParrafoHoja, 1);
 		// 1.- AGREGAMOS LA TABLA
 		agregarTabla(ParrafoHoja);
 		// Agregar 2 lineas en blanco
 		agregarLineasEnBlanco(ParrafoHoja, 2);
 		// 2.- AGREGAMOS LA IMAGEN
-//		try {
-//			Image im = Image.getInstance("logo_mysql.PNG");
-//			im.setAlignment(Image.ALIGN_CENTER | Image.TEXTWRAP);
-//			im.setWidthPercentage(50);
-//			ParrafoHoja.add(im);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		// try {
+		// Image im = Image.getInstance("logo_mysql.PNG");
+		// im.setAlignment(Image.ALIGN_CENTER | Image.TEXTWRAP);
+		// im.setWidthPercentage(50);
+		// ParrafoHoja.add(im);
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
 
 		document.add(ParrafoHoja);
 
@@ -95,7 +89,7 @@ public class ReporteClientes {
 		// Anchos de las columnas
 		float anchosFilas[] = { 0.2f, 0.3f, 1f, 1f, 1f, 0.4f };
 		PdfPTable tabla = new PdfPTable(anchosFilas);
-		String rotulosColumnas[] = { "#", "Código", "Nombre", "Empresa", "Referencia", "Estado" };
+		String rotulosColumnas[] = miCliente.getColumnas();
 		// Porcentaje que ocupa a lo ancho de la pagina del PDF
 		tabla.setWidthPercentage(100);
 		// Alineacion horizontal centrada
@@ -111,7 +105,7 @@ public class ReporteClientes {
 
 		// Mostrar los rotulos de las columnas
 		for (int i = 0; i < rotulosColumnas.length; i++) {
-			cell = new PdfPCell(new Paragraph(rotulosColumnas[i], fuenteNegra10));
+			cell = new PdfPCell(new Paragraph(rotulosColumnas[i]));
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			cell.setBackgroundColor(grisClaro);
@@ -127,17 +121,17 @@ public class ReporteClientes {
 
 			// Iterar Mientras haya una fila siguiente
 			while (rs.next()) { // Agregar 9 celdas
-				cell = new PdfPCell(new Paragraph(String.valueOf(rs.getInt("idCliente")), fuente8));
+				cell = new PdfPCell(new Paragraph(String.valueOf(rs.getInt("idCliente"))));
 				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(rs.getString("codigoCliente"), fuente8));
+				cell = new PdfPCell(new Paragraph(rs.getString("codigoCliente")));
 				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(rs.getString("nombreCliente"), fuente8));
+				cell = new PdfPCell(new Paragraph(rs.getString("nombreCliente")));
 				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(rs.getString("empresaCliente"), fuente8));
+				cell = new PdfPCell(new Paragraph(rs.getString("empresaCliente")));
 				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(rs.getString("referenciaCliente"), fuente8));
+				cell = new PdfPCell(new Paragraph(rs.getString("referenciaCliente")));
 				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(rs.getString("estadoCliente"), fuente8));
+				cell = new PdfPCell(new Paragraph(rs.getString("estadoCliente")));
 				tabla.addCell(cell);
 			}
 
