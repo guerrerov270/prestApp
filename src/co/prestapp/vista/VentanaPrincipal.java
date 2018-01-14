@@ -1985,7 +1985,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReporteClientes";
+		String strNombrePDF = "ReporteClientes.pdf";
 		String strTituloPDF = "Reporte de clientes registrados, generado el: " + diaS + "/" + mesS + "/" + anio
 				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReporteClientes ejemplo = new ReporteClientes(strTituloPDF, strNombrePDF);
@@ -2041,7 +2041,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReportePrestamos";
+		String strNombrePDF = "ReportePrestamos.pdf";
 		String strTituloPDF = "Reporte de préstamos registrados, generado el: " + diaS + "/" + mesS + "/" + anio
 				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReportePrestamos ejemplo = new ReportePrestamos(strTituloPDF, strNombrePDF);
@@ -2088,7 +2088,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReporteAbonos";
+		String strNombrePDF = "ReporteAbonos.pdf";
 		String strTituloPDF = "Reporte de abonos registrados, generado el: " + diaS + "/" + mesS + "/" + anio
 				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReporteAbonos ejemplo = new ReporteAbonos(strTituloPDF, strNombrePDF);
@@ -2148,7 +2148,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReporteAbonosPendientes";
+		String strNombrePDF = "ReporteAbonosPendientes.pdf";
 		String strTituloPDF = "Reporte de abonos pendientes, generado el: " + diaS + "/" + mesS + "/" + anio
 				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReporteAbonosPendientes ejemplo = new ReporteAbonosPendientes(strTituloPDF, strNombrePDF);
@@ -2195,7 +2195,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				String minutoS = concatenaCero(minuto);
 				String segundoS = concatenaCero(segundo);
 
-				String strNombrePDF = "ReporteAbonosPagados";
+				String strNombrePDF = "ReporteAbonosPagados.pdf";
 				String strTituloPDF = "Reporte de abonos pagados, generado el: " + diaS + "/" + mesS + "/" + anio
 						+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 				ReporteAbonosPagados ejemplo = new ReporteAbonosPagados(strTituloPDF, strNombrePDF);

@@ -568,8 +568,7 @@ public class PrestamoDAO {
 		float interesesRecaudados = 0;
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
-		Locale locale = new Locale("es", "CO");
-		NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
+
 		try {
 			CallableStatement miProcedimientoListar = conexion.prepareCall("{call listar_prestamos}");
 			CallableStatement miProcedimiento = conexion.prepareCall("{call calcular_intereses_a_recaudar(?,?)}");
