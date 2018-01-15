@@ -96,6 +96,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelTotalAbonosPendientes;
 	private JLabel jLabelTotalAbonosCobrados;
 	private JLabel jLabelTotalClientesactivos;
+	private JButton jButtonGuardarEdicionCliente;
+	private JButton jButtonEditarCliente;
 	private JMenuItem jMenuItemReporteAbonosPagados;
 	private JMenuItem jMenuItemReporteabonosPendientes;
 	private JMenu jMenuReportes;
@@ -346,7 +348,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jComboPlazo.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
-							ImageIcon icono = new ImageIcon("res/guardar.png");
+
+							ImageIcon icono = new ImageIcon("src/co/prestapp/res/guardar.png");
 							Image img = icono.getImage();
 							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 							ImageIcon otroicon = new ImageIcon(otraimg);
@@ -354,7 +357,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jButtonAceptar.setBounds(9, 157, 130, 30);
 							jPanelEntradasPrestamo.add(jButtonAceptar);
 							{
-								ImageIcon icono1 = new ImageIcon("res/cancelar.png");
+								ImageIcon icono1 = new ImageIcon("src/co/prestapp/res/cancelar.png");
 								Image img1 = icono1.getImage();
 								Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 								ImageIcon otroicon1 = new ImageIcon(otraimg1);
@@ -391,7 +394,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jLabelTotalFormato.setFont(new java.awt.Font("Arial", 0, 16));
 							}
 							{
-								ImageIcon icono1 = new ImageIcon("res/buscar.png");
+								ImageIcon icono1 = new ImageIcon("src/co/prestapp/res/buscar.png");
 								Image img1 = icono1.getImage();
 								Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 								ImageIcon otroicon1 = new ImageIcon(otraimg1);
@@ -509,7 +512,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jTextCodigoPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
-							ImageIcon icono = new ImageIcon("res/guardar.png");
+							ImageIcon icono = new ImageIcon("src/co/prestapp/res/guardar.png");
 							Image img = icono.getImage();
 							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 							ImageIcon otroicon = new ImageIcon(otraimg);
@@ -525,7 +528,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							});
 						}
 						{
-							ImageIcon icono = new ImageIcon("res/cancelar.png");
+							ImageIcon icono = new ImageIcon("src/co/prestapp/res/cancelar.png");
 							Image img = icono.getImage();
 							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 							ImageIcon otroicon = new ImageIcon(otraimg);
@@ -597,7 +600,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jTextEmpresa.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
-							ImageIcon icono = new ImageIcon("res/guardar.png");
+							ImageIcon icono = new ImageIcon("src/co/prestapp/res/guardar.png");
 							Image img = icono.getImage();
 							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 							ImageIcon otroicon = new ImageIcon(otraimg);
@@ -613,14 +616,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							});
 						}
 						{
-							ImageIcon icono = new ImageIcon("res/cancelar.png");
+							ImageIcon icono = new ImageIcon("src/co/prestapp/res/cancelar.png");
 							Image img = icono.getImage();
 							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 							ImageIcon otroicon = new ImageIcon(otraimg);
 							jButtonCancelar = new JButton(otroicon);
 							jPanelAgregarCliente.add(jButtonCancelar);
 							jButtonCancelar.setText("Cancelar");
-							jButtonCancelar.setBounds(200, 125, 145, 30);
+							jButtonCancelar.setBounds(594, 71, 145, 30);
 							jButtonCancelar.setFont(new java.awt.Font("Arial", 0, 16));
 							jButtonCancelar.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
@@ -639,6 +642,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jTextReferencia = new JTextField();
 							jPanelAgregarCliente.add(jTextReferencia);
 							jPanelAgregarCliente.add(getJButtonActualizar());
+							jPanelAgregarCliente.add(getJButtonEditarCliente());
+							jPanelAgregarCliente.add(getJButtonGuardarEdicionCliente());
 							jTextReferencia.setBounds(708, 19, 178, 23);
 							jTextReferencia.setFont(new java.awt.Font("Arial", 0, 16));
 						}
@@ -725,13 +730,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private JButton getJButtonActualizar() {
 		if (jButtonActualizar == null) {
-			ImageIcon icono = new ImageIcon("res/actualizar.png");
+			ImageIcon icono = new ImageIcon("src/co/prestapp/res/actualizar.png");
 			Image img = icono.getImage();
 			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 			ImageIcon otroicon = new ImageIcon(otraimg);
 			jButtonActualizar = new JButton(otroicon);
 			jButtonActualizar.setText("Todos");
-			jButtonActualizar.setBounds(379, 125, 130, 30);
+			jButtonActualizar.setBounds(757, 98, 130, 30);
 			jButtonActualizar.setFont(new java.awt.Font("Arial", 0, 16));
 			jButtonActualizar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
@@ -780,7 +785,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private JButton getJButtonCalcular() {
 		if (jButtonCalcular == null) {
-			ImageIcon icono1 = new ImageIcon("res/calcular.png");
+			ImageIcon icono1 = new ImageIcon("src/co/prestapp/res/calcular.png");
 			Image img1 = icono1.getImage();
 			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 			ImageIcon otroicon1 = new ImageIcon(otraimg1);
@@ -935,7 +940,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private JButton getJButton2() {
 		if (jButton2 == null) {
-			ImageIcon icono = new ImageIcon("res/actualizar.png");
+			ImageIcon icono = new ImageIcon("src/co/prestapp/res/actualizar.png");
 			Image img = icono.getImage();
 			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 			ImageIcon otroicon = new ImageIcon(otraimg);
@@ -992,7 +997,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private JButton getJButtonBuscarPrestamo() {
 		if (jButtonBuscarPrestamo == null) {
-			ImageIcon icono = new ImageIcon("res/buscar.png");
+			ImageIcon icono = new ImageIcon("src/co/prestapp/res/buscar.png");
 			Image img = icono.getImage();
 			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 			ImageIcon otroicon = new ImageIcon(otraimg);
@@ -1011,7 +1016,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private JButton getJButtonActualizarAbonos() {
 		if (jButtonActualizarAbonos == null) {
-			ImageIcon icono = new ImageIcon("res/actualizar.png");
+			ImageIcon icono = new ImageIcon("src/co/prestapp/res/actualizar.png");
 			Image img = icono.getImage();
 			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 			ImageIcon otroicon = new ImageIcon(otraimg);
@@ -1106,7 +1111,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private JButton getJButtonAbonosPagados() {
 		if (jButtonAbonosPagados == null) {
-			ImageIcon icono = new ImageIcon("res/pagado.png");
+			ImageIcon icono = new ImageIcon("src/co/prestapp/res/pagado.png");
 			Image img = icono.getImage();
 			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 			ImageIcon otroicon = new ImageIcon(otraimg);
@@ -1125,7 +1130,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private JButton getJButtonAbonosPendientes() {
 		if (jButtonAbonosPendientes == null) {
-			ImageIcon icono = new ImageIcon("res/noPagado.png");
+			ImageIcon icono = new ImageIcon("src/co/prestapp/res/noPagado.png");
 			Image img = icono.getImage();
 			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 			ImageIcon otroicon = new ImageIcon(otraimg);
@@ -1495,7 +1500,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private JButton getJButtonPrestamosPendientes() {
 		if (jButtonPrestamosPendientes == null) {
-			ImageIcon icono = new ImageIcon("res/noPagado.png");
+			ImageIcon icono = new ImageIcon("src/co/prestapp/res/noPagado.png");
 			Image img = icono.getImage();
 			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 			ImageIcon otroicon = new ImageIcon(otraimg);
@@ -1848,7 +1853,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private JButton getJButtonPrestamoPorFecha() {
 		if (jButtonPrestamoPorFecha == null) {
-			ImageIcon icono1 = new ImageIcon("res/buscar.png");
+			ImageIcon icono1 = new ImageIcon("src/co/prestapp/res/buscar.png");
 			Image img1 = icono1.getImage();
 			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 			ImageIcon otroicon1 = new ImageIcon(otraimg1);
@@ -1866,7 +1871,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private JButton getJButtonAbonoPorFecha() {
 		if (jButtonAbonoPorFecha == null) {
-			ImageIcon icono1 = new ImageIcon("res/buscar.png");
+			ImageIcon icono1 = new ImageIcon("src/co/prestapp/res/buscar.png");
 			Image img1 = icono1.getImage();
 			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 			ImageIcon otroicon1 = new ImageIcon(otraimg1);
@@ -2161,9 +2166,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			ejemplo.abrirPDF();
 
 	}
-	
+
 	private JMenuItem getJMenuItemReporteAbonosPagados() {
-		if(jMenuItemReporteAbonosPagados == null) {
+		if (jMenuItemReporteAbonosPagados == null) {
 			jMenuItemReporteAbonosPagados = new JMenuItem();
 			jMenuItemReporteAbonosPagados.setText("Reporte de abonos pagados");
 			jMenuItemReporteAbonosPagados.addActionListener(new ActionListener() {
@@ -2174,39 +2179,105 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		}
 		return jMenuItemReporteAbonosPagados;
 	}
-	
+
 	private void jMenuItemReporteAbonosPagadosActionPerformed(ActionEvent evt) {
-		
+
 		// configuracion de la fecha actual
-				// Creamos un objeto de la clase Calendar.
-				Calendar fecha = new GregorianCalendar();
-				// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
-				// Usando el método get y el parámetro correspondiente.
-				int anio = fecha.get(Calendar.YEAR);
-				int mes = fecha.get(Calendar.MONTH);
-				int dia = fecha.get(Calendar.DAY_OF_MONTH);
-				int hora = fecha.get(Calendar.HOUR_OF_DAY);
-				int minuto = fecha.get(Calendar.MINUTE);
-				int segundo = fecha.get(Calendar.SECOND);
+		// Creamos un objeto de la clase Calendar.
+		Calendar fecha = new GregorianCalendar();
+		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
+		// Usando el método get y el parámetro correspondiente.
+		int anio = fecha.get(Calendar.YEAR);
+		int mes = fecha.get(Calendar.MONTH);
+		int dia = fecha.get(Calendar.DAY_OF_MONTH);
+		int hora = fecha.get(Calendar.HOUR_OF_DAY);
+		int minuto = fecha.get(Calendar.MINUTE);
+		int segundo = fecha.get(Calendar.SECOND);
 
-				String mesS = concatenaCero(mes + 1);
-				String diaS = concatenaCero(dia);
-				String horaS = concatenaCero(hora);
-				String minutoS = concatenaCero(minuto);
-				String segundoS = concatenaCero(segundo);
+		String mesS = concatenaCero(mes + 1);
+		String diaS = concatenaCero(dia);
+		String horaS = concatenaCero(hora);
+		String minutoS = concatenaCero(minuto);
+		String segundoS = concatenaCero(segundo);
 
-				String strNombrePDF = "ReporteAbonosPagados.pdf";
-				String strTituloPDF = "Reporte de abonos pagados, generado el: " + diaS + "/" + mesS + "/" + anio
-						+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
-				ReporteAbonosPagados ejemplo = new ReporteAbonosPagados(strTituloPDF, strNombrePDF);
-				// Preguntar al usuario si desea abrir el documento PDF
-				int respuesta = JOptionPane.showConfirmDialog(null,
-						"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
-						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-				// Si la respuesta es SI, abrirlo
-				if (respuesta == JOptionPane.YES_OPTION)
-					ejemplo.abrirPDF();
+		String strNombrePDF = "ReporteAbonosPagados.pdf";
+		String strTituloPDF = "Reporte de abonos pagados, generado el: " + diaS + "/" + mesS + "/" + anio + "  a las "
+				+ " " + horaS + ":" + minutoS + ":" + segundoS;
+		ReporteAbonosPagados ejemplo = new ReporteAbonosPagados(strTituloPDF, strNombrePDF);
+		// Preguntar al usuario si desea abrir el documento PDF
+		int respuesta = JOptionPane.showConfirmDialog(null,
+				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		// Si la respuesta es SI, abrirlo
+		if (respuesta == JOptionPane.YES_OPTION)
+			ejemplo.abrirPDF();
+
+	}
+
+	private JButton getJButtonEditarCliente() {
+		if (jButtonEditarCliente == null) {
+			ImageIcon icono1 = new ImageIcon("src/co/prestapp/res/editar.png");
+			Image img1 = icono1.getImage();
+			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+			ImageIcon otroicon1 = new ImageIcon(otraimg1);
+			jButtonEditarCliente = new JButton(otroicon1);
+			jButtonEditarCliente.setText("Editar");
+			jButtonEditarCliente.setBounds(180, 98, 150, 30);
+			jButtonEditarCliente.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+					jButtonEditarClienteActionPerformed(evt);
+				}
+			});
+		}
+		return jButtonEditarCliente;
+	}
+
+	private void jButtonEditarClienteActionPerformed(ActionEvent evt) {
+
+		ClienteVO clienteEncontrado = null;
+		String codigoCliente = JOptionPane.showInputDialog("Ingrese código del cliente");
+		ClienteDAO miCliente = new ClienteDAO();
+		clienteEncontrado = miCliente.buscarCliente(codigoCliente);
+
+		if (clienteEncontrado != null) {
+			jTextNombre.setText(clienteEncontrado.getNombreCliente());
+			jTextEmpresa.setText(clienteEncontrado.getEmpresaCliente());
+			jTextReferencia.setText(clienteEncontrado.getReferenciaCliente());
+		} else {
+			JOptionPane.showMessageDialog(this, "Verifique el código del cliente", "Cliente no encontrado",
+					JOptionPane.WARNING_MESSAGE);
+
+		}
+
+	}
+
+	private JButton getJButtonGuardarEdicionCliente() {
+		if (jButtonGuardarEdicionCliente == null) {
+			ImageIcon icono1 = new ImageIcon("src/co/prestapp/res/guardar.png");
+			Image img1 = icono1.getImage();
+			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+			ImageIcon otroicon1 = new ImageIcon(otraimg1);
+			jButtonGuardarEdicionCliente = new JButton(otroicon1);
+			jButtonGuardarEdicionCliente.setText("Guardar edición");
+			jButtonGuardarEdicionCliente.setBounds(363, 102, 150, 30);
+			jButtonGuardarEdicionCliente.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+					jButtonGuardarEdicionClienteActionPerformed(evt);
+				}
+
+			});
+		}
+		return jButtonGuardarEdicionCliente;
+	}
+
+	private void jButtonGuardarEdicionClienteActionPerformed(ActionEvent evt) {
+
+		ClienteDAO miCliente= new ClienteDAO();
+		String nombre = jTextNombre.getText();
+		String empresa = jTextEmpresa.getText();
+		String referencia = jTextReferencia.getText();
 		
+
 	}
 
 }
