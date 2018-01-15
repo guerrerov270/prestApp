@@ -624,7 +624,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jButtonCancelar.setIcon(new ImageIcon(otraimg));
 							jPanelAgregarCliente.add(jButtonCancelar);
 							jButtonCancelar.setText("Cancelar");
-							jButtonCancelar.setBounds(563, 125, 145, 30);
+							jButtonCancelar.setBounds(570, 125, 130, 30);
 							jButtonCancelar.setFont(new java.awt.Font("Arial", 0, 14));
 							jButtonCancelar.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
@@ -1857,7 +1857,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jButtonPrestamoPorFecha == null) {
 			ImageIcon icono1 = new ImageIcon("src/co/prestapp/res/buscar.png");
 			Image img1 = icono1.getImage();
-			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH); 
+			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 			jButtonPrestamoPorFecha = new JButton();
 			jButtonPrestamoPorFecha.setIcon(new ImageIcon(otraimg1));
 			jButtonPrestamoPorFecha.setBounds(357, 282, 49, 38);
@@ -1874,7 +1874,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jButtonAbonoPorFecha == null) {
 			ImageIcon icono1 = new ImageIcon("src/co/prestapp/res/buscar.png");
 			Image img1 = icono1.getImage();
-			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH); 
+			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 			jButtonAbonoPorFecha = new JButton();
 			jButtonAbonoPorFecha.setIcon(new ImageIcon(otraimg1));
 			// jButtonAbonoPorFecha.setText("Buscar");
@@ -2223,7 +2223,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jButtonEditarCliente = new JButton();
 			jButtonEditarCliente.setIcon(new ImageIcon(otraimg1));
 			jButtonEditarCliente.setText("Editar");
-			jButtonEditarCliente.setBounds(180, 125, 150, 30);
+			jButtonEditarCliente.setBounds(198, 125, 130, 30);
 			jButtonEditarCliente.setFont(new java.awt.Font("Arial", 0, 14));
 			jButtonEditarCliente.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
@@ -2247,6 +2247,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jTextReferencia.setText(clienteEncontrado.getReferenciaCliente());
 			jLabelCodigoCliente.setText(clienteEncontrado.getCodigoCliente());
 			jLabelCodigoCliente.setVisible(false);
+			jButtonGuardarEdicionCliente.setEnabled(true);
 		} else {
 			JOptionPane.showMessageDialog(this, "Verifique el código del cliente", "Cliente no encontrado",
 					JOptionPane.WARNING_MESSAGE);
@@ -2263,8 +2264,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jButtonGuardarEdicionCliente = new JButton();
 			jButtonGuardarEdicionCliente.setIcon(new ImageIcon(otraimg1));
 			jButtonGuardarEdicionCliente.setText("Guardar edición");
-			jButtonGuardarEdicionCliente.setBounds(380, 125, 150, 30);
+			jButtonGuardarEdicionCliente.setBounds(358, 125, 181, 30);
 			jButtonGuardarEdicionCliente.setFont(new java.awt.Font("Arial", 0, 14));
+			jButtonGuardarEdicionCliente.setEnabled(false);
 			jButtonGuardarEdicionCliente.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					jButtonGuardarEdicionClienteActionPerformed(evt);
@@ -2287,6 +2289,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		JOptionPane.showMessageDialog(this, "Cliente editado con éxito", "Edición exitosa",
 				JOptionPane.INFORMATION_MESSAGE);
 		limpiarCamposCliente();
+		jButtonGuardarEdicionCliente.setEnabled(false);
 		actualizaClientes();
 
 	}
