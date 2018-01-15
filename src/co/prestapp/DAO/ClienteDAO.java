@@ -179,4 +179,24 @@ public class ClienteDAO {
 		return matrizInfo;
 	}// Fin obtenerMatrizClientes
 
+	public void editarCliente(String codigoCliente, String nombre, String empresa, String referencia) {
+
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		try {
+			CallableStatement miProcedimiento = conexion.prepareCall("{call editar_cliente(?,?,?,?)}");
+			miProcedimiento.setString(1, codigoCliente);
+			miProcedimiento.setString(2, nombre);
+			miProcedimiento.setString(3, empresa);
+			miProcedimiento.setString(4, referencia);
+			miProcedimiento.execute();
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para editar clientes");
+			System.out.println(e.getMessage());
+
+		}
+	}
+
 }// Fin clase

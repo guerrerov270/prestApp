@@ -96,6 +96,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelTotalAbonosPendientes;
 	private JLabel jLabelTotalAbonosCobrados;
 	private JLabel jLabelTotalClientesactivos;
+	private JLabel jLabelCodigoCliente;
 	private JButton jButtonGuardarEdicionCliente;
 	private JButton jButtonEditarCliente;
 	private JMenuItem jMenuItemReporteAbonosPagados;
@@ -352,20 +353,20 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							ImageIcon icono = new ImageIcon("src/co/prestapp/res/guardar.png");
 							Image img = icono.getImage();
 							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-							ImageIcon otroicon = new ImageIcon(otraimg);
-							jButtonAceptar = new JButton(otroicon);
+							jButtonAceptar = new JButton();
+							jButtonAceptar.setIcon(new ImageIcon(otraimg));
 							jButtonAceptar.setBounds(9, 157, 130, 30);
 							jPanelEntradasPrestamo.add(jButtonAceptar);
 							{
 								ImageIcon icono1 = new ImageIcon("src/co/prestapp/res/cancelar.png");
 								Image img1 = icono1.getImage();
 								Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-								ImageIcon otroicon1 = new ImageIcon(otraimg1);
-								JButton jButtonCancelarPrestamo = new JButton(otroicon1);
+								JButton jButtonCancelarPrestamo = new JButton();
+								jButtonCancelarPrestamo.setIcon(new ImageIcon(otraimg1));
 								jPanelEntradasPrestamo.add(jButtonCancelarPrestamo);
 								jButtonCancelarPrestamo.setText("Cancelar");
 								jButtonCancelarPrestamo.setBounds(145, 157, 145, 30);
-								jButtonCancelarPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
+								jButtonCancelarPrestamo.setFont(new java.awt.Font("Arial", 0, 14));
 								jButtonCancelarPrestamo.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
 										jButtonCancelarPrestamoActionPerformed(evt);
@@ -397,12 +398,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								ImageIcon icono1 = new ImageIcon("src/co/prestapp/res/buscar.png");
 								Image img1 = icono1.getImage();
 								Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-								ImageIcon otroicon1 = new ImageIcon(otraimg1);
-								jButtonClienteExiste = new JButton(otroicon1);
+								jButtonClienteExiste = new JButton();
+								jButtonClienteExiste.setIcon(new ImageIcon(otraimg1));
 								jPanelEntradasPrestamo.add(jButtonClienteExiste);
 								jButtonClienteExiste.setText("Cliente");
 								jButtonClienteExiste.setBounds(726, 78, 130, 30);
-								jButtonClienteExiste.setFont(new java.awt.Font("Arial", 0, 16));
+								jButtonClienteExiste.setFont(new java.awt.Font("Arial", 0, 14));
 								jButtonClienteExiste.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
 										jButtonClienteExisteActionPerformed(evt);
@@ -443,11 +444,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jPanelEntradasPrestamo.add(getJLabelEmpresaResult());
 								jPanelEntradasPrestamo.add(getJButtonPrestamosPendientes());
 								jComboFechasCobro.setBounds(162, 121, 178, 23);
-								jComboFechasCobro.setFont(new java.awt.Font("Arial", 0, 16));
+								jComboFechasCobro.setFont(new java.awt.Font("Arial", 0, 14));
 							}
 
 							jButtonAceptar.setText("Guardar");
-							jButtonAceptar.setFont(new java.awt.Font("Arial", 0, 16));
+							jButtonAceptar.setFont(new java.awt.Font("Arial", 0, 14));
 							jButtonAceptar.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
 									jButtonAceptarActionPerformed(evt);
@@ -515,12 +516,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							ImageIcon icono = new ImageIcon("src/co/prestapp/res/guardar.png");
 							Image img = icono.getImage();
 							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-							ImageIcon otroicon = new ImageIcon(otraimg);
-							jButtonGuardar = new JButton(otroicon);
+							jButtonGuardar = new JButton();
+							jButtonGuardar.setIcon(new ImageIcon(otraimg));
 							jPanelAgregarAbono.add(jButtonGuardar);
 							jButtonGuardar.setText("Guardar");
 							jButtonGuardar.setBounds(17, 147, 130, 30);
-							jButtonGuardar.setFont(new java.awt.Font("Arial", 0, 16));
+							jButtonGuardar.setFont(new java.awt.Font("Arial", 0, 14));
 							jButtonGuardar.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
 									jButtonGuardarAbonoActionPerformed(evt);
@@ -531,8 +532,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							ImageIcon icono = new ImageIcon("src/co/prestapp/res/cancelar.png");
 							Image img = icono.getImage();
 							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-							ImageIcon otroicon = new ImageIcon(otraimg);
-							jButtonCancelarAbono = new JButton(otroicon);
+							jButtonCancelarAbono = new JButton();
+							jButtonCancelarAbono.setIcon(new ImageIcon(otraimg));
 							jPanelAgregarAbono.add(jButtonCancelarAbono);
 							jPanelAgregarAbono.add(getJButtonBuscarPrestamo());
 							jPanelAgregarAbono.add(getJButtonActualizarAbonos());
@@ -542,7 +543,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jPanelAgregarAbono.add(getJButtonAbonosPendientes());
 							jButtonCancelarAbono.setText("Cancelar");
 							jButtonCancelarAbono.setBounds(195, 147, 145, 30);
-							jButtonCancelarAbono.setFont(new java.awt.Font("Arial", 0, 16));
+							jButtonCancelarAbono.setFont(new java.awt.Font("Arial", 0, 14));
 							jButtonCancelarAbono.addActionListener(new ActionListener() {
 
 								@Override
@@ -603,12 +604,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							ImageIcon icono = new ImageIcon("src/co/prestapp/res/guardar.png");
 							Image img = icono.getImage();
 							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-							ImageIcon otroicon = new ImageIcon(otraimg);
-							jButtonGuardarCliente = new JButton(otroicon);
+							jButtonGuardarCliente = new JButton();
+							jButtonGuardarCliente.setIcon(new ImageIcon(otraimg));
 							jPanelAgregarCliente.add(jButtonGuardarCliente);
 							jButtonGuardarCliente.setText("Guardar");
 							jButtonGuardarCliente.setBounds(12, 125, 130, 30);
-							jButtonGuardarCliente.setFont(new java.awt.Font("Arial", 0, 16));
+							jButtonGuardarCliente.setFont(new java.awt.Font("Arial", 0, 14));
 							jButtonGuardarCliente.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
 									jButtonGuardarClienteActionPerformed(evt);
@@ -619,12 +620,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							ImageIcon icono = new ImageIcon("src/co/prestapp/res/cancelar.png");
 							Image img = icono.getImage();
 							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-							ImageIcon otroicon = new ImageIcon(otraimg);
-							jButtonCancelar = new JButton(otroicon);
+							jButtonCancelar = new JButton();
+							jButtonCancelar.setIcon(new ImageIcon(otraimg));
 							jPanelAgregarCliente.add(jButtonCancelar);
 							jButtonCancelar.setText("Cancelar");
-							jButtonCancelar.setBounds(594, 71, 145, 30);
-							jButtonCancelar.setFont(new java.awt.Font("Arial", 0, 16));
+							jButtonCancelar.setBounds(563, 125, 145, 30);
+							jButtonCancelar.setFont(new java.awt.Font("Arial", 0, 14));
 							jButtonCancelar.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
 									jButtonCancelarActionPerformed(evt);
@@ -644,6 +645,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jPanelAgregarCliente.add(getJButtonActualizar());
 							jPanelAgregarCliente.add(getJButtonEditarCliente());
 							jPanelAgregarCliente.add(getJButtonGuardarEdicionCliente());
+							jPanelAgregarCliente.add(getJLabelCodigoCliente());
 							jTextReferencia.setBounds(708, 19, 178, 23);
 							jTextReferencia.setFont(new java.awt.Font("Arial", 0, 16));
 						}
@@ -733,11 +735,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			ImageIcon icono = new ImageIcon("src/co/prestapp/res/actualizar.png");
 			Image img = icono.getImage();
 			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			ImageIcon otroicon = new ImageIcon(otraimg);
-			jButtonActualizar = new JButton(otroicon);
+			jButtonActualizar = new JButton();
+			jButtonActualizar.setIcon(new ImageIcon(otraimg));
 			jButtonActualizar.setText("Todos");
-			jButtonActualizar.setBounds(757, 98, 130, 30);
-			jButtonActualizar.setFont(new java.awt.Font("Arial", 0, 16));
+			jButtonActualizar.setBounds(757, 125, 130, 30);
+			jButtonActualizar.setFont(new java.awt.Font("Arial", 0, 14));
 			jButtonActualizar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					jButtonActualizarActionPerformed(evt);
@@ -788,11 +790,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			ImageIcon icono1 = new ImageIcon("src/co/prestapp/res/calcular.png");
 			Image img1 = icono1.getImage();
 			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			ImageIcon otroicon1 = new ImageIcon(otraimg1);
-			jButtonCalcular = new JButton(otroicon1);
+			jButtonCalcular = new JButton();
+			jButtonCalcular.setIcon(new ImageIcon(otraimg1));
 			jButtonCalcular.setText("Calcular");
 			jButtonCalcular.setBounds(579, 78, 130, 30);
-			jButtonCalcular.setFont(new java.awt.Font("Arial", 0, 16));
+			jButtonCalcular.setFont(new java.awt.Font("Arial", 0, 14));
 			jButtonCalcular.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					try {
@@ -943,11 +945,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			ImageIcon icono = new ImageIcon("src/co/prestapp/res/actualizar.png");
 			Image img = icono.getImage();
 			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			ImageIcon otroicon = new ImageIcon(otraimg);
-			jButton2 = new JButton(otroicon);
+			jButton2 = new JButton();
+			jButton2.setIcon(new ImageIcon(otraimg));
 			jButton2.setText("Todos");
 			jButton2.setBounds(296, 157, 130, 30);
-			jButton2.setFont(new java.awt.Font("Arial", 0, 16));
+			jButton2.setFont(new java.awt.Font("Arial", 0, 14));
 			jButton2.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					jButton2ActionPerformed(evt);
@@ -1004,7 +1006,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jButtonBuscarPrestamo = new JButton(otroicon);
 			jButtonBuscarPrestamo.setText("Buscar");
 			jButtonBuscarPrestamo.setBounds(376, 25, 130, 30);
-			jButtonBuscarPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
+			jButtonBuscarPrestamo.setFont(new java.awt.Font("Arial", 0, 14));
 			jButtonBuscarPrestamo.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					jButtonBuscarPrestamoActionPerformed(evt);
@@ -1019,11 +1021,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			ImageIcon icono = new ImageIcon("src/co/prestapp/res/actualizar.png");
 			Image img = icono.getImage();
 			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			ImageIcon otroicon = new ImageIcon(otraimg);
-			jButtonActualizarAbonos = new JButton(otroicon);
+			jButtonActualizarAbonos = new JButton();
+			jButtonActualizarAbonos.setIcon(new ImageIcon(otraimg));
 			jButtonActualizarAbonos.setText("Todos");
 			jButtonActualizarAbonos.setBounds(381, 147, 130, 30);
-			jButtonActualizarAbonos.setFont(new java.awt.Font("Arial", 0, 16));
+			jButtonActualizarAbonos.setFont(new java.awt.Font("Arial", 0, 14));
 			jButtonActualizarAbonos.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					jButtonActualizarAbonosActionPerformed(evt);
@@ -1114,11 +1116,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			ImageIcon icono = new ImageIcon("src/co/prestapp/res/pagado.png");
 			Image img = icono.getImage();
 			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			ImageIcon otroicon = new ImageIcon(otraimg);
-			jButtonAbonosPagados = new JButton(otroicon);
+			jButtonAbonosPagados = new JButton();
+			jButtonAbonosPagados.setIcon(new ImageIcon(otraimg));
 			jButtonAbonosPagados.setText("Pagados");
 			jButtonAbonosPagados.setBounds(567, 147, 145, 30);
-			jButtonAbonosPagados.setFont(new java.awt.Font("Arial", 0, 16));
+			jButtonAbonosPagados.setFont(new java.awt.Font("Arial", 0, 14));
 			jButtonAbonosPagados.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					jButtonAbonosPagadosActionPerformed(evt);
@@ -1133,11 +1135,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			ImageIcon icono = new ImageIcon("src/co/prestapp/res/noPagado.png");
 			Image img = icono.getImage();
 			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			ImageIcon otroicon = new ImageIcon(otraimg);
-			jButtonAbonosPendientes = new JButton(otroicon);
+			jButtonAbonosPendientes = new JButton();
+			jButtonAbonosPendientes.setIcon(new ImageIcon(otraimg));
 			jButtonAbonosPendientes.setText("Pendientes");
 			jButtonAbonosPendientes.setBounds(738, 147, 150, 30);
-			jButtonAbonosPendientes.setFont(new java.awt.Font("Arial", 0, 16));
+			jButtonAbonosPendientes.setFont(new java.awt.Font("Arial", 0, 14));
 			jButtonAbonosPendientes.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					jButtonAbonosPendientesActionPerformed(evt);
@@ -1503,10 +1505,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			ImageIcon icono = new ImageIcon("src/co/prestapp/res/noPagado.png");
 			Image img = icono.getImage();
 			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			ImageIcon otroicon = new ImageIcon(otraimg);
-			jButtonPrestamosPendientes = new JButton(otroicon);
+			jButtonPrestamosPendientes = new JButton();
+			jButtonPrestamosPendientes.setIcon(new ImageIcon(otraimg));
 			jButtonPrestamosPendientes.setText("Vencidos");
-			jButtonPrestamosPendientes.setFont(new java.awt.Font("Arial", 0, 16));
+			jButtonPrestamosPendientes.setFont(new java.awt.Font("Arial", 0, 14));
 			jButtonPrestamosPendientes.setBounds(431, 157, 150, 30);
 			jButtonPrestamosPendientes.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
@@ -1855,10 +1857,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jButtonPrestamoPorFecha == null) {
 			ImageIcon icono1 = new ImageIcon("src/co/prestapp/res/buscar.png");
 			Image img1 = icono1.getImage();
-			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			ImageIcon otroicon1 = new ImageIcon(otraimg1);
-			jButtonPrestamoPorFecha = new JButton(otroicon1);
-			// jButtonPrestamoPorFecha.setText("Buscar");
+			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH); 
+			jButtonPrestamoPorFecha = new JButton();
+			jButtonPrestamoPorFecha.setIcon(new ImageIcon(otraimg1));
 			jButtonPrestamoPorFecha.setBounds(357, 282, 49, 38);
 			jButtonPrestamoPorFecha.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
@@ -1873,9 +1874,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (jButtonAbonoPorFecha == null) {
 			ImageIcon icono1 = new ImageIcon("src/co/prestapp/res/buscar.png");
 			Image img1 = icono1.getImage();
-			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			ImageIcon otroicon1 = new ImageIcon(otraimg1);
-			jButtonAbonoPorFecha = new JButton(otroicon1);
+			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH); 
+			jButtonAbonoPorFecha = new JButton();
+			jButtonAbonoPorFecha.setIcon(new ImageIcon(otraimg1));
 			// jButtonAbonoPorFecha.setText("Buscar");
 			jButtonAbonoPorFecha.setBounds(844, 281, 49, 38);
 			jButtonAbonoPorFecha.addActionListener(new ActionListener() {
@@ -2219,10 +2220,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			ImageIcon icono1 = new ImageIcon("src/co/prestapp/res/editar.png");
 			Image img1 = icono1.getImage();
 			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			ImageIcon otroicon1 = new ImageIcon(otraimg1);
-			jButtonEditarCliente = new JButton(otroicon1);
+			jButtonEditarCliente = new JButton();
+			jButtonEditarCliente.setIcon(new ImageIcon(otraimg1));
 			jButtonEditarCliente.setText("Editar");
-			jButtonEditarCliente.setBounds(180, 98, 150, 30);
+			jButtonEditarCliente.setBounds(180, 125, 150, 30);
+			jButtonEditarCliente.setFont(new java.awt.Font("Arial", 0, 14));
 			jButtonEditarCliente.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					jButtonEditarClienteActionPerformed(evt);
@@ -2239,10 +2241,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		ClienteDAO miCliente = new ClienteDAO();
 		clienteEncontrado = miCliente.buscarCliente(codigoCliente);
 
-		if (clienteEncontrado != null) {
+		if (clienteEncontrado.getCodigoCliente() != null) {
 			jTextNombre.setText(clienteEncontrado.getNombreCliente());
 			jTextEmpresa.setText(clienteEncontrado.getEmpresaCliente());
 			jTextReferencia.setText(clienteEncontrado.getReferenciaCliente());
+			jLabelCodigoCliente.setText(clienteEncontrado.getCodigoCliente());
+			jLabelCodigoCliente.setVisible(false);
 		} else {
 			JOptionPane.showMessageDialog(this, "Verifique el código del cliente", "Cliente no encontrado",
 					JOptionPane.WARNING_MESSAGE);
@@ -2256,10 +2260,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			ImageIcon icono1 = new ImageIcon("src/co/prestapp/res/guardar.png");
 			Image img1 = icono1.getImage();
 			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			ImageIcon otroicon1 = new ImageIcon(otraimg1);
-			jButtonGuardarEdicionCliente = new JButton(otroicon1);
+			jButtonGuardarEdicionCliente = new JButton();
+			jButtonGuardarEdicionCliente.setIcon(new ImageIcon(otraimg1));
 			jButtonGuardarEdicionCliente.setText("Guardar edición");
-			jButtonGuardarEdicionCliente.setBounds(363, 102, 150, 30);
+			jButtonGuardarEdicionCliente.setBounds(380, 125, 150, 30);
+			jButtonGuardarEdicionCliente.setFont(new java.awt.Font("Arial", 0, 14));
 			jButtonGuardarEdicionCliente.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					jButtonGuardarEdicionClienteActionPerformed(evt);
@@ -2272,12 +2277,26 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private void jButtonGuardarEdicionClienteActionPerformed(ActionEvent evt) {
 
-		ClienteDAO miCliente= new ClienteDAO();
+		ClienteDAO miCliente = new ClienteDAO();
+
+		String codigoCliente = jLabelCodigoCliente.getText();
 		String nombre = jTextNombre.getText();
 		String empresa = jTextEmpresa.getText();
 		String referencia = jTextReferencia.getText();
-		
+		miCliente.editarCliente(codigoCliente, nombre, empresa, referencia);
+		JOptionPane.showMessageDialog(this, "Cliente editado con éxito", "Edición exitosa",
+				JOptionPane.INFORMATION_MESSAGE);
+		limpiarCamposCliente();
+		actualizaClientes();
 
+	}
+
+	private JLabel getJLabelCodigoCliente() {
+		if (jLabelCodigoCliente == null) {
+			jLabelCodigoCliente = new JLabel();
+			jLabelCodigoCliente.setBounds(12, 65, 65, 10);
+		}
+		return jLabelCodigoCliente;
 	}
 
 }
