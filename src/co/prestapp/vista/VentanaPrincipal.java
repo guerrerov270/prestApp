@@ -352,10 +352,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						{
 
 							// Test de carga de imagenes dentro del jar
-							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/guardar.png");
+							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/guardar.png");
 							ImageIcon icono = new ImageIcon(urlDeLaImagen);
-
-							// ImageIcon icono = new ImageIcon("src/co/prestapp/res/guardar.png");
 							Image img = icono.getImage();
 							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 							jButtonAceptar = new JButton();
@@ -363,7 +362,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jButtonAceptar.setBounds(9, 157, 130, 30);
 							jPanelEntradasPrestamo.add(jButtonAceptar);
 							{
-								ImageIcon icono1 = new ImageIcon("src/co/prestapp/res/cancelar.png");
+								URL urlDeLaImagen1 = VentanaPrincipal.class.getClassLoader()
+										.getResource("co/prestapp/res/cancelar.png");
+								ImageIcon icono1 = new ImageIcon(urlDeLaImagen1);
 								Image img1 = icono1.getImage();
 								Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 								JButton jButtonCancelarPrestamo = new JButton();
@@ -400,7 +401,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jLabelTotalFormato.setFont(new java.awt.Font("Arial", 0, 16));
 							}
 							{
-								ImageIcon icono1 = new ImageIcon("src/co/prestapp/res/buscar.png");
+								URL urlDeLaImagen2 = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/buscar.png");
+								ImageIcon icono1 = new ImageIcon(urlDeLaImagen2);
 								Image img1 = icono1.getImage();
 								Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 								jButtonClienteExiste = new JButton();
@@ -518,7 +520,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jTextCodigoPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
-							ImageIcon icono = new ImageIcon("src/co/prestapp/res/guardar.png");
+							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/guardar.png");
+							ImageIcon icono = new ImageIcon(urlDeLaImagen);
 							Image img = icono.getImage();
 							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 							jButtonGuardar = new JButton();
@@ -534,7 +537,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							});
 						}
 						{
-							ImageIcon icono = new ImageIcon("src/co/prestapp/res/cancelar.png");
+							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/cancelar.png");
+							ImageIcon icono = new ImageIcon(urlDeLaImagen);
 							Image img = icono.getImage();
 							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 							jButtonCancelarAbono = new JButton();
@@ -622,7 +626,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							});
 						}
 						{
-							ImageIcon icono = new ImageIcon("src/co/prestapp/res/cancelar.png");
+							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/cancelar.png");
+							ImageIcon icono = new ImageIcon(urlDeLaImagen);
 							Image img = icono.getImage();
 							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 							jButtonCancelar = new JButton();
@@ -737,7 +742,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private JButton getJButtonActualizar() {
 		if (jButtonActualizar == null) {
-			ImageIcon icono = new ImageIcon("src/co/prestapp/res/actualizar.png");
+			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/actualizar.png");
+			ImageIcon icono = new ImageIcon(urlDeLaImagen);
 			Image img = icono.getImage();
 			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 			jButtonActualizar = new JButton();
@@ -792,7 +798,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private JButton getJButtonCalcular() {
 		if (jButtonCalcular == null) {
-			ImageIcon icono1 = new ImageIcon("src/co/prestapp/res/calcular.png");
+			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/calcular.png");
+			ImageIcon icono1 = new ImageIcon(urlDeLaImagen);
 			Image img1 = icono1.getImage();
 			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 			jButtonCalcular = new JButton();
@@ -947,7 +954,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private JButton getJButton2() {
 		if (jButton2 == null) {
-			ImageIcon icono = new ImageIcon("src/co/prestapp/res/actualizar.png");
+			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/actualizar.png");
+			ImageIcon icono = new ImageIcon(urlDeLaImagen);
 			Image img = icono.getImage();
 			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 			jButton2 = new JButton();
@@ -1004,7 +1012,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private JButton getJButtonBuscarPrestamo() {
 		if (jButtonBuscarPrestamo == null) {
-			ImageIcon icono = new ImageIcon("src/co/prestapp/res/buscar.png");
+			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/buscar.png");
+			ImageIcon icono = new ImageIcon(urlDeLaImagen);
 			Image img = icono.getImage();
 			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 			ImageIcon otroicon = new ImageIcon(otraimg);
@@ -1023,7 +1032,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private JButton getJButtonActualizarAbonos() {
 		if (jButtonActualizarAbonos == null) {
-			ImageIcon icono = new ImageIcon("src/co/prestapp/res/actualizar.png");
+			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/actualizar.png");
+			ImageIcon icono = new ImageIcon(urlDeLaImagen);
 			Image img = icono.getImage();
 			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 			jButtonActualizarAbonos = new JButton();
@@ -1118,7 +1128,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private JButton getJButtonAbonosPagados() {
 		if (jButtonAbonosPagados == null) {
-			ImageIcon icono = new ImageIcon("src/co/prestapp/res/pagado.png");
+			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/pagado.png");
+			ImageIcon icono = new ImageIcon(urlDeLaImagen);
 			Image img = icono.getImage();
 			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 			jButtonAbonosPagados = new JButton();
@@ -1137,7 +1148,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private JButton getJButtonAbonosPendientes() {
 		if (jButtonAbonosPendientes == null) {
-			ImageIcon icono = new ImageIcon("src/co/prestapp/res/noPagado.png");
+			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/noPagado.png");
+			ImageIcon icono = new ImageIcon(urlDeLaImagen);
 			Image img = icono.getImage();
 			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 			jButtonAbonosPendientes = new JButton();
@@ -1507,7 +1519,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private JButton getJButtonPrestamosPendientes() {
 		if (jButtonPrestamosPendientes == null) {
-			ImageIcon icono = new ImageIcon("src/co/prestapp/res/noPagado.png");
+			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/noPagado.png");
+			ImageIcon icono = new ImageIcon(urlDeLaImagen);
 			Image img = icono.getImage();
 			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 			jButtonPrestamosPendientes = new JButton();
@@ -1860,7 +1873,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private JButton getJButtonPrestamoPorFecha() {
 		if (jButtonPrestamoPorFecha == null) {
-			ImageIcon icono1 = new ImageIcon("src/co/prestapp/res/buscar.png");
+			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/buscar.png");
+			ImageIcon icono1 = new ImageIcon(urlDeLaImagen);
 			Image img1 = icono1.getImage();
 			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 			jButtonPrestamoPorFecha = new JButton();
@@ -1877,7 +1891,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private JButton getJButtonAbonoPorFecha() {
 		if (jButtonAbonoPorFecha == null) {
-			ImageIcon icono1 = new ImageIcon("src/co/prestapp/res/buscar.png");
+			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/buscar.png");
+			ImageIcon icono1 = new ImageIcon(urlDeLaImagen);
 			Image img1 = icono1.getImage();
 			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 			jButtonAbonoPorFecha = new JButton();
@@ -2222,7 +2237,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private JButton getJButtonEditarCliente() {
 		if (jButtonEditarCliente == null) {
-			ImageIcon icono1 = new ImageIcon("src/co/prestapp/res/editar.png");
+			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/editar.png");
+			ImageIcon icono1 = new ImageIcon(urlDeLaImagen);
 			Image img1 = icono1.getImage();
 			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 			jButtonEditarCliente = new JButton();
@@ -2263,7 +2279,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private JButton getJButtonGuardarEdicionCliente() {
 		if (jButtonGuardarEdicionCliente == null) {
-			ImageIcon icono1 = new ImageIcon("src/co/prestapp/res/guardar.png");
+			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/guardar.png");
+			ImageIcon icono1 = new ImageIcon(urlDeLaImagen);
 			Image img1 = icono1.getImage();
 			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 			jButtonGuardarEdicionCliente = new JButton();
