@@ -664,12 +664,73 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						{
 							jTextReferencia = new JTextField();
 							jPanelAgregarCliente.add(jTextReferencia);
-							jPanelAgregarCliente.add(getJButtonActualizar());
-							jPanelAgregarCliente.add(getJButtonEditarCliente());
-							jPanelAgregarCliente.add(getJButtonGuardarEdicionCliente());
-							jPanelAgregarCliente.add(getJLabelCodigoCliente());
 							jTextReferencia.setBounds(708, 19, 178, 23);
 							jTextReferencia.setFont(new java.awt.Font("Arial", 0, 16));
+						}
+						{
+							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/actualizar.png");
+							ImageIcon icono = new ImageIcon(urlDeLaImagen);
+							Image img = icono.getImage();
+							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							jButtonActualizar = new JButton();
+							jPanelAgregarCliente.add(jButtonActualizar);
+							jButtonActualizar.setIcon(new ImageIcon(otraimg));
+							jButtonActualizar.setText("Todos");
+							jButtonActualizar.setBounds(757, 125, 130, 30);
+							jButtonActualizar.setFont(new java.awt.Font("Arial", 0, 14));
+							jButtonActualizar.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonActualizarActionPerformed(evt);
+								}
+							});
+
+						}
+						{
+							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/editar.png");
+							ImageIcon icono1 = new ImageIcon(urlDeLaImagen);
+							Image img1 = icono1.getImage();
+							Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							jButtonEditarCliente = new JButton();
+							jPanelAgregarCliente.add(jButtonEditarCliente);
+							jButtonEditarCliente.setIcon(new ImageIcon(otraimg1));
+							jButtonEditarCliente.setText("Editar");
+							jButtonEditarCliente.setBounds(198, 125, 130, 30);
+							jButtonEditarCliente.setFont(new java.awt.Font("Arial", 0, 14));
+							jButtonEditarCliente.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonEditarClienteActionPerformed(evt);
+								}
+							});
+
+						}
+						{
+							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/guardar.png");
+							ImageIcon icono1 = new ImageIcon(urlDeLaImagen);
+							Image img1 = icono1.getImage();
+							Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							jButtonGuardarEdicionCliente = new JButton();
+							jPanelAgregarCliente.add(jButtonGuardarEdicionCliente);
+							jButtonGuardarEdicionCliente.setIcon(new ImageIcon(otraimg1));
+							jButtonGuardarEdicionCliente.setText("Guardar edición");
+							jButtonGuardarEdicionCliente.setBounds(358, 125, 181, 30);
+							jButtonGuardarEdicionCliente.setFont(new java.awt.Font("Arial", 0, 14));
+							jButtonGuardarEdicionCliente.setEnabled(false);
+							jButtonGuardarEdicionCliente.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonGuardarEdicionClienteActionPerformed(evt);
+								}
+
+							});
+
+						}
+						{
+							jLabelCodigoCliente = new JLabel();
+							jPanelAgregarCliente.add(jLabelCodigoCliente);
+							jLabelCodigoCliente.setBounds(12, 65, 65, 10);
+
 						}
 					}
 					jTabPestanias.addTab("Reportes", jPanelReportes);
@@ -996,26 +1057,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private void jButtonCancelarPrestamoActionPerformed(ActionEvent evt) {
 
 		limpiarCamposPrestamo();
-	}
-
-	private JButton getJButtonActualizar() {
-		if (jButtonActualizar == null) {
-			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/actualizar.png");
-			ImageIcon icono = new ImageIcon(urlDeLaImagen);
-			Image img = icono.getImage();
-			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			jButtonActualizar = new JButton();
-			jButtonActualizar.setIcon(new ImageIcon(otraimg));
-			jButtonActualizar.setText("Todos");
-			jButtonActualizar.setBounds(757, 125, 130, 30);
-			jButtonActualizar.setFont(new java.awt.Font("Arial", 0, 14));
-			jButtonActualizar.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jButtonActualizarActionPerformed(evt);
-				}
-			});
-		}
-		return jButtonActualizar;
 	}
 
 	/**
@@ -2134,26 +2175,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
-	private JButton getJButtonEditarCliente() {
-		if (jButtonEditarCliente == null) {
-			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/editar.png");
-			ImageIcon icono1 = new ImageIcon(urlDeLaImagen);
-			Image img1 = icono1.getImage();
-			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			jButtonEditarCliente = new JButton();
-			jButtonEditarCliente.setIcon(new ImageIcon(otraimg1));
-			jButtonEditarCliente.setText("Editar");
-			jButtonEditarCliente.setBounds(198, 125, 130, 30);
-			jButtonEditarCliente.setFont(new java.awt.Font("Arial", 0, 14));
-			jButtonEditarCliente.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jButtonEditarClienteActionPerformed(evt);
-				}
-			});
-		}
-		return jButtonEditarCliente;
-	}
-
 	private void jButtonEditarClienteActionPerformed(ActionEvent evt) {
 
 		ClienteVO clienteEncontrado = null;
@@ -2176,28 +2197,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
-	private JButton getJButtonGuardarEdicionCliente() {
-		if (jButtonGuardarEdicionCliente == null) {
-			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/guardar.png");
-			ImageIcon icono1 = new ImageIcon(urlDeLaImagen);
-			Image img1 = icono1.getImage();
-			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			jButtonGuardarEdicionCliente = new JButton();
-			jButtonGuardarEdicionCliente.setIcon(new ImageIcon(otraimg1));
-			jButtonGuardarEdicionCliente.setText("Guardar edición");
-			jButtonGuardarEdicionCliente.setBounds(358, 125, 181, 30);
-			jButtonGuardarEdicionCliente.setFont(new java.awt.Font("Arial", 0, 14));
-			jButtonGuardarEdicionCliente.setEnabled(false);
-			jButtonGuardarEdicionCliente.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jButtonGuardarEdicionClienteActionPerformed(evt);
-				}
-
-			});
-		}
-		return jButtonGuardarEdicionCliente;
-	}
-
 	private void jButtonGuardarEdicionClienteActionPerformed(ActionEvent evt) {
 
 		ClienteDAO miCliente = new ClienteDAO();
@@ -2213,14 +2212,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		jButtonGuardarEdicionCliente.setEnabled(false);
 		actualizaClientes();
 
-	}
-
-	private JLabel getJLabelCodigoCliente() {
-		if (jLabelCodigoCliente == null) {
-			jLabelCodigoCliente = new JLabel();
-			jLabelCodigoCliente.setBounds(12, 65, 65, 10);
-		}
-		return jLabelCodigoCliente;
 	}
 
 }
