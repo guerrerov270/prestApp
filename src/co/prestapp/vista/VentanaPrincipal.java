@@ -97,6 +97,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelTotalAbonosPendientes;
 	private JLabel jLabelTotalAbonosCobrados;
 	private JLabel jLabelTotalClientesactivos;
+	private JComboBox jComboSeleccionListado;
+	private JLabel jLabelSeleccioneListado;
+	private JScrollPane jScrollPaneResultados;
+	private JPanel jPanListaResultados;
+	private JPanel jPaneSeleccionListado;
+	private JPanel jPaneListados;
 	private JLabel jLabelCodigoCliente;
 	private JButton jButtonGuardarEdicionCliente;
 	private JButton jButtonEditarCliente;
@@ -401,7 +407,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jLabelTotalFormato.setFont(new java.awt.Font("Arial", 0, 16));
 							}
 							{
-								URL urlDeLaImagen2 = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/buscar.png");
+								URL urlDeLaImagen2 = VentanaPrincipal.class.getClassLoader()
+										.getResource("co/prestapp/res/buscar.png");
 								ImageIcon icono1 = new ImageIcon(urlDeLaImagen2);
 								Image img1 = icono1.getImage();
 								Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
@@ -520,7 +527,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jTextCodigoPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
-							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/guardar.png");
+							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/guardar.png");
 							ImageIcon icono = new ImageIcon(urlDeLaImagen);
 							Image img = icono.getImage();
 							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
@@ -537,7 +545,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							});
 						}
 						{
-							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/cancelar.png");
+							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/cancelar.png");
 							ImageIcon icono = new ImageIcon(urlDeLaImagen);
 							Image img = icono.getImage();
 							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
@@ -626,7 +635,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							});
 						}
 						{
-							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/cancelar.png");
+							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/cancelar.png");
 							ImageIcon icono = new ImageIcon(urlDeLaImagen);
 							Image img = icono.getImage();
 							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
@@ -662,8 +672,130 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					}
 					jTabPestanias.addTab("Reportes", jPanelReportes);
 					jPanelReportes.setFont(new java.awt.Font("Arial", 0, 16));
-					jPanelReportes.add(getJScrollPaneReportesPorFecha(), BorderLayout.SOUTH);
-					jPanelReportes.add(getJPanelCifras(), BorderLayout.NORTH);
+					{
+						jScrollPaneReportesPorFecha = new JScrollPane();
+						jPanelReportes.add(jScrollPaneReportesPorFecha, BorderLayout.SOUTH);
+						jScrollPaneReportesPorFecha.setBounds(82, 316, 740, 197);
+						jScrollPaneReportesPorFecha.setPreferredSize(new java.awt.Dimension(905, 214));
+						jScrollPaneReportesPorFecha.setViewportView(getJTableReportesPorFecha());
+
+					}
+					{
+						// Aquí el panel de cifras
+						jPanelCifras = new JPanel();
+						jPanelReportes.add(jPanelCifras, BorderLayout.NORTH);
+						jPanelCifras.setLayout(null);
+						jPanelCifras.setBorder(BorderFactory.createTitledBorder("Cifras"));
+						jPanelCifras.setPreferredSize(new java.awt.Dimension(905, 335));
+						{
+							// Componentes del panel de cifras
+							jLabelTotalPrestado = new JLabel();
+							jPanelCifras.add(jLabelTotalPrestado);
+							jLabelTotalPrestado.setText("Total prestado:");
+							jLabelTotalPrestado.setBounds(17, 30, 211, 23);
+							jLabelTotalPrestado.setFont(new java.awt.Font("Arial", 0, 16));
+							
+							jLabelTotalrecibido = new JLabel();
+							jPanelCifras.add(jLabelTotalrecibido);
+							jLabelTotalrecibido.setText("Total recaudado:");
+							jLabelTotalrecibido.setBounds(17, 117, 211, 23);
+							jLabelTotalrecibido.setFont(new java.awt.Font("Arial", 0, 16));
+							
+							jTextTotalPrestado = new JTextField();
+							jPanelCifras.add(jTextTotalPrestado);
+							jTextTotalPrestado.setBounds(226, 30, 178, 23);
+							jTextTotalPrestado.setFont(new java.awt.Font("Arial", 0, 16));
+							jTextTotalPrestado.setEditable(false);
+
+							jTextTotalRecaudado = new JTextField();
+							jPanelCifras.add(jTextTotalRecaudado);
+							jTextTotalRecaudado.setBounds(226, 117, 178, 23);
+							jTextTotalRecaudado.setFont(new java.awt.Font("Arial", 0, 16));
+							jTextTotalRecaudado.setEditable(false);
+							
+							jLabelInteresesRecaudados = new JLabel();
+							jPanelCifras.add(jLabelInteresesRecaudados);
+							jLabelInteresesRecaudados.setText("Intereses recaudados:");
+							jLabelInteresesRecaudados.setBounds(17, 160, 210, 23);
+							jLabelInteresesRecaudados.setFont(new java.awt.Font("Arial", 0, 16));
+							
+							jTextInteresesRecaudados = new JTextField();
+							jPanelCifras.add(jTextInteresesRecaudados);
+							jTextInteresesRecaudados.setBounds(226, 160, 178, 23);
+							jTextInteresesRecaudados.setFont(new java.awt.Font("Arial", 0, 16));
+							jTextInteresesRecaudados.setEditable(false);
+							
+							jLabelTotalPrestamosActivos = new JLabel();
+							jPanelCifras.add(jLabelTotalPrestamosActivos);
+							jLabelTotalPrestamosActivos.setText("Total préstamos activos:");
+							jLabelTotalPrestamosActivos.setBounds(17, 247, 210, 23);
+							jLabelTotalPrestamosActivos.setFont(new java.awt.Font("Arial", 0, 16));
+							
+							jTextTotalPrestamosActivos = new JTextField();
+							jPanelCifras.add(jTextTotalPrestamosActivos);
+							jTextTotalPrestamosActivos.setBounds(226, 247, 178, 23);
+							jTextTotalPrestamosActivos.setFont(new java.awt.Font("Arial", 0, 16));
+							jTextTotalPrestamosActivos.setEditable(false);
+							
+							jLabelTotalPrestamosFinalizados = new JLabel();
+							jPanelCifras.add(jLabelTotalPrestamosFinalizados);
+							jLabelTotalPrestamosFinalizados.setText("Total préstamos finalizados:");
+							jLabelTotalPrestamosFinalizados.setBounds(448, 30, 209, 23);
+							jLabelTotalPrestamosFinalizados.setFont(new java.awt.Font("Arial", 0, 16));
+							
+							jTextTotalPrestamosFinalizados = new JTextField();
+							jPanelCifras.add(jTextTotalPrestamosFinalizados);
+							jTextTotalPrestamosFinalizados.setBounds(710, 30, 178, 23);
+							jTextTotalPrestamosFinalizados.setFont(new java.awt.Font("Arial", 0, 16));
+							jTextTotalPrestamosFinalizados.setEditable(false);
+							
+							jLabelTotalPrestamosVencidos = new JLabel();
+							jPanelCifras.add(jLabelTotalPrestamosVencidos);
+							jLabelTotalPrestamosVencidos.setText("Total préstamos vencidos:");
+							jLabelTotalPrestamosVencidos.setBounds(448, 73, 212, 23);
+							jLabelTotalPrestamosVencidos.setFont(new java.awt.Font("Arial", 0, 16));
+							
+							jTextTotalprestamosVencidos = new JTextField();
+							jPanelCifras.add(jTextTotalprestamosVencidos);
+							jTextTotalprestamosVencidos.setBounds(710, 73, 178, 23);
+							jTextTotalprestamosVencidos.setFont(new java.awt.Font("Arial", 0, 16));
+							jTextTotalprestamosVencidos.setEditable(false);
+							
+							
+							jPanelCifras.add(getJLabelTotalclientesRegistrados());
+							jPanelCifras.add(getJTextTotalClientesactivos());
+							jPanelCifras.add(getJTextTotalclientesRegistrados());
+							jPanelCifras.add(getJLabelTotalClientesactivos());
+							jPanelCifras.add(getJLabelTotalAbonosCobrados());
+							jPanelCifras.add(getJLabelTotalAbonosPendientes());
+							jPanelCifras.add(getJTextTotalAbonosCobrados());
+							jPanelCifras.add(getJTextTotalAbonosPendientes());
+							jPanelCifras.add(getJLabelTotalRecaudoPendiente());
+							jPanelCifras.add(getJTextTotalrecaudoPendiente());
+							jPanelCifras.add(getJLabelInteresesPendientesRecaudo());
+							jPanelCifras.add(getJTextIntersesePendientesRecaudo());
+							jPanelCifras.add(getJLabelPrestadoPorFecha());
+							jPanelCifras.add(getJLabelAbonosPorFecha());
+							jPanelCifras.add(getJButtonPrestamoPorFecha());
+							jPanelCifras.add(getJButtonAbonoPorFecha());
+							
+							calendarioPrestamosPorfecha = new JDateChooser();
+							calendarioPrestamosPorfecha.setLocale(new Locale("ES", "CO"));
+							calendarioPrestamosPorfecha.setDateFormatString("dd/MM/yyyy");
+							jPanelCifras.add(calendarioPrestamosPorfecha);
+							calendarioPrestamosPorfecha.setBounds(225, 291, 132, 23);
+							calendarioPrestamosPorfecha.setFont(new java.awt.Font("Arial", 0, 16));
+
+							calendarioAbonosPorFecha = new JDateChooser();
+							calendarioAbonosPorFecha.setLocale(new Locale("ES", "CO"));
+							calendarioAbonosPorFecha.setDateFormatString("dd/MM/yyyy");
+							jPanelCifras.add(calendarioAbonosPorFecha);
+							calendarioAbonosPorFecha.setBounds(712, 291, 132, 23);
+							calendarioAbonosPorFecha.setFont(new java.awt.Font("Arial", 0, 16));
+						}
+					}
+
+					jTabPestanias.addTab("Listados", null, getJPaneListados(), null);
 
 				}
 			}
@@ -1542,177 +1674,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		actualizaPrestamoVencido();
 	}
 
-	private JPanel getJPanelCifras() {
-		if (jPanelCifras == null) {
-			jPanelCifras = new JPanel();
-			jPanelCifras.setLayout(null);
-			jPanelCifras.setBorder(BorderFactory.createTitledBorder("Cifras"));
-			jPanelCifras.setPreferredSize(new java.awt.Dimension(905, 335));
-			jPanelCifras.add(getJLabelTotalPrestado());
-			jPanelCifras.add(getJLabelTotalrecibido());
-			jPanelCifras.add(getJTextTotalPrestado());
-			jPanelCifras.add(getJTextTotalRecaudado());
-			jPanelCifras.add(getJLabelInteresesRecaudados());
-			jPanelCifras.add(getJTextInteresesRecaudados());
-			jPanelCifras.add(getJLabelTotalPrestamosActivos());
-			jPanelCifras.add(getJTextTotalPrestamosActivos());
-			jPanelCifras.add(getJLabelTotalPrestamosFinalizados());
-			jPanelCifras.add(getJTextTotalPrestamosFinalizados());
-			jPanelCifras.add(getJLabelTotalPrestamosVencidos());
-			jPanelCifras.add(getJTextTotalprestamosVencidos());
-			jPanelCifras.add(getJLabelTotalclientesRegistrados());
-			jPanelCifras.add(getJTextTotalClientesactivos());
-			jPanelCifras.add(getJTextTotalclientesRegistrados());
-			jPanelCifras.add(getJLabelTotalClientesactivos());
-			jPanelCifras.add(getJLabelTotalAbonosCobrados());
-			jPanelCifras.add(getJLabelTotalAbonosPendientes());
-			jPanelCifras.add(getJTextTotalAbonosCobrados());
-			jPanelCifras.add(getJTextTotalAbonosPendientes());
-			jPanelCifras.add(getJLabelTotalRecaudoPendiente());
-			jPanelCifras.add(getJTextTotalrecaudoPendiente());
-			jPanelCifras.add(getJLabelInteresesPendientesRecaudo());
-			jPanelCifras.add(getJTextIntersesePendientesRecaudo());
-			jPanelCifras.add(getJLabelPrestadoPorFecha());
-			jPanelCifras.add(getJLabelAbonosPorFecha());
-			jPanelCifras.add(getJButtonPrestamoPorFecha());
-			jPanelCifras.add(getJButtonAbonoPorFecha());
-
-			calendarioPrestamosPorfecha = new JDateChooser();
-			calendarioPrestamosPorfecha.setLocale(new Locale("ES", "CO"));
-			calendarioPrestamosPorfecha.setDateFormatString("dd/MM/yyyy");
-			jPanelCifras.add(calendarioPrestamosPorfecha);
-			calendarioPrestamosPorfecha.setBounds(225, 291, 132, 23);
-			calendarioPrestamosPorfecha.setFont(new java.awt.Font("Arial", 0, 16));
-
-			calendarioAbonosPorFecha = new JDateChooser();
-			calendarioAbonosPorFecha.setLocale(new Locale("ES", "CO"));
-			calendarioAbonosPorFecha.setDateFormatString("dd/MM/yyyy");
-			jPanelCifras.add(calendarioAbonosPorFecha);
-			calendarioAbonosPorFecha.setBounds(712, 291, 132, 23);
-			calendarioAbonosPorFecha.setFont(new java.awt.Font("Arial", 0, 16));
-		}
-		return jPanelCifras;
-	}
-
-	private JLabel getJLabelTotalPrestado() {
-		if (jLabelTotalPrestado == null) {
-			jLabelTotalPrestado = new JLabel();
-			jLabelTotalPrestado.setText("Total prestado:");
-			jLabelTotalPrestado.setBounds(17, 30, 211, 23);
-			jLabelTotalPrestado.setFont(new java.awt.Font("Arial", 0, 16));
-		}
-		return jLabelTotalPrestado;
-	}
-
-	private JLabel getJLabelTotalrecibido() {
-		if (jLabelTotalrecibido == null) {
-			jLabelTotalrecibido = new JLabel();
-			jLabelTotalrecibido.setText("Total recaudado:");
-			jLabelTotalrecibido.setBounds(17, 117, 211, 23);
-			jLabelTotalrecibido.setFont(new java.awt.Font("Arial", 0, 16));
-		}
-		return jLabelTotalrecibido;
-	}
-
-	private JTextField getJTextTotalPrestado() {
-		if (jTextTotalPrestado == null) {
-			jTextTotalPrestado = new JTextField();
-			jTextTotalPrestado.setBounds(226, 30, 178, 23);
-			jTextTotalPrestado.setFont(new java.awt.Font("Arial", 0, 16));
-			jTextTotalPrestado.setEditable(false);
-		}
-		return jTextTotalPrestado;
-	}
-
-	private JTextField getJTextTotalRecaudado() {
-		if (jTextTotalRecaudado == null) {
-			jTextTotalRecaudado = new JTextField();
-			jTextTotalRecaudado.setBounds(226, 117, 178, 23);
-			jTextTotalRecaudado.setFont(new java.awt.Font("Arial", 0, 16));
-			jTextTotalRecaudado.setEditable(false);
-		}
-		return jTextTotalRecaudado;
-	}
-
-	private JLabel getJLabelInteresesRecaudados() {
-		if (jLabelInteresesRecaudados == null) {
-			jLabelInteresesRecaudados = new JLabel();
-			jLabelInteresesRecaudados.setText("Intereses recaudados:");
-			jLabelInteresesRecaudados.setBounds(17, 160, 210, 23);
-			jLabelInteresesRecaudados.setFont(new java.awt.Font("Arial", 0, 16));
-		}
-		return jLabelInteresesRecaudados;
-	}
-
-	private JTextField getJTextInteresesRecaudados() {
-		if (jTextInteresesRecaudados == null) {
-			jTextInteresesRecaudados = new JTextField();
-			jTextInteresesRecaudados.setBounds(226, 160, 178, 23);
-			jTextInteresesRecaudados.setFont(new java.awt.Font("Arial", 0, 16));
-			jTextInteresesRecaudados.setEditable(false);
-		}
-		return jTextInteresesRecaudados;
-	}
-
-	private JLabel getJLabelTotalPrestamosActivos() {
-		if (jLabelTotalPrestamosActivos == null) {
-			jLabelTotalPrestamosActivos = new JLabel();
-			jLabelTotalPrestamosActivos.setText("Total préstamos activos:");
-			jLabelTotalPrestamosActivos.setBounds(17, 247, 210, 23);
-			jLabelTotalPrestamosActivos.setFont(new java.awt.Font("Arial", 0, 16));
-		}
-		return jLabelTotalPrestamosActivos;
-	}
-
-	private JTextField getJTextTotalPrestamosActivos() {
-		if (jTextTotalPrestamosActivos == null) {
-			jTextTotalPrestamosActivos = new JTextField();
-			jTextTotalPrestamosActivos.setBounds(226, 247, 178, 23);
-			jTextTotalPrestamosActivos.setFont(new java.awt.Font("Arial", 0, 16));
-			jTextTotalPrestamosActivos.setEditable(false);
-		}
-		return jTextTotalPrestamosActivos;
-	}
-
-	private JLabel getJLabelTotalPrestamosFinalizados() {
-		if (jLabelTotalPrestamosFinalizados == null) {
-			jLabelTotalPrestamosFinalizados = new JLabel();
-			jLabelTotalPrestamosFinalizados.setText("Total préstamos finalizados:");
-			jLabelTotalPrestamosFinalizados.setBounds(448, 30, 209, 23);
-			jLabelTotalPrestamosFinalizados.setFont(new java.awt.Font("Arial", 0, 16));
-		}
-		return jLabelTotalPrestamosFinalizados;
-	}
-
-	private JTextField getJTextTotalPrestamosFinalizados() {
-		if (jTextTotalPrestamosFinalizados == null) {
-			jTextTotalPrestamosFinalizados = new JTextField();
-			jTextTotalPrestamosFinalizados.setBounds(710, 30, 178, 23);
-			jTextTotalPrestamosFinalizados.setFont(new java.awt.Font("Arial", 0, 16));
-			jTextTotalPrestamosFinalizados.setEditable(false);
-		}
-		return jTextTotalPrestamosFinalizados;
-	}
-
-	private JLabel getJLabelTotalPrestamosVencidos() {
-		if (jLabelTotalPrestamosVencidos == null) {
-			jLabelTotalPrestamosVencidos = new JLabel();
-			jLabelTotalPrestamosVencidos.setText("Total préstamos vencidos:");
-			jLabelTotalPrestamosVencidos.setBounds(448, 73, 212, 23);
-			jLabelTotalPrestamosVencidos.setFont(new java.awt.Font("Arial", 0, 16));
-		}
-		return jLabelTotalPrestamosVencidos;
-	}
-
-	private JTextField getJTextTotalprestamosVencidos() {
-		if (jTextTotalprestamosVencidos == null) {
-			jTextTotalprestamosVencidos = new JTextField();
-			jTextTotalprestamosVencidos.setBounds(710, 73, 178, 23);
-			jTextTotalprestamosVencidos.setFont(new java.awt.Font("Arial", 0, 16));
-			jTextTotalprestamosVencidos.setEditable(false);
-		}
-		return jTextTotalprestamosVencidos;
-	}
 
 	private JLabel getJLabelTotalclientesRegistrados() {
 		if (jLabelTotalclientesRegistrados == null) {
@@ -1832,16 +1793,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jTextIntersesePendientesRecaudo.setEditable(false);
 		}
 		return jTextIntersesePendientesRecaudo;
-	}
-
-	private JScrollPane getJScrollPaneReportesPorFecha() {
-		if (jScrollPaneReportesPorFecha == null) {
-			jScrollPaneReportesPorFecha = new JScrollPane();
-			jScrollPaneReportesPorFecha.setBounds(82, 316, 740, 197);
-			jScrollPaneReportesPorFecha.setPreferredSize(new java.awt.Dimension(905, 214));
-			jScrollPaneReportesPorFecha.setViewportView(getJTableReportesPorFecha());
-		}
-		return jScrollPaneReportesPorFecha;
 	}
 
 	private JTable getJTableReportesPorFecha() {
@@ -2322,6 +2273,65 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jLabelCodigoCliente.setBounds(12, 65, 65, 10);
 		}
 		return jLabelCodigoCliente;
+	}
+
+	private JPanel getJPaneListados() {
+		if (jPaneListados == null) {
+			jPaneListados = new JPanel();
+			BorderLayout jPaneListadosLayout = new BorderLayout();
+			jPaneListados.setLayout(jPaneListadosLayout);
+			jPaneListados.add(getJPaneSeleccionListado(), BorderLayout.NORTH);
+			jPaneListados.add(getJPanListaResultados(), BorderLayout.SOUTH);
+		}
+		return jPaneListados;
+	}
+
+	private JPanel getJPaneSeleccionListado() {
+		if (jPaneSeleccionListado == null) {
+			jPaneSeleccionListado = new JPanel();
+			jPaneSeleccionListado.setPreferredSize(new java.awt.Dimension(909, 127));
+			jPaneSeleccionListado.setBorder(BorderFactory.createTitledBorder("Listados"));
+			jPaneSeleccionListado.setLayout(null);
+			jPaneSeleccionListado.add(getJLabelSeleccioneListado());
+			jPaneSeleccionListado.add(getJComboSeleccionListado());
+		}
+		return jPaneSeleccionListado;
+	}
+
+	private JPanel getJPanListaResultados() {
+		if (jPanListaResultados == null) {
+			jPanListaResultados = new JPanel();
+			BorderLayout jPanListaResultadosLayout = new BorderLayout();
+			jPanListaResultados.setLayout(jPanListaResultadosLayout);
+			jPanListaResultados.setPreferredSize(new java.awt.Dimension(909, 424));
+			jPanListaResultados.setBorder(BorderFactory.createTitledBorder("Resultados"));
+			jPanListaResultados.add(getJScrollPaneResultados(), BorderLayout.CENTER);
+		}
+		return jPanListaResultados;
+	}
+
+	private JScrollPane getJScrollPaneResultados() {
+		if (jScrollPaneResultados == null) {
+			jScrollPaneResultados = new JScrollPane();
+		}
+		return jScrollPaneResultados;
+	}
+
+	private JLabel getJLabelSeleccioneListado() {
+		if (jLabelSeleccioneListado == null) {
+			jLabelSeleccioneListado = new JLabel();
+			jLabelSeleccioneListado.setText("Seleccione listado:");
+			jLabelSeleccioneListado.setBounds(23, 44, 179, 25);
+		}
+		return jLabelSeleccioneListado;
+	}
+
+	private JComboBox getJComboSeleccionListado() {
+		if (jComboSeleccionListado == null) {
+			jComboSeleccionListado = new JComboBox();
+			jComboSeleccionListado.setBounds(241, 46, 176, 23);
+		}
+		return jComboSeleccionListado;
 	}
 
 }
