@@ -8,6 +8,7 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -350,7 +351,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						}
 						{
 
-							ImageIcon icono = new ImageIcon("src/co/prestapp/res/guardar.png");
+							// Test de carga de imagenes dentro del jar
+							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/guardar.png");
+							ImageIcon icono = new ImageIcon(urlDeLaImagen);
+
+							// ImageIcon icono = new ImageIcon("src/co/prestapp/res/guardar.png");
 							Image img = icono.getImage();
 							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 							jButtonAceptar = new JButton();
