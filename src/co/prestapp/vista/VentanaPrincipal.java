@@ -369,6 +369,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jButtonAceptar.setIcon(new ImageIcon(otraimg));
 							jButtonAceptar.setBounds(9, 157, 130, 30);
 							jPanelEntradasPrestamo.add(jButtonAceptar);
+							jButtonAceptar.setText("Guardar");
+							jButtonAceptar.setFont(new java.awt.Font("Arial", 0, 14));
+							jButtonAceptar.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonAceptarActionPerformed(evt);
+								}
+							});
 							{
 								URL urlDeLaImagen1 = VentanaPrincipal.class.getClassLoader()
 										.getResource("co/prestapp/res/cancelar.png");
@@ -455,21 +462,80 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								DefaultComboBoxModel modelo = new DefaultComboBoxModel();
 								modelo.addElement("Nada para mostrar");
 								jComboFechasCobro.setModel(modelo);
-								jPanelEntradasPrestamo.add(getJButtonCalcular());
-								jPanelEntradasPrestamo.add(getJButton2());
-								jPanelEntradasPrestamo.add(getJLabelEmpresaResult());
-								jPanelEntradasPrestamo.add(getJButtonPrestamosPendientes());
 								jComboFechasCobro.setBounds(162, 121, 178, 23);
 								jComboFechasCobro.setFont(new java.awt.Font("Arial", 0, 14));
 							}
+							{
+								URL urlDeLaImagenCalcular = VentanaPrincipal.class.getClassLoader()
+										.getResource("co/prestapp/res/calcular.png");
+								ImageIcon icono1 = new ImageIcon(urlDeLaImagenCalcular);
+								Image img1 = icono1.getImage();
+								Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+								jButtonCalcular = new JButton();
+								jPanelEntradasPrestamo.add(jButtonCalcular);
+								jButtonCalcular.setIcon(new ImageIcon(otraimg1));
+								jButtonCalcular.setText("Calcular");
+								jButtonCalcular.setBounds(579, 78, 130, 30);
+								jButtonCalcular.setFont(new java.awt.Font("Arial", 0, 14));
+								jButtonCalcular.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent evt) {
+										try {
+											jButtonCalcularActionPerformed(evt);
+										} catch (Exception e) {
+											System.out.println(e.getMessage());
+										}
+									}
+								});
 
-							jButtonAceptar.setText("Guardar");
-							jButtonAceptar.setFont(new java.awt.Font("Arial", 0, 14));
-							jButtonAceptar.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent evt) {
-									jButtonAceptarActionPerformed(evt);
-								}
-							});
+							}
+							{
+								URL urlDeLaImagenActualizar = VentanaPrincipal.class.getClassLoader()
+										.getResource("co/prestapp/res/actualizar.png");
+								ImageIcon iconoActualizar = new ImageIcon(urlDeLaImagenActualizar);
+								Image imgActualizar = iconoActualizar.getImage();
+								Image otraimgActualizar = imgActualizar.getScaledInstance(30, 30,
+										java.awt.Image.SCALE_SMOOTH);
+								jButton2 = new JButton();
+								jPanelEntradasPrestamo.add(jButton2);
+								jButton2.setIcon(new ImageIcon(otraimgActualizar));
+								jButton2.setText("Todos");
+								jButton2.setBounds(296, 157, 130, 30);
+								jButton2.setFont(new java.awt.Font("Arial", 0, 14));
+								jButton2.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent evt) {
+										jButton2ActionPerformed(evt);
+									}
+								});
+
+							}
+							{
+								jLabelEmpresaResult = new JLabel();
+								jPanelEntradasPrestamo.add(jLabelEmpresaResult);
+								jLabelEmpresaResult.setText("Empresa");
+								jLabelEmpresaResult.setBounds(726, 161, 168, 23);
+								jLabelEmpresaResult.setFont(new java.awt.Font("Arial", 0, 16));
+
+							}
+							{
+								URL urlDeLaImagenNoPagado = VentanaPrincipal.class.getClassLoader()
+										.getResource("co/prestapp/res/noPagado.png");
+								ImageIcon iconoNoPagado = new ImageIcon(urlDeLaImagenNoPagado);
+								Image imgNoPagado = iconoNoPagado.getImage();
+								Image otraimgNoPagado = imgNoPagado.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+								jButtonPrestamosPendientes = new JButton();
+								jPanelEntradasPrestamo.add(jButtonPrestamosPendientes);
+								jButtonPrestamosPendientes.setIcon(new ImageIcon(otraimgNoPagado));
+								jButtonPrestamosPendientes.setText("Vencidos");
+								jButtonPrestamosPendientes.setFont(new java.awt.Font("Arial", 0, 14));
+								jButtonPrestamosPendientes.setBounds(431, 157, 150, 30);
+								jButtonPrestamosPendientes.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent evt) {
+										jButtonPrestamosPendientesActionPerformed(evt);
+									}
+								});
+
+							}
+
 						}
 					}
 					jTabPestanias.addTab("Abonos", jPanelAbonos);
@@ -1095,30 +1161,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
-	private JButton getJButtonCalcular() {
-		if (jButtonCalcular == null) {
-			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/calcular.png");
-			ImageIcon icono1 = new ImageIcon(urlDeLaImagen);
-			Image img1 = icono1.getImage();
-			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			jButtonCalcular = new JButton();
-			jButtonCalcular.setIcon(new ImageIcon(otraimg1));
-			jButtonCalcular.setText("Calcular");
-			jButtonCalcular.setBounds(579, 78, 130, 30);
-			jButtonCalcular.setFont(new java.awt.Font("Arial", 0, 14));
-			jButtonCalcular.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					try {
-						jButtonCalcularActionPerformed(evt);
-					} catch (Exception e) {
-						System.out.println(e.getMessage());
-					}
-				}
-			});
-		}
-		return jButtonCalcular;
-	}
-
 	@SuppressWarnings("unchecked")
 	private void jButtonCalcularActionPerformed(ActionEvent evt) throws Exception {
 
@@ -1251,26 +1293,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
-	private JButton getJButton2() {
-		if (jButton2 == null) {
-			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/actualizar.png");
-			ImageIcon icono = new ImageIcon(urlDeLaImagen);
-			Image img = icono.getImage();
-			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			jButton2 = new JButton();
-			jButton2.setIcon(new ImageIcon(otraimg));
-			jButton2.setText("Todos");
-			jButton2.setBounds(296, 157, 130, 30);
-			jButton2.setFont(new java.awt.Font("Arial", 0, 14));
-			jButton2.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jButton2ActionPerformed(evt);
-				}
-			});
-		}
-		return jButton2;
-	}
-
 	/**
 	 * Actualiza la tabla de prestamos
 	 * 
@@ -1279,16 +1301,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private void jButton2ActionPerformed(ActionEvent evt) {
 
 		actualizaPrestamos();
-	}
-
-	private JLabel getJLabelEmpresaResult() {
-		if (jLabelEmpresaResult == null) {
-			jLabelEmpresaResult = new JLabel();
-			jLabelEmpresaResult.setText("Empresa");
-			jLabelEmpresaResult.setBounds(726, 161, 168, 23);
-			jLabelEmpresaResult.setFont(new java.awt.Font("Arial", 0, 16));
-		}
-		return jLabelEmpresaResult;
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -1815,26 +1827,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		return resultado;
 
 	}// Fin validarCamposPrestamo
-
-	private JButton getJButtonPrestamosPendientes() {
-		if (jButtonPrestamosPendientes == null) {
-			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/noPagado.png");
-			ImageIcon icono = new ImageIcon(urlDeLaImagen);
-			Image img = icono.getImage();
-			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			jButtonPrestamosPendientes = new JButton();
-			jButtonPrestamosPendientes.setIcon(new ImageIcon(otraimg));
-			jButtonPrestamosPendientes.setText("Vencidos");
-			jButtonPrestamosPendientes.setFont(new java.awt.Font("Arial", 0, 14));
-			jButtonPrestamosPendientes.setBounds(431, 157, 150, 30);
-			jButtonPrestamosPendientes.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jButtonPrestamosPendientesActionPerformed(evt);
-				}
-			});
-		}
-		return jButtonPrestamosPendientes;
-	}
 
 	private void jButtonPrestamosPendientesActionPerformed(ActionEvent evt) {
 
