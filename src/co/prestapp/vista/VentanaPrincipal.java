@@ -521,7 +521,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 										.getResource("co/prestapp/res/noPagado.png");
 								ImageIcon iconoNoPagado = new ImageIcon(urlDeLaImagenNoPagado);
 								Image imgNoPagado = iconoNoPagado.getImage();
-								Image otraimgNoPagado = imgNoPagado.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+								Image otraimgNoPagado = imgNoPagado.getScaledInstance(30, 30,
+										java.awt.Image.SCALE_SMOOTH);
 								jButtonPrestamosPendientes = new JButton();
 								jPanelEntradasPrestamo.add(jButtonPrestamosPendientes);
 								jButtonPrestamosPendientes.setIcon(new ImageIcon(otraimgNoPagado));
@@ -619,14 +620,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							Image img = icono.getImage();
 							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 							jButtonCancelarAbono = new JButton();
-							jButtonCancelarAbono.setIcon(new ImageIcon(otraimg));
 							jPanelAgregarAbono.add(jButtonCancelarAbono);
-							jPanelAgregarAbono.add(getJButtonBuscarPrestamo());
-							jPanelAgregarAbono.add(getJButtonActualizarAbonos());
-							jPanelAgregarAbono.add(getJLabelCodigoAbono());
-							jPanelAgregarAbono.add(getJTextFieldCodigoAbono());
-							jPanelAgregarAbono.add(getJButtonAbonosPagados());
-							jPanelAgregarAbono.add(getJButtonAbonosPendientes());
+							jButtonCancelarAbono.setIcon(new ImageIcon(otraimg));
 							jButtonCancelarAbono.setText("Cancelar");
 							jButtonCancelarAbono.setBounds(195, 147, 145, 30);
 							jButtonCancelarAbono.setFont(new java.awt.Font("Arial", 0, 14));
@@ -638,6 +633,25 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 								}
 							});
+
+						}
+						{
+							jPanelAgregarAbono.add(getJButtonBuscarPrestamo());
+						}
+						{
+							jPanelAgregarAbono.add(getJButtonActualizarAbonos());
+						}
+						{
+							jPanelAgregarAbono.add(getJLabelCodigoAbono());
+						}
+						{
+							jPanelAgregarAbono.add(getJTextFieldCodigoAbono());
+						}
+						{
+							jPanelAgregarAbono.add(getJButtonAbonosPagados());
+						}
+						{
+							jPanelAgregarAbono.add(getJButtonAbonosPendientes());
 						}
 					}
 					jTabPestanias.addTab("Clientes", jPanelClientes);
@@ -806,8 +820,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jPanelReportes.add(jScrollPaneReportesPorFecha, BorderLayout.SOUTH);
 						jScrollPaneReportesPorFecha.setBounds(82, 316, 740, 197);
 						jScrollPaneReportesPorFecha.setPreferredSize(new java.awt.Dimension(905, 214));
-						jScrollPaneReportesPorFecha.setViewportView(getJTableReportesPorFecha());
-
 					}
 					{
 						// Aquí el panel de cifras
@@ -1833,13 +1845,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		actualizaPrestamoVencido();
 	}
 
-	private JTable getJTableReportesPorFecha() {
-		if (jTableReportesPorFecha == null) {
-			jTableReportesPorFecha = new JTable();
-		}
-		return jTableReportesPorFecha;
-	}
-
 	private void jButtonPrestamoPorFechaActionPerformed(ActionEvent evt) {
 
 		Date fechaIngresada = calendarioPrestamosPorfecha.getDate();
@@ -1854,7 +1859,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private void jButtonAbonoPorFechaActionPerformed(ActionEvent evt) {
 
-		Date fechaIngresada = calendarioPrestamosPorfecha.getDate();
+		Date fechaIngresada = calendarioAbonosPorFecha.getDate();
 		if (fechaIngresada != null) {
 			actualizaAbonosPorFecha();
 		} else {
