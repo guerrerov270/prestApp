@@ -97,6 +97,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelTotalAbonosPendientes;
 	private JLabel jLabelTotalAbonosCobrados;
 	private JLabel jLabelTotalClientesactivos;
+	private JButton jButtonBackup;
 	private JButton jButtonGenerarPDF;
 	private JComboBox<String> jComboSeleccionListado;
 	private JLabel jLabelSeleccioneListado;
@@ -107,15 +108,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelCodigoCliente;
 	private JButton jButtonGuardarEdicionCliente;
 	private JButton jButtonEditarCliente;
-	private JMenuItem jMenuItemReporteAbonosPagados;
-	private JMenuItem jMenuItemReporteabonosPendientes;
-	private JMenu jMenuReportes;
-	private JMenuItem jMenuItemReporteAbonos;
-	private JMenuItem jMenuItemReportePrestamos;
-	private JMenuItem jMenuItemReporteClientes;
-	private JMenuItem jMenuItemBackup;
-	private JMenu jMenuBackup;
-	private JMenuBar jMenuBarOpciones;
 	private JTextField jTextTotalclientesRegistrados;
 	private JTextField jTextTotalClientesactivos;
 	private JLabel jLabelTotalclientesRegistrados;
@@ -132,7 +124,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelTotalrecibido;
 	private JLabel jLabelTotalPrestado;
 	private JPanel jPanelCifras;
-	private JButton jButtonPrestamosPendientes;
 	private JButton jButtonGuardar;
 	private JTextField jTextCodigoPrestamo;
 	private JLabel jLabelCodigoPrestamo;
@@ -172,16 +163,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField jTextEmpresa;
 	private JLabel jLabelReferencia;
 	private JTextField jTextReferencia;
-	private JButton jButtonAbonosPendientes;
-	private JButton jButtonAbonosPagados;
 	private JTextField jTextFieldCodigoAbono;
 	private JLabel jLabelCodigoAbono;
-	private JButton jButtonActualizarAbonos;
 	private JButton jButtonBuscarPrestamo;
 	private JLabel jLabelEmpresaResult;
-	private JButton jButton2;
 	private JButton jButtonCalcular;
-	private JButton jButtonActualizar;
 	private JButton jButtonCancelar;
 	@SuppressWarnings("unused")
 	private JButton jButtonCancelarPrestamo;
@@ -235,12 +221,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			this.setFont(new java.awt.Font("Arial", 0, 16));
 			this.setResizable(false);
 			{
-				jMenuBarOpciones = new JMenuBar();
-				setJMenuBar(jMenuBarOpciones);
-				jMenuBarOpciones.add(getJMenuBackup());
-				jMenuBarOpciones.add(getJMenuReportes());
-			}
-			{
 				jPanelContenedor = new JPanel();
 				BorderLayout jPanelContenedorLayout = new BorderLayout();
 				jPanelAbonos = new JPanel();
@@ -273,7 +253,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jScrollReportes = new JScrollPane();
 						jPanelPrestamos.add(jScrollReportes, BorderLayout.SOUTH);
 						jScrollReportes.setBounds(8, 263, 777, 381);
-						jScrollReportes.setPreferredSize(new java.awt.Dimension(911, 354));
+						jScrollReportes.setPreferredSize(new java.awt.Dimension(909, 372));
 						{
 
 						}
@@ -505,51 +485,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 							}
 							{
-								URL urlDeLaImagenActualizar = VentanaPrincipal.class.getClassLoader()
-										.getResource("co/prestapp/res/actualizar.png");
-								ImageIcon iconoActualizar = new ImageIcon(urlDeLaImagenActualizar);
-								Image imgActualizar = iconoActualizar.getImage();
-								Image otraimgActualizar = imgActualizar.getScaledInstance(30, 30,
-										java.awt.Image.SCALE_SMOOTH);
-								jButton2 = new JButton();
-								jPanelEntradasPrestamo.add(jButton2);
-								jButton2.setIcon(new ImageIcon(otraimgActualizar));
-								jButton2.setText("Todos");
-								jButton2.setBounds(296, 157, 130, 30);
-								jButton2.setFont(new java.awt.Font("Arial", 0, 14));
-								jButton2.addActionListener(new ActionListener() {
-									public void actionPerformed(ActionEvent evt) {
-										jButton2ActionPerformed(evt);
-									}
-								});
-
-							}
-							{
 								jLabelEmpresaResult = new JLabel();
 								jPanelEntradasPrestamo.add(jLabelEmpresaResult);
 								jLabelEmpresaResult.setText("Empresa");
 								jLabelEmpresaResult.setBounds(726, 161, 168, 23);
 								jLabelEmpresaResult.setFont(new java.awt.Font("Arial", 0, 16));
-
-							}
-							{
-								URL urlDeLaImagenNoPagado = VentanaPrincipal.class.getClassLoader()
-										.getResource("co/prestapp/res/noPagado.png");
-								ImageIcon iconoNoPagado = new ImageIcon(urlDeLaImagenNoPagado);
-								Image imgNoPagado = iconoNoPagado.getImage();
-								Image otraimgNoPagado = imgNoPagado.getScaledInstance(30, 30,
-										java.awt.Image.SCALE_SMOOTH);
-								jButtonPrestamosPendientes = new JButton();
-								jPanelEntradasPrestamo.add(jButtonPrestamosPendientes);
-								jButtonPrestamosPendientes.setIcon(new ImageIcon(otraimgNoPagado));
-								jButtonPrestamosPendientes.setText("Vencidos");
-								jButtonPrestamosPendientes.setFont(new java.awt.Font("Arial", 0, 14));
-								jButtonPrestamosPendientes.setBounds(431, 157, 150, 30);
-								jButtonPrestamosPendientes.addActionListener(new ActionListener() {
-									public void actionPerformed(ActionEvent evt) {
-										jButtonPrestamosPendientesActionPerformed(evt);
-									}
-								});
 
 							}
 
@@ -561,7 +501,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jScrollAbonosRecibidos = new JScrollPane();
 						jPanelAbonos.add(jScrollAbonosRecibidos, BorderLayout.SOUTH);
 						jScrollAbonosRecibidos.setBounds(8, 263, 777, 381);
-						jScrollAbonosRecibidos.setPreferredSize(new java.awt.Dimension(911, 354));
+						jScrollAbonosRecibidos.setPreferredSize(new java.awt.Dimension(909, 373));
 						{
 
 						}
@@ -671,25 +611,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 						}
 						{
-							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
-									.getResource("co/prestapp/res/actualizar.png");
-							ImageIcon icono = new ImageIcon(urlDeLaImagen);
-							Image img = icono.getImage();
-							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-							jButtonActualizarAbonos = new JButton();
-							jPanelAgregarAbono.add(jButtonActualizarAbonos);
-							jButtonActualizarAbonos.setIcon(new ImageIcon(otraimg));
-							jButtonActualizarAbonos.setText("Todos");
-							jButtonActualizarAbonos.setBounds(381, 147, 130, 30);
-							jButtonActualizarAbonos.setFont(new java.awt.Font("Arial", 0, 14));
-							jButtonActualizarAbonos.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent evt) {
-									jButtonActualizarAbonosActionPerformed(evt);
-								}
-							});
-
-						}
-						{
 							jLabelCodigoAbono = new JLabel();
 							jPanelAgregarAbono.add(jLabelCodigoAbono);
 							jLabelCodigoAbono.setText("Código abono:");
@@ -703,44 +624,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jTextFieldCodigoAbono.setBounds(496, 78, 71, 23);
 
 						}
-						{
-							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
-									.getResource("co/prestapp/res/pagado.png");
-							ImageIcon icono = new ImageIcon(urlDeLaImagen);
-							Image img = icono.getImage();
-							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-							jButtonAbonosPagados = new JButton();
-							jPanelAgregarAbono.add(jButtonAbonosPagados);
-							jButtonAbonosPagados.setIcon(new ImageIcon(otraimg));
-							jButtonAbonosPagados.setText("Pagados");
-							jButtonAbonosPagados.setBounds(567, 147, 145, 30);
-							jButtonAbonosPagados.setFont(new java.awt.Font("Arial", 0, 14));
-							jButtonAbonosPagados.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent evt) {
-									jButtonAbonosPagadosActionPerformed(evt);
-								}
-							});
-
-						}
-						{
-							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
-									.getResource("co/prestapp/res/noPagado.png");
-							ImageIcon icono = new ImageIcon(urlDeLaImagen);
-							Image img = icono.getImage();
-							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-							jButtonAbonosPendientes = new JButton();
-							jPanelAgregarAbono.add(jButtonAbonosPendientes);
-							jButtonAbonosPendientes.setIcon(new ImageIcon(otraimg));
-							jButtonAbonosPendientes.setText("Pendientes");
-							jButtonAbonosPendientes.setBounds(738, 147, 150, 30);
-							jButtonAbonosPendientes.setFont(new java.awt.Font("Arial", 0, 14));
-							jButtonAbonosPendientes.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent evt) {
-									jButtonAbonosPendientesActionPerformed(evt);
-								}
-							});
-
-						}
 					}
 					jTabPestanias.addTab("Clientes", jPanelClientes);
 					jPanelClientes.setBorder(BorderFactory.createTitledBorder("Datos de clientes"));
@@ -751,7 +634,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jScrollPaneClientes = new JScrollPane();
 						jPanelClientes.add(jScrollPaneClientes, BorderLayout.SOUTH);
 						jScrollPaneClientes.setBounds(8, 263, 777, 381);
-						jScrollPaneClientes.setPreferredSize(new java.awt.Dimension(911, 354));
+						jScrollPaneClientes.setPreferredSize(new java.awt.Dimension(899, 419));
 						{
 
 						}
@@ -759,7 +642,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					{
 						jPanelAgregarCliente = new JPanel();
 						jPanelClientes.add(jPanelAgregarCliente, BorderLayout.NORTH);
-						jPanelAgregarCliente.setPreferredSize(new java.awt.Dimension(903, 182));
+						jPanelAgregarCliente.setPreferredSize(new java.awt.Dimension(899, 132));
 						jPanelAgregarCliente.setLayout(null);
 						{
 							jLabelNombre = new JLabel();
@@ -796,7 +679,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jButtonGuardarCliente.setIcon(new ImageIcon(otraimg));
 							jPanelAgregarCliente.add(jButtonGuardarCliente);
 							jButtonGuardarCliente.setText("Guardar");
-							jButtonGuardarCliente.setBounds(12, 125, 130, 30);
+							jButtonGuardarCliente.setBounds(12, 90, 130, 30);
 							jButtonGuardarCliente.setFont(new java.awt.Font("Arial", 0, 14));
 							jButtonGuardarCliente.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
@@ -814,7 +697,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jButtonCancelar.setIcon(new ImageIcon(otraimg));
 							jPanelAgregarCliente.add(jButtonCancelar);
 							jButtonCancelar.setText("Cancelar");
-							jButtonCancelar.setBounds(570, 125, 130, 30);
+							jButtonCancelar.setBounds(570, 90, 130, 30);
 							jButtonCancelar.setFont(new java.awt.Font("Arial", 0, 14));
 							jButtonCancelar.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
@@ -837,25 +720,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						}
 						{
 							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
-									.getResource("co/prestapp/res/actualizar.png");
-							ImageIcon icono = new ImageIcon(urlDeLaImagen);
-							Image img = icono.getImage();
-							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-							jButtonActualizar = new JButton();
-							jPanelAgregarCliente.add(jButtonActualizar);
-							jButtonActualizar.setIcon(new ImageIcon(otraimg));
-							jButtonActualizar.setText("Todos");
-							jButtonActualizar.setBounds(757, 125, 130, 30);
-							jButtonActualizar.setFont(new java.awt.Font("Arial", 0, 14));
-							jButtonActualizar.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent evt) {
-									jButtonActualizarActionPerformed(evt);
-								}
-							});
-
-						}
-						{
-							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
 									.getResource("co/prestapp/res/editar.png");
 							ImageIcon icono1 = new ImageIcon(urlDeLaImagen);
 							Image img1 = icono1.getImage();
@@ -864,7 +728,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jPanelAgregarCliente.add(jButtonEditarCliente);
 							jButtonEditarCliente.setIcon(new ImageIcon(otraimg1));
 							jButtonEditarCliente.setText("Editar");
-							jButtonEditarCliente.setBounds(198, 125, 130, 30);
+							jButtonEditarCliente.setBounds(198, 90, 130, 30);
 							jButtonEditarCliente.setFont(new java.awt.Font("Arial", 0, 14));
 							jButtonEditarCliente.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
@@ -883,7 +747,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jPanelAgregarCliente.add(jButtonGuardarEdicionCliente);
 							jButtonGuardarEdicionCliente.setIcon(new ImageIcon(otraimg1));
 							jButtonGuardarEdicionCliente.setText("Guardar edición");
-							jButtonGuardarEdicionCliente.setBounds(358, 125, 181, 30);
+							jButtonGuardarEdicionCliente.setBounds(358, 90, 181, 30);
 							jButtonGuardarEdicionCliente.setFont(new java.awt.Font("Arial", 0, 14));
 							jButtonGuardarEdicionCliente.setEnabled(false);
 							jButtonGuardarEdicionCliente.addActionListener(new ActionListener() {
@@ -907,7 +771,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jScrollPaneReportesPorFecha = new JScrollPane();
 						jPanelReportes.add(jScrollPaneReportesPorFecha, BorderLayout.SOUTH);
 						jScrollPaneReportesPorFecha.setBounds(82, 316, 740, 197);
-						jScrollPaneReportesPorFecha.setPreferredSize(new java.awt.Dimension(905, 214));
+						jScrollPaneReportesPorFecha.setPreferredSize(new java.awt.Dimension(909, 243));
 					}
 					{
 						// Aquí el panel de cifras
@@ -1151,12 +1015,24 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jButtonGenerarPDF = new JButton();
 							jButtonGenerarPDF.setIcon(new ImageIcon(otraimg1));
 							jPaneSeleccionListado.add(jButtonGenerarPDF);
+
 							jButtonGenerarPDF.setText("Generar PDF");
 							jButtonGenerarPDF.setBounds(569, 14, 170, 30);
 							jButtonGenerarPDF.setFont(new java.awt.Font("Arial", 0, 16));
 							jButtonGenerarPDF.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
 									jButtonGenerarPDFActionPerformed(evt);
+								}
+							});
+
+							jButtonBackup = new JButton();
+							jPaneSeleccionListado.add(jButtonBackup);
+							jButtonBackup.setText("Copia de seguridad");
+							jButtonBackup.setBounds(750, 14, 150, 30);
+							jButtonBackup.setFont(new java.awt.Font("Arial", 0, 16));
+							jButtonBackup.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonGenerarBackupActionPerformed(evt);
 								}
 							});
 
@@ -1168,7 +1044,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						BorderLayout jPanListaResultadosLayout = new BorderLayout();
 						jPanListaResultados.setLayout(jPanListaResultadosLayout);
 						jPaneListados.add(jPanListaResultados, BorderLayout.SOUTH);
-						jPanListaResultados.setPreferredSize(new java.awt.Dimension(909, 494));
+						jPanListaResultados.setPreferredSize(new java.awt.Dimension(909, 523));
 						jPanListaResultados.setBorder(BorderFactory.createTitledBorder("Resultados"));
 						{
 							// Componentes del panel inferior
@@ -1896,30 +1772,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
-	private JMenu getJMenuBackup() {
-		if (jMenuBackup == null) {
-			jMenuBackup = new JMenu();
-			jMenuBackup.setText("Opciones");
-			jMenuBackup.add(getJMenuItemBackup());
-
-		}
-		return jMenuBackup;
-	}
-
-	private JMenuItem getJMenuItemBackup() {
-		if (jMenuItemBackup == null) {
-			jMenuItemBackup = new JMenuItem();
-			jMenuItemBackup.setText("Crear copia de seguridad");
-			jMenuItemBackup.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jMenuItemBackupActionPerformed(evt);
-				}
-			});
-		}
-		return jMenuItemBackup;
-	}
-
-	private void jMenuItemBackupActionPerformed(ActionEvent evt) {
+	private void generarBackup() {
 
 		// configuracion de la fecha actual
 		Calendar c = Calendar.getInstance();
@@ -1943,20 +1796,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		}
 	}
 
-	private JMenuItem getJMenuItemReporteClientes() {
-		if (jMenuItemReporteClientes == null) {
-			jMenuItemReporteClientes = new JMenuItem();
-			jMenuItemReporteClientes.setText("Reporte de clientes");
-			jMenuItemReporteClientes.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jMenuItemReporteClientesActionPerformed(evt);
-				}
-			});
-		}
-		return jMenuItemReporteClientes;
-	}
-
-	private void jMenuItemReporteClientesActionPerformed(ActionEvent evt) {
+	private void generarReporteClientes() {
 		// configuracion de la fecha actual
 		// Creamos un objeto de la clase Calendar.
 		Calendar fecha = new GregorianCalendar();
@@ -1998,20 +1838,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		return resultado;
 	}
 
-	private JMenuItem getJMenuItemReportePrestamos() {
-		if (jMenuItemReportePrestamos == null) {
-			jMenuItemReportePrestamos = new JMenuItem();
-			jMenuItemReportePrestamos.setText("Reporte de préstamos");
-			jMenuItemReportePrestamos.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jMenuItemReportePrestamosActionPerformed(evt);
-				}
-			});
-		}
-		return jMenuItemReportePrestamos;
-	}
-
-	private void jMenuItemReportePrestamosActionPerformed(ActionEvent evt) {
+	private void generarReportePrestamos() {
 
 		// configuracion de la fecha actual
 		// Creamos un objeto de la clase Calendar.
@@ -2045,20 +1872,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
-	private JMenuItem getJMenuItemReporteAbonos() {
-		if (jMenuItemReporteAbonos == null) {
-			jMenuItemReporteAbonos = new JMenuItem();
-			jMenuItemReporteAbonos.setText("Reporte de abonos");
-			jMenuItemReporteAbonos.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jMenuItemReporteAbonosActionPerformed(evt);
-				}
-			});
-		}
-		return jMenuItemReporteAbonos;
-	}
-
-	private void jMenuItemReporteAbonosActionPerformed(ActionEvent evt) {
+	private void generarReporteAbonos() {
 
 		// configuracion de la fecha actual
 		// Creamos un objeto de la clase Calendar.
@@ -2092,33 +1906,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
-	private JMenu getJMenuReportes() {
-		if (jMenuReportes == null) {
-			jMenuReportes = new JMenu();
-			jMenuReportes.setText("Reportes");
-			jMenuReportes.add(getJMenuItemReporteClientes());
-			jMenuReportes.add(getJMenuItemReportePrestamos());
-			jMenuReportes.add(getJMenuItemReporteAbonos());
-			jMenuReportes.add(getJMenuItemReporteabonosPendientes());
-			jMenuReportes.add(getJMenuItemReporteAbonosPagados());
-		}
-		return jMenuReportes;
-	}
-
-	private JMenuItem getJMenuItemReporteabonosPendientes() {
-		if (jMenuItemReporteabonosPendientes == null) {
-			jMenuItemReporteabonosPendientes = new JMenuItem();
-			jMenuItemReporteabonosPendientes.setText("Reporte de abonos pendientes");
-			jMenuItemReporteabonosPendientes.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jMenuItemReporteAbonosPendientesActionPerformed(evt);
-				}
-			});
-		}
-		return jMenuItemReporteabonosPendientes;
-	}
-
-	private void jMenuItemReporteAbonosPendientesActionPerformed(ActionEvent evt) {
+	private void generarReporteAbonosPendientes() {
 
 		// configuracion de la fecha actual
 		// Creamos un objeto de la clase Calendar.
@@ -2152,20 +1940,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
-	private JMenuItem getJMenuItemReporteAbonosPagados() {
-		if (jMenuItemReporteAbonosPagados == null) {
-			jMenuItemReporteAbonosPagados = new JMenuItem();
-			jMenuItemReporteAbonosPagados.setText("Reporte de abonos pagados");
-			jMenuItemReporteAbonosPagados.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jMenuItemReporteAbonosPagadosActionPerformed(evt);
-				}
-			});
-		}
-		return jMenuItemReporteAbonosPagados;
-	}
-
-	private void jMenuItemReporteAbonosPagadosActionPerformed(ActionEvent evt) {
+	private void generarReporteAbonosPagados() {
 
 		// configuracion de la fecha actual
 		// Creamos un objeto de la clase Calendar.
@@ -2188,14 +1963,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String strNombrePDF = "ReporteAbonosPagados.pdf";
 		String strTituloPDF = "Reporte de abonos pagados, generado el: " + diaS + "/" + mesS + "/" + anio + "  a las "
 				+ " " + horaS + ":" + minutoS + ":" + segundoS;
-		ReporteAbonosPagados ejemplo = new ReporteAbonosPagados(strTituloPDF, strNombrePDF);
+		ReporteAbonosPagados reporte = new ReporteAbonosPagados(strTituloPDF, strNombrePDF);
 		// Preguntar al usuario si desea abrir el documento PDF
 		int respuesta = JOptionPane.showConfirmDialog(null,
 				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
 				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		// Si la respuesta es SI, abrirlo
 		if (respuesta == JOptionPane.YES_OPTION)
-			ejemplo.abrirPDF();
+			reporte.abrirPDF();
 
 	}
 
@@ -2238,16 +2013,22 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
+	private void jButtonGenerarBackupActionPerformed(ActionEvent evt) {
+		generarBackup();
+
+	}
+
 	private void jButtonGenerarPDFActionPerformed(ActionEvent evt) {
 
 		String listaSeleccionada = (String) jComboSeleccionListado.getSelectedItem();
 
 		switch (listaSeleccionada) {
 		case seleccioneUno:
-
+			JOptionPane.showMessageDialog(this, "Debe seleccionar una lista", "Información",
+					JOptionPane.INFORMATION_MESSAGE);
 			break;
 		case listaClientes:
-
+			generarReporteClientes();
 			break;
 		case listaClientesAlfa:
 
@@ -2259,7 +2040,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 			break;
 		case listaPrestamos:
-
+			generarReportePrestamos();
 			break;
 		case listaPrestamosPendientes:
 
@@ -2271,13 +2052,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 			break;
 		case listaAbonos:
-
+			generarReporteAbonos();
 			break;
 		case listaAbonosPendientes:
-
+			generarReporteAbonosPendientes();
 			break;
 		case listaAbonosPagados:
-
+			generarReporteAbonosPagados();
 			break;
 		}
 
