@@ -100,6 +100,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelTotalAbonosPendientes;
 	private JLabel jLabelTotalAbonosCobrados;
 	private JLabel jLabelTotalClientesactivos;
+	private JLabel jLabelCerosPrestamo;
+	private JLabel jLabelPesosPrestamo;
+	private JLabel jLabelPesosAbono;
+	private JLabel jLabelCerosAbono;
 	private JButton jButtonBackup;
 	private JButton jButtonGenerarPDF;
 	private JComboBox<String> jComboSeleccionListado;
@@ -135,8 +139,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelMonto;
 	private JTable jTableAbonosRecibidos;
 	private JScrollPane jScrollAbonosRecibidos;
-	@SuppressWarnings("rawtypes")
-	private JComboBox jComboFechasCobro;
+	private JComboBox<String> jComboFechasCobro;
 	public JLabel jLabelCodigo;
 	public JLabel jLabelNombreCliente;
 	private JButton jButtonClienteExiste;
@@ -271,8 +274,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jLabelMontoPrestamo = new JLabel();
 							jPanelEntradasPrestamo.add(jLabelMontoPrestamo, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
 									GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-							jLabelMontoPrestamo.setText("Monto préstamo:  $");
-							jLabelMontoPrestamo.setBounds(17, 30, 178, 23);
+							jLabelMontoPrestamo.setText("Monto préstamo:");
+							jLabelMontoPrestamo.setBounds(17, 30, 145, 23);
 							jLabelMontoPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
@@ -281,7 +284,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jTextMonto = new JFormattedTextField();
 							jPanelEntradasPrestamo.add(jTextMonto, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
 									GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-							jTextMonto.setBounds(162, 30, 178, 23);
+							jTextMonto.setBounds(162, 30, 54, 23);
 							jTextMonto.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
@@ -495,6 +498,20 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jLabelEmpresaResult.setFont(new java.awt.Font("Arial", 0, 16));
 
 							}
+							{
+								jLabelCerosPrestamo = new JLabel();
+								jPanelEntradasPrestamo.add(jLabelCerosPrestamo);
+								jLabelCerosPrestamo.setText(".000");
+								jLabelCerosPrestamo.setBounds(216, 33, 55, 16);
+								jLabelCerosPrestamo.setFont(new java.awt.Font("Arial", 0, 18));
+							}
+							{
+								jLabelPesosPrestamo = new JLabel();
+								jPanelEntradasPrestamo.add(jLabelPesosPrestamo);
+								jLabelPesosPrestamo.setText("$");
+								jLabelPesosPrestamo.setBounds(149, 33, 19, 16);
+								jLabelPesosPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
+							}
 
 						}
 					}
@@ -525,8 +542,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						{
 							jTextField1 = new JTextField();
 							jPanelAgregarAbono.add(jTextField1);
-							jTextField1.setBounds(748, 78, 146, 23);
+							jTextField1.setBounds(730, 76, 80, 23);
 							jTextField1.setFont(new java.awt.Font("Arial", 0, 16));
+							jTextField1.setSize(54, 23);
 						}
 						{
 							jLabelFecha = new JLabel();
@@ -626,6 +644,20 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jPanelAgregarAbono.add(jTextFieldCodigoAbono);
 							jTextFieldCodigoAbono.setBounds(496, 78, 71, 23);
 
+						}
+						{
+							jLabelCerosAbono = new JLabel();
+							jPanelAgregarAbono.add(jLabelCerosAbono);
+							jLabelCerosAbono.setText(".000");
+							jLabelCerosAbono.setBounds(784, 79, 48, 16);
+							jLabelCerosAbono.setFont(new java.awt.Font("Arial", 0, 18));
+						}
+						{
+							jLabelPesosAbono = new JLabel();
+							jPanelAgregarAbono.add(jLabelPesosAbono);
+							jLabelPesosAbono.setText("$");
+							jLabelPesosAbono.setBounds(717, 79, 18, 16);
+							jLabelPesosAbono.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 					}
 					jTabPestanias.addTab("Clientes", jPanelClientes);
@@ -1137,7 +1169,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		limpiarCamposPrestamo();
 	}
 
-	public void limpiarCamposCliente() {
+	private void limpiarCamposCliente() {
 
 		jTextNombre.setText("");
 		jTextEmpresa.setText("");
@@ -1145,13 +1177,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
-	@SuppressWarnings("unchecked")
-	public void limpiarCamposPrestamo() {
+	private void limpiarCamposPrestamo() {
 
 		jTextMonto.setText("");
 		jTextTasaInteres.setText("");
-		@SuppressWarnings("rawtypes")
-		DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+		DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<String>();
 		modelo.addElement("Nada para mostrar");
 		jComboFechasCobro.setModel(modelo);
 		jTextNumeroCuotas.setText("");
@@ -1160,6 +1190,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		jLabelNombreCliente.setText("Nombre");
 		jLabelCodigo.setText("Código");
 		jLabelEmpresaResult.setText("Empresa");
+		calendarioPrestamos.setDate(null);
+
+	}
+
+	private void limpiarCamposAbono() {
+
+		jTextFieldCodigoAbono.setText("");
+		jTextField1.setText("");
+		calendarioAbonos.setDate(null);
 
 	}
 
@@ -1348,6 +1387,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				actualizaReportes();
 				JOptionPane.showMessageDialog(this, "Abono guardado correctamente", "Información",
 						JOptionPane.INFORMATION_MESSAGE);
+				limpiarCamposAbono();
 			}
 
 		} else {
@@ -1357,7 +1397,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	}
 
 	private void jButtonCancelarAbonoActionPerformed(ActionEvent e) {
-
+		limpiarCamposAbono();
 	}
 
 	// -----------------Tablas------------------------------------------------------
@@ -1674,6 +1714,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		Date fechaIngresada = calendarioPrestamosPorfecha.getDate();
 		if (fechaIngresada != null) {
 			actualizaPrestamosPorFecha();
+			calendarioPrestamosPorfecha.setDate(null);
 		} else {
 			JOptionPane.showMessageDialog(this, "Debe especificar una fecha para la búsqueda", "Alerta",
 					JOptionPane.WARNING_MESSAGE);
@@ -1686,6 +1727,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		Date fechaIngresada = calendarioAbonosPorFecha.getDate();
 		if (fechaIngresada != null) {
 			actualizaAbonosPorFecha();
+			calendarioAbonosPorFecha.setDate(null);
 		} else {
 			JOptionPane.showMessageDialog(this, "Debe especificar una fecha para la búsqueda", "Alerta",
 					JOptionPane.WARNING_MESSAGE);
@@ -1779,8 +1821,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String segundoS = concatenaCero(segundo);
 
 		String strNombrePDF = "ReporteClientesAlfa.pdf";
-		String strTituloPDF = "Reporte de clientes registrados ordenados alfabéticamente, generado el: " + diaS + "/" + mesS + "/" + anio
-				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+		String strTituloPDF = "Reporte de clientes registrados ordenados alfabéticamente, generado el: " + diaS + "/"
+				+ mesS + "/" + anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReporteClientesAlfa ejemplo = new ReporteClientesAlfa(strTituloPDF, strNombrePDF);
 		// Preguntar al usuario si desea abrir el documento PDF
 		int respuesta = JOptionPane.showConfirmDialog(null,
@@ -1843,8 +1885,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String segundoS = concatenaCero(segundo);
 
 		String strNombrePDF = "ReporteClientesNOActivos.pdf";
-		String strTituloPDF = "Reporte de clientes no activos registrados, generado el: " + diaS + "/" + mesS + "/" + anio
-				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+		String strTituloPDF = "Reporte de clientes no activos registrados, generado el: " + diaS + "/" + mesS + "/"
+				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReporteClientesNOActivos ejemplo = new ReporteClientesNOActivos(strTituloPDF, strNombrePDF);
 		// Preguntar al usuario si desea abrir el documento PDF
 		int respuesta = JOptionPane.showConfirmDialog(null,
@@ -1898,7 +1940,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			ejemplo.abrirPDF();
 
 	}
-	
+
 	private void generarReportePrestamosPendientes() {
 
 		// configuracion de la fecha actual
@@ -1920,8 +1962,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String segundoS = concatenaCero(segundo);
 
 		String strNombrePDF = "ReportePrestamosPendientes.pdf";
-		String strTituloPDF = "Reporte de préstamos pendientes registrados, generado el: " + diaS + "/" + mesS + "/" + anio
-				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+		String strTituloPDF = "Reporte de préstamos pendientes registrados, generado el: " + diaS + "/" + mesS + "/"
+				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReportePrestamosPendientes ejemplo = new ReportePrestamosPendientes(strTituloPDF, strNombrePDF);
 		// Preguntar al usuario si desea abrir el documento PDF
 		int respuesta = JOptionPane.showConfirmDialog(null,
@@ -1932,7 +1974,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			ejemplo.abrirPDF();
 
 	}
-	
+
 	private void generarReportePrestamosPagados() {
 
 		// configuracion de la fecha actual
@@ -1966,7 +2008,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			ejemplo.abrirPDF();
 
 	}
-	
+
 	private void generarReportePrestamosVencidos() {
 
 		// configuracion de la fecha actual
@@ -1988,8 +2030,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String segundoS = concatenaCero(segundo);
 
 		String strNombrePDF = "ReportePrestamosVencidos.pdf";
-		String strTituloPDF = "Reporte de préstamos vencidos registrados, generado el: " + diaS + "/" + mesS + "/" + anio
-				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+		String strTituloPDF = "Reporte de préstamos vencidos registrados, generado el: " + diaS + "/" + mesS + "/"
+				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReportePrestamosVencidos ejemplo = new ReportePrestamosVencidos(strTituloPDF, strNombrePDF);
 		// Preguntar al usuario si desea abrir el documento PDF
 		int respuesta = JOptionPane.showConfirmDialog(null,
