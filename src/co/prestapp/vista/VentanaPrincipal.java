@@ -188,6 +188,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JButton jButtonGuardarCliente;
 	private JTextField jTextNombre;
 	private JLabel jLabelEmpresa;
+	private JTable tablaResultados;
 	// Constantes para listados
 	private final String seleccioneUno = "Seleccione uno";
 	private final String listaClientes = "Listado de clientes registrados";
@@ -1164,13 +1165,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					{
 						// Panel inferior
 						jPanListaResultados = new JPanel();
+						BorderLayout jPanListaResultadosLayout = new BorderLayout();
+						jPanListaResultados.setLayout(jPanListaResultadosLayout);
 						jPaneListados.add(jPanListaResultados, BorderLayout.SOUTH);
 						jPanListaResultados.setPreferredSize(new java.awt.Dimension(909, 494));
 						jPanListaResultados.setBorder(BorderFactory.createTitledBorder("Resultados"));
 						{
 							// Componentes del panel inferior
 							jScrollPaneResultados = new JScrollPane();
-							jPanListaResultados.add(jScrollPaneResultados);
+							jPanListaResultados.add(jScrollPaneResultados, BorderLayout.CENTER);
 						}
 					}
 
@@ -2259,7 +2262,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 			break;
 		case listaPrestamosPendientes:
-			
+
 			break;
 		case listaPrestamosPagados:
 
@@ -2286,10 +2289,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 		switch (listaSeleccionada) {
 		case seleccioneUno:
-
+			tablaResultados = new JTable();
+			jScrollPaneResultados.setViewportView(tablaResultados);
 			break;
 		case listaClientes:
-
+			ClienteDAO miCliente = new ClienteDAO();
+			String informacionClientes[][] = miCliente.obtenerMatrizClientes();
+			String titulos[] = miCliente.getColumnas();
+			jTableClientes = new JTable(informacionClientes, titulos);
+			jScrollPaneClientes.setViewportView(jTableClientes);
+			jTableClientes.setFont(new java.awt.Font("Arial", 0, 16));
+			JTableHeader th = jTableClientes.getTableHeader();
+			th.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(jTableClientes);
 			break;
 		case listaClientesAlfa:
 
@@ -2301,7 +2313,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 			break;
 		case listaPrestamos:
-
+			PrestamoDAO miPrestamo = new PrestamoDAO();
+			miPrestamo.actualizaPagos();
+			String informacionPrestamos[][] = miPrestamo.obtenerMatrizPrestamos();
+			String titulos[] = miPrestamo.getColumnas();
+			jTablePrestamos = new JTable(informacionPrestamos, titulos);
+			jScrollReportes.setViewportView(jTablePrestamos);
+			jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 16));
+			JTableHeader th = jTablePrestamos.getTableHeader();
+			th.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(jTablePrestamos);
 			break;
 		case listaPrestamosPendientes:
 			System.out.println("Prestamos pendientes");
@@ -2313,13 +2334,39 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 			break;
 		case listaAbonos:
-
+			AbonoDAO miAbono = new AbonoDAO();
+			String informacionAbonos[][] = miAbono.obtenerMatrizAbonos();
+			String titulos[] = miAbono.getColumnas();
+			tablaResultados = new JTable(informacionAbonos, titulos);
+			jScrollPaneResultados.setViewportView(tablaResultados);
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			JTableHeader th = tablaResultados.getTableHeader();
+			th.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(tablaResultados);
 			break;
 		case listaAbonosPendientes:
 
+			AbonoDAO miAbono = new AbonoDAO();
+			String informacionAbonos[][] = miAbono.obtenerMatrizAbonosPendientes();
+			String titulos[] = miAbono.getColumnas();
+			jTableAbonosRecibidos = new JTable(informacionAbonos, titulos);
+			jScrollAbonosRecibidos.setViewportView(jTableAbonosRecibidos);
+			jTableAbonosRecibidos.setFont(new java.awt.Font("Arial", 0, 16));
+			JTableHeader th = jTableAbonosRecibidos.getTableHeader();
+			th.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(jTableAbonosRecibidos);
 			break;
 		case listaAbonosPagados:
 
+			AbonoDAO miAbono = new AbonoDAO();
+			String informacionAbonos[][] = miAbono.obtenerMatrizAbonosPagados();
+			String titulos[] = miAbono.getColumnas();
+			jTableAbonosRecibidos = new JTable(informacionAbonos, titulos);
+			jScrollAbonosRecibidos.setViewportView(jTableAbonosRecibidos);
+			jTableAbonosRecibidos.setFont(new java.awt.Font("Arial", 0, 16));
+			JTableHeader th = jTableAbonosRecibidos.getTableHeader();
+			th.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(jTableAbonosRecibidos);
 			break;
 		}
 
