@@ -2310,13 +2310,34 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			ajustaColumnasAContenido(tablaResultados);
 			break;
 		case listaClientesAlfa:
-
+			miCliente = new ClienteDAO();
+			String informacionClientesAlfa[][] = miCliente.obtenerMatrizClientesAlfa();
+			tablaResultados = new JTable(informacionClientesAlfa, titulosCliente);
+			jScrollPaneResultados.setViewportView(tablaResultados);
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			JTableHeader thClientesAlfa = tablaResultados.getTableHeader();
+			thClientesAlfa.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(tablaResultados);
 			break;
 		case listaClientesActivos:
-
+			miCliente = new ClienteDAO();
+			String informacionClientesActivos[][] = miCliente.obtenerMatrizClientesActivos();
+			tablaResultados = new JTable(informacionClientesActivos, titulosCliente);
+			jScrollPaneResultados.setViewportView(tablaResultados);
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			JTableHeader thClientesActivos = tablaResultados.getTableHeader();
+			thClientesActivos.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(tablaResultados);
 			break;
 		case listaClientesNoActivos:
-
+			miCliente = new ClienteDAO();
+			String informacionClientesNOActivos[][] = miCliente.obtenerMatrizClientesNOActivos();
+			tablaResultados = new JTable(informacionClientesNOActivos, titulosCliente);
+			jScrollPaneResultados.setViewportView(tablaResultados);
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			JTableHeader thClientesNOActivos = tablaResultados.getTableHeader();
+			thClientesNOActivos.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(tablaResultados);
 			break;
 		case listaPrestamos:
 			miPrestamo = new PrestamoDAO();
@@ -2330,13 +2351,26 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			ajustaColumnasAContenido(tablaResultados);
 			break;
 		case listaPrestamosPendientes:
-			
-			
-			
+			miPrestamo = new PrestamoDAO();
+			miPrestamo.actualizaPagos();
+			String informacionPrestamosPendientes[][] = miPrestamo.obtenerMatrizPrestamosPendientes();
+			tablaResultados = new JTable(informacionPrestamosPendientes, titulosPrestamo);
+			jScrollPaneResultados.setViewportView(tablaResultados);
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			JTableHeader thPrestamosPendientes = tablaResultados.getTableHeader();
+			thPrestamosPendientes.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(tablaResultados);
 			break;
 		case listaPrestamosPagados:
-
-			
+			miPrestamo = new PrestamoDAO();
+			miPrestamo.actualizaPagos();
+			String informacionPrestamosPagados[][] = miPrestamo.obtenerMatrizPrestamosPagados();
+			tablaResultados = new JTable(informacionPrestamosPagados, titulosPrestamo);
+			jScrollPaneResultados.setViewportView(tablaResultados);
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			JTableHeader thPrestamosPagados = tablaResultados.getTableHeader();
+			thPrestamosPagados.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(tablaResultados);
 			break;
 		case listaPrestamosVencidos:
 			miPrestamo = new PrestamoDAO();
