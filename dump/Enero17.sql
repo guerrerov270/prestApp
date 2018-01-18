@@ -39,8 +39,8 @@ CREATE TABLE `abono` (
   PRIMARY KEY (`idAbono`),
   UNIQUE KEY `codigoAbono_UNIQUE` (`codigoAbono`),
   KEY `fk_abono_prestamo` (`abonoPrestamo`),
-  CONSTRAINT `fk_abono_prestamo` FOREIGN KEY (`abonoPrestamo`) REFERENCES `prestamo` (`codigoPrestamo`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=latin1;
+  CONSTRAINT `fk_abono_prestamo` FOREIGN KEY (`abonoPrestamo`) REFERENCES `prestamo` (`codigoPrestamo`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,7 +49,7 @@ CREATE TABLE `abono` (
 
 LOCK TABLES `abono` WRITE;
 /*!40000 ALTER TABLE `abono` DISABLE KEYS */;
-INSERT INTO `abono` VALUES (1,'A001',60000,90000,'SI','2018-01-15','2018-01-03','P001','SI','PAGADO',1),(2,'A002',60000,40000,'NO','2018-01-29','2018-01-12','P001','SI','PAGADO',2),(3,'A003',60000,60000,'SI','2018-02-12','2018-01-06','P001','SI','PAGADO',3),(4,'A004',60000,50000,'NO','2018-02-26','2018-01-06','P001','SI','PAGADO',4),(5,'A005',75000,75000,'SI','2018-01-18','2018-01-06','P002','SI','PAGADO',1),(6,'A006',75000,75000,'SI','2018-02-01','2018-01-11','P002','SI','PAGADO',2),(7,'A007',75000,75000,'SI','2018-02-15','2018-01-06','P002','SI','PAGADO',3),(8,'A008',75000,75000,'SI','2018-03-01','2018-01-06','P002','SI','PAGADO',4),(9,'A009',75000,75000,'SI','2018-03-15','2018-01-06','P002','SI','PAGADO',5),(10,'A010',75000,75000,'SI','2018-03-29','2018-01-06','P002','SI','PAGADO',6),(11,'A011',75000,75000,'SI','2018-04-12','2018-01-06','P002','SI','PAGADO',7),(12,'A012',75000,75000,'SI','2018-04-26','2018-01-06','P002','SI','PAGADO',8),(13,'A013',75000,75000,'SI','2018-05-10','2018-01-06','P002','SI','PAGADO',9),(14,'A014',75000,75000,'SI','2018-05-24','2018-01-06','P002','SI','PAGADO',10),(15,'A015',90000,90000,'SI','2018-01-25','2018-01-06','P003','SI','PAGADO',1),(16,'A016',90000,90000,'SI','2018-02-08','2018-01-06','P003','SI','PAGADO',2),(17,'A017',90000,90000,'SI','2018-02-22','2018-01-06','P003','SI','PAGADO',3),(18,'A018',90000,90000,'SI','2018-03-08','2018-01-06','P003','SI','PAGADO',4),(19,'A019',75000,70000,'NO','2018-01-20','2018-01-19','P004','SI','PAGADO',1),(20,'A020',75000,76000,'SI','2018-02-03','2018-01-06','P004','SI','PAGADO',2),(21,'A021',75000,76000,'SI','2018-02-17','2018-01-06','P004','SI','PAGADO',3),(22,'A022',75000,76000,'SI','2018-03-03','2018-01-06','P004','SI','PAGADO',4),(23,'A023',75000,232000,'SI','2018-03-17','2018-01-11','P004','SI','PAGADO',5),(24,'A024',75000,70000,'NO','2018-03-31','2018-01-09','P004','SI','PAGADO',6),(25,'A025',75000,150000,'SI','2018-04-14','2018-01-12','P004','SI','PAGADO',7),(26,'A026',75000,0,'NO','2018-04-28','2018-01-12','P004','SI','PAGADO',8),(27,'A027',75000,0,'NO','2018-05-12',NULL,'P004','NO','PENDIENTE',9),(28,'A028',75000,0,'NO','2018-05-26',NULL,'P004','NO','PENDIENTE',10),(29,'A029',100000,1000000,'SI','2018-02-06','2018-01-06','P005','SI','PAGADO',1),(30,'A030',100000,0,'NO','2018-03-06',NULL,'P005','NO','PENDIENTE',2),(31,'A031',100000,0,'NO','2018-04-06',NULL,'P005','NO','PENDIENTE',3),(32,'A032',100000,0,'NO','2018-05-06',NULL,'P005','NO','PENDIENTE',4),(33,'A033',100000,0,'NO','2018-06-06',NULL,'P005','NO','PENDIENTE',5),(34,'A034',100000,0,'NO','2018-07-06',NULL,'P005','NO','PENDIENTE',6),(35,'A035',100000,0,'NO','2018-08-06',NULL,'P005','NO','PENDIENTE',7),(36,'A036',100000,0,'NO','2018-09-06',NULL,'P005','NO','PENDIENTE',8),(37,'A037',100000,0,'NO','2018-10-06',NULL,'P005','NO','PENDIENTE',9),(38,'A038',100000,0,'NO','2018-11-06',NULL,'P005','NO','PENDIENTE',10),(39,'A039',70000,200000,'SI','2018-02-06','2018-01-06','P006','SI','PAGADO',1),(40,'A040',70000,80000,'SI','2018-03-06','2018-01-06','P006','SI','PAGADO',2),(41,'A041',70000,0,'NO','2018-04-06',NULL,'P006','NO','PENDIENTE',3),(42,'A042',70000,0,'NO','2018-05-06',NULL,'P006','NO','PENDIENTE',4),(43,'A043',27500,110000,'SI','2018-01-13','2018-01-06','P007','SI','PAGADO',1),(44,'A044',27500,0,'NO','2018-01-20',NULL,'P007','NO','PENDIENTE',2),(45,'A045',27500,0,'NO','2018-01-27',NULL,'P007','NO','PENDIENTE',3),(46,'A046',27500,0,'NO','2018-02-03',NULL,'P007','NO','PENDIENTE',4),(47,'A047',12000,120000,'SI','2018-01-13','2018-01-06','P008','SI','PAGADO',1),(48,'A048',12000,0,'NO','2018-01-20',NULL,'P008','NO','PENDIENTE',2),(49,'A049',12000,0,'NO','2018-01-27',NULL,'P008','NO','PENDIENTE',3),(50,'A050',12000,0,'NO','2018-02-03',NULL,'P008','NO','PENDIENTE',4),(51,'A051',12000,0,'NO','2018-02-10',NULL,'P008','NO','PENDIENTE',5),(52,'A052',12000,0,'NO','2018-02-17',NULL,'P008','NO','PENDIENTE',6),(53,'A053',12000,0,'NO','2018-02-24',NULL,'P008','NO','PENDIENTE',7),(54,'A054',12000,0,'NO','2018-03-03',NULL,'P008','NO','PENDIENTE',8),(55,'A055',12000,0,'NO','2018-03-10',NULL,'P008','NO','PENDIENTE',9),(56,'A056',12000,0,'NO','2018-03-17',NULL,'P008','NO','PENDIENTE',10),(67,'A057',150000,600000,'SI','2018-01-20','2018-01-12','P009','SI','PAGADO',1),(68,'A068',150000,0,'NO','2018-02-03',NULL,'P009','NO','PENDIENTE',2),(69,'A069',150000,0,'NO','2018-02-17',NULL,'P009','NO','PENDIENTE',3),(70,'A070',150000,0,'NO','2018-03-03',NULL,'P009','NO','PENDIENTE',4),(71,'A071',150000,600000,'SI','2018-01-22','2018-01-08','P010','SI','PAGADO',1),(72,'A072',150000,0,'NO','2018-02-05',NULL,'P010','NO','PENDIENTE',2),(73,'A073',150000,0,'NO','2018-02-19',NULL,'P010','NO','PENDIENTE',3),(74,'A074',150000,0,'NO','2018-03-05',NULL,'P010','NO','PENDIENTE',4),(75,'A075',175000,0,'NO','2018-02-08',NULL,'P011','NO','PENDIENTE',1),(76,'A076',175000,0,'NO','2018-03-08',NULL,'P011','NO','PENDIENTE',2),(77,'A077',175000,600000,'SI','2018-04-08','2018-01-12','P011','SI','PAGADO',3),(78,'A078',175000,100000,'NO','2018-05-08','2018-01-03','P011','SI','PAGADO',4),(79,'A079',20000,0,'NO','2017-02-02',NULL,'P012','NO','PENDIENTE',1),(80,'A080',20000,0,'NO','2017-03-02',NULL,'P012','NO','PENDIENTE',2),(81,'A081',20000,0,'NO','2017-04-02',NULL,'P012','NO','PENDIENTE',3),(82,'A082',20000,0,'NO','2017-05-02',NULL,'P012','NO','PENDIENTE',4),(83,'A083',20000,0,'NO','2017-06-02',NULL,'P012','NO','PENDIENTE',5),(84,'A084',20000,0,'NO','2017-07-02',NULL,'P012','NO','PENDIENTE',6),(85,'A085',20000,0,'NO','2017-08-02',NULL,'P012','NO','PENDIENTE',7),(86,'A086',20000,0,'NO','2017-09-02',NULL,'P012','NO','PENDIENTE',8),(87,'A087',20000,200000,'SI','2017-10-02','2018-01-12','P012','NO','PAGADO',9),(88,'A088',20000,0,'NO','2017-11-02',NULL,'P012','NO','PENDIENTE',10),(89,'A089',150000,600000,'SI','2018-01-17','2018-01-12','P013','SI','PAGADO',1),(90,'A090',150000,0,'NO','2018-01-31','2018-01-12','P013','SI','PAGADO',2),(91,'A091',150000,0,'NO','2018-02-14',NULL,'P013','NO','PENDIENTE',3),(92,'A092',150000,0,'NO','2018-02-28',NULL,'P013','NO','PENDIENTE',4);
+INSERT INTO `abono` VALUES (1,'A001',60000,90000,'SI','2018-01-15','2018-01-03','P001','SI','PAGADO',1),(2,'A002',60000,40000,'NO','2018-01-29','2018-01-12','P001','SI','PAGADO',2),(3,'A003',60000,60000,'SI','2018-02-12','2018-01-06','P001','SI','PAGADO',3),(4,'A004',60000,50000,'NO','2018-02-26','2018-01-06','P001','SI','PAGADO',4),(5,'A005',75000,75000,'SI','2018-01-18','2018-01-06','P002','SI','PAGADO',1),(6,'A006',75000,75000,'SI','2018-02-01','2018-01-11','P002','SI','PAGADO',2),(7,'A007',75000,75000,'SI','2018-02-15','2018-01-06','P002','SI','PAGADO',3),(8,'A008',75000,75000,'SI','2018-03-01','2018-01-06','P002','SI','PAGADO',4),(9,'A009',75000,75000,'SI','2018-03-15','2018-01-06','P002','SI','PAGADO',5),(10,'A010',75000,75000,'SI','2018-03-29','2018-01-06','P002','SI','PAGADO',6),(11,'A011',75000,75000,'SI','2018-04-12','2018-01-06','P002','SI','PAGADO',7),(12,'A012',75000,75000,'SI','2018-04-26','2018-01-06','P002','SI','PAGADO',8),(13,'A013',75000,75000,'SI','2018-05-10','2018-01-06','P002','SI','PAGADO',9),(14,'A014',75000,75000,'SI','2018-05-24','2018-01-06','P002','SI','PAGADO',10),(15,'A015',90000,90000,'SI','2018-01-25','2018-01-06','P003','SI','PAGADO',1),(16,'A016',90000,90000,'SI','2018-02-08','2018-01-06','P003','SI','PAGADO',2),(17,'A017',90000,90000,'SI','2018-02-22','2018-01-06','P003','SI','PAGADO',3),(18,'A018',90000,90000,'SI','2018-03-08','2018-01-06','P003','SI','PAGADO',4),(19,'A019',75000,70000,'NO','2018-01-20','2018-01-19','P004','SI','PAGADO',1),(20,'A020',75000,76000,'SI','2018-02-03','2018-01-06','P004','SI','PAGADO',2),(21,'A021',75000,76000,'SI','2018-02-17','2018-01-06','P004','SI','PAGADO',3),(22,'A022',75000,76000,'SI','2018-03-03','2018-01-06','P004','SI','PAGADO',4),(23,'A023',75000,232000,'SI','2018-03-17','2018-01-11','P004','SI','PAGADO',5),(24,'A024',75000,70000,'NO','2018-03-31','2018-01-09','P004','SI','PAGADO',6),(25,'A025',75000,150000,'SI','2018-04-14','2018-01-12','P004','SI','PAGADO',7),(26,'A026',75000,0,'NO','2018-04-28','2018-01-12','P004','SI','PAGADO',8),(27,'A027',75000,0,'NO','2018-05-12',NULL,'P004','NO','PENDIENTE',9),(28,'A028',75000,0,'NO','2018-05-26',NULL,'P004','NO','PENDIENTE',10),(29,'A029',100000,1000000,'SI','2018-02-06','2018-01-06','P005','SI','PAGADO',1),(30,'A030',100000,0,'NO','2018-03-06',NULL,'P005','NO','PENDIENTE',2),(31,'A031',100000,0,'NO','2018-04-06',NULL,'P005','NO','PENDIENTE',3),(32,'A032',100000,0,'NO','2018-05-06',NULL,'P005','NO','PENDIENTE',4),(33,'A033',100000,0,'NO','2018-06-06',NULL,'P005','NO','PENDIENTE',5),(34,'A034',100000,0,'NO','2018-07-06',NULL,'P005','NO','PENDIENTE',6),(35,'A035',100000,0,'NO','2018-08-06',NULL,'P005','NO','PENDIENTE',7),(36,'A036',100000,0,'NO','2018-09-06',NULL,'P005','NO','PENDIENTE',8),(37,'A037',100000,0,'NO','2018-10-06',NULL,'P005','NO','PENDIENTE',9),(38,'A038',100000,0,'NO','2018-11-06',NULL,'P005','NO','PENDIENTE',10),(39,'A039',70000,200000,'SI','2018-02-06','2018-01-06','P006','SI','PAGADO',1),(40,'A040',70000,80000,'SI','2018-03-06','2018-01-06','P006','SI','PAGADO',2),(41,'A041',70000,0,'NO','2018-04-06',NULL,'P006','NO','PENDIENTE',3),(42,'A042',70000,0,'NO','2018-05-06',NULL,'P006','NO','PENDIENTE',4),(43,'A043',27500,110000,'SI','2018-01-13','2018-01-06','P007','SI','PAGADO',1),(44,'A044',27500,0,'NO','2018-01-20',NULL,'P007','NO','PENDIENTE',2),(45,'A045',27500,0,'NO','2018-01-27',NULL,'P007','NO','PENDIENTE',3),(46,'A046',27500,0,'NO','2018-02-03',NULL,'P007','NO','PENDIENTE',4),(47,'A047',12000,120000,'SI','2018-01-13','2018-01-06','P008','SI','PAGADO',1),(48,'A048',12000,0,'NO','2018-01-20',NULL,'P008','NO','PENDIENTE',2),(49,'A049',12000,0,'NO','2018-01-27',NULL,'P008','NO','PENDIENTE',3),(50,'A050',12000,0,'NO','2018-02-03',NULL,'P008','NO','PENDIENTE',4),(51,'A051',12000,0,'NO','2018-02-10',NULL,'P008','NO','PENDIENTE',5),(52,'A052',12000,0,'NO','2018-02-17',NULL,'P008','NO','PENDIENTE',6),(53,'A053',12000,0,'NO','2018-02-24',NULL,'P008','NO','PENDIENTE',7),(54,'A054',12000,0,'NO','2018-03-03',NULL,'P008','NO','PENDIENTE',8),(55,'A055',12000,0,'NO','2018-03-10',NULL,'P008','NO','PENDIENTE',9),(56,'A056',12000,0,'NO','2018-03-17',NULL,'P008','NO','PENDIENTE',10),(67,'A057',150000,600000,'SI','2018-01-20','2018-01-12','P009','SI','PAGADO',1),(68,'A068',150000,0,'NO','2018-02-03',NULL,'P009','NO','PENDIENTE',2),(69,'A069',150000,0,'NO','2018-02-17',NULL,'P009','NO','PENDIENTE',3),(70,'A070',150000,0,'NO','2018-03-03',NULL,'P009','NO','PENDIENTE',4),(71,'A071',150000,600000,'SI','2018-01-22','2018-01-08','P010','SI','PAGADO',1),(72,'A072',150000,0,'NO','2018-02-05',NULL,'P010','NO','PENDIENTE',2),(73,'A073',150000,0,'NO','2018-02-19',NULL,'P010','NO','PENDIENTE',3),(74,'A074',150000,0,'NO','2018-03-05',NULL,'P010','NO','PENDIENTE',4),(75,'A075',175000,0,'NO','2018-02-08',NULL,'P011','NO','PENDIENTE',1),(76,'A076',175000,0,'NO','2018-03-08',NULL,'P011','NO','PENDIENTE',2),(77,'A077',175000,600000,'SI','2018-04-08','2018-01-12','P011','SI','PAGADO',3),(78,'A078',175000,100000,'NO','2018-05-08','2018-01-03','P011','SI','PAGADO',4),(79,'A079',20000,0,'NO','2017-02-02',NULL,'P012','NO','PENDIENTE',1),(80,'A080',20000,0,'NO','2017-03-02',NULL,'P012','NO','PENDIENTE',2),(81,'A081',20000,0,'NO','2017-04-02',NULL,'P012','NO','PENDIENTE',3),(82,'A082',20000,0,'NO','2017-05-02',NULL,'P012','NO','PENDIENTE',4),(83,'A083',20000,0,'NO','2017-06-02',NULL,'P012','NO','PENDIENTE',5),(84,'A084',20000,0,'NO','2017-07-02',NULL,'P012','NO','PENDIENTE',6),(85,'A085',20000,0,'NO','2017-08-02',NULL,'P012','NO','PENDIENTE',7),(86,'A086',20000,0,'NO','2017-09-02',NULL,'P012','NO','PENDIENTE',8),(87,'A087',20000,200000,'SI','2017-10-02','2018-01-12','P012','NO','PAGADO',9),(88,'A088',20000,0,'NO','2017-11-02',NULL,'P012','NO','PENDIENTE',10);
 /*!40000 ALTER TABLE `abono` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -105,8 +105,8 @@ CREATE TABLE `prestamo` (
   PRIMARY KEY (`idPrestamo`),
   UNIQUE KEY `codigoPrestamo_UNIQUE` (`codigoPrestamo`),
   KEY `fk_prestamo_cliente` (`codigoClienteFK`),
-  CONSTRAINT `fk_prestamo_cliente` FOREIGN KEY (`codigoClienteFK`) REFERENCES `cliente` (`codigoCliente`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+  CONSTRAINT `fk_prestamo_cliente` FOREIGN KEY (`codigoClienteFK`) REFERENCES `cliente` (`codigoCliente`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -115,7 +115,7 @@ CREATE TABLE `prestamo` (
 
 LOCK TABLES `prestamo` WRITE;
 /*!40000 ALTER TABLE `prestamo` DISABLE KEYS */;
-INSERT INTO `prestamo` VALUES (1,'P001',200000,10,4,240000,240000,'2018-01-01','2018-02-26','QUINCENAL','c001','PAGADO'),(2,'P002',500000,10,10,750000,750000,'2018-01-04','2018-05-24','QUINCENAL','c002','PAGADO'),(3,'P003',300000,10,4,360000,360000,'2018-01-11','2018-03-08','QUINCENAL','c002','PAGADO'),(4,'P004',500000,10,10,750000,750000,'2018-01-06','2018-05-26','QUINCENAL','c022','PAGADO'),(5,'P005',500000,10,10,1000000,1000000,'2018-01-06','2018-11-06','MENSUAL','C001','PAGADO'),(6,'P006',200000,10,4,280000,280000,'2018-01-06','2018-05-06','MENSUAL','c001','PAGADO'),(7,'P007',100000,10,4,110000,110000,'2018-01-06','2018-02-03','SEMANAL','c001','PAGADO'),(8,'P008',100000,10,10,120000,120000,'2018-01-06','2018-03-17','SEMANAL','c001','PAGADO'),(9,'P009',500000,10,4,600000,600000,'2018-01-06','2018-03-03','QUINCENAL','c001','PAGADO'),(10,'P010',500000,10,4,600000,600000,'2018-01-08','2018-03-05','QUINCENAL','c001','PAGADO'),(11,'P011',500000,10,4,700000,700000,'2018-01-08','2018-05-08','MENSUAL','c001','PAGADO'),(12,'P012',100000,10,10,200000,200000,'2017-01-02','2017-11-02','MENSUAL','c001','PAGADO'),(13,'P013',500000,10,4,600000,600000,'2018-01-03','2018-02-28','QUINCENAL','C027','PAGADO');
+INSERT INTO `prestamo` VALUES (1,'P001',200000,10,4,240000,240000,'2018-01-01','2018-02-26','QUINCENAL','c001','PAGADO'),(2,'P002',500000,10,10,750000,750000,'2018-01-04','2018-05-24','QUINCENAL','c002','PAGADO'),(3,'P003',300000,10,4,360000,360000,'2018-01-11','2018-03-08','QUINCENAL','c002','PAGADO'),(4,'P004',500000,10,10,750000,750000,'2018-01-06','2018-05-26','QUINCENAL','c022','PAGADO'),(5,'P005',500000,10,10,1000000,1000000,'2018-01-06','2018-11-06','MENSUAL','C001','PAGADO'),(6,'P006',200000,10,4,280000,280000,'2018-01-06','2018-05-06','MENSUAL','c001','PAGADO'),(7,'P007',100000,10,4,110000,110000,'2018-01-06','2018-02-03','SEMANAL','c001','PAGADO'),(8,'P008',100000,10,10,120000,120000,'2018-01-06','2018-03-17','SEMANAL','c001','PAGADO'),(9,'P009',500000,10,4,600000,600000,'2018-01-06','2018-03-03','QUINCENAL','c001','PAGADO'),(10,'P010',500000,10,4,600000,600000,'2018-01-08','2018-03-05','QUINCENAL','c001','PAGADO'),(11,'P011',500000,10,4,700000,700000,'2018-01-08','2018-05-08','MENSUAL','c001','PAGADO'),(12,'P012',100000,10,10,200000,200000,'2017-01-02','2017-11-02','MENSUAL','c001','PAGADO');
 /*!40000 ALTER TABLE `prestamo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -134,10 +134,10 @@ UNLOCK TABLES;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `agregar_abono`(codigoAbono VARCHAR(10), montoACobrar DECIMAL, montoPagado DECIMAL, completoAbono ENUM('SI','NO'),fechaACobrar DATE, abonoPrestamo VARCHAR(10),puntualAbono ENUM('SI','NO'),estadoAbono ENUM('PENDIENTE','PAGADO','ERROR'),numeroAbono INT(3))
-INSERT INTO `test`.`Abono` (`codigoAbono`,`montoACobrar`,`montoPagado`, `completoAbono`,`fechaACobrar`,`abonoPrestamo`,`puntualAbono`,`estadoAbono`,`numeroAbono`) VALUES (codigoAbono, montoACobrar, montoPagado, completoAbono,fechaACobrar,abonoPrestamo,puntualAbono,estadoAbono,numeroAbono) ;;
+INSERT INTO `test`.`abono` (`codigoAbono`,`montoACobrar`,`montoPagado`, `completoAbono`,`fechaACobrar`,`abonoPrestamo`,`puntualAbono`,`estadoAbono`,`numeroAbono`) VALUES (codigoAbono, montoACobrar, montoPagado, completoAbono,fechaACobrar,abonoPrestamo,puntualAbono,estadoAbono,numeroAbono) ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -151,10 +151,10 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `agregar_cliente`(codigoCliente VARCHAR(10),nombreCliente VARCHAR(45),empresaCliente VARCHAR(45),referenciaCliente VARCHAR(45))
-INSERT INTO `test`.`Cliente` (`codigoCliente`,`nombreCliente`, `empresaCliente`,`referenciaCliente`) VALUES (codigoCliente, nombreCliente, empresaCliente, referenciaCliente) ;;
+INSERT INTO `test`.`cliente` (`codigoCliente`,`nombreCliente`, `empresaCliente`,`referenciaCliente`) VALUES (codigoCliente, nombreCliente, empresaCliente, referenciaCliente) ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -168,10 +168,10 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `agregar_prestamo`(codigoPrestamo VARCHAR(10),montoPrestamo DECIMAL,tasaInteresPrestamo INT,numeroCuotasPrestamo INT,saldoPendientePrestamo DECIMAL, saldoPagadoPrestamo DECIMAL, fechaInicioFormateada DATE, fechaFinFormateada DATE, tipoPlazoPrestamo ENUM('MENSUAL','QUINCENAL','SEMANAL','OTRO'), codigoClienteFK VARCHAR(10), estadoPrestamo ENUM('PENDIENTE','PAGADO','REFINANCIADO'))
-INSERT INTO `test`.`Prestamo` (`codigoPrestamo`,`montoPrestamo`, `tasaInteresPrestamo`,`numeroCuotasPrestamo`,`saldoPendientePrestamo`,`saldoPagadoPrestamo`,`fechaInicioPrestamo`,`fechaFinPrestamo`,`tipoPlazoPrestamo`,`codigoClienteFK`, `estadoPrestamo`) VALUES (codigoPrestamo, montoPrestamo, tasaInteresPrestamo, numeroCuotasPrestamo,saldoPendientePrestamo, saldoPagadoPrestamo, fechaInicioFormateada, fechaFinFormateada, tipoPlazoPrestamo, codigoClienteFK, estadoPrestamo) ;;
+INSERT INTO `test`.`prestamo` (`codigoPrestamo`,`montoPrestamo`, `tasaInteresPrestamo`,`numeroCuotasPrestamo`,`saldoPendientePrestamo`,`saldoPagadoPrestamo`,`fechaInicioPrestamo`,`fechaFinPrestamo`,`tipoPlazoPrestamo`,`codigoClienteFK`, `estadoPrestamo`) VALUES (codigoPrestamo, montoPrestamo, tasaInteresPrestamo, numeroCuotasPrestamo,saldoPendientePrestamo, saldoPagadoPrestamo, fechaInicioFormateada, fechaFinFormateada, tipoPlazoPrestamo, codigoClienteFK, estadoPrestamo) ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -185,10 +185,10 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `buscar_abono`(codigoAbonoE VARCHAR(10))
-SELECT * FROM `test`.`Abono` WHERE codigoAbono=codigoAbonoE ;;
+SELECT * FROM `test`.`abono` WHERE codigoAbono=codigoAbonoE ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -202,10 +202,10 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `buscar_abono_prestamo`(abonoPrestamoE VARCHAR(10))
-SELECT * FROM `test`.`Abono` WHERE abonoPrestamo=abonoPrestamoE ;;
+SELECT * FROM `test`.`abono` WHERE abonoPrestamo=abonoPrestamoE ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -219,10 +219,10 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `buscar_cliente`(codigoClienteE VARCHAR(10))
-SELECT idCliente,codigoCliente,nombreCliente,empresaCliente,referenciaCliente FROM `test`.`Cliente` WHERE codigoCliente=codigoClienteE ;;
+SELECT idCliente,codigoCliente,nombreCliente,empresaCliente,referenciaCliente FROM `test`.`cliente` WHERE codigoCliente=codigoClienteE ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -240,7 +240,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `calcular_intereses_a_recaudar`(OUT interesesARecaudar FLOAT, codigoPrestamoE VARCHAR(10))
 BEGIN
-	SET interesesARecaudar=(SELECT SUM(saldoPagadoPrestamo-montoPrestamo) FROM test.Prestamo  WHERE codigoPrestamo=codigoPrestamoE && estadoPrestamo='PAGADO');
+	SET interesesARecaudar=(SELECT SUM(saldoPagadoPrestamo-montoPrestamo) FROM test.prestamo  WHERE codigoPrestamo=codigoPrestamoE && estadoPrestamo='PAGADO');
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -259,7 +259,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `calcular_intereses_recaudados`(OUT interesesRecaudados FLOAT, codigoPrestamoE VARCHAR(10))
 BEGIN
-	SET interesesRecaudados=(SELECT SUM(saldoPendientePrestamo-montoPrestamo) FROM test.Prestamo  WHERE codigoPrestamo=codigoPrestamoE && estadoPrestamo='PENDIENTE');
+	SET interesesRecaudados=(SELECT SUM(saldoPendientePrestamo-montoPrestamo) FROM test.prestamo  WHERE codigoPrestamo=codigoPrestamoE && estadoPrestamo='PENDIENTE');
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -278,7 +278,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `calcular_total_prestado`(OUT totalprestado FLOAT, codigoprestamoE VARCHAR(10))
 BEGIN
-	SET totalprestado=(SELECT SUM(montoPrestamo) FROM test.Prestamo  WHERE codigoprestamo=codigoprestamoE);
+	SET totalprestado=(SELECT SUM(montoPrestamo) FROM test.prestamo  WHERE codigoprestamo=codigoprestamoE);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -297,7 +297,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `calcular_total_recaudado`(OUT totalRecaudado FLOAT, codigoPrestamoE VARCHAR(10))
 BEGIN
-	SET totalRecaudado=(SELECT SUM(saldoPagadoprestamo) FROM test.Prestamo  WHERE codigoPrestamo=codigoPrestamoE);
+	SET totalRecaudado=(SELECT SUM(saldoPagadoprestamo) FROM test.prestamo  WHERE codigoPrestamo=codigoPrestamoE);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -316,7 +316,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `calcular_total_recaudo_pendiente`(OUT totalRecaudoPendiente FLOAT, codigoPrestamoE VARCHAR(10))
 BEGIN
-	SET totalRecaudoPendiente=(SELECT SUM(saldoPendientePrestamo) FROM test.Prestamo  WHERE codigoPrestamo=codigoPrestamoE && estadoPrestamo='PENDIENTE');
+	SET totalRecaudoPendiente=(SELECT SUM(saldoPendientePrestamo) FROM test.prestamo  WHERE codigoPrestamo=codigoPrestamoE && estadoPrestamo='PENDIENTE');
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -335,7 +335,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `contar_abonos_cobrados`(OUT totalCobrados INT)
 BEGIN
-	SET totalCobrados=(SELECT COUNT(*) FROM Abono WHERE estadoabono='PAGADO');
+	SET totalCobrados=(SELECT COUNT(*) FROM abono WHERE estadoabono='PAGADO');
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -354,7 +354,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `contar_abonos_pendientes`(OUT totalPendientes INT)
 BEGIN
-	SET totalPendientes=(SELECT COUNT(*) FROM Abono WHERE estadoabono='PENDIENTE');
+	SET totalPendientes=(SELECT COUNT(*) FROM abono WHERE estadoabono='PENDIENTE');
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -373,7 +373,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `contar_clientes_activos`(OUT total_activos INT)
 BEGIN
-    SET total_activos=(SELECT COUNT(*) FROM Cliente WHERE estadoCliente='ACTIVO');
+    SET total_activos=(SELECT COUNT(*) FROM cliente WHERE estadoCliente='ACTIVO');
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -392,7 +392,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `contar_clientes_registrados`(OUT total_registrados INT)
 BEGIN
-	SET total_registrados=(SELECT COUNT(*) FROM Cliente);
+	SET total_registrados=(SELECT COUNT(*) FROM cliente);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -411,7 +411,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `contar_prestamos_activos`(OUT totalActivos INT)
 BEGIN
-	SET totalActivos=(SELECT COUNT(*) FROM Prestamo WHERE estadoPrestamo='PENDIENTE');
+	SET totalActivos=(SELECT COUNT(*) FROM prestamo WHERE estadoPrestamo='PENDIENTE');
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -430,7 +430,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `contar_prestamos_finalizados`(OUT totalFinalizados INT)
 BEGIN
-	SET totalFinalizados=(SELECT COUNT(*) FROM Prestamo WHERE estadoPrestamo='PAGADO');
+	SET totalFinalizados=(SELECT COUNT(*) FROM prestamo WHERE estadoPrestamo='PAGADO');
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -449,7 +449,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `contar_prestamos_vencidos`(OUT totalVencidos INT)
 BEGIN
-	SET totalVencidos=(SELECT COUNT(*) FROM Prestamo WHERE estadoPrestamo='VENCIDO');
+	SET totalVencidos=(SELECT COUNT(*) FROM prestamo WHERE estadoPrestamo='VENCIDO');
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -483,14 +483,14 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `generar_codigo_abono`(OUT codigo_secundario VARCHAR(4))
 BEGIN   
      DECLARE contador INT;
   DECLARE cantidadAbonos INT;
 	BEGIN
-    SET cantidadAbonos=(SELECT COUNT(*) FROM Abono);
+    SET cantidadAbonos=(SELECT COUNT(*) FROM abono);
     IF(cantidadAbonos=0) THEN
 		SET contador=1;
         IF(contador<10)THEN
@@ -503,7 +503,7 @@ BEGIN
             END IF;
         END IF;
     END IF;
-    SET contador= (SELECT MAX(idAbono)+1 FROM Abono);
+    SET contador= (SELECT MAX(idAbono)+1 FROM abono);
     IF(contador<10)THEN
             SET codigo_secundario= CONCAT('A00',contador);
             ELSE IF(contador<100) THEN
@@ -528,14 +528,14 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `generar_codigo_cliente`(OUT codigo_secundario VARCHAR(4))
 BEGIN  
   DECLARE contador INT;
   DECLARE cantidadClientes INT;
 	BEGIN
-    SET cantidadClientes=(SELECT COUNT(*) FROM Cliente);
+    SET cantidadClientes=(SELECT COUNT(*) FROM cliente);
     IF(cantidadClientes=0) THEN
 		SET contador=1;
         IF(contador<10)THEN
@@ -548,7 +548,7 @@ BEGIN
             END IF;
         END IF;
     END IF;
-    SET contador= (SELECT MAX(idCliente)+1 FROM Cliente);
+    SET contador= (SELECT MAX(idCliente)+1 FROM cliente);
     IF(contador<10)THEN
             SET codigo_secundario= CONCAT('C00',contador);
             ELSE IF(contador<100) THEN
@@ -573,14 +573,14 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `generar_codigo_prestamo`(OUT codigo_secundario VARCHAR(4))
 BEGIN   
      DECLARE contador INT;
   DECLARE cantidadPrestamos INT;
 	BEGIN
-    SET cantidadPrestamos=(SELECT COUNT(*) FROM Prestamo);
+    SET cantidadPrestamos=(SELECT COUNT(*) FROM prestamo);
     IF(cantidadPrestamos=0) THEN
 		SET contador=1;
         IF(contador<10)THEN
@@ -593,7 +593,7 @@ BEGIN
             END IF;
         END IF;
     END IF;
-    SET contador= (SELECT MAX(idPrestamo)+1 FROM Prestamo);
+    SET contador= (SELECT MAX(idPrestamo)+1 FROM prestamo);
     IF(contador<10)THEN
             SET codigo_secundario= CONCAT('P00',contador);
             ELSE IF(contador<100) THEN
@@ -618,10 +618,10 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `listar_abonos`()
-SELECT * FROM Abono ;;
+SELECT * FROM abono ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -638,7 +638,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `listar_abonos_pagados`()
-SELECT * FROM Abono WHERE estadoAbono='PAGADO' ;;
+SELECT * FROM abono WHERE estadoAbono='PAGADO' ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -656,7 +656,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `listar_abonos_pagados_por_fecha`(fechapagoE DATE)
 BEGIN
-	SELECT * FROM Abono WHERE fechaPago=fechaPagoE ORDER BY fechaPago ASC;
+	SELECT * FROM abono WHERE fechaPago=fechaPagoE ORDER BY fechaPago ASC;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -674,7 +674,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `listar_abonos_pendientes`()
-SELECT * FROM Abono WHERE estadoAbono='PENDIENTE' ;;
+SELECT * FROM abono WHERE estadoAbono='PENDIENTE' ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -691,7 +691,26 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `listar_clientes`()
-SELECT * FROM Cliente ;;
+SELECT * FROM cliente ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `listar_clientes_activos` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `listar_clientes_activos`()
+BEGIN
+	SELECT * FROM cliente WHERE estadoCliente='ACTIVO';
+END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -709,7 +728,26 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `listar_clientes_alfa`()
 BEGIN
-	SELECT * FROM Cliente ORDER BY nombreCliente ASC;
+	SELECT * FROM cliente ORDER BY nombreCliente ASC;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `listar_clientes_no_activos` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `listar_clientes_no_activos`()
+BEGIN
+	SELECT * FROM cliente WHERE estadoCliente='NO_ACTIVO';
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -727,7 +765,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `listar_prestamos`()
-SELECT * FROM Prestamo ;;
+SELECT * FROM prestamo ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -741,10 +779,48 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `listar_prestamos_actualizados`()
-SELECT * FROM Prestamo ;;
+SELECT * FROM prestamo ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `listar_prestamos_pagados` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `listar_prestamos_pagados`()
+BEGIN
+	SELECT * FROM prestamo WHERE estadoPrestamo='PAGADO';
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `listar_prestamos_pendientes` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `listar_prestamos_pendientes`()
+BEGIN
+	SELECT * FROM prestamo WHERE estadoPrestamo='PENDIENTE';
+END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -762,7 +838,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `listar_prestamos_por_fecha`(fechaInicioPrestamoE DATE)
 BEGIN
-	SELECT * FROM Prestamo WHERE fechaInicioPrestamo=fechaInicioPrestamoE ORDER BY fechaInicioPrestamo ASC;
+	SELECT * FROM prestamo WHERE fechaInicioPrestamo=fechaInicioPrestamoE ORDER BY fechaInicioPrestamo ASC;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -780,7 +856,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `listar_prestamos_vencidos`()
-SELECT * FROM Prestamo WHERE estadoPrestamo='VENCIDO' ORDER BY fechaInicioPrestamo ASC ;;
+SELECT * FROM prestamo WHERE estadoPrestamo='VENCIDO' ORDER BY fechaInicioPrestamo ASC ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -794,11 +870,11 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `pagar_abono`(codigoAbonoE VARCHAR(10), fechaPagoE DATE, montoPagadoE DECIMAL, completoAbonoE ENUM('SI','NO'), puntualAbonoE ENUM('SI','NO'))
 BEGIN
-UPDATE `test`.`Abono` SET fechaPago=fechaPagoE, montoPagado=montoPagadoE, estadoAbono='PAGADO', completoAbono=completoAbonoE, puntualAbono=puntualAbonoE WHERE codigoAbono=codigoAbonoE;
+UPDATE `test`.`abono` SET fechaPago=fechaPagoE, montoPagado=montoPagadoE, estadoAbono='PAGADO', completoAbono=completoAbonoE, puntualAbono=puntualAbonoE WHERE codigoAbono=codigoAbonoE;
 
   end ;;
 DELIMITER ;
@@ -814,14 +890,14 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sumar_pagos_abono`(abonoPrestamoE VARCHAR(10))
 BEGIN   
      DECLARE total DECIMAL;
 	BEGIN
-    SET total=(SELECT SUM(montoPagado) FROM test.Abono  WHERE abonoPrestamo=abonoPrestamoE);
-    UPDATE `test`.`Prestamo` SET saldoPagadoPrestamo=total WHERE codigoPrestamo=abonoPrestamoE;
+    SET total=(SELECT SUM(montoPagado) FROM test.abono  WHERE abonoPrestamo=abonoPrestamoE);
+    UPDATE `test`.`prestamo` SET saldoPagadoPrestamo=total WHERE codigoPrestamo=abonoPrestamoE;
     END;
   end ;;
 DELIMITER ;
@@ -860,19 +936,19 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `verificar_prestamo_pagado`(abonoPrestamoE VARCHAR(10))
 BEGIN   
      DECLARE totalPagado DECIMAL;
      DECLARE totalPendiente DECIMAL;
 	BEGIN
-    SET totalPagado=(SELECT SUM(montoPagado) FROM test.Abono  WHERE abonoPrestamo=abonoPrestamoE);
-    SET totalPendiente=(SELECT saldoPendientePrestamo FROM `test`.`Prestamo` WHERE codigoPrestamo=abonoPrestamoE);
+    SET totalPagado=(SELECT SUM(montoPagado) FROM test.abono  WHERE abonoPrestamo=abonoPrestamoE);
+    SET totalPendiente=(SELECT saldoPendientePrestamo FROM `test`.`prestamo` WHERE codigoPrestamo=abonoPrestamoE);
 		IF(totalPagado>=totalPendiente) THEN 
-        UPDATE `test`.`Prestamo` SET estadoPrestamo='PAGADO' WHERE codigoPrestamo=abonoPrestamoE;
+        UPDATE `test`.`prestamo` SET estadoPrestamo='PAGADO' WHERE codigoPrestamo=abonoPrestamoE;
 		ELSE IF(totalPendiente>totalPagado) THEN
-        UPDATE `test`.`Prestamo` SET estadoPrestamo='PENDIENTE' WHERE codigoPrestamo=abonoPrestamoE;
+        UPDATE `test`.`prestamo` SET estadoPrestamo='PENDIENTE' WHERE codigoPrestamo=abonoPrestamoE;
         END IF;
         END IF;
     END;
@@ -899,12 +975,12 @@ begin
 	DECLARE estadoActual VARCHAR(10);
      begin
    SET fechaActual=(SELECT CURRENT_timestamp());
-    SET fechaFinal=(SELECT fechaFinprestamo FROM `test`.`Prestamo` WHERE codigoPrestamo=codigoPrestamoE);
-    SET estadoActual=(SELECT estadoPrestamo FROM `test`.`Prestamo` WHERE codigoPrestamo=codigoPrestamoE);
+    SET fechaFinal=(SELECT fechaFinprestamo FROM `test`.`prestamo` WHERE codigoPrestamo=codigoPrestamoE);
+    SET estadoActual=(SELECT estadoPrestamo FROM `test`.`prestamo` WHERE codigoPrestamo=codigoPrestamoE);
 		IF(fechaActual>fechaFinal && estadoActual='PENDIENTE') THEN 
-        UPDATE `test`.`Prestamo` SET estadoPrestamo='VENCIDO' WHERE codigoPrestamo=codigoPrestamoE;
+        UPDATE `test`.`prestamo` SET estadoPrestamo='VENCIDO' WHERE codigoPrestamo=codigoPrestamoE;
 		ELSE IF(fechaActual>fechaFinal && estadoActual='PAGADO') THEN
-        UPDATE `test`.`Prestamo` SET estadoPrestamo='PAGADO' WHERE codigoPrestamo=codigoPrestamoE;
+        UPDATE `test`.`prestamo` SET estadoPrestamo='PAGADO' WHERE codigoPrestamo=codigoPrestamoE;
         END IF;
         END IF;
         end;
@@ -924,4 +1000,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-01-15 14:57:55
+-- Dump completed on 2018-01-18 14:18:06
