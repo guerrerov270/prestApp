@@ -27,9 +27,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -994,12 +991,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jLabelSeleccioneListado = new JLabel();
 							jPaneSeleccionListado.add(jLabelSeleccioneListado);
 							jLabelSeleccioneListado.setText("Seleccione listado:");
-							jLabelSeleccioneListado.setBounds(23, 18, 172, 25);
+							jLabelSeleccioneListado.setBounds(12, 19, 172, 25);
 							jLabelSeleccioneListado.setFont(new java.awt.Font("Arial", 0, 16));
 
 							jComboSeleccionListado = new JComboBox();
 							jPaneSeleccionListado.add(jComboSeleccionListado);
-							jComboSeleccionListado.setBounds(188, 20, 369, 23);
+							jComboSeleccionListado.setBounds(155, 20, 316, 23);
 							jComboSeleccionListado.setFont(new java.awt.Font("Arial", 0, 16));
 							jComboSeleccionListado.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
@@ -1017,7 +1014,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jPaneSeleccionListado.add(jButtonGenerarPDF);
 
 							jButtonGenerarPDF.setText("Generar PDF");
-							jButtonGenerarPDF.setBounds(569, 14, 170, 30);
+							jButtonGenerarPDF.setBounds(483, 14, 170, 30);
 							jButtonGenerarPDF.setFont(new java.awt.Font("Arial", 0, 16));
 							jButtonGenerarPDF.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
@@ -1025,10 +1022,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								}
 							});
 
+							URL urlDeLaImagenBackup = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/backup.png");
+							ImageIcon iconoBackup = new ImageIcon(urlDeLaImagenBackup);
+							Image imgBackup = iconoBackup.getImage();
+							Image otraimgBackup = imgBackup.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 							jButtonBackup = new JButton();
+							jButtonBackup.setIcon(new ImageIcon(otraimgBackup));
 							jPaneSeleccionListado.add(jButtonBackup);
 							jButtonBackup.setText("Copia de seguridad");
-							jButtonBackup.setBounds(750, 14, 150, 30);
+							jButtonBackup.setBounds(664, 14, 229, 30);
 							jButtonBackup.setFont(new java.awt.Font("Arial", 0, 16));
 							jButtonBackup.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
@@ -1126,16 +1129,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private void jButtonCancelarPrestamoActionPerformed(ActionEvent evt) {
 
 		limpiarCamposPrestamo();
-	}
-
-	/**
-	 * Actualiza la tabla de clientes
-	 * 
-	 * @param evt
-	 */
-	private void jButtonActualizarActionPerformed(ActionEvent evt) {
-
-		actualizaClientes();
 	}
 
 	public void limpiarCamposCliente() {
@@ -1296,16 +1289,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
-	/**
-	 * Actualiza la tabla de prestamos
-	 * 
-	 * @param evt
-	 */
-	private void jButton2ActionPerformed(ActionEvent evt) {
-
-		actualizaPrestamos();
-	}
-
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private DefaultComboBoxModel llenaComboPlazos(ArrayList<Date> fechasPago) {
 
@@ -1321,17 +1304,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 		}
 		return modelo;
-
-	}
-
-	/**
-	 * Actualiza la tabla de abonos
-	 * 
-	 * @param evt
-	 */
-	private void jButtonActualizarAbonosActionPerformed(ActionEvent evt) {
-
-		actualizaAbonos();
 
 	}
 
@@ -1382,34 +1354,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
-	private void jButtonAbonosPagadosActionPerformed(ActionEvent evt) {
-
-		actualizaAbonosPagados();
-	}
-
-	private void jButtonAbonosPendientesActionPerformed(ActionEvent evt) {
-
-		actualizaAbonosPendientes();
-	}
-
 	// -----------------Tablas------------------------------------------------------
 	private void actualizaAbonos() {
 
 		AbonoDAO miAbono = new AbonoDAO();
 		String informacionAbonos[][] = miAbono.obtenerMatrizAbonos();
-		String titulos[] = miAbono.getColumnas();
-		jTableAbonosRecibidos = new JTable(informacionAbonos, titulos);
-		jScrollAbonosRecibidos.setViewportView(jTableAbonosRecibidos);
-		jTableAbonosRecibidos.setFont(new java.awt.Font("Arial", 0, 16));
-		JTableHeader th = jTableAbonosRecibidos.getTableHeader();
-		th.setFont(new java.awt.Font("Arial", 0, 16));
-		ajustaColumnasAContenido(jTableAbonosRecibidos);
-	}
-
-	private void actualizaAbonosPendientes() {
-
-		AbonoDAO miAbono = new AbonoDAO();
-		String informacionAbonos[][] = miAbono.obtenerMatrizAbonosPendientes();
 		String titulos[] = miAbono.getColumnas();
 		jTableAbonosRecibidos = new JTable(informacionAbonos, titulos);
 		jScrollAbonosRecibidos.setViewportView(jTableAbonosRecibidos);
@@ -1505,25 +1454,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		} else {
 			System.out.println("Lista de abonos no encontrada");
 			JOptionPane.showMessageDialog(this, "Préstamo no encontrado", "Alerta", JOptionPane.WARNING_MESSAGE);
-		}
-	}
-
-	private void actualizaPrestamoVencido() {
-
-		PrestamoDAO miPrestamo = new PrestamoDAO();
-		String informacionAbonos[][] = miPrestamo.obtenerMatrizPrestamosVencidos();
-		if (informacionAbonos != null) {
-			String titulos[] = miPrestamo.getColumnas();
-			jTablePrestamos = new JTable(informacionAbonos, titulos);
-			jScrollReportes.setViewportView(jTablePrestamos);
-			jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 16));
-			JTableHeader th = jTablePrestamos.getTableHeader();
-			th.setFont(new java.awt.Font("Arial", 0, 16));
-			ajustaColumnasAContenido(jTablePrestamos);
-
-		} else {
-			System.out.println("Lista de abonos no encontrada");
-			JOptionPane.showMessageDialog(this, "Préstamos no encontrados", "Alerta", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 
@@ -1732,11 +1662,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		return resultado;
 
 	}// Fin validarCamposPrestamo
-
-	private void jButtonPrestamosPendientesActionPerformed(ActionEvent evt) {
-
-		actualizaPrestamoVencido();
-	}
 
 	private void jButtonPrestamoPorFechaActionPerformed(ActionEvent evt) {
 
