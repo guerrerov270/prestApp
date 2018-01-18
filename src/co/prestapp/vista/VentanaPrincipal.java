@@ -189,6 +189,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField jTextNombre;
 	private JLabel jLabelEmpresa;
 	// Constantes para listados
+	private final String seleccioneUno = "Seleccione uno";
 	private final String listaClientes = "Listado de clientes registrados";
 	private final String listaClientesAlfa = "Listado de clientes alfabéticamente";
 	private final String listaClientesActivos = "Listado de clientes activos";
@@ -1120,7 +1121,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						// Panel superior
 						jPaneSeleccionListado = new JPanel();
 						jPaneListados.add(jPaneSeleccionListado, BorderLayout.NORTH);
-						jPaneSeleccionListado.setPreferredSize(new java.awt.Dimension(909, 127));
+						jPaneSeleccionListado.setPreferredSize(new java.awt.Dimension(909, 55));
 						jPaneSeleccionListado.setBorder(BorderFactory.createTitledBorder("Listados"));
 						jPaneSeleccionListado.setLayout(null);
 						{
@@ -1128,21 +1129,43 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jLabelSeleccioneListado = new JLabel();
 							jPaneSeleccionListado.add(jLabelSeleccioneListado);
 							jLabelSeleccioneListado.setText("Seleccione listado:");
-							jLabelSeleccioneListado.setBounds(23, 44, 206, 25);
-							jLabelSeleccioneListado.setFont(new java.awt.Font("Arial",0,16));
+							jLabelSeleccioneListado.setBounds(23, 18, 172, 25);
+							jLabelSeleccioneListado.setFont(new java.awt.Font("Arial", 0, 16));
 
 							jComboSeleccionListado = new JComboBox();
 							jPaneSeleccionListado.add(jComboSeleccionListado);
-							jPaneSeleccionListado.add(getJButtonGenerarPDF());
-							jComboSeleccionListado.setBounds(229, 46, 369, 23);
-							jComboSeleccionListado.setFont(new java.awt.Font("Arial",0,16));
+							jComboSeleccionListado.setBounds(188, 20, 369, 23);
+							jComboSeleccionListado.setFont(new java.awt.Font("Arial", 0, 16));
+							jComboSeleccionListado.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jComboSeleccionListadoActionPerformed(evt);
+								}
+							});
+
+							URL urlDeLaImagenpdf = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/pdf.png");
+							ImageIcon icono1 = new ImageIcon(urlDeLaImagenpdf);
+							Image img1 = icono1.getImage();
+							Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							jButtonGenerarPDF = new JButton();
+							jButtonGenerarPDF.setIcon(new ImageIcon(otraimg1));
+							jPaneSeleccionListado.add(jButtonGenerarPDF);
+							jButtonGenerarPDF.setText("Generar PDF");
+							jButtonGenerarPDF.setBounds(569, 14, 170, 30);
+							jButtonGenerarPDF.setFont(new java.awt.Font("Arial", 0, 16));
+							jButtonGenerarPDF.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonGenerarPDFActionPerformed(evt);
+								}
+							});
+
 						}
 					}
 					{
 						// Panel inferior
 						jPanListaResultados = new JPanel();
 						jPaneListados.add(jPanListaResultados, BorderLayout.SOUTH);
-						jPanListaResultados.setPreferredSize(new java.awt.Dimension(909, 424));
+						jPanListaResultados.setPreferredSize(new java.awt.Dimension(909, 494));
 						jPanListaResultados.setBorder(BorderFactory.createTitledBorder("Resultados"));
 						{
 							// Componentes del panel inferior
@@ -1863,9 +1886,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private void llenaComboListados() {
 
 		ComboBoxModel<String> jComboListadosModel = new DefaultComboBoxModel<String>(
-				new String[] { listaClientes, listaClientesAlfa, listaClientesActivos, listaClientesNoActivos,
-						listaPrestamos, listaPrestamosPendientes, listaPrestamosPagados, listaPrestamosVencidos,
-						listaAbonos, listaAbonosPendientes, listaAbonosPagados });
+				new String[] { seleccioneUno, listaClientes, listaClientesAlfa, listaClientesActivos,
+						listaClientesNoActivos, listaPrestamos, listaPrestamosPendientes, listaPrestamosPagados,
+						listaPrestamosVencidos, listaAbonos, listaAbonosPendientes, listaAbonosPagados });
 		jComboSeleccionListado.setModel(jComboListadosModel);
 
 	}
@@ -2211,25 +2234,95 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		actualizaClientes();
 
 	}
-	
-	private JButton getJButtonGenerarPDF() {
-		if(jButtonGenerarPDF == null) {
-			jButtonGenerarPDF = new JButton();
-			jButtonGenerarPDF.setText("Generar PDF");
-			jButtonGenerarPDF.setBounds(628, 47, 133, 23);
-			jButtonGenerarPDF.setFont(new java.awt.Font("Arial",0,16));
-			jButtonGenerarPDF.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jButtonGenerarPDFActionPerformed(evt);
-				}
-			});
-		}
-		return jButtonGenerarPDF;
-	}
-	
+
 	private void jButtonGenerarPDFActionPerformed(ActionEvent evt) {
-		System.out.println("jButtonGenerarPDF.actionPerformed, event="+evt);
-		//TODO add your code for jButtonGenerarPDF.actionPerformed
+
+		String listaSeleccionada = (String) jComboSeleccionListado.getSelectedItem();
+
+		switch (listaSeleccionada) {
+		case seleccioneUno:
+
+			break;
+		case listaClientes:
+
+			break;
+		case listaClientesAlfa:
+
+			break;
+		case listaClientesActivos:
+
+			break;
+		case listaClientesNoActivos:
+
+			break;
+		case listaPrestamos:
+
+			break;
+		case listaPrestamosPendientes:
+			
+			break;
+		case listaPrestamosPagados:
+
+			break;
+		case listaPrestamosVencidos:
+
+			break;
+		case listaAbonos:
+
+			break;
+		case listaAbonosPendientes:
+
+			break;
+		case listaAbonosPagados:
+
+			break;
+		}
+
+	}
+
+	private void jComboSeleccionListadoActionPerformed(ActionEvent evt) {
+
+		String listaSeleccionada = (String) jComboSeleccionListado.getSelectedItem();
+
+		switch (listaSeleccionada) {
+		case seleccioneUno:
+
+			break;
+		case listaClientes:
+
+			break;
+		case listaClientesAlfa:
+
+			break;
+		case listaClientesActivos:
+
+			break;
+		case listaClientesNoActivos:
+
+			break;
+		case listaPrestamos:
+
+			break;
+		case listaPrestamosPendientes:
+			System.out.println("Prestamos pendientes");
+			break;
+		case listaPrestamosPagados:
+
+			break;
+		case listaPrestamosVencidos:
+
+			break;
+		case listaAbonos:
+
+			break;
+		case listaAbonosPendientes:
+
+			break;
+		case listaAbonosPagados:
+
+			break;
+		}
+
 	}
 
 }
