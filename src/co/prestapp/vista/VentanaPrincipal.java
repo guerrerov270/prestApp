@@ -2287,21 +2287,27 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 		String listaSeleccionada = (String) jComboSeleccionListado.getSelectedItem();
 
+		AbonoDAO miAbono = new AbonoDAO();
+		String titulosAbono[] = miAbono.getColumnas();
+		ClienteDAO miCliente = new ClienteDAO();
+		String titulosCliente[] = miCliente.getColumnas();
+		PrestamoDAO miPrestamo = new PrestamoDAO();
+		String titulosPrestamo[] = miPrestamo.getColumnas();
+
 		switch (listaSeleccionada) {
 		case seleccioneUno:
 			tablaResultados = new JTable();
 			jScrollPaneResultados.setViewportView(tablaResultados);
 			break;
 		case listaClientes:
-			ClienteDAO miCliente = new ClienteDAO();
+			miCliente = new ClienteDAO();
 			String informacionClientes[][] = miCliente.obtenerMatrizClientes();
-			String titulos[] = miCliente.getColumnas();
-			jTableClientes = new JTable(informacionClientes, titulos);
-			jScrollPaneClientes.setViewportView(jTableClientes);
-			jTableClientes.setFont(new java.awt.Font("Arial", 0, 16));
-			JTableHeader th = jTableClientes.getTableHeader();
-			th.setFont(new java.awt.Font("Arial", 0, 16));
-			ajustaColumnasAContenido(jTableClientes);
+			tablaResultados = new JTable(informacionClientes, titulosCliente);
+			jScrollPaneResultados.setViewportView(tablaResultados);
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			JTableHeader thClientes = tablaResultados.getTableHeader();
+			thClientes.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(tablaResultados);
 			break;
 		case listaClientesAlfa:
 
@@ -2313,60 +2319,69 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 			break;
 		case listaPrestamos:
-			PrestamoDAO miPrestamo = new PrestamoDAO();
+			miPrestamo = new PrestamoDAO();
 			miPrestamo.actualizaPagos();
 			String informacionPrestamos[][] = miPrestamo.obtenerMatrizPrestamos();
-			String titulos[] = miPrestamo.getColumnas();
-			jTablePrestamos = new JTable(informacionPrestamos, titulos);
-			jScrollReportes.setViewportView(jTablePrestamos);
-			jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 16));
-			JTableHeader th = jTablePrestamos.getTableHeader();
-			th.setFont(new java.awt.Font("Arial", 0, 16));
-			ajustaColumnasAContenido(jTablePrestamos);
+			tablaResultados = new JTable(informacionPrestamos, titulosPrestamo);
+			jScrollPaneResultados.setViewportView(tablaResultados);
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			JTableHeader thPrestamos = tablaResultados.getTableHeader();
+			thPrestamos.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(tablaResultados);
 			break;
 		case listaPrestamosPendientes:
-			System.out.println("Prestamos pendientes");
+			
+			
+			
 			break;
 		case listaPrestamosPagados:
 
+			
 			break;
 		case listaPrestamosVencidos:
+			miPrestamo = new PrestamoDAO();
+			String informacionPrestamosVencidos[][] = miPrestamo.obtenerMatrizPrestamosVencidos();
+			if (informacionPrestamosVencidos != null) {
+				tablaResultados = new JTable(informacionPrestamosVencidos, titulosPrestamo);
+				jScrollPaneResultados.setViewportView(tablaResultados);
+				tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+				JTableHeader thPrestamosVencidos = tablaResultados.getTableHeader();
+				thPrestamosVencidos.setFont(new java.awt.Font("Arial", 0, 16));
+				ajustaColumnasAContenido(tablaResultados);
 
+			} else {
+				JOptionPane.showMessageDialog(this, "Préstamos no encontrados", "Alerta", JOptionPane.WARNING_MESSAGE);
+			}
 			break;
 		case listaAbonos:
-			AbonoDAO miAbono = new AbonoDAO();
+			miAbono = new AbonoDAO();
 			String informacionAbonos[][] = miAbono.obtenerMatrizAbonos();
-			String titulos[] = miAbono.getColumnas();
-			tablaResultados = new JTable(informacionAbonos, titulos);
+			tablaResultados = new JTable(informacionAbonos, titulosAbono);
 			jScrollPaneResultados.setViewportView(tablaResultados);
 			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
-			JTableHeader th = tablaResultados.getTableHeader();
-			th.setFont(new java.awt.Font("Arial", 0, 16));
+			JTableHeader thAbonos = tablaResultados.getTableHeader();
+			thAbonos.setFont(new java.awt.Font("Arial", 0, 16));
 			ajustaColumnasAContenido(tablaResultados);
 			break;
 		case listaAbonosPendientes:
-
-			AbonoDAO miAbono = new AbonoDAO();
-			String informacionAbonos[][] = miAbono.obtenerMatrizAbonosPendientes();
-			String titulos[] = miAbono.getColumnas();
-			jTableAbonosRecibidos = new JTable(informacionAbonos, titulos);
-			jScrollAbonosRecibidos.setViewportView(jTableAbonosRecibidos);
-			jTableAbonosRecibidos.setFont(new java.awt.Font("Arial", 0, 16));
-			JTableHeader th = jTableAbonosRecibidos.getTableHeader();
-			th.setFont(new java.awt.Font("Arial", 0, 16));
-			ajustaColumnasAContenido(jTableAbonosRecibidos);
+			miAbono = new AbonoDAO();
+			String informacionAbonosPendientes[][] = miAbono.obtenerMatrizAbonosPendientes();
+			tablaResultados = new JTable(informacionAbonosPendientes, titulosAbono);
+			jScrollPaneResultados.setViewportView(tablaResultados);
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			JTableHeader thAbonosPen = tablaResultados.getTableHeader();
+			thAbonosPen.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(tablaResultados);
 			break;
 		case listaAbonosPagados:
-
-			AbonoDAO miAbono = new AbonoDAO();
-			String informacionAbonos[][] = miAbono.obtenerMatrizAbonosPagados();
-			String titulos[] = miAbono.getColumnas();
-			jTableAbonosRecibidos = new JTable(informacionAbonos, titulos);
-			jScrollAbonosRecibidos.setViewportView(jTableAbonosRecibidos);
-			jTableAbonosRecibidos.setFont(new java.awt.Font("Arial", 0, 16));
-			JTableHeader th = jTableAbonosRecibidos.getTableHeader();
-			th.setFont(new java.awt.Font("Arial", 0, 16));
-			ajustaColumnasAContenido(jTableAbonosRecibidos);
+			miAbono = new AbonoDAO();
+			String informacionAbonosPagados[][] = miAbono.obtenerMatrizAbonosPagados();
+			tablaResultados = new JTable(informacionAbonosPagados, titulosAbono);
+			jScrollPaneResultados.setViewportView(tablaResultados);
+			JTableHeader thAbonosPag = tablaResultados.getTableHeader();
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			thAbonosPag.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(tablaResultados);
 			break;
 		}
 
