@@ -97,7 +97,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelTotalAbonosPendientes;
 	private JLabel jLabelTotalAbonosCobrados;
 	private JLabel jLabelTotalClientesactivos;
-	private JComboBox jComboSeleccionListado;
+	private JButton jButtonGenerarPDF;
+	private JComboBox<String> jComboSeleccionListado;
 	private JLabel jLabelSeleccioneListado;
 	private JScrollPane jScrollPaneResultados;
 	private JPanel jPanListaResultados;
@@ -187,6 +188,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JButton jButtonGuardarCliente;
 	private JTextField jTextNombre;
 	private JLabel jLabelEmpresa;
+	// Constantes para listados
+	private final String listaClientes = "Listado de clientes registrados";
+	private final String listaClientesAlfa = "Listado de clientes alfabéticamente";
+	private final String listaClientesActivos = "Listado de clientes activos";
+	private final String listaClientesNoActivos = "Listado de clientes no activos";
+	private final String listaPrestamos = "Listado de préstamos registrados";
+	private final String listaPrestamosPendientes = "Listado de préstamos pendientes";
+	private final String listaPrestamosPagados = "Listado de préstamos pagados";
+	private final String listaPrestamosVencidos = "Listado de préstamos vencidos";
+	private final String listaAbonos = "Listado de abonos registrados";
+	private final String listaAbonosPendientes = "Listado de abonos pendientes";
+	private final String listaAbonosPagados = "Listado de abonos pagados";
 
 	/**
 	 * Auto-generated main method to display this JFrame
@@ -208,6 +221,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		actualizaAbonos();
 		actualizaClientes();
 		actualizaReportes();
+		llenaComboListados();
 
 	}
 
@@ -636,22 +650,94 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 						}
 						{
-							jPanelAgregarAbono.add(getJButtonBuscarPrestamo());
+							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/buscar.png");
+							ImageIcon icono = new ImageIcon(urlDeLaImagen);
+							Image img = icono.getImage();
+							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							jButtonBuscarPrestamo = new JButton();
+							jPanelAgregarAbono.add(jButtonBuscarPrestamo);
+							jButtonBuscarPrestamo.setIcon(new ImageIcon(otraimg));
+							jButtonBuscarPrestamo.setText("Buscar");
+							jButtonBuscarPrestamo.setBounds(376, 25, 130, 30);
+							jButtonBuscarPrestamo.setFont(new java.awt.Font("Arial", 0, 14));
+							jButtonBuscarPrestamo.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonBuscarPrestamoActionPerformed(evt);
+								}
+							});
+
 						}
 						{
-							jPanelAgregarAbono.add(getJButtonActualizarAbonos());
+							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/actualizar.png");
+							ImageIcon icono = new ImageIcon(urlDeLaImagen);
+							Image img = icono.getImage();
+							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							jButtonActualizarAbonos = new JButton();
+							jPanelAgregarAbono.add(jButtonActualizarAbonos);
+							jButtonActualizarAbonos.setIcon(new ImageIcon(otraimg));
+							jButtonActualizarAbonos.setText("Todos");
+							jButtonActualizarAbonos.setBounds(381, 147, 130, 30);
+							jButtonActualizarAbonos.setFont(new java.awt.Font("Arial", 0, 14));
+							jButtonActualizarAbonos.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonActualizarAbonosActionPerformed(evt);
+								}
+							});
+
 						}
 						{
-							jPanelAgregarAbono.add(getJLabelCodigoAbono());
+							jLabelCodigoAbono = new JLabel();
+							jPanelAgregarAbono.add(jLabelCodigoAbono);
+							jLabelCodigoAbono.setText("Código abono:");
+							jLabelCodigoAbono.setBounds(381, 78, 178, 23);
+							jLabelCodigoAbono.setFont(new java.awt.Font("Arial", 0, 16));
+
 						}
 						{
-							jPanelAgregarAbono.add(getJTextFieldCodigoAbono());
+							jTextFieldCodigoAbono = new JTextField();
+							jPanelAgregarAbono.add(jTextFieldCodigoAbono);
+							jTextFieldCodigoAbono.setBounds(496, 78, 71, 23);
+
 						}
 						{
-							jPanelAgregarAbono.add(getJButtonAbonosPagados());
+							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/pagado.png");
+							ImageIcon icono = new ImageIcon(urlDeLaImagen);
+							Image img = icono.getImage();
+							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							jButtonAbonosPagados = new JButton();
+							jPanelAgregarAbono.add(jButtonAbonosPagados);
+							jButtonAbonosPagados.setIcon(new ImageIcon(otraimg));
+							jButtonAbonosPagados.setText("Pagados");
+							jButtonAbonosPagados.setBounds(567, 147, 145, 30);
+							jButtonAbonosPagados.setFont(new java.awt.Font("Arial", 0, 14));
+							jButtonAbonosPagados.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonAbonosPagadosActionPerformed(evt);
+								}
+							});
+
 						}
 						{
-							jPanelAgregarAbono.add(getJButtonAbonosPendientes());
+							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/noPagado.png");
+							ImageIcon icono = new ImageIcon(urlDeLaImagen);
+							Image img = icono.getImage();
+							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							jButtonAbonosPendientes = new JButton();
+							jPanelAgregarAbono.add(jButtonAbonosPendientes);
+							jButtonAbonosPendientes.setIcon(new ImageIcon(otraimg));
+							jButtonAbonosPendientes.setText("Pendientes");
+							jButtonAbonosPendientes.setBounds(738, 147, 150, 30);
+							jButtonAbonosPendientes.setFont(new java.awt.Font("Arial", 0, 14));
+							jButtonAbonosPendientes.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonAbonosPendientesActionPerformed(evt);
+								}
+							});
+
 						}
 					}
 					jTabPestanias.addTab("Clientes", jPanelClientes);
@@ -1042,11 +1128,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jLabelSeleccioneListado = new JLabel();
 							jPaneSeleccionListado.add(jLabelSeleccioneListado);
 							jLabelSeleccioneListado.setText("Seleccione listado:");
-							jLabelSeleccioneListado.setBounds(23, 44, 179, 25);
+							jLabelSeleccioneListado.setBounds(23, 44, 206, 25);
+							jLabelSeleccioneListado.setFont(new java.awt.Font("Arial",0,16));
 
 							jComboSeleccionListado = new JComboBox();
 							jPaneSeleccionListado.add(jComboSeleccionListado);
-							jComboSeleccionListado.setBounds(241, 46, 176, 23);
+							jPaneSeleccionListado.add(getJButtonGenerarPDF());
+							jComboSeleccionListado.setBounds(229, 46, 369, 23);
+							jComboSeleccionListado.setFont(new java.awt.Font("Arial",0,16));
 						}
 					}
 					{
@@ -1333,64 +1422,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
-	private JButton getJButtonBuscarPrestamo() {
-		if (jButtonBuscarPrestamo == null) {
-			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/buscar.png");
-			ImageIcon icono = new ImageIcon(urlDeLaImagen);
-			Image img = icono.getImage();
-			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			ImageIcon otroicon = new ImageIcon(otraimg);
-			jButtonBuscarPrestamo = new JButton(otroicon);
-			jButtonBuscarPrestamo.setText("Buscar");
-			jButtonBuscarPrestamo.setBounds(376, 25, 130, 30);
-			jButtonBuscarPrestamo.setFont(new java.awt.Font("Arial", 0, 14));
-			jButtonBuscarPrestamo.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jButtonBuscarPrestamoActionPerformed(evt);
-				}
-			});
-		}
-		return jButtonBuscarPrestamo;
-	}
-
-	private JButton getJButtonActualizarAbonos() {
-		if (jButtonActualizarAbonos == null) {
-			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/actualizar.png");
-			ImageIcon icono = new ImageIcon(urlDeLaImagen);
-			Image img = icono.getImage();
-			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			jButtonActualizarAbonos = new JButton();
-			jButtonActualizarAbonos.setIcon(new ImageIcon(otraimg));
-			jButtonActualizarAbonos.setText("Todos");
-			jButtonActualizarAbonos.setBounds(381, 147, 130, 30);
-			jButtonActualizarAbonos.setFont(new java.awt.Font("Arial", 0, 14));
-			jButtonActualizarAbonos.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jButtonActualizarAbonosActionPerformed(evt);
-				}
-			});
-		}
-		return jButtonActualizarAbonos;
-	}
-
-	private JLabel getJLabelCodigoAbono() {
-		if (jLabelCodigoAbono == null) {
-			jLabelCodigoAbono = new JLabel();
-			jLabelCodigoAbono.setText("Código abono:");
-			jLabelCodigoAbono.setBounds(381, 78, 178, 23);
-			jLabelCodigoAbono.setFont(new java.awt.Font("Arial", 0, 16));
-		}
-		return jLabelCodigoAbono;
-	}
-
-	private JTextField getJTextFieldCodigoAbono() {
-		if (jTextFieldCodigoAbono == null) {
-			jTextFieldCodigoAbono = new JTextField();
-			jTextFieldCodigoAbono.setBounds(496, 78, 71, 23);
-		}
-		return jTextFieldCodigoAbono;
-	}
-
 	/**
 	 * Actualiza la tabla de abonos
 	 * 
@@ -1447,46 +1478,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private void jButtonCancelarAbonoActionPerformed(ActionEvent e) {
 
-	}
-
-	private JButton getJButtonAbonosPagados() {
-		if (jButtonAbonosPagados == null) {
-			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/pagado.png");
-			ImageIcon icono = new ImageIcon(urlDeLaImagen);
-			Image img = icono.getImage();
-			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			jButtonAbonosPagados = new JButton();
-			jButtonAbonosPagados.setIcon(new ImageIcon(otraimg));
-			jButtonAbonosPagados.setText("Pagados");
-			jButtonAbonosPagados.setBounds(567, 147, 145, 30);
-			jButtonAbonosPagados.setFont(new java.awt.Font("Arial", 0, 14));
-			jButtonAbonosPagados.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jButtonAbonosPagadosActionPerformed(evt);
-				}
-			});
-		}
-		return jButtonAbonosPagados;
-	}
-
-	private JButton getJButtonAbonosPendientes() {
-		if (jButtonAbonosPendientes == null) {
-			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/noPagado.png");
-			ImageIcon icono = new ImageIcon(urlDeLaImagen);
-			Image img = icono.getImage();
-			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			jButtonAbonosPendientes = new JButton();
-			jButtonAbonosPendientes.setIcon(new ImageIcon(otraimg));
-			jButtonAbonosPendientes.setText("Pendientes");
-			jButtonAbonosPendientes.setBounds(738, 147, 150, 30);
-			jButtonAbonosPendientes.setFont(new java.awt.Font("Arial", 0, 14));
-			jButtonAbonosPendientes.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jButtonAbonosPendientesActionPerformed(evt);
-				}
-			});
-		}
-		return jButtonAbonosPendientes;
 	}
 
 	private void jButtonAbonosPagadosActionPerformed(ActionEvent evt) {
@@ -1869,6 +1860,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
+	private void llenaComboListados() {
+
+		ComboBoxModel<String> jComboListadosModel = new DefaultComboBoxModel<String>(
+				new String[] { listaClientes, listaClientesAlfa, listaClientesActivos, listaClientesNoActivos,
+						listaPrestamos, listaPrestamosPendientes, listaPrestamosPagados, listaPrestamosVencidos,
+						listaAbonos, listaAbonosPendientes, listaAbonosPagados });
+		jComboSeleccionListado.setModel(jComboListadosModel);
+
+	}
+
 	private JMenu getJMenuBackup() {
 		if (jMenuBackup == null) {
 			jMenuBackup = new JMenu();
@@ -2209,6 +2210,26 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		jButtonGuardarEdicionCliente.setEnabled(false);
 		actualizaClientes();
 
+	}
+	
+	private JButton getJButtonGenerarPDF() {
+		if(jButtonGenerarPDF == null) {
+			jButtonGenerarPDF = new JButton();
+			jButtonGenerarPDF.setText("Generar PDF");
+			jButtonGenerarPDF.setBounds(628, 47, 133, 23);
+			jButtonGenerarPDF.setFont(new java.awt.Font("Arial",0,16));
+			jButtonGenerarPDF.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+					jButtonGenerarPDFActionPerformed(evt);
+				}
+			});
+		}
+		return jButtonGenerarPDF;
+	}
+	
+	private void jButtonGenerarPDFActionPerformed(ActionEvent evt) {
+		System.out.println("jButtonGenerarPDF.actionPerformed, event="+evt);
+		//TODO add your code for jButtonGenerarPDF.actionPerformed
 	}
 
 }
