@@ -27,9 +27,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -53,7 +50,13 @@ import co.prestapp.reports.ReporteAbonos;
 import co.prestapp.reports.ReporteAbonosPagados;
 import co.prestapp.reports.ReporteAbonosPendientes;
 import co.prestapp.reports.ReporteClientes;
+import co.prestapp.reports.ReporteClientesActivos;
+import co.prestapp.reports.ReporteClientesAlfa;
+import co.prestapp.reports.ReporteClientesNOActivos;
 import co.prestapp.reports.ReportePrestamos;
+import co.prestapp.reports.ReportePrestamosPagados;
+import co.prestapp.reports.ReportePrestamosPendientes;
+import co.prestapp.reports.ReportePrestamosVencidos;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -97,18 +100,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelTotalAbonosPendientes;
 	private JLabel jLabelTotalAbonosCobrados;
 	private JLabel jLabelTotalClientesactivos;
+	private JLabel jLabelCerosPrestamo;
+	private JLabel jLabelPesosPrestamo;
+	private JLabel jLabelPesosAbono;
+	private JLabel jLabelCerosAbono;
+	private JButton jButtonBackup;
+	private JButton jButtonGenerarPDF;
+	private JComboBox<String> jComboSeleccionListado;
+	private JLabel jLabelSeleccioneListado;
+	private JScrollPane jScrollPaneResultados;
+	private JPanel jPanListaResultados;
+	private JPanel jPaneSeleccionListado;
+	private JPanel jPaneListados;
 	private JLabel jLabelCodigoCliente;
 	private JButton jButtonGuardarEdicionCliente;
 	private JButton jButtonEditarCliente;
-	private JMenuItem jMenuItemReporteAbonosPagados;
-	private JMenuItem jMenuItemReporteabonosPendientes;
-	private JMenu jMenuReportes;
-	private JMenuItem jMenuItemReporteAbonos;
-	private JMenuItem jMenuItemReportePrestamos;
-	private JMenuItem jMenuItemReporteClientes;
-	private JMenuItem jMenuItemBackup;
-	private JMenu jMenuBackup;
-	private JMenuBar jMenuBarOpciones;
 	private JTextField jTextTotalclientesRegistrados;
 	private JTextField jTextTotalClientesactivos;
 	private JLabel jLabelTotalclientesRegistrados;
@@ -125,7 +131,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelTotalrecibido;
 	private JLabel jLabelTotalPrestado;
 	private JPanel jPanelCifras;
-	private JButton jButtonPrestamosPendientes;
 	private JButton jButtonGuardar;
 	private JTextField jTextCodigoPrestamo;
 	private JLabel jLabelCodigoPrestamo;
@@ -134,8 +139,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelMonto;
 	private JTable jTableAbonosRecibidos;
 	private JScrollPane jScrollAbonosRecibidos;
-	@SuppressWarnings("rawtypes")
-	private JComboBox jComboFechasCobro;
+	private JComboBox<String> jComboFechasCobro;
 	public JLabel jLabelCodigo;
 	public JLabel jLabelNombreCliente;
 	private JButton jButtonClienteExiste;
@@ -165,22 +169,31 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField jTextEmpresa;
 	private JLabel jLabelReferencia;
 	private JTextField jTextReferencia;
-	private JButton jButtonAbonosPendientes;
-	private JButton jButtonAbonosPagados;
 	private JTextField jTextFieldCodigoAbono;
 	private JLabel jLabelCodigoAbono;
-	private JButton jButtonActualizarAbonos;
 	private JButton jButtonBuscarPrestamo;
 	private JLabel jLabelEmpresaResult;
-	private JButton jButton2;
 	private JButton jButtonCalcular;
-	private JButton jButtonActualizar;
 	private JButton jButtonCancelar;
 	@SuppressWarnings("unused")
 	private JButton jButtonCancelarPrestamo;
 	private JButton jButtonGuardarCliente;
 	private JTextField jTextNombre;
 	private JLabel jLabelEmpresa;
+	private JTable tablaResultados;
+	// Constantes para listados
+	private final String seleccioneUno = "Seleccione uno";
+	private final String listaClientes = "Listado de clientes registrados";
+	private final String listaClientesAlfa = "Listado de clientes alfabéticamente";
+	private final String listaClientesActivos = "Listado de clientes activos";
+	private final String listaClientesNoActivos = "Listado de clientes no activos";
+	private final String listaPrestamos = "Listado de préstamos registrados";
+	private final String listaPrestamosPendientes = "Listado de préstamos pendientes";
+	private final String listaPrestamosPagados = "Listado de préstamos pagados";
+	private final String listaPrestamosVencidos = "Listado de préstamos vencidos";
+	private final String listaAbonos = "Listado de abonos registrados";
+	private final String listaAbonosPendientes = "Listado de abonos pendientes";
+	private final String listaAbonosPagados = "Listado de abonos pagados";
 
 	/**
 	 * Auto-generated main method to display this JFrame
@@ -202,6 +215,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		actualizaAbonos();
 		actualizaClientes();
 		actualizaReportes();
+		llenaComboListados();
 
 	}
 
@@ -212,12 +226,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			this.setTitle("PrestApp 1.0");
 			this.setFont(new java.awt.Font("Arial", 0, 16));
 			this.setResizable(false);
-			{
-				jMenuBarOpciones = new JMenuBar();
-				setJMenuBar(jMenuBarOpciones);
-				jMenuBarOpciones.add(getJMenuBackup());
-				jMenuBarOpciones.add(getJMenuReportes());
-			}
 			{
 				jPanelContenedor = new JPanel();
 				BorderLayout jPanelContenedorLayout = new BorderLayout();
@@ -230,10 +238,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				jPanelPrestamos = new JPanel();
 				BorderLayout jPanelPrestamosLayout = new BorderLayout();
 				jPanelPrestamos.setLayout(jPanelPrestamosLayout);
-
 				jPanelReportes = new JPanel();
 				BorderLayout jPanelReportesLayout = new BorderLayout();
 				jPanelReportes.setLayout(jPanelReportesLayout);
+				jPaneListados = new JPanel();
+				BorderLayout jPaneListadosLayout = new BorderLayout();
+				jPaneListados.setLayout(jPaneListadosLayout);
 
 				getContentPane().add(jPanelContenedor, BorderLayout.CENTER);
 				jPanelContenedor.setLayout(jPanelContenedorLayout);
@@ -249,7 +259,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jScrollReportes = new JScrollPane();
 						jPanelPrestamos.add(jScrollReportes, BorderLayout.SOUTH);
 						jScrollReportes.setBounds(8, 263, 777, 381);
-						jScrollReportes.setPreferredSize(new java.awt.Dimension(911, 354));
+						jScrollReportes.setPreferredSize(new java.awt.Dimension(909, 372));
 						{
 
 						}
@@ -264,8 +274,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jLabelMontoPrestamo = new JLabel();
 							jPanelEntradasPrestamo.add(jLabelMontoPrestamo, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
 									GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-							jLabelMontoPrestamo.setText("Monto préstamo:  $");
-							jLabelMontoPrestamo.setBounds(17, 30, 178, 23);
+							jLabelMontoPrestamo.setText("Monto préstamo:");
+							jLabelMontoPrestamo.setBounds(17, 30, 145, 23);
 							jLabelMontoPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
@@ -274,7 +284,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jTextMonto = new JFormattedTextField();
 							jPanelEntradasPrestamo.add(jTextMonto, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
 									GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-							jTextMonto.setBounds(162, 30, 178, 23);
+							jTextMonto.setBounds(162, 30, 54, 23);
 							jTextMonto.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
@@ -361,6 +371,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jButtonAceptar.setIcon(new ImageIcon(otraimg));
 							jButtonAceptar.setBounds(9, 157, 130, 30);
 							jPanelEntradasPrestamo.add(jButtonAceptar);
+							jButtonAceptar.setText("Guardar");
+							jButtonAceptar.setFont(new java.awt.Font("Arial", 0, 14));
+							jButtonAceptar.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonAceptarActionPerformed(evt);
+								}
+							});
 							{
 								URL urlDeLaImagen1 = VentanaPrincipal.class.getClassLoader()
 										.getResource("co/prestapp/res/cancelar.png");
@@ -401,7 +418,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jLabelTotalFormato.setFont(new java.awt.Font("Arial", 0, 16));
 							}
 							{
-								URL urlDeLaImagen2 = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/buscar.png");
+								URL urlDeLaImagen2 = VentanaPrincipal.class.getClassLoader()
+										.getResource("co/prestapp/res/buscar.png");
 								ImageIcon icono1 = new ImageIcon(urlDeLaImagen2);
 								Image img1 = icono1.getImage();
 								Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
@@ -446,21 +464,55 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								DefaultComboBoxModel modelo = new DefaultComboBoxModel();
 								modelo.addElement("Nada para mostrar");
 								jComboFechasCobro.setModel(modelo);
-								jPanelEntradasPrestamo.add(getJButtonCalcular());
-								jPanelEntradasPrestamo.add(getJButton2());
-								jPanelEntradasPrestamo.add(getJLabelEmpresaResult());
-								jPanelEntradasPrestamo.add(getJButtonPrestamosPendientes());
 								jComboFechasCobro.setBounds(162, 121, 178, 23);
 								jComboFechasCobro.setFont(new java.awt.Font("Arial", 0, 14));
 							}
+							{
+								URL urlDeLaImagenCalcular = VentanaPrincipal.class.getClassLoader()
+										.getResource("co/prestapp/res/calcular.png");
+								ImageIcon icono1 = new ImageIcon(urlDeLaImagenCalcular);
+								Image img1 = icono1.getImage();
+								Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+								jButtonCalcular = new JButton();
+								jPanelEntradasPrestamo.add(jButtonCalcular);
+								jButtonCalcular.setIcon(new ImageIcon(otraimg1));
+								jButtonCalcular.setText("Calcular");
+								jButtonCalcular.setBounds(579, 78, 130, 30);
+								jButtonCalcular.setFont(new java.awt.Font("Arial", 0, 14));
+								jButtonCalcular.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent evt) {
+										try {
+											jButtonCalcularActionPerformed(evt);
+										} catch (Exception e) {
+											System.out.println(e.getMessage());
+										}
+									}
+								});
 
-							jButtonAceptar.setText("Guardar");
-							jButtonAceptar.setFont(new java.awt.Font("Arial", 0, 14));
-							jButtonAceptar.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent evt) {
-									jButtonAceptarActionPerformed(evt);
-								}
-							});
+							}
+							{
+								jLabelEmpresaResult = new JLabel();
+								jPanelEntradasPrestamo.add(jLabelEmpresaResult);
+								jLabelEmpresaResult.setText("Empresa");
+								jLabelEmpresaResult.setBounds(726, 161, 168, 23);
+								jLabelEmpresaResult.setFont(new java.awt.Font("Arial", 0, 16));
+
+							}
+							{
+								jLabelCerosPrestamo = new JLabel();
+								jPanelEntradasPrestamo.add(jLabelCerosPrestamo);
+								jLabelCerosPrestamo.setText(".000");
+								jLabelCerosPrestamo.setBounds(216, 33, 55, 16);
+								jLabelCerosPrestamo.setFont(new java.awt.Font("Arial", 0, 18));
+							}
+							{
+								jLabelPesosPrestamo = new JLabel();
+								jPanelEntradasPrestamo.add(jLabelPesosPrestamo);
+								jLabelPesosPrestamo.setText("$");
+								jLabelPesosPrestamo.setBounds(149, 33, 19, 16);
+								jLabelPesosPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
+							}
+
 						}
 					}
 					jTabPestanias.addTab("Abonos", jPanelAbonos);
@@ -469,7 +521,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jScrollAbonosRecibidos = new JScrollPane();
 						jPanelAbonos.add(jScrollAbonosRecibidos, BorderLayout.SOUTH);
 						jScrollAbonosRecibidos.setBounds(8, 263, 777, 381);
-						jScrollAbonosRecibidos.setPreferredSize(new java.awt.Dimension(911, 354));
+						jScrollAbonosRecibidos.setPreferredSize(new java.awt.Dimension(909, 373));
 						{
 
 						}
@@ -490,8 +542,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						{
 							jTextField1 = new JTextField();
 							jPanelAgregarAbono.add(jTextField1);
-							jTextField1.setBounds(748, 78, 146, 23);
+							jTextField1.setBounds(730, 76, 80, 23);
 							jTextField1.setFont(new java.awt.Font("Arial", 0, 16));
+							jTextField1.setSize(54, 23);
 						}
 						{
 							jLabelFecha = new JLabel();
@@ -520,7 +573,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jTextCodigoPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
-							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/guardar.png");
+							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/guardar.png");
 							ImageIcon icono = new ImageIcon(urlDeLaImagen);
 							Image img = icono.getImage();
 							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
@@ -537,19 +591,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							});
 						}
 						{
-							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/cancelar.png");
+							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/cancelar.png");
 							ImageIcon icono = new ImageIcon(urlDeLaImagen);
 							Image img = icono.getImage();
 							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 							jButtonCancelarAbono = new JButton();
-							jButtonCancelarAbono.setIcon(new ImageIcon(otraimg));
 							jPanelAgregarAbono.add(jButtonCancelarAbono);
-							jPanelAgregarAbono.add(getJButtonBuscarPrestamo());
-							jPanelAgregarAbono.add(getJButtonActualizarAbonos());
-							jPanelAgregarAbono.add(getJLabelCodigoAbono());
-							jPanelAgregarAbono.add(getJTextFieldCodigoAbono());
-							jPanelAgregarAbono.add(getJButtonAbonosPagados());
-							jPanelAgregarAbono.add(getJButtonAbonosPendientes());
+							jButtonCancelarAbono.setIcon(new ImageIcon(otraimg));
 							jButtonCancelarAbono.setText("Cancelar");
 							jButtonCancelarAbono.setBounds(195, 147, 145, 30);
 							jButtonCancelarAbono.setFont(new java.awt.Font("Arial", 0, 14));
@@ -561,6 +610,54 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 								}
 							});
+
+						}
+						{
+							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/buscar.png");
+							ImageIcon icono = new ImageIcon(urlDeLaImagen);
+							Image img = icono.getImage();
+							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							jButtonBuscarPrestamo = new JButton();
+							jPanelAgregarAbono.add(jButtonBuscarPrestamo);
+							jButtonBuscarPrestamo.setIcon(new ImageIcon(otraimg));
+							jButtonBuscarPrestamo.setText("Buscar");
+							jButtonBuscarPrestamo.setBounds(376, 25, 130, 30);
+							jButtonBuscarPrestamo.setFont(new java.awt.Font("Arial", 0, 14));
+							jButtonBuscarPrestamo.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonBuscarPrestamoActionPerformed(evt);
+								}
+							});
+
+						}
+						{
+							jLabelCodigoAbono = new JLabel();
+							jPanelAgregarAbono.add(jLabelCodigoAbono);
+							jLabelCodigoAbono.setText("Código abono:");
+							jLabelCodigoAbono.setBounds(381, 78, 178, 23);
+							jLabelCodigoAbono.setFont(new java.awt.Font("Arial", 0, 16));
+
+						}
+						{
+							jTextFieldCodigoAbono = new JTextField();
+							jPanelAgregarAbono.add(jTextFieldCodigoAbono);
+							jTextFieldCodigoAbono.setBounds(496, 78, 71, 23);
+
+						}
+						{
+							jLabelCerosAbono = new JLabel();
+							jPanelAgregarAbono.add(jLabelCerosAbono);
+							jLabelCerosAbono.setText(".000");
+							jLabelCerosAbono.setBounds(784, 79, 48, 16);
+							jLabelCerosAbono.setFont(new java.awt.Font("Arial", 0, 18));
+						}
+						{
+							jLabelPesosAbono = new JLabel();
+							jPanelAgregarAbono.add(jLabelPesosAbono);
+							jLabelPesosAbono.setText("$");
+							jLabelPesosAbono.setBounds(717, 79, 18, 16);
+							jLabelPesosAbono.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 					}
 					jTabPestanias.addTab("Clientes", jPanelClientes);
@@ -572,7 +669,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jScrollPaneClientes = new JScrollPane();
 						jPanelClientes.add(jScrollPaneClientes, BorderLayout.SOUTH);
 						jScrollPaneClientes.setBounds(8, 263, 777, 381);
-						jScrollPaneClientes.setPreferredSize(new java.awt.Dimension(911, 354));
+						jScrollPaneClientes.setPreferredSize(new java.awt.Dimension(899, 419));
 						{
 
 						}
@@ -580,7 +677,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					{
 						jPanelAgregarCliente = new JPanel();
 						jPanelClientes.add(jPanelAgregarCliente, BorderLayout.NORTH);
-						jPanelAgregarCliente.setPreferredSize(new java.awt.Dimension(903, 182));
+						jPanelAgregarCliente.setPreferredSize(new java.awt.Dimension(899, 132));
 						jPanelAgregarCliente.setLayout(null);
 						{
 							jLabelNombre = new JLabel();
@@ -617,7 +714,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jButtonGuardarCliente.setIcon(new ImageIcon(otraimg));
 							jPanelAgregarCliente.add(jButtonGuardarCliente);
 							jButtonGuardarCliente.setText("Guardar");
-							jButtonGuardarCliente.setBounds(12, 125, 130, 30);
+							jButtonGuardarCliente.setBounds(12, 90, 130, 30);
 							jButtonGuardarCliente.setFont(new java.awt.Font("Arial", 0, 14));
 							jButtonGuardarCliente.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
@@ -626,7 +723,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							});
 						}
 						{
-							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/cancelar.png");
+							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/cancelar.png");
 							ImageIcon icono = new ImageIcon(urlDeLaImagen);
 							Image img = icono.getImage();
 							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
@@ -634,7 +732,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jButtonCancelar.setIcon(new ImageIcon(otraimg));
 							jPanelAgregarCliente.add(jButtonCancelar);
 							jButtonCancelar.setText("Cancelar");
-							jButtonCancelar.setBounds(570, 125, 130, 30);
+							jButtonCancelar.setBounds(570, 90, 130, 30);
 							jButtonCancelar.setFont(new java.awt.Font("Arial", 0, 14));
 							jButtonCancelar.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
@@ -652,18 +750,349 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						{
 							jTextReferencia = new JTextField();
 							jPanelAgregarCliente.add(jTextReferencia);
-							jPanelAgregarCliente.add(getJButtonActualizar());
-							jPanelAgregarCliente.add(getJButtonEditarCliente());
-							jPanelAgregarCliente.add(getJButtonGuardarEdicionCliente());
-							jPanelAgregarCliente.add(getJLabelCodigoCliente());
 							jTextReferencia.setBounds(708, 19, 178, 23);
 							jTextReferencia.setFont(new java.awt.Font("Arial", 0, 16));
+						}
+						{
+							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/editar.png");
+							ImageIcon icono1 = new ImageIcon(urlDeLaImagen);
+							Image img1 = icono1.getImage();
+							Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							jButtonEditarCliente = new JButton();
+							jPanelAgregarCliente.add(jButtonEditarCliente);
+							jButtonEditarCliente.setIcon(new ImageIcon(otraimg1));
+							jButtonEditarCliente.setText("Editar");
+							jButtonEditarCliente.setBounds(198, 90, 130, 30);
+							jButtonEditarCliente.setFont(new java.awt.Font("Arial", 0, 14));
+							jButtonEditarCliente.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonEditarClienteActionPerformed(evt);
+								}
+							});
+
+						}
+						{
+							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/guardar.png");
+							ImageIcon icono1 = new ImageIcon(urlDeLaImagen);
+							Image img1 = icono1.getImage();
+							Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							jButtonGuardarEdicionCliente = new JButton();
+							jPanelAgregarCliente.add(jButtonGuardarEdicionCliente);
+							jButtonGuardarEdicionCliente.setIcon(new ImageIcon(otraimg1));
+							jButtonGuardarEdicionCliente.setText("Guardar edición");
+							jButtonGuardarEdicionCliente.setBounds(358, 90, 181, 30);
+							jButtonGuardarEdicionCliente.setFont(new java.awt.Font("Arial", 0, 14));
+							jButtonGuardarEdicionCliente.setEnabled(false);
+							jButtonGuardarEdicionCliente.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonGuardarEdicionClienteActionPerformed(evt);
+								}
+
+							});
+
+						}
+						{
+							jLabelCodigoCliente = new JLabel();
+							jPanelAgregarCliente.add(jLabelCodigoCliente);
+							jLabelCodigoCliente.setBounds(12, 65, 65, 10);
+
 						}
 					}
 					jTabPestanias.addTab("Reportes", jPanelReportes);
 					jPanelReportes.setFont(new java.awt.Font("Arial", 0, 16));
-					jPanelReportes.add(getJScrollPaneReportesPorFecha(), BorderLayout.SOUTH);
-					jPanelReportes.add(getJPanelCifras(), BorderLayout.NORTH);
+					{
+						jScrollPaneReportesPorFecha = new JScrollPane();
+						jPanelReportes.add(jScrollPaneReportesPorFecha, BorderLayout.SOUTH);
+						jScrollPaneReportesPorFecha.setBounds(82, 316, 740, 197);
+						jScrollPaneReportesPorFecha.setPreferredSize(new java.awt.Dimension(909, 243));
+					}
+					{
+						// Aquí el panel de cifras
+						jPanelCifras = new JPanel();
+						jPanelReportes.add(jPanelCifras, BorderLayout.NORTH);
+						jPanelCifras.setLayout(null);
+						jPanelCifras.setBorder(BorderFactory.createTitledBorder("Cifras"));
+						jPanelCifras.setPreferredSize(new java.awt.Dimension(905, 335));
+						{
+							// Componentes del panel de cifras
+							jLabelTotalPrestado = new JLabel();
+							jPanelCifras.add(jLabelTotalPrestado);
+							jLabelTotalPrestado.setText("Total prestado:");
+							jLabelTotalPrestado.setBounds(17, 30, 211, 23);
+							jLabelTotalPrestado.setFont(new java.awt.Font("Arial", 0, 16));
+
+							jLabelTotalrecibido = new JLabel();
+							jPanelCifras.add(jLabelTotalrecibido);
+							jLabelTotalrecibido.setText("Total recaudado:");
+							jLabelTotalrecibido.setBounds(17, 117, 211, 23);
+							jLabelTotalrecibido.setFont(new java.awt.Font("Arial", 0, 16));
+
+							jTextTotalPrestado = new JTextField();
+							jPanelCifras.add(jTextTotalPrestado);
+							jTextTotalPrestado.setBounds(226, 30, 178, 23);
+							jTextTotalPrestado.setFont(new java.awt.Font("Arial", 0, 16));
+							jTextTotalPrestado.setEditable(false);
+
+							jTextTotalRecaudado = new JTextField();
+							jPanelCifras.add(jTextTotalRecaudado);
+							jTextTotalRecaudado.setBounds(226, 117, 178, 23);
+							jTextTotalRecaudado.setFont(new java.awt.Font("Arial", 0, 16));
+							jTextTotalRecaudado.setEditable(false);
+
+							jLabelInteresesRecaudados = new JLabel();
+							jPanelCifras.add(jLabelInteresesRecaudados);
+							jLabelInteresesRecaudados.setText("Intereses recaudados:");
+							jLabelInteresesRecaudados.setBounds(17, 160, 210, 23);
+							jLabelInteresesRecaudados.setFont(new java.awt.Font("Arial", 0, 16));
+
+							jTextInteresesRecaudados = new JTextField();
+							jPanelCifras.add(jTextInteresesRecaudados);
+							jTextInteresesRecaudados.setBounds(226, 160, 178, 23);
+							jTextInteresesRecaudados.setFont(new java.awt.Font("Arial", 0, 16));
+							jTextInteresesRecaudados.setEditable(false);
+
+							jLabelTotalPrestamosActivos = new JLabel();
+							jPanelCifras.add(jLabelTotalPrestamosActivos);
+							jLabelTotalPrestamosActivos.setText("Total préstamos activos:");
+							jLabelTotalPrestamosActivos.setBounds(17, 247, 210, 23);
+							jLabelTotalPrestamosActivos.setFont(new java.awt.Font("Arial", 0, 16));
+
+							jTextTotalPrestamosActivos = new JTextField();
+							jPanelCifras.add(jTextTotalPrestamosActivos);
+							jTextTotalPrestamosActivos.setBounds(226, 247, 178, 23);
+							jTextTotalPrestamosActivos.setFont(new java.awt.Font("Arial", 0, 16));
+							jTextTotalPrestamosActivos.setEditable(false);
+
+							jLabelTotalPrestamosFinalizados = new JLabel();
+							jPanelCifras.add(jLabelTotalPrestamosFinalizados);
+							jLabelTotalPrestamosFinalizados.setText("Total préstamos finalizados:");
+							jLabelTotalPrestamosFinalizados.setBounds(448, 30, 209, 23);
+							jLabelTotalPrestamosFinalizados.setFont(new java.awt.Font("Arial", 0, 16));
+
+							jTextTotalPrestamosFinalizados = new JTextField();
+							jPanelCifras.add(jTextTotalPrestamosFinalizados);
+							jTextTotalPrestamosFinalizados.setBounds(710, 30, 178, 23);
+							jTextTotalPrestamosFinalizados.setFont(new java.awt.Font("Arial", 0, 16));
+							jTextTotalPrestamosFinalizados.setEditable(false);
+
+							jLabelTotalPrestamosVencidos = new JLabel();
+							jPanelCifras.add(jLabelTotalPrestamosVencidos);
+							jLabelTotalPrestamosVencidos.setText("Total préstamos vencidos:");
+							jLabelTotalPrestamosVencidos.setBounds(448, 73, 212, 23);
+							jLabelTotalPrestamosVencidos.setFont(new java.awt.Font("Arial", 0, 16));
+
+							jTextTotalprestamosVencidos = new JTextField();
+							jPanelCifras.add(jTextTotalprestamosVencidos);
+							jTextTotalprestamosVencidos.setBounds(710, 73, 178, 23);
+							jTextTotalprestamosVencidos.setFont(new java.awt.Font("Arial", 0, 16));
+							jTextTotalprestamosVencidos.setEditable(false);
+
+							jLabelTotalclientesRegistrados = new JLabel();
+							jPanelCifras.add(jLabelTotalclientesRegistrados);
+							jLabelTotalclientesRegistrados.setText("Total clientes registrados:");
+							jLabelTotalclientesRegistrados.setBounds(448, 204, 178, 23);
+							jLabelTotalclientesRegistrados.setFont(new java.awt.Font("Arial", 0, 16));
+
+							jTextTotalClientesactivos = new JTextField();
+							jPanelCifras.add(jTextTotalClientesactivos);
+							jTextTotalClientesactivos.setBounds(710, 247, 178, 23);
+							jTextTotalClientesactivos.setFont(new java.awt.Font("Arial", 0, 16));
+							jTextTotalClientesactivos.setEditable(false);
+
+							jTextTotalclientesRegistrados = new JTextField();
+							jPanelCifras.add(jTextTotalclientesRegistrados);
+							jTextTotalclientesRegistrados.setBounds(710, 204, 178, 23);
+							jTextTotalclientesRegistrados.setFont(new java.awt.Font("Arial", 0, 16));
+							jTextTotalclientesRegistrados.setEditable(false);
+
+							jLabelTotalClientesactivos = new JLabel();
+							jPanelCifras.add(jLabelTotalClientesactivos);
+							jLabelTotalClientesactivos.setText("Total clientes activos:");
+							jLabelTotalClientesactivos.setBounds(448, 247, 178, 23);
+							jLabelTotalClientesactivos.setFont(new java.awt.Font("Arial", 0, 16));
+
+							jLabelTotalAbonosCobrados = new JLabel();
+							jPanelCifras.add(jLabelTotalAbonosCobrados);
+							jLabelTotalAbonosCobrados.setText("Total abonos cobrados:");
+							jLabelTotalAbonosCobrados.setBounds(448, 117, 178, 23);
+							jLabelTotalAbonosCobrados.setFont(new java.awt.Font("Arial", 0, 16));
+
+							jLabelTotalAbonosPendientes = new JLabel();
+							jPanelCifras.add(jLabelTotalAbonosPendientes);
+							jLabelTotalAbonosPendientes.setText("Total abonos pendientes:");
+							jLabelTotalAbonosPendientes.setBounds(448, 160, 178, 23);
+							jLabelTotalAbonosPendientes.setFont(new java.awt.Font("Arial", 0, 16));
+
+							jTextTotalAbonosCobrados = new JTextField();
+							jPanelCifras.add(jTextTotalAbonosCobrados);
+							jTextTotalAbonosCobrados.setBounds(710, 117, 178, 23);
+							jTextTotalAbonosCobrados.setFont(new java.awt.Font("Arial", 0, 16));
+							jTextTotalAbonosCobrados.setEditable(false);
+
+							jTextTotalAbonosPendientes = new JTextField();
+							jPanelCifras.add(jTextTotalAbonosPendientes);
+							jTextTotalAbonosPendientes.setBounds(710, 160, 178, 23);
+							jTextTotalAbonosPendientes.setFont(new java.awt.Font("Arial", 0, 16));
+							jTextTotalAbonosPendientes.setEditable(false);
+
+							jLabelTotalRecaudoPendiente = new JLabel();
+							jPanelCifras.add(jLabelTotalRecaudoPendiente);
+							jLabelTotalRecaudoPendiente.setText("Total recaudo pendiente:");
+							jLabelTotalRecaudoPendiente.setBounds(17, 73, 178, 23);
+							jLabelTotalRecaudoPendiente.setFont(new java.awt.Font("Arial", 0, 16));
+
+							jTextTotalrecaudoPendiente = new JTextField();
+							jPanelCifras.add(jTextTotalrecaudoPendiente);
+							jTextTotalrecaudoPendiente.setBounds(226, 73, 178, 23);
+							jTextTotalrecaudoPendiente.setFont(new java.awt.Font("Arial", 0, 16));
+							jTextTotalrecaudoPendiente.setEditable(false);
+
+							jLabelInteresesPendientesRecaudo = new JLabel();
+							jPanelCifras.add(jLabelInteresesPendientesRecaudo);
+							jLabelInteresesPendientesRecaudo.setText("Interses a recaudar");
+							jLabelInteresesPendientesRecaudo.setBounds(17, 204, 178, 23);
+							jLabelInteresesPendientesRecaudo.setFont(new java.awt.Font("Arial", 0, 16));
+
+							jTextIntersesePendientesRecaudo = new JTextField();
+							jPanelCifras.add(jTextIntersesePendientesRecaudo);
+							jTextIntersesePendientesRecaudo.setBounds(226, 204, 178, 23);
+							jTextIntersesePendientesRecaudo.setFont(new java.awt.Font("Arial", 0, 16));
+							jTextIntersesePendientesRecaudo.setEditable(false);
+
+							jLabelPrestadoPorFecha = new JLabel();
+							jPanelCifras.add(jLabelPrestadoPorFecha);
+							jLabelPrestadoPorFecha.setText("Préstamos por fecha:");
+							jLabelPrestadoPorFecha.setBounds(17, 291, 209, 23);
+							jLabelPrestadoPorFecha.setFont(new java.awt.Font("Arial", 0, 16));
+
+							jLabelAbonosPorFecha = new JLabel();
+							jPanelCifras.add(jLabelAbonosPorFecha);
+							jLabelAbonosPorFecha.setText("Abonos pagados por fecha:");
+							jLabelAbonosPorFecha.setBounds(448, 291, 249, 23);
+							jLabelAbonosPorFecha.setFont(new java.awt.Font("Arial", 0, 16));
+
+							URL urlDeLaImagenBuscar = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/buscar.png");
+							ImageIcon icono1 = new ImageIcon(urlDeLaImagenBuscar);
+							Image img1 = icono1.getImage();
+							Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							jButtonPrestamoPorFecha = new JButton();
+							jPanelCifras.add(jButtonPrestamoPorFecha);
+							jButtonPrestamoPorFecha.setIcon(new ImageIcon(otraimg1));
+							jButtonPrestamoPorFecha.setBounds(357, 282, 49, 38);
+							jButtonPrestamoPorFecha.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonPrestamoPorFechaActionPerformed(evt);
+								}
+							});
+
+							jButtonAbonoPorFecha = new JButton();
+							jPanelCifras.add(jButtonAbonoPorFecha);
+							jButtonAbonoPorFecha.setIcon(new ImageIcon(otraimg1));
+							// jButtonAbonoPorFecha.setText("Buscar");
+							jButtonAbonoPorFecha.setBounds(844, 281, 49, 38);
+							jButtonAbonoPorFecha.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonAbonoPorFechaActionPerformed(evt);
+								}
+							});
+
+							calendarioPrestamosPorfecha = new JDateChooser();
+							calendarioPrestamosPorfecha.setLocale(new Locale("ES", "CO"));
+							calendarioPrestamosPorfecha.setDateFormatString("dd/MM/yyyy");
+							jPanelCifras.add(calendarioPrestamosPorfecha);
+							calendarioPrestamosPorfecha.setBounds(225, 291, 132, 23);
+							calendarioPrestamosPorfecha.setFont(new java.awt.Font("Arial", 0, 16));
+
+							calendarioAbonosPorFecha = new JDateChooser();
+							calendarioAbonosPorFecha.setLocale(new Locale("ES", "CO"));
+							calendarioAbonosPorFecha.setDateFormatString("dd/MM/yyyy");
+							jPanelCifras.add(calendarioAbonosPorFecha);
+							calendarioAbonosPorFecha.setBounds(712, 291, 132, 23);
+							calendarioAbonosPorFecha.setFont(new java.awt.Font("Arial", 0, 16));
+						}
+					}
+
+					jTabPestanias.addTab("Listados", jPaneListados);
+					jPaneListados.setFont(new java.awt.Font("Arial", 0, 16));
+					{
+						// Panel superior
+						jPaneSeleccionListado = new JPanel();
+						jPaneListados.add(jPaneSeleccionListado, BorderLayout.NORTH);
+						jPaneSeleccionListado.setPreferredSize(new java.awt.Dimension(909, 55));
+						jPaneSeleccionListado.setBorder(BorderFactory.createTitledBorder("Listados"));
+						jPaneSeleccionListado.setLayout(null);
+						{
+							// Componentes del panel superior
+							jLabelSeleccioneListado = new JLabel();
+							jPaneSeleccionListado.add(jLabelSeleccioneListado);
+							jLabelSeleccioneListado.setText("Seleccione listado:");
+							jLabelSeleccioneListado.setBounds(12, 19, 172, 25);
+							jLabelSeleccioneListado.setFont(new java.awt.Font("Arial", 0, 16));
+
+							jComboSeleccionListado = new JComboBox();
+							jPaneSeleccionListado.add(jComboSeleccionListado);
+							jComboSeleccionListado.setBounds(155, 20, 316, 23);
+							jComboSeleccionListado.setFont(new java.awt.Font("Arial", 0, 16));
+							jComboSeleccionListado.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jComboSeleccionListadoActionPerformed(evt);
+								}
+							});
+
+							URL urlDeLaImagenpdf = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/pdf.png");
+							ImageIcon icono1 = new ImageIcon(urlDeLaImagenpdf);
+							Image img1 = icono1.getImage();
+							Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							jButtonGenerarPDF = new JButton();
+							jButtonGenerarPDF.setIcon(new ImageIcon(otraimg1));
+							jPaneSeleccionListado.add(jButtonGenerarPDF);
+
+							jButtonGenerarPDF.setText("Generar PDF");
+							jButtonGenerarPDF.setBounds(483, 14, 170, 30);
+							jButtonGenerarPDF.setFont(new java.awt.Font("Arial", 0, 16));
+							jButtonGenerarPDF.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonGenerarPDFActionPerformed(evt);
+								}
+							});
+
+							URL urlDeLaImagenBackup = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/backup.png");
+							ImageIcon iconoBackup = new ImageIcon(urlDeLaImagenBackup);
+							Image imgBackup = iconoBackup.getImage();
+							Image otraimgBackup = imgBackup.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							jButtonBackup = new JButton();
+							jButtonBackup.setIcon(new ImageIcon(otraimgBackup));
+							jPaneSeleccionListado.add(jButtonBackup);
+							jButtonBackup.setText("Copia de seguridad");
+							jButtonBackup.setBounds(664, 14, 229, 30);
+							jButtonBackup.setFont(new java.awt.Font("Arial", 0, 16));
+							jButtonBackup.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonGenerarBackupActionPerformed(evt);
+								}
+							});
+
+						}
+					}
+					{
+						// Panel inferior
+						jPanListaResultados = new JPanel();
+						BorderLayout jPanListaResultadosLayout = new BorderLayout();
+						jPanListaResultados.setLayout(jPanListaResultadosLayout);
+						jPaneListados.add(jPanListaResultados, BorderLayout.SOUTH);
+						jPanListaResultados.setPreferredSize(new java.awt.Dimension(909, 523));
+						jPanListaResultados.setBorder(BorderFactory.createTitledBorder("Resultados"));
+						{
+							// Componentes del panel inferior
+							jScrollPaneResultados = new JScrollPane();
+							jPanListaResultados.add(jScrollPaneResultados, BorderLayout.CENTER);
+						}
+					}
 
 				}
 			}
@@ -674,7 +1103,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			// add your error handling code here
 			e.printStackTrace();
 		}
-	}
+	}// Fin initGUI-------------------------------------------------------
 
 	private void jButtonClienteExisteActionPerformed(ActionEvent evt) {
 
@@ -740,37 +1169,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		limpiarCamposPrestamo();
 	}
 
-	private JButton getJButtonActualizar() {
-		if (jButtonActualizar == null) {
-			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/actualizar.png");
-			ImageIcon icono = new ImageIcon(urlDeLaImagen);
-			Image img = icono.getImage();
-			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			jButtonActualizar = new JButton();
-			jButtonActualizar.setIcon(new ImageIcon(otraimg));
-			jButtonActualizar.setText("Todos");
-			jButtonActualizar.setBounds(757, 125, 130, 30);
-			jButtonActualizar.setFont(new java.awt.Font("Arial", 0, 14));
-			jButtonActualizar.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jButtonActualizarActionPerformed(evt);
-				}
-			});
-		}
-		return jButtonActualizar;
-	}
-
-	/**
-	 * Actualiza la tabla de clientes
-	 * 
-	 * @param evt
-	 */
-	private void jButtonActualizarActionPerformed(ActionEvent evt) {
-
-		actualizaClientes();
-	}
-
-	public void limpiarCamposCliente() {
+	private void limpiarCamposCliente() {
 
 		jTextNombre.setText("");
 		jTextEmpresa.setText("");
@@ -778,13 +1177,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
-	@SuppressWarnings("unchecked")
-	public void limpiarCamposPrestamo() {
+	private void limpiarCamposPrestamo() {
 
 		jTextMonto.setText("");
 		jTextTasaInteres.setText("");
-		@SuppressWarnings("rawtypes")
-		DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+		DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<String>();
 		modelo.addElement("Nada para mostrar");
 		jComboFechasCobro.setModel(modelo);
 		jTextNumeroCuotas.setText("");
@@ -793,31 +1190,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		jLabelNombreCliente.setText("Nombre");
 		jLabelCodigo.setText("Código");
 		jLabelEmpresaResult.setText("Empresa");
+		calendarioPrestamos.setDate(null);
 
 	}
 
-	private JButton getJButtonCalcular() {
-		if (jButtonCalcular == null) {
-			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/calcular.png");
-			ImageIcon icono1 = new ImageIcon(urlDeLaImagen);
-			Image img1 = icono1.getImage();
-			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			jButtonCalcular = new JButton();
-			jButtonCalcular.setIcon(new ImageIcon(otraimg1));
-			jButtonCalcular.setText("Calcular");
-			jButtonCalcular.setBounds(579, 78, 130, 30);
-			jButtonCalcular.setFont(new java.awt.Font("Arial", 0, 14));
-			jButtonCalcular.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					try {
-						jButtonCalcularActionPerformed(evt);
-					} catch (Exception e) {
-						System.out.println(e.getMessage());
-					}
-				}
-			});
-		}
-		return jButtonCalcular;
+	private void limpiarCamposAbono() {
+
+		jTextFieldCodigoAbono.setText("");
+		jTextField1.setText("");
+		calendarioAbonos.setDate(null);
+
 	}
 
 	@SuppressWarnings("unchecked")
@@ -952,46 +1334,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
-	private JButton getJButton2() {
-		if (jButton2 == null) {
-			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/actualizar.png");
-			ImageIcon icono = new ImageIcon(urlDeLaImagen);
-			Image img = icono.getImage();
-			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			jButton2 = new JButton();
-			jButton2.setIcon(new ImageIcon(otraimg));
-			jButton2.setText("Todos");
-			jButton2.setBounds(296, 157, 130, 30);
-			jButton2.setFont(new java.awt.Font("Arial", 0, 14));
-			jButton2.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jButton2ActionPerformed(evt);
-				}
-			});
-		}
-		return jButton2;
-	}
-
-	/**
-	 * Actualiza la tabla de prestamos
-	 * 
-	 * @param evt
-	 */
-	private void jButton2ActionPerformed(ActionEvent evt) {
-
-		actualizaPrestamos();
-	}
-
-	private JLabel getJLabelEmpresaResult() {
-		if (jLabelEmpresaResult == null) {
-			jLabelEmpresaResult = new JLabel();
-			jLabelEmpresaResult.setText("Empresa");
-			jLabelEmpresaResult.setBounds(726, 161, 168, 23);
-			jLabelEmpresaResult.setFont(new java.awt.Font("Arial", 0, 16));
-		}
-		return jLabelEmpresaResult;
-	}
-
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private DefaultComboBoxModel llenaComboPlazos(ArrayList<Date> fechasPago) {
 
@@ -1007,75 +1349,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 		}
 		return modelo;
-
-	}
-
-	private JButton getJButtonBuscarPrestamo() {
-		if (jButtonBuscarPrestamo == null) {
-			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/buscar.png");
-			ImageIcon icono = new ImageIcon(urlDeLaImagen);
-			Image img = icono.getImage();
-			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			ImageIcon otroicon = new ImageIcon(otraimg);
-			jButtonBuscarPrestamo = new JButton(otroicon);
-			jButtonBuscarPrestamo.setText("Buscar");
-			jButtonBuscarPrestamo.setBounds(376, 25, 130, 30);
-			jButtonBuscarPrestamo.setFont(new java.awt.Font("Arial", 0, 14));
-			jButtonBuscarPrestamo.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jButtonBuscarPrestamoActionPerformed(evt);
-				}
-			});
-		}
-		return jButtonBuscarPrestamo;
-	}
-
-	private JButton getJButtonActualizarAbonos() {
-		if (jButtonActualizarAbonos == null) {
-			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/actualizar.png");
-			ImageIcon icono = new ImageIcon(urlDeLaImagen);
-			Image img = icono.getImage();
-			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			jButtonActualizarAbonos = new JButton();
-			jButtonActualizarAbonos.setIcon(new ImageIcon(otraimg));
-			jButtonActualizarAbonos.setText("Todos");
-			jButtonActualizarAbonos.setBounds(381, 147, 130, 30);
-			jButtonActualizarAbonos.setFont(new java.awt.Font("Arial", 0, 14));
-			jButtonActualizarAbonos.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jButtonActualizarAbonosActionPerformed(evt);
-				}
-			});
-		}
-		return jButtonActualizarAbonos;
-	}
-
-	private JLabel getJLabelCodigoAbono() {
-		if (jLabelCodigoAbono == null) {
-			jLabelCodigoAbono = new JLabel();
-			jLabelCodigoAbono.setText("Código abono:");
-			jLabelCodigoAbono.setBounds(381, 78, 178, 23);
-			jLabelCodigoAbono.setFont(new java.awt.Font("Arial", 0, 16));
-		}
-		return jLabelCodigoAbono;
-	}
-
-	private JTextField getJTextFieldCodigoAbono() {
-		if (jTextFieldCodigoAbono == null) {
-			jTextFieldCodigoAbono = new JTextField();
-			jTextFieldCodigoAbono.setBounds(496, 78, 71, 23);
-		}
-		return jTextFieldCodigoAbono;
-	}
-
-	/**
-	 * Actualiza la tabla de abonos
-	 * 
-	 * @param evt
-	 */
-	private void jButtonActualizarAbonosActionPerformed(ActionEvent evt) {
-
-		actualizaAbonos();
 
 	}
 
@@ -1114,6 +1387,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				actualizaReportes();
 				JOptionPane.showMessageDialog(this, "Abono guardado correctamente", "Información",
 						JOptionPane.INFORMATION_MESSAGE);
+				limpiarCamposAbono();
 			}
 
 		} else {
@@ -1123,57 +1397,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	}
 
 	private void jButtonCancelarAbonoActionPerformed(ActionEvent e) {
-
-	}
-
-	private JButton getJButtonAbonosPagados() {
-		if (jButtonAbonosPagados == null) {
-			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/pagado.png");
-			ImageIcon icono = new ImageIcon(urlDeLaImagen);
-			Image img = icono.getImage();
-			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			jButtonAbonosPagados = new JButton();
-			jButtonAbonosPagados.setIcon(new ImageIcon(otraimg));
-			jButtonAbonosPagados.setText("Pagados");
-			jButtonAbonosPagados.setBounds(567, 147, 145, 30);
-			jButtonAbonosPagados.setFont(new java.awt.Font("Arial", 0, 14));
-			jButtonAbonosPagados.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jButtonAbonosPagadosActionPerformed(evt);
-				}
-			});
-		}
-		return jButtonAbonosPagados;
-	}
-
-	private JButton getJButtonAbonosPendientes() {
-		if (jButtonAbonosPendientes == null) {
-			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/noPagado.png");
-			ImageIcon icono = new ImageIcon(urlDeLaImagen);
-			Image img = icono.getImage();
-			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			jButtonAbonosPendientes = new JButton();
-			jButtonAbonosPendientes.setIcon(new ImageIcon(otraimg));
-			jButtonAbonosPendientes.setText("Pendientes");
-			jButtonAbonosPendientes.setBounds(738, 147, 150, 30);
-			jButtonAbonosPendientes.setFont(new java.awt.Font("Arial", 0, 14));
-			jButtonAbonosPendientes.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jButtonAbonosPendientesActionPerformed(evt);
-				}
-			});
-		}
-		return jButtonAbonosPendientes;
-	}
-
-	private void jButtonAbonosPagadosActionPerformed(ActionEvent evt) {
-
-		actualizaAbonosPagados();
-	}
-
-	private void jButtonAbonosPendientesActionPerformed(ActionEvent evt) {
-
-		actualizaAbonosPendientes();
+		limpiarCamposAbono();
 	}
 
 	// -----------------Tablas------------------------------------------------------
@@ -1181,19 +1405,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 		AbonoDAO miAbono = new AbonoDAO();
 		String informacionAbonos[][] = miAbono.obtenerMatrizAbonos();
-		String titulos[] = miAbono.getColumnas();
-		jTableAbonosRecibidos = new JTable(informacionAbonos, titulos);
-		jScrollAbonosRecibidos.setViewportView(jTableAbonosRecibidos);
-		jTableAbonosRecibidos.setFont(new java.awt.Font("Arial", 0, 16));
-		JTableHeader th = jTableAbonosRecibidos.getTableHeader();
-		th.setFont(new java.awt.Font("Arial", 0, 16));
-		ajustaColumnasAContenido(jTableAbonosRecibidos);
-	}
-
-	private void actualizaAbonosPendientes() {
-
-		AbonoDAO miAbono = new AbonoDAO();
-		String informacionAbonos[][] = miAbono.obtenerMatrizAbonosPendientes();
 		String titulos[] = miAbono.getColumnas();
 		jTableAbonosRecibidos = new JTable(informacionAbonos, titulos);
 		jScrollAbonosRecibidos.setViewportView(jTableAbonosRecibidos);
@@ -1289,25 +1500,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		} else {
 			System.out.println("Lista de abonos no encontrada");
 			JOptionPane.showMessageDialog(this, "Préstamo no encontrado", "Alerta", JOptionPane.WARNING_MESSAGE);
-		}
-	}
-
-	private void actualizaPrestamoVencido() {
-
-		PrestamoDAO miPrestamo = new PrestamoDAO();
-		String informacionAbonos[][] = miPrestamo.obtenerMatrizPrestamosVencidos();
-		if (informacionAbonos != null) {
-			String titulos[] = miPrestamo.getColumnas();
-			jTablePrestamos = new JTable(informacionAbonos, titulos);
-			jScrollReportes.setViewportView(jTablePrestamos);
-			jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 16));
-			JTableHeader th = jTablePrestamos.getTableHeader();
-			th.setFont(new java.awt.Font("Arial", 0, 16));
-			ajustaColumnasAContenido(jTablePrestamos);
-
-		} else {
-			System.out.println("Lista de abonos no encontrada");
-			JOptionPane.showMessageDialog(this, "Préstamos no encontrados", "Alerta", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 
@@ -1517,402 +1709,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}// Fin validarCamposPrestamo
 
-	private JButton getJButtonPrestamosPendientes() {
-		if (jButtonPrestamosPendientes == null) {
-			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/noPagado.png");
-			ImageIcon icono = new ImageIcon(urlDeLaImagen);
-			Image img = icono.getImage();
-			Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			jButtonPrestamosPendientes = new JButton();
-			jButtonPrestamosPendientes.setIcon(new ImageIcon(otraimg));
-			jButtonPrestamosPendientes.setText("Vencidos");
-			jButtonPrestamosPendientes.setFont(new java.awt.Font("Arial", 0, 14));
-			jButtonPrestamosPendientes.setBounds(431, 157, 150, 30);
-			jButtonPrestamosPendientes.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jButtonPrestamosPendientesActionPerformed(evt);
-				}
-			});
-		}
-		return jButtonPrestamosPendientes;
-	}
-
-	private void jButtonPrestamosPendientesActionPerformed(ActionEvent evt) {
-
-		actualizaPrestamoVencido();
-	}
-
-	private JPanel getJPanelCifras() {
-		if (jPanelCifras == null) {
-			jPanelCifras = new JPanel();
-			jPanelCifras.setLayout(null);
-			jPanelCifras.setBorder(BorderFactory.createTitledBorder("Cifras"));
-			jPanelCifras.setPreferredSize(new java.awt.Dimension(905, 335));
-			jPanelCifras.add(getJLabelTotalPrestado());
-			jPanelCifras.add(getJLabelTotalrecibido());
-			jPanelCifras.add(getJTextTotalPrestado());
-			jPanelCifras.add(getJTextTotalRecaudado());
-			jPanelCifras.add(getJLabelInteresesRecaudados());
-			jPanelCifras.add(getJTextInteresesRecaudados());
-			jPanelCifras.add(getJLabelTotalPrestamosActivos());
-			jPanelCifras.add(getJTextTotalPrestamosActivos());
-			jPanelCifras.add(getJLabelTotalPrestamosFinalizados());
-			jPanelCifras.add(getJTextTotalPrestamosFinalizados());
-			jPanelCifras.add(getJLabelTotalPrestamosVencidos());
-			jPanelCifras.add(getJTextTotalprestamosVencidos());
-			jPanelCifras.add(getJLabelTotalclientesRegistrados());
-			jPanelCifras.add(getJTextTotalClientesactivos());
-			jPanelCifras.add(getJTextTotalclientesRegistrados());
-			jPanelCifras.add(getJLabelTotalClientesactivos());
-			jPanelCifras.add(getJLabelTotalAbonosCobrados());
-			jPanelCifras.add(getJLabelTotalAbonosPendientes());
-			jPanelCifras.add(getJTextTotalAbonosCobrados());
-			jPanelCifras.add(getJTextTotalAbonosPendientes());
-			jPanelCifras.add(getJLabelTotalRecaudoPendiente());
-			jPanelCifras.add(getJTextTotalrecaudoPendiente());
-			jPanelCifras.add(getJLabelInteresesPendientesRecaudo());
-			jPanelCifras.add(getJTextIntersesePendientesRecaudo());
-			jPanelCifras.add(getJLabelPrestadoPorFecha());
-			jPanelCifras.add(getJLabelAbonosPorFecha());
-			jPanelCifras.add(getJButtonPrestamoPorFecha());
-			jPanelCifras.add(getJButtonAbonoPorFecha());
-
-			calendarioPrestamosPorfecha = new JDateChooser();
-			calendarioPrestamosPorfecha.setLocale(new Locale("ES", "CO"));
-			calendarioPrestamosPorfecha.setDateFormatString("dd/MM/yyyy");
-			jPanelCifras.add(calendarioPrestamosPorfecha);
-			calendarioPrestamosPorfecha.setBounds(225, 291, 132, 23);
-			calendarioPrestamosPorfecha.setFont(new java.awt.Font("Arial", 0, 16));
-
-			calendarioAbonosPorFecha = new JDateChooser();
-			calendarioAbonosPorFecha.setLocale(new Locale("ES", "CO"));
-			calendarioAbonosPorFecha.setDateFormatString("dd/MM/yyyy");
-			jPanelCifras.add(calendarioAbonosPorFecha);
-			calendarioAbonosPorFecha.setBounds(712, 291, 132, 23);
-			calendarioAbonosPorFecha.setFont(new java.awt.Font("Arial", 0, 16));
-		}
-		return jPanelCifras;
-	}
-
-	private JLabel getJLabelTotalPrestado() {
-		if (jLabelTotalPrestado == null) {
-			jLabelTotalPrestado = new JLabel();
-			jLabelTotalPrestado.setText("Total prestado:");
-			jLabelTotalPrestado.setBounds(17, 30, 211, 23);
-			jLabelTotalPrestado.setFont(new java.awt.Font("Arial", 0, 16));
-		}
-		return jLabelTotalPrestado;
-	}
-
-	private JLabel getJLabelTotalrecibido() {
-		if (jLabelTotalrecibido == null) {
-			jLabelTotalrecibido = new JLabel();
-			jLabelTotalrecibido.setText("Total recaudado:");
-			jLabelTotalrecibido.setBounds(17, 117, 211, 23);
-			jLabelTotalrecibido.setFont(new java.awt.Font("Arial", 0, 16));
-		}
-		return jLabelTotalrecibido;
-	}
-
-	private JTextField getJTextTotalPrestado() {
-		if (jTextTotalPrestado == null) {
-			jTextTotalPrestado = new JTextField();
-			jTextTotalPrestado.setBounds(226, 30, 178, 23);
-			jTextTotalPrestado.setFont(new java.awt.Font("Arial", 0, 16));
-			jTextTotalPrestado.setEditable(false);
-		}
-		return jTextTotalPrestado;
-	}
-
-	private JTextField getJTextTotalRecaudado() {
-		if (jTextTotalRecaudado == null) {
-			jTextTotalRecaudado = new JTextField();
-			jTextTotalRecaudado.setBounds(226, 117, 178, 23);
-			jTextTotalRecaudado.setFont(new java.awt.Font("Arial", 0, 16));
-			jTextTotalRecaudado.setEditable(false);
-		}
-		return jTextTotalRecaudado;
-	}
-
-	private JLabel getJLabelInteresesRecaudados() {
-		if (jLabelInteresesRecaudados == null) {
-			jLabelInteresesRecaudados = new JLabel();
-			jLabelInteresesRecaudados.setText("Intereses recaudados:");
-			jLabelInteresesRecaudados.setBounds(17, 160, 210, 23);
-			jLabelInteresesRecaudados.setFont(new java.awt.Font("Arial", 0, 16));
-		}
-		return jLabelInteresesRecaudados;
-	}
-
-	private JTextField getJTextInteresesRecaudados() {
-		if (jTextInteresesRecaudados == null) {
-			jTextInteresesRecaudados = new JTextField();
-			jTextInteresesRecaudados.setBounds(226, 160, 178, 23);
-			jTextInteresesRecaudados.setFont(new java.awt.Font("Arial", 0, 16));
-			jTextInteresesRecaudados.setEditable(false);
-		}
-		return jTextInteresesRecaudados;
-	}
-
-	private JLabel getJLabelTotalPrestamosActivos() {
-		if (jLabelTotalPrestamosActivos == null) {
-			jLabelTotalPrestamosActivos = new JLabel();
-			jLabelTotalPrestamosActivos.setText("Total préstamos activos:");
-			jLabelTotalPrestamosActivos.setBounds(17, 247, 210, 23);
-			jLabelTotalPrestamosActivos.setFont(new java.awt.Font("Arial", 0, 16));
-		}
-		return jLabelTotalPrestamosActivos;
-	}
-
-	private JTextField getJTextTotalPrestamosActivos() {
-		if (jTextTotalPrestamosActivos == null) {
-			jTextTotalPrestamosActivos = new JTextField();
-			jTextTotalPrestamosActivos.setBounds(226, 247, 178, 23);
-			jTextTotalPrestamosActivos.setFont(new java.awt.Font("Arial", 0, 16));
-			jTextTotalPrestamosActivos.setEditable(false);
-		}
-		return jTextTotalPrestamosActivos;
-	}
-
-	private JLabel getJLabelTotalPrestamosFinalizados() {
-		if (jLabelTotalPrestamosFinalizados == null) {
-			jLabelTotalPrestamosFinalizados = new JLabel();
-			jLabelTotalPrestamosFinalizados.setText("Total préstamos finalizados:");
-			jLabelTotalPrestamosFinalizados.setBounds(448, 30, 209, 23);
-			jLabelTotalPrestamosFinalizados.setFont(new java.awt.Font("Arial", 0, 16));
-		}
-		return jLabelTotalPrestamosFinalizados;
-	}
-
-	private JTextField getJTextTotalPrestamosFinalizados() {
-		if (jTextTotalPrestamosFinalizados == null) {
-			jTextTotalPrestamosFinalizados = new JTextField();
-			jTextTotalPrestamosFinalizados.setBounds(710, 30, 178, 23);
-			jTextTotalPrestamosFinalizados.setFont(new java.awt.Font("Arial", 0, 16));
-			jTextTotalPrestamosFinalizados.setEditable(false);
-		}
-		return jTextTotalPrestamosFinalizados;
-	}
-
-	private JLabel getJLabelTotalPrestamosVencidos() {
-		if (jLabelTotalPrestamosVencidos == null) {
-			jLabelTotalPrestamosVencidos = new JLabel();
-			jLabelTotalPrestamosVencidos.setText("Total préstamos vencidos:");
-			jLabelTotalPrestamosVencidos.setBounds(448, 73, 212, 23);
-			jLabelTotalPrestamosVencidos.setFont(new java.awt.Font("Arial", 0, 16));
-		}
-		return jLabelTotalPrestamosVencidos;
-	}
-
-	private JTextField getJTextTotalprestamosVencidos() {
-		if (jTextTotalprestamosVencidos == null) {
-			jTextTotalprestamosVencidos = new JTextField();
-			jTextTotalprestamosVencidos.setBounds(710, 73, 178, 23);
-			jTextTotalprestamosVencidos.setFont(new java.awt.Font("Arial", 0, 16));
-			jTextTotalprestamosVencidos.setEditable(false);
-		}
-		return jTextTotalprestamosVencidos;
-	}
-
-	private JLabel getJLabelTotalclientesRegistrados() {
-		if (jLabelTotalclientesRegistrados == null) {
-			jLabelTotalclientesRegistrados = new JLabel();
-			jLabelTotalclientesRegistrados.setText("Total clientes registrados:");
-			jLabelTotalclientesRegistrados.setBounds(448, 204, 178, 23);
-			jLabelTotalclientesRegistrados.setFont(new java.awt.Font("Arial", 0, 16));
-		}
-		return jLabelTotalclientesRegistrados;
-	}
-
-	private JTextField getJTextTotalClientesactivos() {
-		if (jTextTotalClientesactivos == null) {
-			jTextTotalClientesactivos = new JTextField();
-			jTextTotalClientesactivos.setBounds(710, 247, 178, 23);
-			jTextTotalClientesactivos.setFont(new java.awt.Font("Arial", 0, 16));
-			jTextTotalClientesactivos.setEditable(false);
-		}
-		return jTextTotalClientesactivos;
-	}
-
-	private JTextField getJTextTotalclientesRegistrados() {
-		if (jTextTotalclientesRegistrados == null) {
-			jTextTotalclientesRegistrados = new JTextField();
-			jTextTotalclientesRegistrados.setBounds(710, 204, 178, 23);
-			jTextTotalclientesRegistrados.setFont(new java.awt.Font("Arial", 0, 16));
-			jTextTotalclientesRegistrados.setEditable(false);
-		}
-		return jTextTotalclientesRegistrados;
-	}
-
-	private JLabel getJLabelTotalClientesactivos() {
-		if (jLabelTotalClientesactivos == null) {
-			jLabelTotalClientesactivos = new JLabel();
-			jLabelTotalClientesactivos.setText("Total clientes activos:");
-			jLabelTotalClientesactivos.setBounds(448, 247, 178, 23);
-			jLabelTotalClientesactivos.setFont(new java.awt.Font("Arial", 0, 16));
-		}
-		return jLabelTotalClientesactivos;
-	}
-
-	private JLabel getJLabelTotalAbonosCobrados() {
-		if (jLabelTotalAbonosCobrados == null) {
-			jLabelTotalAbonosCobrados = new JLabel();
-			jLabelTotalAbonosCobrados.setText("Total abonos cobrados:");
-			jLabelTotalAbonosCobrados.setBounds(448, 117, 178, 23);
-			jLabelTotalAbonosCobrados.setFont(new java.awt.Font("Arial", 0, 16));
-		}
-		return jLabelTotalAbonosCobrados;
-	}
-
-	private JLabel getJLabelTotalAbonosPendientes() {
-		if (jLabelTotalAbonosPendientes == null) {
-			jLabelTotalAbonosPendientes = new JLabel();
-			jLabelTotalAbonosPendientes.setText("Total abonos pendientes:");
-			jLabelTotalAbonosPendientes.setBounds(448, 160, 178, 23);
-			jLabelTotalAbonosPendientes.setFont(new java.awt.Font("Arial", 0, 16));
-		}
-		return jLabelTotalAbonosPendientes;
-	}
-
-	private JTextField getJTextTotalAbonosCobrados() {
-		if (jTextTotalAbonosCobrados == null) {
-			jTextTotalAbonosCobrados = new JTextField();
-			jTextTotalAbonosCobrados.setBounds(710, 117, 178, 23);
-			jTextTotalAbonosCobrados.setFont(new java.awt.Font("Arial", 0, 16));
-			jTextTotalAbonosCobrados.setEditable(false);
-		}
-		return jTextTotalAbonosCobrados;
-	}
-
-	private JTextField getJTextTotalAbonosPendientes() {
-		if (jTextTotalAbonosPendientes == null) {
-			jTextTotalAbonosPendientes = new JTextField();
-			jTextTotalAbonosPendientes.setBounds(710, 160, 178, 23);
-			jTextTotalAbonosPendientes.setFont(new java.awt.Font("Arial", 0, 16));
-			jTextTotalAbonosPendientes.setEditable(false);
-		}
-		return jTextTotalAbonosPendientes;
-	}
-
-	private JLabel getJLabelTotalRecaudoPendiente() {
-		if (jLabelTotalRecaudoPendiente == null) {
-			jLabelTotalRecaudoPendiente = new JLabel();
-			jLabelTotalRecaudoPendiente.setText("Total recaudo pendiente:");
-			jLabelTotalRecaudoPendiente.setBounds(17, 73, 178, 23);
-			jLabelTotalRecaudoPendiente.setFont(new java.awt.Font("Arial", 0, 16));
-		}
-		return jLabelTotalRecaudoPendiente;
-	}
-
-	private JTextField getJTextTotalrecaudoPendiente() {
-		if (jTextTotalrecaudoPendiente == null) {
-			jTextTotalrecaudoPendiente = new JTextField();
-			jTextTotalrecaudoPendiente.setBounds(226, 73, 178, 23);
-			jTextTotalrecaudoPendiente.setFont(new java.awt.Font("Arial", 0, 16));
-			jTextTotalrecaudoPendiente.setEditable(false);
-		}
-		return jTextTotalrecaudoPendiente;
-	}
-
-	private JLabel getJLabelInteresesPendientesRecaudo() {
-		if (jLabelInteresesPendientesRecaudo == null) {
-			jLabelInteresesPendientesRecaudo = new JLabel();
-			jLabelInteresesPendientesRecaudo.setText("Interses a recaudar");
-			jLabelInteresesPendientesRecaudo.setBounds(17, 204, 178, 23);
-			jLabelInteresesPendientesRecaudo.setFont(new java.awt.Font("Arial", 0, 16));
-		}
-		return jLabelInteresesPendientesRecaudo;
-	}
-
-	private JTextField getJTextIntersesePendientesRecaudo() {
-		if (jTextIntersesePendientesRecaudo == null) {
-			jTextIntersesePendientesRecaudo = new JTextField();
-			jTextIntersesePendientesRecaudo.setBounds(226, 204, 178, 23);
-			jTextIntersesePendientesRecaudo.setFont(new java.awt.Font("Arial", 0, 16));
-			jTextIntersesePendientesRecaudo.setEditable(false);
-		}
-		return jTextIntersesePendientesRecaudo;
-	}
-
-	private JScrollPane getJScrollPaneReportesPorFecha() {
-		if (jScrollPaneReportesPorFecha == null) {
-			jScrollPaneReportesPorFecha = new JScrollPane();
-			jScrollPaneReportesPorFecha.setBounds(82, 316, 740, 197);
-			jScrollPaneReportesPorFecha.setPreferredSize(new java.awt.Dimension(905, 214));
-			jScrollPaneReportesPorFecha.setViewportView(getJTableReportesPorFecha());
-		}
-		return jScrollPaneReportesPorFecha;
-	}
-
-	private JTable getJTableReportesPorFecha() {
-		if (jTableReportesPorFecha == null) {
-			jTableReportesPorFecha = new JTable();
-		}
-		return jTableReportesPorFecha;
-	}
-
-	private JLabel getJLabelPrestadoPorFecha() {
-		if (jLabelPrestadoPorFecha == null) {
-			jLabelPrestadoPorFecha = new JLabel();
-			jLabelPrestadoPorFecha.setText("Préstamos por fecha:");
-			jLabelPrestadoPorFecha.setBounds(17, 291, 209, 23);
-			jLabelPrestadoPorFecha.setFont(new java.awt.Font("Arial", 0, 16));
-		}
-		return jLabelPrestadoPorFecha;
-	}
-
-	private JLabel getJLabelAbonosPorFecha() {
-		if (jLabelAbonosPorFecha == null) {
-			jLabelAbonosPorFecha = new JLabel();
-			jLabelAbonosPorFecha.setText("Abonos pagados por fecha:");
-			jLabelAbonosPorFecha.setBounds(448, 291, 249, 23);
-			jLabelAbonosPorFecha.setFont(new java.awt.Font("Arial", 0, 16));
-		}
-		return jLabelAbonosPorFecha;
-	}
-
-	private JButton getJButtonPrestamoPorFecha() {
-		if (jButtonPrestamoPorFecha == null) {
-			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/buscar.png");
-			ImageIcon icono1 = new ImageIcon(urlDeLaImagen);
-			Image img1 = icono1.getImage();
-			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			jButtonPrestamoPorFecha = new JButton();
-			jButtonPrestamoPorFecha.setIcon(new ImageIcon(otraimg1));
-			jButtonPrestamoPorFecha.setBounds(357, 282, 49, 38);
-			jButtonPrestamoPorFecha.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jButtonPrestamoPorFechaActionPerformed(evt);
-				}
-			});
-		}
-		return jButtonPrestamoPorFecha;
-	}
-
-	private JButton getJButtonAbonoPorFecha() {
-		if (jButtonAbonoPorFecha == null) {
-			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/buscar.png");
-			ImageIcon icono1 = new ImageIcon(urlDeLaImagen);
-			Image img1 = icono1.getImage();
-			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			jButtonAbonoPorFecha = new JButton();
-			jButtonAbonoPorFecha.setIcon(new ImageIcon(otraimg1));
-			// jButtonAbonoPorFecha.setText("Buscar");
-			jButtonAbonoPorFecha.setBounds(844, 281, 49, 38);
-			jButtonAbonoPorFecha.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jButtonAbonoPorFechaActionPerformed(evt);
-				}
-			});
-		}
-		return jButtonAbonoPorFecha;
-	}
-
 	private void jButtonPrestamoPorFechaActionPerformed(ActionEvent evt) {
 
 		Date fechaIngresada = calendarioPrestamosPorfecha.getDate();
 		if (fechaIngresada != null) {
 			actualizaPrestamosPorFecha();
+			calendarioPrestamosPorfecha.setDate(null);
 		} else {
 			JOptionPane.showMessageDialog(this, "Debe especificar una fecha para la búsqueda", "Alerta",
 					JOptionPane.WARNING_MESSAGE);
@@ -1922,9 +1724,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private void jButtonAbonoPorFechaActionPerformed(ActionEvent evt) {
 
-		Date fechaIngresada = calendarioPrestamosPorfecha.getDate();
+		Date fechaIngresada = calendarioAbonosPorFecha.getDate();
 		if (fechaIngresada != null) {
 			actualizaAbonosPorFecha();
+			calendarioAbonosPorFecha.setDate(null);
 		} else {
 			JOptionPane.showMessageDialog(this, "Debe especificar una fecha para la búsqueda", "Alerta",
 					JOptionPane.WARNING_MESSAGE);
@@ -1932,30 +1735,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
-	private JMenu getJMenuBackup() {
-		if (jMenuBackup == null) {
-			jMenuBackup = new JMenu();
-			jMenuBackup.setText("Opciones");
-			jMenuBackup.add(getJMenuItemBackup());
+	private void llenaComboListados() {
 
-		}
-		return jMenuBackup;
+		ComboBoxModel<String> jComboListadosModel = new DefaultComboBoxModel<String>(
+				new String[] { seleccioneUno, listaClientes, listaClientesAlfa, listaClientesActivos,
+						listaClientesNoActivos, listaPrestamos, listaPrestamosPendientes, listaPrestamosPagados,
+						listaPrestamosVencidos, listaAbonos, listaAbonosPendientes, listaAbonosPagados });
+		jComboSeleccionListado.setModel(jComboListadosModel);
+
 	}
 
-	private JMenuItem getJMenuItemBackup() {
-		if (jMenuItemBackup == null) {
-			jMenuItemBackup = new JMenuItem();
-			jMenuItemBackup.setText("Crear copia de seguridad");
-			jMenuItemBackup.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jMenuItemBackupActionPerformed(evt);
-				}
-			});
-		}
-		return jMenuItemBackup;
-	}
-
-	private void jMenuItemBackupActionPerformed(ActionEvent evt) {
+	private void generarBackup() {
 
 		// configuracion de la fecha actual
 		Calendar c = Calendar.getInstance();
@@ -1979,20 +1769,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		}
 	}
 
-	private JMenuItem getJMenuItemReporteClientes() {
-		if (jMenuItemReporteClientes == null) {
-			jMenuItemReporteClientes = new JMenuItem();
-			jMenuItemReporteClientes.setText("Reporte de clientes");
-			jMenuItemReporteClientes.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jMenuItemReporteClientesActionPerformed(evt);
-				}
-			});
-		}
-		return jMenuItemReporteClientes;
-	}
-
-	private void jMenuItemReporteClientesActionPerformed(ActionEvent evt) {
+	private void generarReporteClientes() {
 		// configuracion de la fecha actual
 		// Creamos un objeto de la clase Calendar.
 		Calendar fecha = new GregorianCalendar();
@@ -2024,6 +1801,102 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			ejemplo.abrirPDF();
 	}
 
+	private void generarReporteClientesAlfa() {
+		// configuracion de la fecha actual
+		// Creamos un objeto de la clase Calendar.
+		Calendar fecha = new GregorianCalendar();
+		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
+		// Usando el método get y el parámetro correspondiente.
+		int anio = fecha.get(Calendar.YEAR);
+		int mes = fecha.get(Calendar.MONTH);
+		int dia = fecha.get(Calendar.DAY_OF_MONTH);
+		int hora = fecha.get(Calendar.HOUR_OF_DAY);
+		int minuto = fecha.get(Calendar.MINUTE);
+		int segundo = fecha.get(Calendar.SECOND);
+
+		String mesS = concatenaCero(mes + 1);
+		String diaS = concatenaCero(dia);
+		String horaS = concatenaCero(hora);
+		String minutoS = concatenaCero(minuto);
+		String segundoS = concatenaCero(segundo);
+
+		String strNombrePDF = "ReporteClientesAlfa.pdf";
+		String strTituloPDF = "Reporte de clientes registrados ordenados alfabéticamente, generado el: " + diaS + "/"
+				+ mesS + "/" + anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+		ReporteClientesAlfa ejemplo = new ReporteClientesAlfa(strTituloPDF, strNombrePDF);
+		// Preguntar al usuario si desea abrir el documento PDF
+		int respuesta = JOptionPane.showConfirmDialog(null,
+				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		// Si la respuesta es SI, abrirlo
+		if (respuesta == JOptionPane.YES_OPTION)
+			ejemplo.abrirPDF();
+	}
+
+	private void generarReporteClientesActivos() {
+		// configuracion de la fecha actual
+		// Creamos un objeto de la clase Calendar.
+		Calendar fecha = new GregorianCalendar();
+		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
+		// Usando el método get y el parámetro correspondiente.
+		int anio = fecha.get(Calendar.YEAR);
+		int mes = fecha.get(Calendar.MONTH);
+		int dia = fecha.get(Calendar.DAY_OF_MONTH);
+		int hora = fecha.get(Calendar.HOUR_OF_DAY);
+		int minuto = fecha.get(Calendar.MINUTE);
+		int segundo = fecha.get(Calendar.SECOND);
+
+		String mesS = concatenaCero(mes + 1);
+		String diaS = concatenaCero(dia);
+		String horaS = concatenaCero(hora);
+		String minutoS = concatenaCero(minuto);
+		String segundoS = concatenaCero(segundo);
+
+		String strNombrePDF = "ReporteClientesActivos.pdf";
+		String strTituloPDF = "Reporte de clientes activos registrados, generado el: " + diaS + "/" + mesS + "/" + anio
+				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+		ReporteClientesActivos ejemplo = new ReporteClientesActivos(strTituloPDF, strNombrePDF);
+		// Preguntar al usuario si desea abrir el documento PDF
+		int respuesta = JOptionPane.showConfirmDialog(null,
+				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		// Si la respuesta es SI, abrirlo
+		if (respuesta == JOptionPane.YES_OPTION)
+			ejemplo.abrirPDF();
+	}
+
+	private void generarReporteClientesNOActivos() {
+		// configuracion de la fecha actual
+		// Creamos un objeto de la clase Calendar.
+		Calendar fecha = new GregorianCalendar();
+		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
+		// Usando el método get y el parámetro correspondiente.
+		int anio = fecha.get(Calendar.YEAR);
+		int mes = fecha.get(Calendar.MONTH);
+		int dia = fecha.get(Calendar.DAY_OF_MONTH);
+		int hora = fecha.get(Calendar.HOUR_OF_DAY);
+		int minuto = fecha.get(Calendar.MINUTE);
+		int segundo = fecha.get(Calendar.SECOND);
+
+		String mesS = concatenaCero(mes + 1);
+		String diaS = concatenaCero(dia);
+		String horaS = concatenaCero(hora);
+		String minutoS = concatenaCero(minuto);
+		String segundoS = concatenaCero(segundo);
+
+		String strNombrePDF = "ReporteClientesNOActivos.pdf";
+		String strTituloPDF = "Reporte de clientes no activos registrados, generado el: " + diaS + "/" + mesS + "/"
+				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+		ReporteClientesNOActivos ejemplo = new ReporteClientesNOActivos(strTituloPDF, strNombrePDF);
+		// Preguntar al usuario si desea abrir el documento PDF
+		int respuesta = JOptionPane.showConfirmDialog(null,
+				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		// Si la respuesta es SI, abrirlo
+		if (respuesta == JOptionPane.YES_OPTION)
+			ejemplo.abrirPDF();
+	}
+
 	public String concatenaCero(int parametro) {
 		String resultado = "";
 		if (parametro < 10) {
@@ -2034,20 +1907,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		return resultado;
 	}
 
-	private JMenuItem getJMenuItemReportePrestamos() {
-		if (jMenuItemReportePrestamos == null) {
-			jMenuItemReportePrestamos = new JMenuItem();
-			jMenuItemReportePrestamos.setText("Reporte de préstamos");
-			jMenuItemReportePrestamos.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jMenuItemReportePrestamosActionPerformed(evt);
-				}
-			});
-		}
-		return jMenuItemReportePrestamos;
-	}
-
-	private void jMenuItemReportePrestamosActionPerformed(ActionEvent evt) {
+	private void generarReportePrestamos() {
 
 		// configuracion de la fecha actual
 		// Creamos un objeto de la clase Calendar.
@@ -2081,20 +1941,109 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
-	private JMenuItem getJMenuItemReporteAbonos() {
-		if (jMenuItemReporteAbonos == null) {
-			jMenuItemReporteAbonos = new JMenuItem();
-			jMenuItemReporteAbonos.setText("Reporte de abonos");
-			jMenuItemReporteAbonos.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jMenuItemReporteAbonosActionPerformed(evt);
-				}
-			});
-		}
-		return jMenuItemReporteAbonos;
+	private void generarReportePrestamosPendientes() {
+
+		// configuracion de la fecha actual
+		// Creamos un objeto de la clase Calendar.
+		Calendar fecha = new GregorianCalendar();
+		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
+		// Usando el método get y el parámetro correspondiente.
+		int anio = fecha.get(Calendar.YEAR);
+		int mes = fecha.get(Calendar.MONTH);
+		int dia = fecha.get(Calendar.DAY_OF_MONTH);
+		int hora = fecha.get(Calendar.HOUR_OF_DAY);
+		int minuto = fecha.get(Calendar.MINUTE);
+		int segundo = fecha.get(Calendar.SECOND);
+
+		String mesS = concatenaCero(mes + 1);
+		String diaS = concatenaCero(dia);
+		String horaS = concatenaCero(hora);
+		String minutoS = concatenaCero(minuto);
+		String segundoS = concatenaCero(segundo);
+
+		String strNombrePDF = "ReportePrestamosPendientes.pdf";
+		String strTituloPDF = "Reporte de préstamos pendientes registrados, generado el: " + diaS + "/" + mesS + "/"
+				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+		ReportePrestamosPendientes ejemplo = new ReportePrestamosPendientes(strTituloPDF, strNombrePDF);
+		// Preguntar al usuario si desea abrir el documento PDF
+		int respuesta = JOptionPane.showConfirmDialog(null,
+				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		// Si la respuesta es SI, abrirlo
+		if (respuesta == JOptionPane.YES_OPTION)
+			ejemplo.abrirPDF();
+
 	}
 
-	private void jMenuItemReporteAbonosActionPerformed(ActionEvent evt) {
+	private void generarReportePrestamosPagados() {
+
+		// configuracion de la fecha actual
+		// Creamos un objeto de la clase Calendar.
+		Calendar fecha = new GregorianCalendar();
+		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
+		// Usando el método get y el parámetro correspondiente.
+		int anio = fecha.get(Calendar.YEAR);
+		int mes = fecha.get(Calendar.MONTH);
+		int dia = fecha.get(Calendar.DAY_OF_MONTH);
+		int hora = fecha.get(Calendar.HOUR_OF_DAY);
+		int minuto = fecha.get(Calendar.MINUTE);
+		int segundo = fecha.get(Calendar.SECOND);
+
+		String mesS = concatenaCero(mes + 1);
+		String diaS = concatenaCero(dia);
+		String horaS = concatenaCero(hora);
+		String minutoS = concatenaCero(minuto);
+		String segundoS = concatenaCero(segundo);
+
+		String strNombrePDF = "ReportePrestamosPagados.pdf";
+		String strTituloPDF = "Reporte de préstamos pagados registrados, generado el: " + diaS + "/" + mesS + "/" + anio
+				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+		ReportePrestamosPagados ejemplo = new ReportePrestamosPagados(strTituloPDF, strNombrePDF);
+		// Preguntar al usuario si desea abrir el documento PDF
+		int respuesta = JOptionPane.showConfirmDialog(null,
+				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		// Si la respuesta es SI, abrirlo
+		if (respuesta == JOptionPane.YES_OPTION)
+			ejemplo.abrirPDF();
+
+	}
+
+	private void generarReportePrestamosVencidos() {
+
+		// configuracion de la fecha actual
+		// Creamos un objeto de la clase Calendar.
+		Calendar fecha = new GregorianCalendar();
+		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
+		// Usando el método get y el parámetro correspondiente.
+		int anio = fecha.get(Calendar.YEAR);
+		int mes = fecha.get(Calendar.MONTH);
+		int dia = fecha.get(Calendar.DAY_OF_MONTH);
+		int hora = fecha.get(Calendar.HOUR_OF_DAY);
+		int minuto = fecha.get(Calendar.MINUTE);
+		int segundo = fecha.get(Calendar.SECOND);
+
+		String mesS = concatenaCero(mes + 1);
+		String diaS = concatenaCero(dia);
+		String horaS = concatenaCero(hora);
+		String minutoS = concatenaCero(minuto);
+		String segundoS = concatenaCero(segundo);
+
+		String strNombrePDF = "ReportePrestamosVencidos.pdf";
+		String strTituloPDF = "Reporte de préstamos vencidos registrados, generado el: " + diaS + "/" + mesS + "/"
+				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+		ReportePrestamosVencidos ejemplo = new ReportePrestamosVencidos(strTituloPDF, strNombrePDF);
+		// Preguntar al usuario si desea abrir el documento PDF
+		int respuesta = JOptionPane.showConfirmDialog(null,
+				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		// Si la respuesta es SI, abrirlo
+		if (respuesta == JOptionPane.YES_OPTION)
+			ejemplo.abrirPDF();
+
+	}
+
+	private void generarReporteAbonos() {
 
 		// configuracion de la fecha actual
 		// Creamos un objeto de la clase Calendar.
@@ -2128,33 +2077,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
-	private JMenu getJMenuReportes() {
-		if (jMenuReportes == null) {
-			jMenuReportes = new JMenu();
-			jMenuReportes.setText("Reportes");
-			jMenuReportes.add(getJMenuItemReporteClientes());
-			jMenuReportes.add(getJMenuItemReportePrestamos());
-			jMenuReportes.add(getJMenuItemReporteAbonos());
-			jMenuReportes.add(getJMenuItemReporteabonosPendientes());
-			jMenuReportes.add(getJMenuItemReporteAbonosPagados());
-		}
-		return jMenuReportes;
-	}
-
-	private JMenuItem getJMenuItemReporteabonosPendientes() {
-		if (jMenuItemReporteabonosPendientes == null) {
-			jMenuItemReporteabonosPendientes = new JMenuItem();
-			jMenuItemReporteabonosPendientes.setText("Reporte de abonos pendientes");
-			jMenuItemReporteabonosPendientes.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jMenuItemReporteAbonosPendientesActionPerformed(evt);
-				}
-			});
-		}
-		return jMenuItemReporteabonosPendientes;
-	}
-
-	private void jMenuItemReporteAbonosPendientesActionPerformed(ActionEvent evt) {
+	private void generarReporteAbonosPendientes() {
 
 		// configuracion de la fecha actual
 		// Creamos un objeto de la clase Calendar.
@@ -2188,20 +2111,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
-	private JMenuItem getJMenuItemReporteAbonosPagados() {
-		if (jMenuItemReporteAbonosPagados == null) {
-			jMenuItemReporteAbonosPagados = new JMenuItem();
-			jMenuItemReporteAbonosPagados.setText("Reporte de abonos pagados");
-			jMenuItemReporteAbonosPagados.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jMenuItemReporteAbonosPagadosActionPerformed(evt);
-				}
-			});
-		}
-		return jMenuItemReporteAbonosPagados;
-	}
-
-	private void jMenuItemReporteAbonosPagadosActionPerformed(ActionEvent evt) {
+	private void generarReporteAbonosPagados() {
 
 		// configuracion de la fecha actual
 		// Creamos un objeto de la clase Calendar.
@@ -2224,35 +2134,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String strNombrePDF = "ReporteAbonosPagados.pdf";
 		String strTituloPDF = "Reporte de abonos pagados, generado el: " + diaS + "/" + mesS + "/" + anio + "  a las "
 				+ " " + horaS + ":" + minutoS + ":" + segundoS;
-		ReporteAbonosPagados ejemplo = new ReporteAbonosPagados(strTituloPDF, strNombrePDF);
+		ReporteAbonosPagados reporte = new ReporteAbonosPagados(strTituloPDF, strNombrePDF);
 		// Preguntar al usuario si desea abrir el documento PDF
 		int respuesta = JOptionPane.showConfirmDialog(null,
 				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
 				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		// Si la respuesta es SI, abrirlo
 		if (respuesta == JOptionPane.YES_OPTION)
-			ejemplo.abrirPDF();
+			reporte.abrirPDF();
 
-	}
-
-	private JButton getJButtonEditarCliente() {
-		if (jButtonEditarCliente == null) {
-			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/editar.png");
-			ImageIcon icono1 = new ImageIcon(urlDeLaImagen);
-			Image img1 = icono1.getImage();
-			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			jButtonEditarCliente = new JButton();
-			jButtonEditarCliente.setIcon(new ImageIcon(otraimg1));
-			jButtonEditarCliente.setText("Editar");
-			jButtonEditarCliente.setBounds(198, 125, 130, 30);
-			jButtonEditarCliente.setFont(new java.awt.Font("Arial", 0, 14));
-			jButtonEditarCliente.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jButtonEditarClienteActionPerformed(evt);
-				}
-			});
-		}
-		return jButtonEditarCliente;
 	}
 
 	private void jButtonEditarClienteActionPerformed(ActionEvent evt) {
@@ -2277,28 +2167,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
-	private JButton getJButtonGuardarEdicionCliente() {
-		if (jButtonGuardarEdicionCliente == null) {
-			URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader().getResource("co/prestapp/res/guardar.png");
-			ImageIcon icono1 = new ImageIcon(urlDeLaImagen);
-			Image img1 = icono1.getImage();
-			Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-			jButtonGuardarEdicionCliente = new JButton();
-			jButtonGuardarEdicionCliente.setIcon(new ImageIcon(otraimg1));
-			jButtonGuardarEdicionCliente.setText("Guardar edición");
-			jButtonGuardarEdicionCliente.setBounds(358, 125, 181, 30);
-			jButtonGuardarEdicionCliente.setFont(new java.awt.Font("Arial", 0, 14));
-			jButtonGuardarEdicionCliente.setEnabled(false);
-			jButtonGuardarEdicionCliente.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					jButtonGuardarEdicionClienteActionPerformed(evt);
-				}
-
-			});
-		}
-		return jButtonGuardarEdicionCliente;
-	}
-
 	private void jButtonGuardarEdicionClienteActionPerformed(ActionEvent evt) {
 
 		ClienteDAO miCliente = new ClienteDAO();
@@ -2316,12 +2184,193 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
-	private JLabel getJLabelCodigoCliente() {
-		if (jLabelCodigoCliente == null) {
-			jLabelCodigoCliente = new JLabel();
-			jLabelCodigoCliente.setBounds(12, 65, 65, 10);
+	private void jButtonGenerarBackupActionPerformed(ActionEvent evt) {
+		generarBackup();
+
+	}
+
+	private void jButtonGenerarPDFActionPerformed(ActionEvent evt) {
+
+		String listaSeleccionada = (String) jComboSeleccionListado.getSelectedItem();
+
+		switch (listaSeleccionada) {
+		case seleccioneUno:
+			JOptionPane.showMessageDialog(this, "Debe seleccionar una lista", "Información",
+					JOptionPane.INFORMATION_MESSAGE);
+			break;
+		case listaClientes:
+			generarReporteClientes();
+			break;
+		case listaClientesAlfa:
+			generarReporteClientesAlfa();
+			break;
+		case listaClientesActivos:
+			generarReporteClientesActivos();
+			break;
+		case listaClientesNoActivos:
+			generarReporteClientesNOActivos();
+			break;
+		case listaPrestamos:
+			generarReportePrestamos();
+			break;
+		case listaPrestamosPendientes:
+			generarReportePrestamosPendientes();
+			break;
+		case listaPrestamosPagados:
+			generarReportePrestamosPagados();
+			break;
+		case listaPrestamosVencidos:
+			generarReportePrestamosVencidos();
+			break;
+		case listaAbonos:
+			generarReporteAbonos();
+			break;
+		case listaAbonosPendientes:
+			generarReporteAbonosPendientes();
+			break;
+		case listaAbonosPagados:
+			generarReporteAbonosPagados();
+			break;
 		}
-		return jLabelCodigoCliente;
+
+	}
+
+	private void jComboSeleccionListadoActionPerformed(ActionEvent evt) {
+
+		String listaSeleccionada = (String) jComboSeleccionListado.getSelectedItem();
+
+		AbonoDAO miAbono = new AbonoDAO();
+		String titulosAbono[] = miAbono.getColumnas();
+		ClienteDAO miCliente = new ClienteDAO();
+		String titulosCliente[] = miCliente.getColumnas();
+		PrestamoDAO miPrestamo = new PrestamoDAO();
+		String titulosPrestamo[] = miPrestamo.getColumnas();
+
+		switch (listaSeleccionada) {
+		case seleccioneUno:
+			tablaResultados = new JTable();
+			jScrollPaneResultados.setViewportView(tablaResultados);
+			break;
+		case listaClientes:
+			miCliente = new ClienteDAO();
+			String informacionClientes[][] = miCliente.obtenerMatrizClientes();
+			tablaResultados = new JTable(informacionClientes, titulosCliente);
+			jScrollPaneResultados.setViewportView(tablaResultados);
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			JTableHeader thClientes = tablaResultados.getTableHeader();
+			thClientes.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(tablaResultados);
+			break;
+		case listaClientesAlfa:
+			miCliente = new ClienteDAO();
+			String informacionClientesAlfa[][] = miCliente.obtenerMatrizClientesAlfa();
+			tablaResultados = new JTable(informacionClientesAlfa, titulosCliente);
+			jScrollPaneResultados.setViewportView(tablaResultados);
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			JTableHeader thClientesAlfa = tablaResultados.getTableHeader();
+			thClientesAlfa.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(tablaResultados);
+			break;
+		case listaClientesActivos:
+			miCliente = new ClienteDAO();
+			String informacionClientesActivos[][] = miCliente.obtenerMatrizClientesActivos();
+			tablaResultados = new JTable(informacionClientesActivos, titulosCliente);
+			jScrollPaneResultados.setViewportView(tablaResultados);
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			JTableHeader thClientesActivos = tablaResultados.getTableHeader();
+			thClientesActivos.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(tablaResultados);
+			break;
+		case listaClientesNoActivos:
+			miCliente = new ClienteDAO();
+			String informacionClientesNOActivos[][] = miCliente.obtenerMatrizClientesNOActivos();
+			tablaResultados = new JTable(informacionClientesNOActivos, titulosCliente);
+			jScrollPaneResultados.setViewportView(tablaResultados);
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			JTableHeader thClientesNOActivos = tablaResultados.getTableHeader();
+			thClientesNOActivos.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(tablaResultados);
+			break;
+		case listaPrestamos:
+			miPrestamo = new PrestamoDAO();
+			miPrestamo.actualizaPagos();
+			String informacionPrestamos[][] = miPrestamo.obtenerMatrizPrestamos();
+			tablaResultados = new JTable(informacionPrestamos, titulosPrestamo);
+			jScrollPaneResultados.setViewportView(tablaResultados);
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			JTableHeader thPrestamos = tablaResultados.getTableHeader();
+			thPrestamos.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(tablaResultados);
+			break;
+		case listaPrestamosPendientes:
+			miPrestamo = new PrestamoDAO();
+			miPrestamo.actualizaPagos();
+			String informacionPrestamosPendientes[][] = miPrestamo.obtenerMatrizPrestamosPendientes();
+			tablaResultados = new JTable(informacionPrestamosPendientes, titulosPrestamo);
+			jScrollPaneResultados.setViewportView(tablaResultados);
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			JTableHeader thPrestamosPendientes = tablaResultados.getTableHeader();
+			thPrestamosPendientes.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(tablaResultados);
+			break;
+		case listaPrestamosPagados:
+			miPrestamo = new PrestamoDAO();
+			miPrestamo.actualizaPagos();
+			String informacionPrestamosPagados[][] = miPrestamo.obtenerMatrizPrestamosPagados();
+			tablaResultados = new JTable(informacionPrestamosPagados, titulosPrestamo);
+			jScrollPaneResultados.setViewportView(tablaResultados);
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			JTableHeader thPrestamosPagados = tablaResultados.getTableHeader();
+			thPrestamosPagados.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(tablaResultados);
+			break;
+		case listaPrestamosVencidos:
+			miPrestamo = new PrestamoDAO();
+			String informacionPrestamosVencidos[][] = miPrestamo.obtenerMatrizPrestamosVencidos();
+			if (informacionPrestamosVencidos != null) {
+				tablaResultados = new JTable(informacionPrestamosVencidos, titulosPrestamo);
+				jScrollPaneResultados.setViewportView(tablaResultados);
+				tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+				JTableHeader thPrestamosVencidos = tablaResultados.getTableHeader();
+				thPrestamosVencidos.setFont(new java.awt.Font("Arial", 0, 16));
+				ajustaColumnasAContenido(tablaResultados);
+
+			} else {
+				JOptionPane.showMessageDialog(this, "Préstamos no encontrados", "Alerta", JOptionPane.WARNING_MESSAGE);
+			}
+			break;
+		case listaAbonos:
+			miAbono = new AbonoDAO();
+			String informacionAbonos[][] = miAbono.obtenerMatrizAbonos();
+			tablaResultados = new JTable(informacionAbonos, titulosAbono);
+			jScrollPaneResultados.setViewportView(tablaResultados);
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			JTableHeader thAbonos = tablaResultados.getTableHeader();
+			thAbonos.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(tablaResultados);
+			break;
+		case listaAbonosPendientes:
+			miAbono = new AbonoDAO();
+			String informacionAbonosPendientes[][] = miAbono.obtenerMatrizAbonosPendientes();
+			tablaResultados = new JTable(informacionAbonosPendientes, titulosAbono);
+			jScrollPaneResultados.setViewportView(tablaResultados);
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			JTableHeader thAbonosPen = tablaResultados.getTableHeader();
+			thAbonosPen.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(tablaResultados);
+			break;
+		case listaAbonosPagados:
+			miAbono = new AbonoDAO();
+			String informacionAbonosPagados[][] = miAbono.obtenerMatrizAbonosPagados();
+			tablaResultados = new JTable(informacionAbonosPagados, titulosAbono);
+			jScrollPaneResultados.setViewportView(tablaResultados);
+			JTableHeader thAbonosPag = tablaResultados.getTableHeader();
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			thAbonosPag.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(tablaResultados);
+			break;
+		}
+
 	}
 
 }
