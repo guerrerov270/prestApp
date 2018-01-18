@@ -52,6 +52,7 @@ import co.prestapp.reports.ReporteAbonosPendientes;
 import co.prestapp.reports.ReporteClientes;
 import co.prestapp.reports.ReporteClientesActivos;
 import co.prestapp.reports.ReporteClientesAlfa;
+import co.prestapp.reports.ReporteClientesNOActivos;
 import co.prestapp.reports.ReportePrestamos;
 import co.prestapp.reports.ReportePrestamosPagados;
 import co.prestapp.reports.ReportePrestamosPendientes;
@@ -1844,7 +1845,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String strNombrePDF = "ReporteClientesNOActivos.pdf";
 		String strTituloPDF = "Reporte de clientes no activos registrados, generado el: " + diaS + "/" + mesS + "/" + anio
 				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
-		ReporteClientes ejemplo = new ReporteClientes(strTituloPDF, strNombrePDF);
+		ReporteClientesNOActivos ejemplo = new ReporteClientesNOActivos(strTituloPDF, strNombrePDF);
 		// Preguntar al usuario si desea abrir el documento PDF
 		int respuesta = JOptionPane.showConfirmDialog(null,
 				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
