@@ -3,7 +3,9 @@ package co.prestapp.vista;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -104,6 +106,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelTotalAbonosCobrados;
 	private JLabel jLabelTotalClientesactivos;
 	private JLabel jLabelCerosPrestamo;
+	private JTextField jTextTotalSalidas;
+	private JTextField jTextTotalentradas;
+	private JLabel jLabelTotalSalidas;
+	private JLabel jLabelTotalEntradas;
+	private JPanel jPanelEstadisticas;
 	private JButton jButtonBuscarMovimientos;
 	private JLabel jLabelFechaFinMovimiento;
 	private JLabel jLabelFechaInicioMovimiento;
@@ -972,14 +979,52 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jPanListaResultados = new JPanel();
 						BorderLayout jPanListaResultadosLayout = new BorderLayout();
 						jPanListaResultados.setLayout(jPanListaResultadosLayout);
-						jPaneListados.add(jPanListaResultados, BorderLayout.SOUTH);
-						jPanListaResultados.setPreferredSize(new java.awt.Dimension(909, 480));
+						jPaneListados.add(jPanListaResultados, BorderLayout.CENTER);
+						jPanListaResultados.setPreferredSize(new java.awt.Dimension(909, 400));
 						jPanListaResultados.setBorder(BorderFactory.createTitledBorder("Resultados"));
 						{
 							// Componentes del panel inferior
 							jScrollPaneResultados = new JScrollPane();
 							jPanListaResultados.add(jScrollPaneResultados, BorderLayout.CENTER);
 						}
+					}
+					{
+						jPanelEstadisticas = new JPanel();
+						GridLayout jPanelEstadisticasLayout = new GridLayout(1, 1);
+						jPanelEstadisticasLayout.setHgap(5);
+						jPanelEstadisticasLayout.setVgap(5);
+						jPanelEstadisticasLayout.setColumns(1);
+						jPaneListados.add(jPanelEstadisticas, BorderLayout.SOUTH);
+						jPanelEstadisticas.setLayout(jPanelEstadisticasLayout);
+						jPanelEstadisticas.setPreferredSize(new java.awt.Dimension(909, 66));
+						jPanelEstadisticas.setBorder(BorderFactory.createTitledBorder("Estadísticas"));
+						{
+							jLabelTotalEntradas = new JLabel();
+							jPanelEstadisticas.add(jLabelTotalEntradas);
+							jLabelTotalEntradas.setText("Total entradas:");
+							jLabelTotalEntradas.setBounds(11, 27, 189, 30);
+							jLabelTotalEntradas.setFont(new java.awt.Font("Arial", 0, 16));
+						}
+						{
+							jTextTotalentradas = new JTextField();
+							jPanelEstadisticas.add(jTextTotalentradas);
+							jTextTotalentradas.setEnabled(false);
+							jTextTotalentradas.setFont(new java.awt.Font("Arial", 0, 16));
+						}
+						{
+							jLabelTotalSalidas = new JLabel();
+							jPanelEstadisticas.add(jLabelTotalSalidas);
+							jLabelTotalSalidas.setText("Total salidas:");
+							jLabelTotalSalidas.setBounds(448, 26, 189, 30);
+							jLabelTotalSalidas.setFont(new java.awt.Font("Arial", 0, 16));
+						}
+						{
+							jTextTotalSalidas = new JTextField();
+							jPanelEstadisticas.add(jTextTotalSalidas);
+							jTextTotalSalidas.setEnabled(false);
+							jTextTotalSalidas.setFont(new java.awt.Font("Arial", 0, 16));
+						}
+						
 					}
 
 					jTabPestanias.addTab("Reportes", jPanelReportes);
@@ -2568,6 +2613,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
 			thMovimientos.setFont(new java.awt.Font("Arial", 0, 16));
 			ajustaColumnasAContenido(tablaResultados);
+			calcularTotalEntradas();
+			calcularTotalSalidas();
 			break;
 		case listaMovimientosEntrada:
 			miMovimiento = new MovimientoDAO();
@@ -2578,6 +2625,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
 			thMovimientosEntrada.setFont(new java.awt.Font("Arial", 0, 16));
 			ajustaColumnasAContenido(tablaResultados);
+			calcularTotalEntradas();
+			calcularTotalSalidas();
 			break;
 		case listaMovimientosSalida:
 			miMovimiento = new MovimientoDAO();
@@ -2588,6 +2637,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
 			thMovimientosSalida.setFont(new java.awt.Font("Arial", 0, 16));
 			ajustaColumnasAContenido(tablaResultados);
+			calcularTotalEntradas();
+			calcularTotalSalidas();
 			break;
 		case listaMovimientosFechas:
 			calendarioInicioMovimiento.setEnabled(true);
@@ -2621,6 +2672,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jButtonBuscarMovimientos.setEnabled(false);
 			calendarioInicioMovimiento.setDate(null);
 			calendarioFinMovimiento.setDate(null);
+			calcularTotalEntradas();
+			calcularTotalSalidas();
 		} else {
 			JOptionPane.showMessageDialog(this, "Debe especificar una fecha de inicio y una final", "Alerta",
 					JOptionPane.WARNING_MESSAGE);
