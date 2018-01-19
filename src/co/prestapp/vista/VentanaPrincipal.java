@@ -103,6 +103,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelTotalAbonosCobrados;
 	private JLabel jLabelTotalClientesactivos;
 	private JLabel jLabelCerosPrestamo;
+	private JButton jButtonBuscarMovimientos;
+	private JLabel jLabelFechaFinMovimiento;
+	private JLabel jLabelFechaInicioMovimiento;
+	private JScrollPane jScrollPaneResultadosMovimiento;
+	private JPanel jPanelResultadoMovimientos;
+	private JPanel jPanelEntradaMovimientos;
+	private JPanel jPanelMovimientos;
 	private JCheckBox jCheckBoxEditandoAbono;
 	private JCheckBox jCheckBoxEdicionCliente;
 	private JButton jButtonEditarAbono;
@@ -169,6 +176,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JDateChooser calendarioAbonos;
 	private JDateChooser calendarioPrestamosPorfecha;
 	private JDateChooser calendarioAbonosPorFecha;
+	private JDateChooser calendarioInicioMovimiento;
+	private JDateChooser calendarioFinMovimiento;
 	private JLabel jLabelNombre;
 	private JTextField jTextEmpresa;
 	private JLabel jLabelReferencia;
@@ -198,6 +207,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private final String listaAbonos = "Listado de abonos registrados";
 	private final String listaAbonosPendientes = "Listado de abonos pendientes";
 	private final String listaAbonosPagados = "Listado de abonos pagados";
+	private final String listaMovimientos = "Listado de movimientos registrados";
+	private final String listaMovimientosEntrada = "Listado de movimientos de entrada registrados";
+	private final String listaMovimientosSalida = "Listado de movimientos de salida registrados";
+	private final String listaMovimientosFechas = "Listado de movimientos entre fechas";
 
 	/**
 	 * Auto-generated main method to display this JFrame
@@ -248,6 +261,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				jPaneListados = new JPanel();
 				BorderLayout jPaneListadosLayout = new BorderLayout();
 				jPaneListados.setLayout(jPaneListadosLayout);
+				jPanelMovimientos = new JPanel();
+				BorderLayout jPanelMovimientosLayout = new BorderLayout();
+				jPanelMovimientos.setLayout(jPanelMovimientosLayout);
 
 				getContentPane().add(jPanelContenedor, BorderLayout.CENTER);
 				jPanelContenedor.setLayout(jPanelContenedorLayout);
@@ -815,6 +831,145 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jCheckBoxEdicionCliente.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 					}
+					// Aquí movimientos
+					jTabPestanias.addTab("Movimientos", jPanelMovimientos);
+					jPanelMovimientos.setFont(new java.awt.Font("Arial", 0, 16));
+					{
+						jPanelEntradaMovimientos = new JPanel();
+						jPanelMovimientos.add(jPanelEntradaMovimientos, BorderLayout.NORTH);
+						jPanelEntradaMovimientos.setLayout(null);
+						jPanelEntradaMovimientos.setPreferredSize(new java.awt.Dimension(909, 146));
+						jPanelEntradaMovimientos.setBorder(BorderFactory.createTitledBorder("Búsqueda"));
+					}
+					{
+						jPanelResultadoMovimientos = new JPanel();
+						BorderLayout jPanelResultadoMovimientosLayout = new BorderLayout();
+						jPanelMovimientos.add(jPanelResultadoMovimientos, BorderLayout.SOUTH);
+						jPanelResultadoMovimientos.setLayout(jPanelResultadoMovimientosLayout);
+						jPanelResultadoMovimientos.setPreferredSize(new java.awt.Dimension(909, 430));
+						jPanelResultadoMovimientos.setBorder(BorderFactory.createTitledBorder("Resultados"));
+						{
+							jScrollPaneResultadosMovimiento = new JScrollPane();
+							jPanelResultadoMovimientos.add(jScrollPaneResultadosMovimiento, BorderLayout.CENTER);
+						}
+					}
+					// Aquí listados
+					jTabPestanias.addTab("Listados", jPaneListados);
+					jPaneListados.setFont(new java.awt.Font("Arial", 0, 16));
+					{
+						// Panel superior
+						jPaneSeleccionListado = new JPanel();
+						jPaneListados.add(jPaneSeleccionListado, BorderLayout.NORTH);
+						jPaneSeleccionListado.setPreferredSize(new java.awt.Dimension(909, 99));
+						jPaneSeleccionListado.setBorder(BorderFactory.createTitledBorder("Listados"));
+						jPaneSeleccionListado.setLayout(null);
+						{
+							jButtonBuscarMovimientos = new JButton();
+							jPaneSeleccionListado.add(jButtonBuscarMovimientos);
+							jButtonBuscarMovimientos.setText("Buscar");
+							jButtonBuscarMovimientos.setBounds(665, 60, 229, 30);
+							jButtonBuscarMovimientos.setFont(new java.awt.Font("Arial", 0, 16));
+						}
+						{
+							calendarioFinMovimiento = new JDateChooser();
+							jPaneSeleccionListado.add(calendarioFinMovimiento);
+							calendarioFinMovimiento.setLocale(new Locale("ES", "CO"));
+							calendarioFinMovimiento.setDateFormatString("dd/MM/yyyy");
+							calendarioFinMovimiento.setBounds(483, 60, 170, 30);
+							calendarioFinMovimiento.setFont(new java.awt.Font("Arial", 0, 16));
+						}
+						{
+							jLabelFechaFinMovimiento = new JLabel();
+							jPaneSeleccionListado.add(jLabelFechaFinMovimiento);
+							jLabelFechaFinMovimiento.setText("Fecha fin:");
+							jLabelFechaFinMovimiento.setBounds(355, 60, 132, 30);
+							jLabelFechaFinMovimiento.setFont(new java.awt.Font("Arial", 0, 16));
+						}
+						{
+							jLabelFechaInicioMovimiento = new JLabel();
+							jPaneSeleccionListado.add(jLabelFechaInicioMovimiento);
+							jLabelFechaInicioMovimiento.setText("Fecha inicio:");
+							jLabelFechaInicioMovimiento.setBounds(12, 60, 143, 30);
+							jLabelFechaInicioMovimiento.setFont(new java.awt.Font("Arial", 0, 16));
+						}
+						{
+							calendarioInicioMovimiento = new JDateChooser();
+							jPaneSeleccionListado.add(calendarioInicioMovimiento);
+							calendarioInicioMovimiento.setLocale(new Locale("ES", "CO"));
+							calendarioInicioMovimiento.setDateFormatString("dd/MM/yyyy");
+							calendarioInicioMovimiento.setBounds(155, 60, 178, 30);
+							calendarioInicioMovimiento.setFont(new java.awt.Font("Arial", 0, 16));
+						}
+						{
+							// Componentes del panel superior
+							jLabelSeleccioneListado = new JLabel();
+							jPaneSeleccionListado.add(jLabelSeleccioneListado);
+							jLabelSeleccioneListado.setText("Seleccione listado:");
+							jLabelSeleccioneListado.setBounds(12, 19, 172, 25);
+							jLabelSeleccioneListado.setFont(new java.awt.Font("Arial", 0, 16));
+
+							jComboSeleccionListado = new JComboBox();
+							jPaneSeleccionListado.add(jComboSeleccionListado);
+							jComboSeleccionListado.setBounds(155, 20, 316, 23);
+							jComboSeleccionListado.setFont(new java.awt.Font("Arial", 0, 16));
+							jComboSeleccionListado.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jComboSeleccionListadoActionPerformed(evt);
+								}
+							});
+
+							URL urlDeLaImagenpdf = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/pdf.png");
+							ImageIcon icono1 = new ImageIcon(urlDeLaImagenpdf);
+							Image img1 = icono1.getImage();
+							Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							jButtonGenerarPDF = new JButton();
+							jButtonGenerarPDF.setIcon(new ImageIcon(otraimg1));
+							jPaneSeleccionListado.add(jButtonGenerarPDF);
+
+							jButtonGenerarPDF.setText("Generar PDF");
+							jButtonGenerarPDF.setBounds(483, 14, 170, 30);
+							jButtonGenerarPDF.setFont(new java.awt.Font("Arial", 0, 16));
+							jButtonGenerarPDF.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonGenerarPDFActionPerformed(evt);
+								}
+							});
+
+							URL urlDeLaImagenBackup = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/backup.png");
+							ImageIcon iconoBackup = new ImageIcon(urlDeLaImagenBackup);
+							Image imgBackup = iconoBackup.getImage();
+							Image otraimgBackup = imgBackup.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							jButtonBackup = new JButton();
+							jButtonBackup.setIcon(new ImageIcon(otraimgBackup));
+							jPaneSeleccionListado.add(jButtonBackup);
+							jButtonBackup.setText("Copia de seguridad");
+							jButtonBackup.setBounds(664, 14, 229, 30);
+							jButtonBackup.setFont(new java.awt.Font("Arial", 0, 16));
+							jButtonBackup.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonGenerarBackupActionPerformed(evt);
+								}
+							});
+
+						}
+					}
+					{
+						// Panel inferior
+						jPanListaResultados = new JPanel();
+						BorderLayout jPanListaResultadosLayout = new BorderLayout();
+						jPanListaResultados.setLayout(jPanListaResultadosLayout);
+						jPaneListados.add(jPanListaResultados, BorderLayout.SOUTH);
+						jPanListaResultados.setPreferredSize(new java.awt.Dimension(909, 480));
+						jPanListaResultados.setBorder(BorderFactory.createTitledBorder("Resultados"));
+						{
+							// Componentes del panel inferior
+							jScrollPaneResultados = new JScrollPane();
+							jPanListaResultados.add(jScrollPaneResultados, BorderLayout.CENTER);
+						}
+					}
+
 					jTabPestanias.addTab("Reportes", jPanelReportes);
 					jPanelReportes.setFont(new java.awt.Font("Arial", 0, 16));
 					{
@@ -1027,85 +1182,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jPanelCifras.add(calendarioAbonosPorFecha);
 							calendarioAbonosPorFecha.setBounds(712, 291, 132, 23);
 							calendarioAbonosPorFecha.setFont(new java.awt.Font("Arial", 0, 16));
-						}
-					}
-
-					jTabPestanias.addTab("Listados", jPaneListados);
-					jPaneListados.setFont(new java.awt.Font("Arial", 0, 16));
-					{
-						// Panel superior
-						jPaneSeleccionListado = new JPanel();
-						jPaneListados.add(jPaneSeleccionListado, BorderLayout.NORTH);
-						jPaneSeleccionListado.setPreferredSize(new java.awt.Dimension(909, 55));
-						jPaneSeleccionListado.setBorder(BorderFactory.createTitledBorder("Listados"));
-						jPaneSeleccionListado.setLayout(null);
-						{
-							// Componentes del panel superior
-							jLabelSeleccioneListado = new JLabel();
-							jPaneSeleccionListado.add(jLabelSeleccioneListado);
-							jLabelSeleccioneListado.setText("Seleccione listado:");
-							jLabelSeleccioneListado.setBounds(12, 19, 172, 25);
-							jLabelSeleccioneListado.setFont(new java.awt.Font("Arial", 0, 16));
-
-							jComboSeleccionListado = new JComboBox();
-							jPaneSeleccionListado.add(jComboSeleccionListado);
-							jComboSeleccionListado.setBounds(155, 20, 316, 23);
-							jComboSeleccionListado.setFont(new java.awt.Font("Arial", 0, 16));
-							jComboSeleccionListado.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent evt) {
-									jComboSeleccionListadoActionPerformed(evt);
-								}
-							});
-
-							URL urlDeLaImagenpdf = VentanaPrincipal.class.getClassLoader()
-									.getResource("co/prestapp/res/pdf.png");
-							ImageIcon icono1 = new ImageIcon(urlDeLaImagenpdf);
-							Image img1 = icono1.getImage();
-							Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-							jButtonGenerarPDF = new JButton();
-							jButtonGenerarPDF.setIcon(new ImageIcon(otraimg1));
-							jPaneSeleccionListado.add(jButtonGenerarPDF);
-
-							jButtonGenerarPDF.setText("Generar PDF");
-							jButtonGenerarPDF.setBounds(483, 14, 170, 30);
-							jButtonGenerarPDF.setFont(new java.awt.Font("Arial", 0, 16));
-							jButtonGenerarPDF.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent evt) {
-									jButtonGenerarPDFActionPerformed(evt);
-								}
-							});
-
-							URL urlDeLaImagenBackup = VentanaPrincipal.class.getClassLoader()
-									.getResource("co/prestapp/res/backup.png");
-							ImageIcon iconoBackup = new ImageIcon(urlDeLaImagenBackup);
-							Image imgBackup = iconoBackup.getImage();
-							Image otraimgBackup = imgBackup.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-							jButtonBackup = new JButton();
-							jButtonBackup.setIcon(new ImageIcon(otraimgBackup));
-							jPaneSeleccionListado.add(jButtonBackup);
-							jButtonBackup.setText("Copia de seguridad");
-							jButtonBackup.setBounds(664, 14, 229, 30);
-							jButtonBackup.setFont(new java.awt.Font("Arial", 0, 16));
-							jButtonBackup.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent evt) {
-									jButtonGenerarBackupActionPerformed(evt);
-								}
-							});
-
-						}
-					}
-					{
-						// Panel inferior
-						jPanListaResultados = new JPanel();
-						BorderLayout jPanListaResultadosLayout = new BorderLayout();
-						jPanListaResultados.setLayout(jPanListaResultadosLayout);
-						jPaneListados.add(jPanListaResultados, BorderLayout.SOUTH);
-						jPanListaResultados.setPreferredSize(new java.awt.Dimension(909, 523));
-						jPanListaResultados.setBorder(BorderFactory.createTitledBorder("Resultados"));
-						{
-							// Componentes del panel inferior
-							jScrollPaneResultados = new JScrollPane();
-							jPanListaResultados.add(jScrollPaneResultados, BorderLayout.CENTER);
 						}
 					}
 

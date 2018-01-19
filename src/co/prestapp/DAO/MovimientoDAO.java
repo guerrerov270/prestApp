@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-import co.prestapp.VO.AbonoVO;
 import co.prestapp.VO.MovimientoVO;
 import co.prestapp.connection.DBConnection;
 
@@ -55,29 +54,22 @@ public class MovimientoDAO {
 		MovimientoVO miMovimiento;
 
 		try {
-			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_abonos}");
+			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_movimientos}");
 			ResultSet miRs = miProcedimiento.executeQuery();
 			DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
 			Locale locale = new Locale("es", "CO");
 			NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
 
 			while (miRs.next()) {
-				miAbono = new AbonoVO();
-				miAbono.setIDAbono(miRs.getInt("idAbono"));
-				miAbono.setCodigoAbono(miRs.getString("codigoAbono"));
-				miAbono.setMontoACobrar(formatoMoneda.format(miRs.getDouble("montoACobrar")));
-				miAbono.setMontoPagado(formatoMoneda.format(miRs.getDouble("montoPagado")));
-				miAbono.setCompletoAbono(miRs.getString("completoAbono"));
-				miAbono.setFechaACobrar(formato.format(miRs.getDate("fechaACobrar")));
-				if (miRs.getDate("fechaPago") != null) {
-					miAbono.setFechaPago(formato.format(miRs.getDate("fechaPago")));
-				}
-				miAbono.setAbonoPrestamo(miRs.getString("abonoPrestamo"));
-				miAbono.setPuntualAbono(miRs.getString("puntualAbono"));
-				miAbono.setEstadoAbono(miRs.getString("estadoAbono"));
-				miAbono.setNumeroAbono(miRs.getInt("numeroAbono"));
+				miMovimiento = new MovimientoVO();
+				miMovimiento.setIdMovimiento(miRs.getInt("idMovimiento"));
+				miMovimiento.setCodigoMovimiento(miRs.getString("codigoMovimiento"));
+				miMovimiento.setFechaMovimiento(formato.format(miRs.getDate("fechaMovimiento")));
+				miMovimiento.setEntradaMovimiento(formatoMoneda.format(miRs.getDouble("entradaMovimiento")));
+				miMovimiento.setSalidaMovimiento(formatoMoneda.format(miRs.getDouble("salidaMovimiento")));
+				miMovimiento.setSaldoMovimiento(formatoMoneda.format(miRs.getDouble("saldoMovimiento")));
 
-				listaAbonos.add(miAbono);
+				listaMovimientos.add(miMovimiento);
 			}
 			miRs.close();
 			conexion.close();
@@ -87,26 +79,21 @@ public class MovimientoDAO {
 			System.out.println(e.getMessage());
 
 		}
-		return listaAbonos;
+		return listaMovimientos;
 	}// Fin buscarPrestamosConMatriz
 
 	public String[][] obtenerMatrizMovimientos() {
 
 		ArrayList<MovimientoVO> listaMovimientos = buscarMovimientosConMatriz();
-		String matrizInfo[][] = new String[listaAbonos.size()][11];
+		String matrizInfo[][] = new String[listaMovimientos.size()][6];
 
-		for (int i = 0; i < listaAbonos.size(); i++) {
-			matrizInfo[i][0] = listaAbonos.get(i).getIDAbono() + "";
-			matrizInfo[i][1] = listaAbonos.get(i).getCodigoAbono() + "";
-			matrizInfo[i][2] = listaAbonos.get(i).getMontoACobrar() + "";
-			matrizInfo[i][3] = listaAbonos.get(i).getMontoPagado() + "";
-			matrizInfo[i][4] = listaAbonos.get(i).getCompletoAbono() + "";
-			matrizInfo[i][5] = listaAbonos.get(i).getFechaACobrar() + "";
-			matrizInfo[i][6] = listaAbonos.get(i).getFechaPago() + "";
-			matrizInfo[i][7] = listaAbonos.get(i).getAbonoPrestamo() + "";
-			matrizInfo[i][8] = listaAbonos.get(i).getPuntualAbono() + "";
-			matrizInfo[i][9] = listaAbonos.get(i).getEstadoAbono() + "";
-			matrizInfo[i][10] = listaAbonos.get(i).getNumeroAbono() + "";
+		for (int i = 0; i < listaMovimientos.size(); i++) {
+			matrizInfo[i][0] = listaMovimientos.get(i).getIdMovimiento() + "";
+			matrizInfo[i][1] = listaMovimientos.get(i).getCodigoMovimiento() + "";
+			matrizInfo[i][2] = listaMovimientos.get(i).getFechaMovimiento() + "";
+			matrizInfo[i][3] = listaMovimientos.get(i).getEntradaMovimiento() + "";
+			matrizInfo[i][4] = listaMovimientos.get(i).getSalidaMovimiento() + "";
+			matrizInfo[i][5] = listaMovimientos.get(i).getSaldoMovimiento() + "";
 		}
 
 		return matrizInfo;
