@@ -44,6 +44,7 @@ import javax.swing.SwingUtilities;
 
 import co.prestapp.DAO.AbonoDAO;
 import co.prestapp.DAO.ClienteDAO;
+import co.prestapp.DAO.MovimientoDAO;
 import co.prestapp.DAO.PrestamoDAO;
 import co.prestapp.VO.AbonoVO;
 import co.prestapp.VO.ClienteVO;
@@ -869,6 +870,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jButtonBuscarMovimientos.setText("Buscar");
 							jButtonBuscarMovimientos.setBounds(665, 60, 229, 30);
 							jButtonBuscarMovimientos.setFont(new java.awt.Font("Arial", 0, 16));
+							jButtonBuscarMovimientos.setEnabled(false);
+							jButtonBuscarMovimientos.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonBuscarMovimientosActionPerformed(evt);
+								}
+							});
 						}
 						{
 							calendarioFinMovimiento = new JDateChooser();
@@ -877,6 +884,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							calendarioFinMovimiento.setDateFormatString("dd/MM/yyyy");
 							calendarioFinMovimiento.setBounds(483, 60, 170, 30);
 							calendarioFinMovimiento.setFont(new java.awt.Font("Arial", 0, 16));
+							calendarioFinMovimiento.setEnabled(false);
 						}
 						{
 							jLabelFechaFinMovimiento = new JLabel();
@@ -899,6 +907,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							calendarioInicioMovimiento.setDateFormatString("dd/MM/yyyy");
 							calendarioInicioMovimiento.setBounds(155, 60, 178, 30);
 							calendarioInicioMovimiento.setFont(new java.awt.Font("Arial", 0, 16));
+							calendarioInicioMovimiento.setEnabled(false);
+
 						}
 						{
 							// Componentes del panel superior
@@ -1366,6 +1376,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 		PrestamoDAO miPrestamo = new PrestamoDAO();
 		AbonoDAO miAbono = new AbonoDAO();
+		MovimientoDAO miMovimiento = new MovimientoDAO();
 		float montoPrestamo = 0;
 		int tasaInteres = 0;
 		int numeroCuotas = 0;
@@ -1431,6 +1442,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 			// Creo los abonos correspondientes a ese préstamo
 			miAbono.crearAbonosPrestamo(totalPagar, numeroCuotas, fechasPago, codigoPrestamo);
+
+			// Registro el movimiento
+			miMovimiento.agregarMovimiento(codigoPrestamo, fechaInicio, 0, montoPrestamo);
+
 			JOptionPane.showMessageDialog(this, "El préstamo se ha creado correctamente", "Información",
 					JOptionPane.INFORMATION_MESSAGE);
 			limpiarCamposPrestamo();
@@ -1473,6 +1488,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 		AbonoDAO miAbono = new AbonoDAO();
 		AbonoVO miAbonoVO = new AbonoVO();
+		MovimientoDAO miMovimiento = new MovimientoDAO();
 		Date fechaPago = null;
 		String codigoAbono = "";
 		double montoPagado = 0;
@@ -1482,6 +1498,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			codigoAbono = jTextFieldCodigoAbono.getText();
 			montoPagado = Double.parseDouble(jTextField1.getText()) * 1000;
 			miAbono.editarAbonoPagado(codigoAbono, fechaPago, montoPagado);
+			//Edito el movimiento para actualizar cifras
+			miMovimiento.editarMovimiento(codigoAbono, fechaPago, montoPagado, 0);
+			
 			JOptionPane.showMessageDialog(this, "Abono editado con éxito", "Edición exitosa",
 					JOptionPane.INFORMATION_MESSAGE);
 			limpiarCamposAbono();
@@ -1500,6 +1519,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						"Verifique el código del abono", JOptionPane.WARNING_MESSAGE);
 			} else {
 				miAbono.pagarAbono(codigoAbono, fechaPago, montoPagado);
+
+				// Registro el movimiento
+				miMovimiento.agregarMovimiento(codigoAbono, fechaPago, montoPagado, 0);
+
 				actualizaAbonos();
 				actualizaPrestamos();
 				actualizaAbonosPagados();
@@ -2370,6 +2393,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		case listaAbonosPagados:
 			generarReporteAbonosPagados();
 			break;
+		case listaMovimientos:
+			break;
+		case listaMovimientosEntrada:
+			break;
+		case listaMovimientosSalida:
+			break;
+		case listaMovimientosFechas:
+			break;
 		}
 
 	}
@@ -2384,6 +2415,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String titulosCliente[] = miCliente.getColumnas();
 		PrestamoDAO miPrestamo = new PrestamoDAO();
 		String titulosPrestamo[] = miPrestamo.getColumnas();
+		MovimientoDAO miMovimiento = new MovimientoDAO();
+		String titulosMovimiento[] = miMovimiento.getColumnas();
 
 		switch (listaSeleccionada) {
 		case seleccioneUno:
@@ -2508,8 +2541,39 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			thAbonosPag.setFont(new java.awt.Font("Arial", 0, 16));
 			ajustaColumnasAContenido(tablaResultados);
 			break;
+		case listaMovimientos:
+			miMovimiento = new MovimientoDAO();
+			String informacionMovimientos[][] = miMovimiento.obtenerMatrizMovimientos();
+			tablaResultados = new JTable(informacionMovimientos, titulosMovimiento);
+			jScrollPaneResultados.setViewportView(tablaResultados);
+			JTableHeader thMovimientos = tablaResultados.getTableHeader();
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			thMovimientos.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(tablaResultados);
+			break;
+		case listaMovimientosEntrada:
+			break;
+		case listaMovimientosSalida:
+			break;
+		case listaMovimientosFechas:
+			calendarioInicioMovimiento.setEnabled(true);
+			calendarioFinMovimiento.setEnabled(true);
+			jButtonBuscarMovimientos.setEnabled(true);
+			break;
+
 		}
 
+	}
+
+	private void jButtonBuscarMovimientosActionPerformed(ActionEvent evt) {
+
+		MovimientoDAO miMovimiento = new MovimientoDAO();
+
+		Date fechaInicio = calendarioInicioMovimiento.getDate();
+		Date fechaFin = calendarioFinMovimiento.getDate();
+		if (fechaInicio != null && fechaFin != null) {
+
+		}
 	}
 
 }

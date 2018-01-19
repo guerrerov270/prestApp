@@ -6,11 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import co.prestapp.VO.AbonoVO;
 import co.prestapp.VO.MovimientoVO;
 import co.prestapp.connection.DBConnection;
 
@@ -98,4 +100,58 @@ public class MovimientoDAO {
 
 		return matrizInfo;
 	}// Fin obtenerMatrizAbonos
+
+	public void editarMovimiento(String codigoMovimiento, Date fechaMovimiento, double entradaMovimiento,
+			double salidaMovimiento) {
+		
+		Locale locale = new Locale("es", "CO");
+		NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
+		java.sql.Date fechaFormateada = new java.sql.Date(fechaMovimiento.getTime());
+		
+		AbonoVO miAbono = buscarAbono(codigoAbono);
+		// Verifico si puntual y si completo
+		SimpleDateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
+		Date fechaCobro = null;
+		try {
+
+			fechaCobro = formato.parse(miAbono.getFechaACobrar());
+
+		} catch (ParseException ex) {
+
+			ex.printStackTrace();
+
+		}
+		// Comparo fechas
+		if (fechaPago.before(fechaCobro)) {
+			puntualAbono = "SI";
+		}
+
+		try {
+			if (montoPagado >= formatoMoneda.parse(miAbono.getMontoACobrar()).doubleValue()) {
+				completoAbono = "SI";
+			}
+		} catch (Exception e1) {
+			System.out.println(e1.getMessage());
+			System.out.println("No sé si el abono es completo o no");
+		}
+
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		try {
+			CallableStatement miProcedimiento = conexion.prepareCall("{call editar_abono_pagado(?,?,?,?,?)}");
+			miProcedimiento.setString(1, codigoAbono);
+			miProcedimiento.setDate(2, fechaFormateada);
+			miProcedimiento.setDouble(3, montoPagado);
+			miProcedimiento.setString(4, completoAbono);
+			miProcedimiento.setString(5, puntualAbono);
+			miProcedimiento.execute();
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para editar abono");
+			System.out.println(e.getMessage());
+
+		}
+
+	}
 }
