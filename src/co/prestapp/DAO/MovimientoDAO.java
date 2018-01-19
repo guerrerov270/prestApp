@@ -122,4 +122,167 @@ public class MovimientoDAO {
 		}
 
 	}
+
+	public String[][] obtenerMatrizMovimientosEntrada() {
+
+		ArrayList<MovimientoVO> listaMovimientos = buscarMovimientosEntradaConMatriz();
+		String matrizInfo[][] = new String[listaMovimientos.size()][6];
+
+		for (int i = 0; i < listaMovimientos.size(); i++) {
+			matrizInfo[i][0] = listaMovimientos.get(i).getIdMovimiento() + "";
+			matrizInfo[i][1] = listaMovimientos.get(i).getCodigoMovimiento() + "";
+			matrizInfo[i][2] = listaMovimientos.get(i).getFechaMovimiento() + "";
+			matrizInfo[i][3] = listaMovimientos.get(i).getEntradaMovimiento() + "";
+			matrizInfo[i][4] = listaMovimientos.get(i).getSalidaMovimiento() + "";
+			matrizInfo[i][5] = listaMovimientos.get(i).getSaldoMovimiento() + "";
+		}
+
+		return matrizInfo;
+	}
+
+	private ArrayList<MovimientoVO> buscarMovimientosEntradaConMatriz() {
+
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		ArrayList<MovimientoVO> listaMovimientos = new ArrayList<MovimientoVO>();
+		MovimientoVO miMovimiento;
+
+		try {
+			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_movimientos_entrada}");
+			ResultSet miRs = miProcedimiento.executeQuery();
+			DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
+			Locale locale = new Locale("es", "CO");
+			NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
+
+			while (miRs.next()) {
+				miMovimiento = new MovimientoVO();
+				miMovimiento.setIdMovimiento(miRs.getInt("idMovimiento"));
+				miMovimiento.setCodigoMovimiento(miRs.getString("codigoMovimiento"));
+				miMovimiento.setFechaMovimiento(formato.format(miRs.getDate("fechaMovimiento")));
+				miMovimiento.setEntradaMovimiento(formatoMoneda.format(miRs.getDouble("entradaMovimiento")));
+				miMovimiento.setSalidaMovimiento(formatoMoneda.format(miRs.getDouble("salidaMovimiento")));
+				miMovimiento.setSaldoMovimiento(formatoMoneda.format(miRs.getDouble("saldoMovimiento")));
+
+				listaMovimientos.add(miMovimiento);
+			}
+			miRs.close();
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para listar movimientos entrada");
+			System.out.println(e.getMessage());
+
+		}
+		return listaMovimientos;
+	}
+
+	public String[][] obtenerMatrizMovimientosSalida() {
+
+		ArrayList<MovimientoVO> listaMovimientos = buscarMovimientosSalidaConMatriz();
+		String matrizInfo[][] = new String[listaMovimientos.size()][6];
+
+		for (int i = 0; i < listaMovimientos.size(); i++) {
+			matrizInfo[i][0] = listaMovimientos.get(i).getIdMovimiento() + "";
+			matrizInfo[i][1] = listaMovimientos.get(i).getCodigoMovimiento() + "";
+			matrizInfo[i][2] = listaMovimientos.get(i).getFechaMovimiento() + "";
+			matrizInfo[i][3] = listaMovimientos.get(i).getEntradaMovimiento() + "";
+			matrizInfo[i][4] = listaMovimientos.get(i).getSalidaMovimiento() + "";
+			matrizInfo[i][5] = listaMovimientos.get(i).getSaldoMovimiento() + "";
+		}
+
+		return matrizInfo;
+	}
+
+	private ArrayList<MovimientoVO> buscarMovimientosSalidaConMatriz() {
+
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		ArrayList<MovimientoVO> listaMovimientos = new ArrayList<MovimientoVO>();
+		MovimientoVO miMovimiento;
+
+		try {
+			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_movimientos_salida}");
+			ResultSet miRs = miProcedimiento.executeQuery();
+			DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
+			Locale locale = new Locale("es", "CO");
+			NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
+
+			while (miRs.next()) {
+				miMovimiento = new MovimientoVO();
+				miMovimiento.setIdMovimiento(miRs.getInt("idMovimiento"));
+				miMovimiento.setCodigoMovimiento(miRs.getString("codigoMovimiento"));
+				miMovimiento.setFechaMovimiento(formato.format(miRs.getDate("fechaMovimiento")));
+				miMovimiento.setEntradaMovimiento(formatoMoneda.format(miRs.getDouble("entradaMovimiento")));
+				miMovimiento.setSalidaMovimiento(formatoMoneda.format(miRs.getDouble("salidaMovimiento")));
+				miMovimiento.setSaldoMovimiento(formatoMoneda.format(miRs.getDouble("saldoMovimiento")));
+
+				listaMovimientos.add(miMovimiento);
+			}
+			miRs.close();
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para listar movimientos salida");
+			System.out.println(e.getMessage());
+
+		}
+		return listaMovimientos;
+	}
+
+	public String[][] obtenerMatrizMovimientosFechas(Date fechaInicio, Date fechaFin) {
+
+		ArrayList<MovimientoVO> listaMovimientos = buscarMovimientosFechasConMatriz(fechaInicio, fechaFin);
+		String matrizInfo[][] = new String[listaMovimientos.size()][6];
+
+		for (int i = 0; i < listaMovimientos.size(); i++) {
+			matrizInfo[i][0] = listaMovimientos.get(i).getIdMovimiento() + "";
+			matrizInfo[i][1] = listaMovimientos.get(i).getCodigoMovimiento() + "";
+			matrizInfo[i][2] = listaMovimientos.get(i).getFechaMovimiento() + "";
+			matrizInfo[i][3] = listaMovimientos.get(i).getEntradaMovimiento() + "";
+			matrizInfo[i][4] = listaMovimientos.get(i).getSalidaMovimiento() + "";
+			matrizInfo[i][5] = listaMovimientos.get(i).getSaldoMovimiento() + "";
+		}
+
+		return matrizInfo;
+	}
+
+	private ArrayList<MovimientoVO> buscarMovimientosFechasConMatriz(Date fechaInicio, Date fechaFin) {
+
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		ArrayList<MovimientoVO> listaMovimientos = new ArrayList<MovimientoVO>();
+		MovimientoVO miMovimiento;
+		java.sql.Date fechaInicioFormateada = new java.sql.Date(fechaInicio.getTime());
+		java.sql.Date fechaFinFormateada = new java.sql.Date(fechaFin.getTime());
+
+		try {
+			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_movimientos_fechas(?,?)}");
+			miProcedimiento.setDate(1, fechaInicioFormateada);
+			miProcedimiento.setDate(2, fechaFinFormateada);
+			ResultSet miRs = miProcedimiento.executeQuery();
+			DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
+			Locale locale = new Locale("es", "CO");
+			NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
+
+			while (miRs.next()) {
+				miMovimiento = new MovimientoVO();
+				miMovimiento.setIdMovimiento(miRs.getInt("idMovimiento"));
+				miMovimiento.setCodigoMovimiento(miRs.getString("codigoMovimiento"));
+				miMovimiento.setFechaMovimiento(formato.format(miRs.getDate("fechaMovimiento")));
+				miMovimiento.setEntradaMovimiento(formatoMoneda.format(miRs.getDouble("entradaMovimiento")));
+				miMovimiento.setSalidaMovimiento(formatoMoneda.format(miRs.getDouble("salidaMovimiento")));
+				miMovimiento.setSaldoMovimiento(formatoMoneda.format(miRs.getDouble("saldoMovimiento")));
+
+				listaMovimientos.add(miMovimiento);
+			}
+			miRs.close();
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para listar movimientos entre fechas");
+			System.out.println(e.getMessage());
+
+		}
+		return listaMovimientos;
+	}
 }

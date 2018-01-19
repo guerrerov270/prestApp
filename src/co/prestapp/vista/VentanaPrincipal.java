@@ -1333,7 +1333,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (validarCamposCalcular()) {
 
 			try {
-				montoPrestamo = Float.parseFloat(jTextMonto.getText())*1000;
+				montoPrestamo = Float.parseFloat(jTextMonto.getText()) * 1000;
 				tasaInteres = Integer.parseInt(jTextTasaInteres.getText());
 				tipoPlazo = (String) jComboPlazo.getSelectedItem();
 				numeroCuotas = Integer.parseInt(jTextNumeroCuotas.getText());
@@ -1561,7 +1561,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private void actualizaMovimientos() {
 
-		MovimientoDAO miMovimiento= new MovimientoDAO();
+		MovimientoDAO miMovimiento = new MovimientoDAO();
 		String informacionMovimientos[][] = miMovimiento.obtenerMatrizMovimientos();
 		String titulos[] = miMovimiento.getColumnas();
 		tablaMovimientos = new JTable(informacionMovimientos, titulos);
@@ -1570,7 +1570,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		JTableHeader th = tablaMovimientos.getTableHeader();
 		th.setFont(new java.awt.Font("Arial", 0, 16));
 		ajustaColumnasAContenido(tablaMovimientos);
-		
+
 	}
 
 	private void actualizaAbonosPagados() {
@@ -2570,8 +2570,24 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			ajustaColumnasAContenido(tablaResultados);
 			break;
 		case listaMovimientosEntrada:
+			miMovimiento = new MovimientoDAO();
+			String informacionMovimientosEntrada[][] = miMovimiento.obtenerMatrizMovimientosEntrada();
+			tablaResultados = new JTable(informacionMovimientosEntrada, titulosMovimiento);
+			jScrollPaneResultados.setViewportView(tablaResultados);
+			JTableHeader thMovimientosEntrada = tablaResultados.getTableHeader();
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			thMovimientosEntrada.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(tablaResultados);
 			break;
 		case listaMovimientosSalida:
+			miMovimiento = new MovimientoDAO();
+			String informacionMovimientosSalida[][] = miMovimiento.obtenerMatrizMovimientosSalida();
+			tablaResultados = new JTable(informacionMovimientosSalida, titulosMovimiento);
+			jScrollPaneResultados.setViewportView(tablaResultados);
+			JTableHeader thMovimientosSalida = tablaResultados.getTableHeader();
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			thMovimientosSalida.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(tablaResultados);
 			break;
 		case listaMovimientosFechas:
 			calendarioInicioMovimiento.setEnabled(true);
@@ -2586,11 +2602,28 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private void jButtonBuscarMovimientosActionPerformed(ActionEvent evt) {
 
 		MovimientoDAO miMovimiento = new MovimientoDAO();
-
+		String titulosMovimiento[] = miMovimiento.getColumnas();
 		Date fechaInicio = calendarioInicioMovimiento.getDate();
 		Date fechaFin = calendarioFinMovimiento.getDate();
 		if (fechaInicio != null && fechaFin != null) {
 
+			miMovimiento = new MovimientoDAO();
+			String informacionMovimientosFechas[][] = miMovimiento.obtenerMatrizMovimientosFechas(fechaInicio,
+					fechaFin);
+			tablaResultados = new JTable(informacionMovimientosFechas, titulosMovimiento);
+			jScrollPaneResultados.setViewportView(tablaResultados);
+			JTableHeader thMovimientos = tablaResultados.getTableHeader();
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			thMovimientos.setFont(new java.awt.Font("Arial", 0, 16));
+			ajustaColumnasAContenido(tablaResultados);
+			calendarioInicioMovimiento.setEnabled(false);
+			calendarioFinMovimiento.setEnabled(false);
+			jButtonBuscarMovimientos.setEnabled(false);
+			calendarioInicioMovimiento.setDate(null);
+			calendarioFinMovimiento.setDate(null);
+		} else {
+			JOptionPane.showMessageDialog(this, "Debe especificar una fecha de inicio y una final", "Alerta",
+					JOptionPane.WARNING_MESSAGE);
 		}
 	}
 
