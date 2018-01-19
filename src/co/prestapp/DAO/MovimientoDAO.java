@@ -4,6 +4,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -285,4 +286,46 @@ public class MovimientoDAO {
 		}
 		return listaMovimientos;
 	}
+
+	public float calcularTotalEntradas() {
+
+		float totalEntradas = 0;
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		try {
+			CallableStatement miProcedimiento = conexion.prepareCall("{call sumar_entradas_movimiento(?)}");
+			miProcedimiento.registerOutParameter(1, Types.NUMERIC);
+			miProcedimiento.executeQuery();
+			totalEntradas = miProcedimiento.getFloat(1);
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para generar codigo de préstamo");
+			System.out.println(e.getMessage());
+		}
+
+		return totalEntradas;
+
+	}// Fin calcularTotalEntradas
+
+	public float calcularTotalSalidas() {
+
+		float totalEntradas = 0;
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		try {
+			CallableStatement miProcedimiento = conexion.prepareCall("{call sumar_salidas_movimiento(?)}");
+			miProcedimiento.registerOutParameter(1, Types.NUMERIC);
+			miProcedimiento.executeQuery();
+			totalEntradas = miProcedimiento.getFloat(1);
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para generar codigo de préstamo");
+			System.out.println(e.getMessage());
+		}
+
+		return totalEntradas;
+
+	}// Fin calcularTotalSalidas
 }

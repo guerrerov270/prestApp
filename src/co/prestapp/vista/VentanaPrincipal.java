@@ -1024,7 +1024,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jTextTotalSalidas.setEnabled(false);
 							jTextTotalSalidas.setFont(new java.awt.Font("Arial", 0, 16));
 						}
-						
+
 					}
 
 					jTabPestanias.addTab("Reportes", jPanelReportes);
@@ -2613,8 +2613,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
 			thMovimientos.setFont(new java.awt.Font("Arial", 0, 16));
 			ajustaColumnasAContenido(tablaResultados);
-			calcularTotalEntradas();
-			calcularTotalSalidas();
+			jTextTotalentradas.setText(miMovimiento.calcularTotalEntradas() + "");
+			jTextTotalSalidas.setText(miMovimiento.calcularTotalSalidas() + "");
+
 			break;
 		case listaMovimientosEntrada:
 			miMovimiento = new MovimientoDAO();
@@ -2625,8 +2626,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
 			thMovimientosEntrada.setFont(new java.awt.Font("Arial", 0, 16));
 			ajustaColumnasAContenido(tablaResultados);
-			calcularTotalEntradas();
-			calcularTotalSalidas();
 			break;
 		case listaMovimientosSalida:
 			miMovimiento = new MovimientoDAO();
@@ -2637,8 +2636,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
 			thMovimientosSalida.setFont(new java.awt.Font("Arial", 0, 16));
 			ajustaColumnasAContenido(tablaResultados);
-			calcularTotalEntradas();
-			calcularTotalSalidas();
 			break;
 		case listaMovimientosFechas:
 			calendarioInicioMovimiento.setEnabled(true);
@@ -2672,8 +2669,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jButtonBuscarMovimientos.setEnabled(false);
 			calendarioInicioMovimiento.setDate(null);
 			calendarioFinMovimiento.setDate(null);
-			calcularTotalEntradas();
-			calcularTotalSalidas();
 		} else {
 			JOptionPane.showMessageDialog(this, "Debe especificar una fecha de inicio y una final", "Alerta",
 					JOptionPane.WARNING_MESSAGE);
