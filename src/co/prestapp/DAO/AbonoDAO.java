@@ -450,9 +450,9 @@ public class AbonoDAO {
 		}
 		return listaAbonos;
 	}
-	
+
 	public String[][] obtenerMatrizAbonosPorFecha(Date fechaSeleccionada) {
-		
+
 		ArrayList<AbonoVO> listaAbonos = buscarAbonosPagadosPorFechaConMatriz(fechaSeleccionada);
 		String matrizInfo[][] = new String[listaAbonos.size()][11];
 
@@ -474,13 +474,13 @@ public class AbonoDAO {
 	}
 
 	private ArrayList<AbonoVO> buscarAbonosPagadosPorFechaConMatriz(Date fechaSeleccionada) {
-		
+
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
 		ArrayList<AbonoVO> listaAbonos = new ArrayList<AbonoVO>();
 		AbonoVO miAbono;
 		java.sql.Date fechaSeleccionadaFormateada = new java.sql.Date(fechaSeleccionada.getTime());
-		
+
 		try {
 			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_abonos_pagados_por_fecha(?)}");
 			miProcedimiento.setDate(1, fechaSeleccionadaFormateada);
@@ -558,6 +558,17 @@ public class AbonoDAO {
 		return totalAbonosPendientes;
 	}
 
-	
+	public boolean verificarAbonoPendiente(String codigoAbono) {
+
+		boolean respuesta = false;
+		AbonoVO miAbonoVO = buscarAbono(codigoAbono);
+
+		if (miAbonoVO.getEstadoAbono().equals("PENDIENTE")) {
+			System.out.println(miAbonoVO.getEstadoAbono());
+			respuesta = true;
+		}
+
+		return respuesta;
+	}
 
 } // Fin AbonoDAO

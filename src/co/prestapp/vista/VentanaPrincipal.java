@@ -24,6 +24,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
@@ -101,6 +102,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelTotalAbonosCobrados;
 	private JLabel jLabelTotalClientesactivos;
 	private JLabel jLabelCerosPrestamo;
+	private JCheckBox jCheckBoxEdicionCliente;
+	private JButton jButtonEditarAbono;
 	private JLabel jLabelPesosPrestamo;
 	private JLabel jLabelPesosAbono;
 	private JLabel jLabelCerosAbono;
@@ -113,7 +116,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JPanel jPaneSeleccionListado;
 	private JPanel jPaneListados;
 	private JLabel jLabelCodigoCliente;
-	private JButton jButtonGuardarEdicionCliente;
 	private JButton jButtonEditarCliente;
 	private JTextField jTextTotalclientesRegistrados;
 	private JTextField jTextTotalClientesactivos;
@@ -600,7 +602,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jPanelAgregarAbono.add(jButtonCancelarAbono);
 							jButtonCancelarAbono.setIcon(new ImageIcon(otraimg));
 							jButtonCancelarAbono.setText("Cancelar");
-							jButtonCancelarAbono.setBounds(195, 147, 145, 30);
+							jButtonCancelarAbono.setBounds(351, 147, 145, 30);
 							jButtonCancelarAbono.setFont(new java.awt.Font("Arial", 0, 14));
 							jButtonCancelarAbono.addActionListener(new ActionListener() {
 
@@ -658,6 +660,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jLabelPesosAbono.setText("$");
 							jLabelPesosAbono.setBounds(717, 79, 18, 16);
 							jLabelPesosAbono.setFont(new java.awt.Font("Arial", 0, 16));
+						}
+						{
+							jButtonEditarAbono = new JButton();
+							jPanelAgregarAbono.add(jButtonEditarAbono);
+							jButtonEditarAbono.setText("Editar");
+							jButtonEditarAbono.setBounds(185, 146, 130, 30);
+							jButtonEditarAbono.setFont(new java.awt.Font("Arial", 0, 16));
+							jButtonEditarAbono.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonEditarAbonoActionPerformed(evt);
+								}
+							});
 						}
 					}
 					jTabPestanias.addTab("Clientes", jPanelClientes);
@@ -732,7 +746,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jButtonCancelar.setIcon(new ImageIcon(otraimg));
 							jPanelAgregarCliente.add(jButtonCancelar);
 							jButtonCancelar.setText("Cancelar");
-							jButtonCancelar.setBounds(570, 90, 130, 30);
+							jButtonCancelar.setBounds(386, 90, 130, 30);
 							jButtonCancelar.setFont(new java.awt.Font("Arial", 0, 14));
 							jButtonCancelar.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
@@ -773,31 +787,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 						}
 						{
-							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
-									.getResource("co/prestapp/res/guardar.png");
-							ImageIcon icono1 = new ImageIcon(urlDeLaImagen);
-							Image img1 = icono1.getImage();
-							Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-							jButtonGuardarEdicionCliente = new JButton();
-							jPanelAgregarCliente.add(jButtonGuardarEdicionCliente);
-							jButtonGuardarEdicionCliente.setIcon(new ImageIcon(otraimg1));
-							jButtonGuardarEdicionCliente.setText("Guardar edición");
-							jButtonGuardarEdicionCliente.setBounds(358, 90, 181, 30);
-							jButtonGuardarEdicionCliente.setFont(new java.awt.Font("Arial", 0, 14));
-							jButtonGuardarEdicionCliente.setEnabled(false);
-							jButtonGuardarEdicionCliente.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent evt) {
-									jButtonGuardarEdicionClienteActionPerformed(evt);
-								}
-
-							});
-
-						}
-						{
 							jLabelCodigoCliente = new JLabel();
 							jPanelAgregarCliente.add(jLabelCodigoCliente);
 							jLabelCodigoCliente.setBounds(12, 65, 65, 10);
 
+						}
+						{
+							jCheckBoxEdicionCliente = new JCheckBox();
+							jPanelAgregarCliente.add(jCheckBoxEdicionCliente);
+							jCheckBoxEdicionCliente.setText("Editando");
+							jCheckBoxEdicionCliente.setBounds(773, 93, 115, 20);
+							jCheckBoxEdicionCliente.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 					}
 					jTabPestanias.addTab("Reportes", jPanelReportes);
@@ -1139,6 +1139,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	 */
 	private void jButtonGuardarClienteActionPerformed(ActionEvent evt) {
 
+		if (jCheckBoxEdicionCliente.isSelected()) {
+			ClienteDAO miCliente = new ClienteDAO();
+
+			String codigoCliente = jLabelCodigoCliente.getText();
+			String nombre = jTextNombre.getText();
+			String empresa = jTextEmpresa.getText();
+			String referencia = jTextReferencia.getText();
+			miCliente.editarCliente(codigoCliente, nombre, empresa, referencia);
+			JOptionPane.showMessageDialog(this, "Cliente editado con éxito", "Edición exitosa",
+					JOptionPane.INFORMATION_MESSAGE);
+			limpiarCamposCliente();
+			jCheckBoxEdicionCliente.setSelected(false);
+			actualizaClientes();
+			return;
+		}
 		if (validarCamposCliente()) {
 			String nombre = jTextNombre.getText();
 			String empresa = jTextEmpresa.getText();
@@ -1376,9 +1391,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			codigoAbono = jTextFieldCodigoAbono.getText();
 			montoPagado = Double.parseDouble(jTextField1.getText()) * 1000;
 			miAbonoVO = miAbono.buscarAbono(codigoAbono);
-			if (miAbonoVO == null) {
-				JOptionPane.showMessageDialog(this, "No se ha podido encontrar el abono", "Alerta",
-						JOptionPane.WARNING_MESSAGE);
+			if (miAbonoVO == null || !(miAbono.verificarAbonoPendiente(codigoAbono))) {
+				JOptionPane.showMessageDialog(this, "No se ha podido encontrar el abono o ya está pagado",
+						"Verifique el código del abono", JOptionPane.WARNING_MESSAGE);
 			} else {
 				miAbono.pagarAbono(codigoAbono, fechaPago, montoPagado);
 				actualizaAbonos();
@@ -2158,7 +2173,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jTextReferencia.setText(clienteEncontrado.getReferenciaCliente());
 			jLabelCodigoCliente.setText(clienteEncontrado.getCodigoCliente());
 			jLabelCodigoCliente.setVisible(false);
-			jButtonGuardarEdicionCliente.setEnabled(true);
+			jCheckBoxEdicionCliente.setSelected(true);
 		} else {
 			JOptionPane.showMessageDialog(this, "Verifique el código del cliente", "Cliente no encontrado",
 					JOptionPane.WARNING_MESSAGE);
@@ -2167,21 +2182,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
-	private void jButtonGuardarEdicionClienteActionPerformed(ActionEvent evt) {
+	private void jButtonEditarAbonoActionPerformed(ActionEvent evt) {
 
-		ClienteDAO miCliente = new ClienteDAO();
+		String codigoAbono = JOptionPane.showInputDialog("Ingrese código del abono");
+		AbonoVO abonoEncontrado = null;
+		AbonoDAO miAbono = new AbonoDAO();
+		abonoEncontrado = miAbono.buscarAbono(codigoAbono);
 
-		String codigoCliente = jLabelCodigoCliente.getText();
-		String nombre = jTextNombre.getText();
-		String empresa = jTextEmpresa.getText();
-		String referencia = jTextReferencia.getText();
-		miCliente.editarCliente(codigoCliente, nombre, empresa, referencia);
-		JOptionPane.showMessageDialog(this, "Cliente editado con éxito", "Edición exitosa",
-				JOptionPane.INFORMATION_MESSAGE);
-		limpiarCamposCliente();
-		jButtonGuardarEdicionCliente.setEnabled(false);
-		actualizaClientes();
-
+		Date fechaSeleccionada = calendarioAbonos.getDate();
+		String montoAbono = jTextField1.getText();
 	}
 
 	private void jButtonGenerarBackupActionPerformed(ActionEvent evt) {
