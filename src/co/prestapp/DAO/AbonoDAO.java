@@ -571,4 +571,58 @@ public class AbonoDAO {
 		return respuesta;
 	}
 
+	public void editarAbonoPagado(String codigoAbono, Date fechaPago, double montoPagado) {
+
+		Locale locale = new Locale("es", "CO");
+		NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
+		java.sql.Date fechaFormateada = new java.sql.Date(fechaPago.getTime());
+		String completoAbono = "NO";
+		String puntualAbono = "NO";
+		AbonoVO miAbono = buscarAbono(codigoAbono);
+		// Verifico si puntual y si completo
+		SimpleDateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
+		Date fechaCobro = null;
+		try {
+
+			fechaCobro = formato.parse(miAbono.getFechaACobrar());
+
+		} catch (ParseException ex) {
+
+			ex.printStackTrace();
+
+		}
+		// Comparo fechas
+		if (fechaPago.before(fechaCobro)) {
+			puntualAbono = "SI";
+		}
+
+		try {
+			if (montoPagado >= formatoMoneda.parse(miAbono.getMontoACobrar()).doubleValue()) {
+				completoAbono = "SI";
+			}
+		} catch (Exception e1) {
+			System.out.println(e1.getMessage());
+			System.out.println("No sé si el abono es completo o no");
+		}
+
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		try {
+			CallableStatement miProcedimiento = conexion.prepareCall("{call editar_abono_pagado(?,?,?,?,?)}");
+			miProcedimiento.setString(1, codigoAbono);
+			miProcedimiento.setDate(2, fechaFormateada);
+			miProcedimiento.setDouble(3, montoPagado);
+			miProcedimiento.setString(4, completoAbono);
+			miProcedimiento.setString(5, puntualAbono);
+			miProcedimiento.execute();
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para editar abono");
+			System.out.println(e.getMessage());
+
+		}
+
+	}
+
 } // Fin AbonoDAO

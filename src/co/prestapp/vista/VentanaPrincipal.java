@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -102,6 +103,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelTotalAbonosCobrados;
 	private JLabel jLabelTotalClientesactivos;
 	private JLabel jLabelCerosPrestamo;
+	private JCheckBox jCheckBoxEditandoAbono;
 	private JCheckBox jCheckBoxEdicionCliente;
 	private JButton jButtonEditarAbono;
 	private JLabel jLabelPesosPrestamo;
@@ -673,6 +675,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								}
 							});
 						}
+						{
+							jCheckBoxEditandoAbono = new JCheckBox();
+							jPanelAgregarAbono.add(jCheckBoxEditandoAbono);
+							jCheckBoxEditandoAbono.setText("Editando");
+							jCheckBoxEditandoAbono.setBounds(778, 170, 126, 20);
+							jCheckBoxEditandoAbono.setFont(new java.awt.Font("Arial", 0, 16));
+						}
 					}
 					jTabPestanias.addTab("Clientes", jPanelClientes);
 					jPanelClientes.setBorder(BorderFactory.createTitledBorder("Datos de clientes"));
@@ -796,7 +805,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jCheckBoxEdicionCliente = new JCheckBox();
 							jPanelAgregarCliente.add(jCheckBoxEdicionCliente);
 							jCheckBoxEdicionCliente.setText("Editando");
-							jCheckBoxEdicionCliente.setBounds(773, 93, 115, 20);
+							jCheckBoxEdicionCliente.setBounds(778, 103, 115, 20);
 							jCheckBoxEdicionCliente.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 					}
@@ -1385,6 +1394,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		Date fechaPago = null;
 		String codigoAbono = "";
 		double montoPagado = 0;
+
+		if (jCheckBoxEditandoAbono.isSelected()) {
+			fechaPago = calendarioAbonos.getDate();
+			codigoAbono = jTextFieldCodigoAbono.getText();
+			montoPagado = Double.parseDouble(jTextField1.getText()) * 1000;
+			miAbono.editarAbonoPagado(codigoAbono, fechaPago, montoPagado);
+			JOptionPane.showMessageDialog(this, "Abono editado con éxito", "Edición exitosa",
+					JOptionPane.INFORMATION_MESSAGE);
+			limpiarCamposAbono();
+			jCheckBoxEditandoAbono.setSelected(false);
+			actualizaAbonos();
+			return;
+		}
 
 		if (validarCamposAbonoPrestamo()) {
 			fechaPago = calendarioAbonos.getDate();
@@ -2187,10 +2209,36 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String codigoAbono = JOptionPane.showInputDialog("Ingrese código del abono");
 		AbonoVO abonoEncontrado = null;
 		AbonoDAO miAbono = new AbonoDAO();
+		SimpleDateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
+		Locale locale = new Locale("es", "CO");
+		NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
 		abonoEncontrado = miAbono.buscarAbono(codigoAbono);
 
-		Date fechaSeleccionada = calendarioAbonos.getDate();
-		String montoAbono = jTextField1.getText();
+		if (abonoEncontrado.getCodigoAbono() != null) {
+			jTextFieldCodigoAbono.setText(abonoEncontrado.getCodigoAbono());
+			Date fechaFormateada;
+			try {
+				fechaFormateada = formato.parse(abonoEncontrado.getFechaPago());
+				calendarioAbonos.setDate(fechaFormateada);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			int monto;
+			try {
+				monto = formatoMoneda.parse(abonoEncontrado.getMontoPagado()).intValue();
+				jTextField1.setText((monto / 1000) + "");
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			jCheckBoxEditandoAbono.setSelected(true);
+		} else {
+			JOptionPane.showMessageDialog(this, "Verifique el código del abono", "Abono no encontrado",
+					JOptionPane.WARNING_MESSAGE);
+
+		}
 	}
 
 	private void jButtonGenerarBackupActionPerformed(ActionEvent evt) {
