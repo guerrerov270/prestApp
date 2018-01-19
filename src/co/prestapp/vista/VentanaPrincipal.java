@@ -195,6 +195,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField jTextNombre;
 	private JLabel jLabelEmpresa;
 	private JTable tablaResultados;
+	private JTable tablaMovimientos;
 	// Constantes para listados
 	private final String seleccioneUno = "Seleccione uno";
 	private final String listaClientes = "Listado de clientes registrados";
@@ -233,6 +234,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		actualizaAbonos();
 		actualizaClientes();
 		actualizaReportes();
+		actualizaMovimientos();
 		llenaComboListados();
 
 	}
@@ -1331,7 +1333,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (validarCamposCalcular()) {
 
 			try {
-				montoPrestamo = Float.parseFloat(jTextMonto.getText());
+				montoPrestamo = Float.parseFloat(jTextMonto.getText())*1000;
 				tasaInteres = Integer.parseInt(jTextTasaInteres.getText());
 				tipoPlazo = (String) jComboPlazo.getSelectedItem();
 				numeroCuotas = Integer.parseInt(jTextNumeroCuotas.getText());
@@ -1449,6 +1451,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			JOptionPane.showMessageDialog(this, "El préstamo se ha creado correctamente", "Información",
 					JOptionPane.INFORMATION_MESSAGE);
 			limpiarCamposPrestamo();
+			actualizaMovimientos();
 			actualizaPrestamos();
 			actualizaReportes();
 		}
@@ -1498,9 +1501,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			codigoAbono = jTextFieldCodigoAbono.getText();
 			montoPagado = Double.parseDouble(jTextField1.getText()) * 1000;
 			miAbono.editarAbonoPagado(codigoAbono, fechaPago, montoPagado);
-			//Edito el movimiento para actualizar cifras
+			// Edito el movimiento para actualizar cifras
 			miMovimiento.editarMovimiento(codigoAbono, fechaPago, montoPagado, 0);
-			
+			actualizaMovimientos();
 			JOptionPane.showMessageDialog(this, "Abono editado con éxito", "Edición exitosa",
 					JOptionPane.INFORMATION_MESSAGE);
 			limpiarCamposAbono();
@@ -1522,7 +1525,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 				// Registro el movimiento
 				miMovimiento.agregarMovimiento(codigoAbono, fechaPago, montoPagado, 0);
-
+				actualizaMovimientos();
 				actualizaAbonos();
 				actualizaPrestamos();
 				actualizaAbonosPagados();
@@ -1554,6 +1557,20 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		JTableHeader th = jTableAbonosRecibidos.getTableHeader();
 		th.setFont(new java.awt.Font("Arial", 0, 16));
 		ajustaColumnasAContenido(jTableAbonosRecibidos);
+	}
+
+	private void actualizaMovimientos() {
+
+		MovimientoDAO miMovimiento= new MovimientoDAO();
+		String informacionMovimientos[][] = miMovimiento.obtenerMatrizMovimientos();
+		String titulos[] = miMovimiento.getColumnas();
+		tablaMovimientos = new JTable(informacionMovimientos, titulos);
+		jScrollPaneResultadosMovimiento.setViewportView(tablaMovimientos);
+		tablaMovimientos.setFont(new java.awt.Font("Arial", 0, 16));
+		JTableHeader th = tablaMovimientos.getTableHeader();
+		th.setFont(new java.awt.Font("Arial", 0, 16));
+		ajustaColumnasAContenido(tablaMovimientos);
+		
 	}
 
 	private void actualizaAbonosPagados() {
@@ -1882,7 +1899,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		ComboBoxModel<String> jComboListadosModel = new DefaultComboBoxModel<String>(
 				new String[] { seleccioneUno, listaClientes, listaClientesAlfa, listaClientesActivos,
 						listaClientesNoActivos, listaPrestamos, listaPrestamosPendientes, listaPrestamosPagados,
-						listaPrestamosVencidos, listaAbonos, listaAbonosPendientes, listaAbonosPagados });
+						listaPrestamosVencidos, listaAbonos, listaAbonosPendientes, listaAbonosPagados,
+						listaMovimientos, listaMovimientosEntrada, listaMovimientosSalida, listaMovimientosFechas });
 		jComboSeleccionListado.setModel(jComboListadosModel);
 
 	}
