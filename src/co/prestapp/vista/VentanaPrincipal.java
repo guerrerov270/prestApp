@@ -664,7 +664,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jLabelPesosAbono.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
+							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/editar.png");
+							ImageIcon icono = new ImageIcon(urlDeLaImagen);
+							Image img = icono.getImage();
+							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 							jButtonEditarAbono = new JButton();
+							jButtonEditarAbono.setIcon(new ImageIcon(otraimg));
 							jPanelAgregarAbono.add(jButtonEditarAbono);
 							jButtonEditarAbono.setText("Editar");
 							jButtonEditarAbono.setBounds(185, 146, 130, 30);
@@ -2221,7 +2227,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				fechaFormateada = formato.parse(abonoEncontrado.getFechaPago());
 				calendarioAbonos.setDate(fechaFormateada);
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 			int monto;
@@ -2229,7 +2235,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				monto = formatoMoneda.parse(abonoEncontrado.getMontoPagado()).intValue();
 				jTextField1.setText((monto / 1000) + "");
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 
