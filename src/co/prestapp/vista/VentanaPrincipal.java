@@ -2625,6 +2625,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		MovimientoDAO miMovimiento = new MovimientoDAO();
 		String titulosMovimiento[] = miMovimiento.getColumnas();
 
+		Locale locale = new Locale("es", "CO");
+		NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
+
 		switch (listaSeleccionada) {
 		case seleccioneUno:
 			tablaResultados = new JTable();
@@ -2757,8 +2760,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
 			thMovimientos.setFont(new java.awt.Font("Arial", 0, 16));
 			ajustaColumnasAContenido(tablaResultados);
-			jTextTotalentradas.setText(miMovimiento.calcularTotalEntradas() + "");
-			jTextTotalSalidas.setText(miMovimiento.calcularTotalSalidas() + "");
+			jTextTotalentradas.setText(formatoMoneda.format(miMovimiento.calcularTotalEntradas()) + "");
+			jTextTotalSalidas.setText(formatoMoneda.format(miMovimiento.calcularTotalSalidas()) + "");
 
 			break;
 		case listaMovimientosEntrada:
@@ -2770,7 +2773,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
 			thMovimientosEntrada.setFont(new java.awt.Font("Arial", 0, 16));
 			ajustaColumnasAContenido(tablaResultados);
-			jTextTotalentradas.setText(miMovimiento.calcularTotalEntradas() + "");
+			jTextTotalentradas.setText(formatoMoneda.format(miMovimiento.calcularTotalEntradas()) + "");
 			jTextTotalSalidas.setText("");
 			break;
 		case listaMovimientosSalida:
@@ -2783,7 +2786,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			thMovimientosSalida.setFont(new java.awt.Font("Arial", 0, 16));
 			ajustaColumnasAContenido(tablaResultados);
 			jTextTotalentradas.setText("");
-			jTextTotalSalidas.setText(miMovimiento.calcularTotalSalidas() + "");
+			jTextTotalSalidas.setText(formatoMoneda.format(miMovimiento.calcularTotalSalidas()) + "");
 			break;
 		case listaMovimientosFechas:
 			calendarioInicioMovimiento.setEnabled(true);
@@ -2803,6 +2806,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String titulosMovimiento[] = miMovimiento.getColumnas();
 		Date fechaInicio = calendarioInicioMovimiento.getDate();
 		Date fechaFin = calendarioFinMovimiento.getDate();
+		Locale locale = new Locale("es", "CO");
+		NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
 		if (fechaInicio != null && fechaFin != null) {
 
 			miMovimiento = new MovimientoDAO();
@@ -2814,8 +2819,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
 			thMovimientos.setFont(new java.awt.Font("Arial", 0, 16));
 			ajustaColumnasAContenido(tablaResultados);
-			jTextTotalentradas.setText(miMovimiento.calcularTotalEntradas(fechaInicio, fechaFin) + "");
-			jTextTotalSalidas.setText(miMovimiento.calcularTotalSalidas(fechaInicio, fechaFin) + "");
+			jTextTotalentradas
+					.setText(formatoMoneda.format(miMovimiento.calcularTotalEntradas(fechaInicio, fechaFin)) + "");
+			jTextTotalSalidas
+					.setText(formatoMoneda.format(miMovimiento.calcularTotalSalidas(fechaInicio, fechaFin)) + "");
 			calendarioInicioMovimiento.setEnabled(false);
 			calendarioFinMovimiento.setEnabled(false);
 			jButtonBuscarMovimientos.setEnabled(false);
