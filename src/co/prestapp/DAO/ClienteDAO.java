@@ -8,8 +8,11 @@ import java.sql.Types;
 import java.util.ArrayList;
 import co.prestapp.VO.ClienteVO;
 import co.prestapp.connection.DBConnection;
+import co.prestapp.connection.DBError;
 
 public class ClienteDAO {
+	
+	DBError error= new DBError();
 
 	public void agregarCliente(String nombre, String empresa, String referencia) {
 
@@ -28,6 +31,7 @@ public class ClienteDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para agregar cliente");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".agregarCliente");
 		}
 
 	}// Fin agregar cliente
@@ -54,6 +58,7 @@ public class ClienteDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para buscar cliente");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".buscarCliente");
 		}
 
 		return miCliente;
@@ -80,6 +85,7 @@ public class ClienteDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para generar codigo de cliente");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".recuperarCodigoCliente");
 		}
 
 		return codigoCliente;
@@ -101,6 +107,7 @@ public class ClienteDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para contar clientes registrados");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".contarClientesRegistrados");
 		}
 
 		return totalRegistrados;
@@ -122,6 +129,7 @@ public class ClienteDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para contar clientes activos");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".contarClientesActivos");
 		}
 
 		return totalActivos;
@@ -156,6 +164,7 @@ public class ClienteDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para listar clientes");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".buscarClientesConMatriz");
 
 		}
 		return listaClientes;
@@ -195,6 +204,7 @@ public class ClienteDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para editar clientes");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".editarCliente");
 
 		}
 	}
@@ -243,6 +253,7 @@ public class ClienteDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para listar clientes");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".buscarClientesConMatrizAlfa");
 
 		}
 		return listaClientes;
@@ -292,6 +303,7 @@ public class ClienteDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para listar clientes");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".buscarClientesConMatrizActivos");
 
 		}
 		return listaClientes;
@@ -341,6 +353,7 @@ public class ClienteDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para listar clientes");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".buscarClientesConMatrizNOActivos");
 
 		}
 		return listaClientes;

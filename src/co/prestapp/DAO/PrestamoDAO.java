@@ -16,8 +16,11 @@ import java.util.Locale;
 
 import co.prestapp.VO.PrestamoVO;
 import co.prestapp.connection.DBConnection;
+import co.prestapp.connection.DBError;
 
 public class PrestamoDAO {
+
+	DBError error = new DBError();
 
 	/**
 	 * Agrega los prestamos llamando a un procedimiento almacenado en BD
@@ -63,6 +66,7 @@ public class PrestamoDAO {
 			System.out.println("Error al ejecutar consulta para agregar préstamo");
 			System.out.println(e.getMessage());
 			e.printStackTrace();
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".agregarPrestamo");
 		}
 		return codigoPrestamo;
 
@@ -194,6 +198,7 @@ public class PrestamoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para generar codigo de préstamo");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".recuperarCodigoPrestamo");
 		}
 
 		return codigoPrestamo;
@@ -243,6 +248,7 @@ public class PrestamoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para listar prestamos");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".buscarPrestamosConMatriz");
 
 		}
 
@@ -285,6 +291,7 @@ public class PrestamoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para actualizar pagos");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".actualizaPagos");
 
 		}
 
@@ -380,6 +387,8 @@ public class PrestamoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para listar prestamos");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(),
+					this.getClass().getCanonicalName() + ".buscarPrestamosVencidosConMatriz");
 
 		}
 
@@ -454,6 +463,7 @@ public class PrestamoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para listar prestamos");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".buscarPrestamosPorFecha");
 
 		}
 
@@ -482,6 +492,7 @@ public class PrestamoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para calcular total prestado");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".calcularTotalPrestado");
 		}
 
 		return totalPrestado;
@@ -508,6 +519,7 @@ public class PrestamoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para calcular total recaudado");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".calcularTotalRecaudado");
 		}
 
 		return totalRecaudado;
@@ -534,6 +546,7 @@ public class PrestamoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para calcular total recaudado");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".calcularRecaudoPendiente");
 		}
 
 		return totalRecaudoPendiente;
@@ -559,6 +572,8 @@ public class PrestamoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para calcular intereses recaudados");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(),
+					this.getClass().getCanonicalName() + ".calcularInteresesRecaudados");
 		}
 
 		return interesesRecaudados;
@@ -586,6 +601,8 @@ public class PrestamoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para calcular intereses recaudados");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(),
+					this.getClass().getCanonicalName() + ".calcularInteresesPendientesRecaudo");
 		}
 
 		return interesesRecaudados;
@@ -606,6 +623,7 @@ public class PrestamoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para contar préstamos activos");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".contarPrestamosActivos");
 		}
 
 		return totalPrestamosActivos;
@@ -626,6 +644,8 @@ public class PrestamoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para contar préstamos finalizados");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(),
+					this.getClass().getCanonicalName() + ".contarPrestamosFinalizados");
 		}
 
 		return totalPrestamosFinalizados;
@@ -646,6 +666,7 @@ public class PrestamoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para contar préstamos vencidos");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".contarPrestamosVencidos");
 		}
 
 		return totalPrestamosVencidos;
@@ -717,6 +738,8 @@ public class PrestamoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para listar prestamos");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(),
+					this.getClass().getCanonicalName() + ".buscarPrestamosConMatrizPendientes");
 
 		}
 
@@ -788,6 +811,8 @@ public class PrestamoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para listar prestamos");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(),
+					this.getClass().getCanonicalName() + ".buscarPrestamosConMatrizPagados");
 
 		}
 
@@ -835,6 +860,7 @@ public class PrestamoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para buscar préstamo");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".buscarPrestamo");
 
 		}
 
@@ -888,7 +914,7 @@ public class PrestamoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para editar préstamo");
 			System.out.println(e.getMessage());
-			e.printStackTrace();
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".editarPrestamo");
 		}
 
 	}

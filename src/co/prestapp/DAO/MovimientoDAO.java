@@ -14,8 +14,11 @@ import java.util.Locale;
 
 import co.prestapp.VO.MovimientoVO;
 import co.prestapp.connection.DBConnection;
+import co.prestapp.connection.DBError;
 
 public class MovimientoDAO {
+
+	DBError error = new DBError();
 
 	public void agregarMovimiento(String codigoMovimiento, Date fechaMovimiento, double entradaMovimiento,
 			double salidaMovimiento) {
@@ -37,6 +40,7 @@ public class MovimientoDAO {
 			System.out.println("Error al ejecutar consulta para agregar movimiento");
 			System.out.println(e.getMessage());
 			e.printStackTrace();
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".agregarMovimiento");
 		}
 
 	}// Fin agregarMovimiento
@@ -78,6 +82,8 @@ public class MovimientoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para listar movimientos");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(),
+					this.getClass().getCanonicalName() + ".buscarMovimientosConMatriz");
 
 		}
 		return listaMovimientos;
@@ -119,6 +125,7 @@ public class MovimientoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para editar movimiento");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".editarMovimiento");
 
 		}
 
@@ -172,6 +179,8 @@ public class MovimientoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para listar movimientos entrada");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(),
+					this.getClass().getCanonicalName() + ".buscarMovimientosEntradaConMatriz");
 
 		}
 		return listaMovimientos;
@@ -225,6 +234,8 @@ public class MovimientoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para listar movimientos salida");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(),
+					this.getClass().getCanonicalName() + ".buscarMovimientosSalidaConMatriz");
 
 		}
 		return listaMovimientos;
@@ -282,6 +293,8 @@ public class MovimientoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para listar movimientos entre fechas");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(),
+					this.getClass().getCanonicalName() + ".buscarMovimientosFechasConMatriz");
 
 		}
 		return listaMovimientos;
@@ -302,6 +315,7 @@ public class MovimientoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para generar codigo de préstamo");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".calcularTotalEntradas");
 		}
 
 		return totalEntradas;
@@ -323,6 +337,7 @@ public class MovimientoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para generar codigo de préstamo");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".calcularTotalSalidas");
 		}
 
 		return totalSalidas;
@@ -348,6 +363,7 @@ public class MovimientoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para sumar entradas por fecha");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".calcularTotalEntradas");
 		}
 
 		return totalEntradas;
@@ -372,6 +388,7 @@ public class MovimientoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para sumar salidas por fecha");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".calcularTotalSalidas");
 		}
 
 		return totalSalidas;

@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 
 public class DBBackup {
 
+	DBError error = new DBError();
 	private int BUFFER = 10485760;
 	// para guardar en memmoria
 	private StringBuffer temp = null;
@@ -43,12 +44,15 @@ public class DBBackup {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+			error.guardarMensajeError(ex.getMessage(), this.getClass().getSimpleName() + "CrearBackup");
 		} finally {
 			try {
 				if (null != fichero)
 					fichero.close();
 			} catch (Exception e2) {
 				JOptionPane.showMessageDialog(null, e2.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+				error.guardarMensajeError(e2.getMessage(), this.getClass().getSimpleName() + "CrearBackup");
+
 			}
 		}
 		return ok;

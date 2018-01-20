@@ -15,8 +15,11 @@ import java.util.Locale;
 
 import co.prestapp.VO.AbonoVO;
 import co.prestapp.connection.DBConnection;
+import co.prestapp.connection.DBError;
 
 public class AbonoDAO {
+
+	DBError error = new DBError();
 
 	public void agregarAbono(double montoACobrar, double montoPagado, String completoAbono, Date fechaCobro,
 			String abonoPrestamoFK, String puntualAbono, String estadoAbono, int numeroAbono) {
@@ -43,7 +46,7 @@ public class AbonoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para agregar abono");
 			System.out.println(e.getMessage());
-			e.printStackTrace();
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".agregarAbono");
 		}
 
 	}// Fin agregar abono
@@ -70,6 +73,7 @@ public class AbonoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para generar codigo de abono");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), AbonoDAO.class + ".recuperarCodigoAbono");
 		}
 
 		return codigoAbono;
@@ -133,6 +137,7 @@ public class AbonoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para listar abonos");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".buscarAbonosConMatriz");
 
 		}
 		return listaAbonos;
@@ -201,6 +206,7 @@ public class AbonoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para buscar abono por codigo de prestamo");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".buscarAbonosPrestamo");
 
 		}
 		return listaAbonos;
@@ -251,6 +257,7 @@ public class AbonoDAO {
 		} catch (ParseException ex) {
 
 			ex.printStackTrace();
+			error.guardarMensajeError(ex.getMessage(), this.getClass().getCanonicalName() + ".pagarAbono");
 
 		}
 
@@ -274,6 +281,7 @@ public class AbonoDAO {
 		} catch (Exception e1) {
 			System.out.println(e1.getMessage());
 			System.out.println("No sé si el abono es completo o no");
+			error.guardarMensajeError(e1.getMessage(), this.getClass().getCanonicalName() + ".pagarAbono");
 		}
 
 		DBConnection miConexion = new DBConnection();
@@ -292,6 +300,7 @@ public class AbonoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar el pago del abono");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".pagarAbono");
 
 		}
 
@@ -333,6 +342,7 @@ public class AbonoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para buscar abono");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".buscarAbono");
 
 		}
 		return miAbono;
@@ -364,7 +374,6 @@ public class AbonoDAO {
 		Connection conexion = miConexion.darConexion();
 		ArrayList<AbonoVO> listaAbonos = new ArrayList<AbonoVO>();
 		AbonoVO miAbono;
-		;
 		try {
 			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_abonos_pendientes}");
 			ResultSet miRs = miProcedimiento.executeQuery();
@@ -396,6 +405,8 @@ public class AbonoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para listar abonos pendientes");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(),
+					this.getClass().getCanonicalName() + ".buscarAbonosPendientesConMatriz");
 
 		}
 		return listaAbonos;
@@ -427,7 +438,6 @@ public class AbonoDAO {
 		Connection conexion = miConexion.darConexion();
 		ArrayList<AbonoVO> listaAbonos = new ArrayList<AbonoVO>();
 		AbonoVO miAbono;
-		;
 		try {
 			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_abonos_pagados}");
 			ResultSet miRs = miProcedimiento.executeQuery();
@@ -459,6 +469,7 @@ public class AbonoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para listar abonos pagados");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".buscarAbonosPagadosConMatriz");
 
 		}
 		return listaAbonos;
@@ -526,6 +537,8 @@ public class AbonoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para listar abonos pagados por fecha");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(),
+					this.getClass().getCanonicalName() + ".buscarAbonosPagadosPorFechaConMatriz");
 
 		}
 		return listaAbonos;
@@ -546,6 +559,7 @@ public class AbonoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para contar abonos cobrados");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".contarAbonosCobrados");
 		}
 
 		return totalAbonosCobrados;
@@ -566,6 +580,7 @@ public class AbonoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para contar abonos pendientes");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".contarAbonosPendientes");
 		}
 
 		return totalAbonosPendientes;
@@ -597,6 +612,7 @@ public class AbonoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para eliminar abonos asociados");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".eliminarAbonosAsociados");
 
 		}
 	}
@@ -622,6 +638,7 @@ public class AbonoDAO {
 		} catch (ParseException ex) {
 
 			ex.printStackTrace();
+			error.guardarMensajeError(ex.getMessage(), this.getClass().getCanonicalName() + ".editarAbonoPagado");
 
 		}
 		// Comparo fechas
@@ -644,6 +661,7 @@ public class AbonoDAO {
 		} catch (Exception e1) {
 			System.out.println(e1.getMessage());
 			System.out.println("No sé si el abono es completo o no");
+			error.guardarMensajeError(e1.getMessage(), this.getClass().getCanonicalName() + ".editarAbonoPagado");
 		}
 
 		DBConnection miConexion = new DBConnection();
@@ -661,6 +679,7 @@ public class AbonoDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para editar abono");
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".editarAbonoPagado");
 
 		}
 
