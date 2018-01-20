@@ -117,9 +117,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JButton jButtonBuscarMovimientos;
 	private JLabel jLabelFechaFinMovimiento;
 	private JLabel jLabelFechaInicioMovimiento;
-	private JScrollPane jScrollPaneResultadosMovimiento;
-	private JPanel jPanelResultadoMovimientos;
-	private JPanel jPanelEntradaMovimientos;
 	private JPanel jPanelMovimientos;
 	private JCheckBox jCheckBoxEditandoAbono;
 	private JCheckBox jCheckBoxEdicionCliente;
@@ -205,7 +202,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField jTextNombre;
 	private JLabel jLabelEmpresa;
 	private JTable tablaResultados;
-	private JTable tablaMovimientos;
 	// Constantes para listados
 	private final String seleccioneUno = "Seleccione uno";
 	private final String listaClientes = "Listado de clientes registrados";
@@ -244,7 +240,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		actualizaAbonos();
 		actualizaClientes();
 		actualizaReportes();
-		actualizaMovimientos();
 		llenaComboListados();
 
 	}
@@ -842,28 +837,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jCheckBoxEdicionCliente.setText("Editando");
 							jCheckBoxEdicionCliente.setBounds(778, 103, 115, 20);
 							jCheckBoxEdicionCliente.setFont(new java.awt.Font("Arial", 0, 16));
-						}
-					}
-					// Aquí movimientos
-					jTabPestanias.addTab("Movimientos", jPanelMovimientos);
-					jPanelMovimientos.setFont(new java.awt.Font("Arial", 0, 16));
-					{
-						jPanelEntradaMovimientos = new JPanel();
-						jPanelMovimientos.add(jPanelEntradaMovimientos, BorderLayout.NORTH);
-						jPanelEntradaMovimientos.setLayout(null);
-						jPanelEntradaMovimientos.setPreferredSize(new java.awt.Dimension(909, 146));
-						jPanelEntradaMovimientos.setBorder(BorderFactory.createTitledBorder("Búsqueda"));
-					}
-					{
-						jPanelResultadoMovimientos = new JPanel();
-						BorderLayout jPanelResultadoMovimientosLayout = new BorderLayout();
-						jPanelMovimientos.add(jPanelResultadoMovimientos, BorderLayout.SOUTH);
-						jPanelResultadoMovimientos.setLayout(jPanelResultadoMovimientosLayout);
-						jPanelResultadoMovimientos.setPreferredSize(new java.awt.Dimension(909, 430));
-						jPanelResultadoMovimientos.setBorder(BorderFactory.createTitledBorder("Resultados"));
-						{
-							jScrollPaneResultadosMovimiento = new JScrollPane();
-							jPanelResultadoMovimientos.add(jScrollPaneResultadosMovimiento, BorderLayout.CENTER);
 						}
 					}
 					// Aquí listados
@@ -1499,7 +1472,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			JOptionPane.showMessageDialog(this, "El préstamo se ha creado correctamente", "Información",
 					JOptionPane.INFORMATION_MESSAGE);
 			limpiarCamposPrestamo();
-			actualizaMovimientos();
 			actualizaPrestamos();
 			actualizaReportes();
 		}
@@ -1551,7 +1523,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			miAbono.editarAbonoPagado(codigoAbono, fechaPago, montoPagado);
 			// Edito el movimiento para actualizar cifras
 			miMovimiento.editarMovimiento(codigoAbono, fechaPago, montoPagado, 0);
-			actualizaMovimientos();
 			JOptionPane.showMessageDialog(this, "Abono editado con éxito", "Edición exitosa",
 					JOptionPane.INFORMATION_MESSAGE);
 			limpiarCamposAbono();
@@ -1573,7 +1544,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 				// Registro el movimiento
 				miMovimiento.agregarMovimiento(codigoAbono, fechaPago, montoPagado, 0);
-				actualizaMovimientos();
 				actualizaAbonos();
 				actualizaPrestamos();
 				actualizaAbonosPagados();
@@ -1605,20 +1575,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		JTableHeader th = jTableAbonosRecibidos.getTableHeader();
 		th.setFont(new java.awt.Font("Arial", 0, 16));
 		ajustaColumnasAContenido(jTableAbonosRecibidos);
-	}
-
-	private void actualizaMovimientos() {
-
-		MovimientoDAO miMovimiento = new MovimientoDAO();
-		String informacionMovimientos[][] = miMovimiento.obtenerMatrizMovimientos();
-		String titulos[] = miMovimiento.getColumnas();
-		tablaMovimientos = new JTable(informacionMovimientos, titulos);
-		jScrollPaneResultadosMovimiento.setViewportView(tablaMovimientos);
-		tablaMovimientos.setFont(new java.awt.Font("Arial", 0, 16));
-		JTableHeader th = tablaMovimientos.getTableHeader();
-		th.setFont(new java.awt.Font("Arial", 0, 16));
-		ajustaColumnasAContenido(tablaMovimientos);
-
 	}
 
 	private void actualizaAbonosPagados() {
@@ -1996,7 +1952,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReporteClientes.pdf";
+		String strNombrePDF = "ReporteClientes" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de clientes registrados, generado el: " + diaS + "/" + mesS + "/" + anio
 				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReporteClientes ejemplo = new ReporteClientes(strTituloPDF, strNombrePDF);
@@ -2028,7 +1984,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReporteClientesAlfa.pdf";
+		String strNombrePDF = "ReporteClientesAlfa" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de clientes registrados ordenados alfabéticamente, generado el: " + diaS + "/"
 				+ mesS + "/" + anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReporteClientesAlfa ejemplo = new ReporteClientesAlfa(strTituloPDF, strNombrePDF);
@@ -2060,7 +2016,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReporteClientesActivos.pdf";
+		String strNombrePDF = "ReporteClientesActivos" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de clientes activos registrados, generado el: " + diaS + "/" + mesS + "/" + anio
 				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReporteClientesActivos ejemplo = new ReporteClientesActivos(strTituloPDF, strNombrePDF);
@@ -2092,7 +2048,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReporteClientesNOActivos.pdf";
+		String strNombrePDF = "ReporteClientesNOActivos" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de clientes no activos registrados, generado el: " + diaS + "/" + mesS + "/"
 				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReporteClientesNOActivos ejemplo = new ReporteClientesNOActivos(strTituloPDF, strNombrePDF);
@@ -2135,7 +2091,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReportePrestamos.pdf";
+		String strNombrePDF = "ReportePrestamos" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de préstamos registrados, generado el: " + diaS + "/" + mesS + "/" + anio
 				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReportePrestamos ejemplo = new ReportePrestamos(strTituloPDF, strNombrePDF);
@@ -2169,7 +2125,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReportePrestamosPendientes.pdf";
+		String strNombrePDF = "ReportePrestamosPendientes" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de préstamos pendientes registrados, generado el: " + diaS + "/" + mesS + "/"
 				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReportePrestamosPendientes ejemplo = new ReportePrestamosPendientes(strTituloPDF, strNombrePDF);
@@ -2203,7 +2159,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReportePrestamosPagados.pdf";
+		String strNombrePDF = "ReportePrestamosPagados" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de préstamos pagados registrados, generado el: " + diaS + "/" + mesS + "/" + anio
 				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReportePrestamosPagados ejemplo = new ReportePrestamosPagados(strTituloPDF, strNombrePDF);
@@ -2237,7 +2193,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReportePrestamosVencidos.pdf";
+		String strNombrePDF = "ReportePrestamosVencidos" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de préstamos vencidos registrados, generado el: " + diaS + "/" + mesS + "/"
 				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReportePrestamosVencidos ejemplo = new ReportePrestamosVencidos(strTituloPDF, strNombrePDF);
@@ -2271,7 +2227,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReporteAbonos.pdf";
+		String strNombrePDF = "ReporteAbonos" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de abonos registrados, generado el: " + diaS + "/" + mesS + "/" + anio
 				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReporteAbonos ejemplo = new ReporteAbonos(strTituloPDF, strNombrePDF);
@@ -2305,7 +2261,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReporteAbonosPendientes.pdf";
+		String strNombrePDF = "ReporteAbonosPendientes" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de abonos pendientes, generado el: " + diaS + "/" + mesS + "/" + anio
 				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReporteAbonosPendientes ejemplo = new ReporteAbonosPendientes(strTituloPDF, strNombrePDF);
@@ -2339,7 +2295,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReporteAbonosPagados.pdf";
+		String strNombrePDF = "ReporteAbonosPagados" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de abonos pagados, generado el: " + diaS + "/" + mesS + "/" + anio + "  a las "
 				+ " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReporteAbonosPagados reporte = new ReporteAbonosPagados(strTituloPDF, strNombrePDF);
@@ -2373,7 +2329,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReporteMovimientos.pdf";
+		String strNombrePDF = "ReporteMovimientos" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de movimientos resgistrados, generado el: " + diaS + "/" + mesS + "/" + anio
 				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReporteMovimientos reporte = new ReporteMovimientos(strTituloPDF, strNombrePDF);
@@ -2406,7 +2362,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReporteMovimientosEntrada.pdf";
+		String strNombrePDF = "ReporteMovimientosEntrada" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de movimientos de entrada resgistrados, generado el: " + diaS + "/" + mesS + "/"
 				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReporteMovimientosEntrada reporte = new ReporteMovimientosEntrada(strTituloPDF, strNombrePDF);
@@ -2439,7 +2395,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReporteMovimientosSalida.pdf";
+		String strNombrePDF = "ReporteMovimientosSalida" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de movimientos de salida resgistrados, generado el: " + diaS + "/" + mesS + "/"
 				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReporteMovimientosSalida reporte = new ReporteMovimientosSalida(strTituloPDF, strNombrePDF);
@@ -2472,7 +2428,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReporteMovimientosFechas.pdf";
+		String strNombrePDF = "ReporteMovimientosFechas" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de movimientos resgistrados por fecha, generado el: " + diaS + "/" + mesS + "/"
 				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReporteMovimientosFechas reporte = new ReporteMovimientosFechas(strTituloPDF, strNombrePDF, fechaInicio,
