@@ -110,6 +110,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelTotalAbonosCobrados;
 	private JLabel jLabelTotalClientesactivos;
 	private JLabel jLabelCerosPrestamo;
+	private JCheckBox jCheckBoxEditandoPrestamo;
 	private JLabel jLabelCodigoPrestamoOculto;
 	private JTextField jTextTotalSalidas;
 	private JTextField jTextTotalentradas;
@@ -569,6 +570,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jLabelCodigoPrestamoOculto.setBounds(289, 34, 10, 10);
 								jLabelCodigoPrestamoOculto.setVisible(false);
 							}
+							{
+								jCheckBoxEditandoPrestamo = new JCheckBox();
+								jPanelEntradasPrestamo.add(jCheckBoxEditandoPrestamo);
+								jCheckBoxEditandoPrestamo.setText("Editando");
+								jCheckBoxEditandoPrestamo.setBounds(789, 178, 115, 20);
+								jCheckBoxEditandoPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
+								jCheckBoxEditandoPrestamo.setEnabled(false);
+							}
 
 						}
 					}
@@ -738,7 +747,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jCheckBoxEditandoAbono = new JCheckBox();
 							jPanelAgregarAbono.add(jCheckBoxEditandoAbono);
 							jCheckBoxEditandoAbono.setText("Editando");
-							jCheckBoxEditandoAbono.setBounds(778, 170, 126, 20);
+							jCheckBoxEditandoAbono.setBounds(779, 181, 126, 20);
 							jCheckBoxEditandoAbono.setFont(new java.awt.Font("Arial", 0, 16));
 							jCheckBoxEditandoAbono.setEnabled(false);
 						}
@@ -865,7 +874,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jCheckBoxEdicionCliente = new JCheckBox();
 							jPanelAgregarCliente.add(jCheckBoxEdicionCliente);
 							jCheckBoxEdicionCliente.setText("Editando");
-							jCheckBoxEdicionCliente.setBounds(778, 103, 115, 20);
+							jCheckBoxEdicionCliente.setBounds(784, 112, 115, 20);
 							jCheckBoxEdicionCliente.setFont(new java.awt.Font("Arial", 0, 16));
 							jCheckBoxEdicionCliente.setEnabled(false);
 						}
@@ -1443,7 +1452,89 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		// La ultima fecha del arreglo
 		Date fechaFin = null;
 		String codigoCliente = "";
+		String codigoPrestamo = jLabelCodigoPrestamoOculto.getText();
 		ArrayList<Date> fechasPago = new ArrayList<Date>();
+
+		if (jCheckBoxEditandoPrestamo.isSelected()) {
+			if (validarCamposPrestamo()) {
+
+				// recojo valores
+				try {
+					montoPrestamo = Float.parseFloat(jTextMonto.getText()) * 1000;
+					tasaInteres = Integer.parseInt(jTextTasaInteres.getText());
+					numeroCuotas = Integer.parseInt(jTextNumeroCuotas.getText());
+				} catch (NumberFormatException e) {
+					System.out.println(e.getMessage());
+				}
+				tipoPlazo = (String) jComboPlazo.getSelectedItem();
+				tipoPlazoMayus = tipoPlazo.toUpperCase();
+				// El saldo pendiente
+				totalPagar = miPrestamo.calcularPrestamo(montoPrestamo, tasaInteres, tipoPlazo, numeroCuotas);
+
+				fechaInicio = calendarioPrestamos.getDate();
+				// Fecha de fin
+				fechasPago = miPrestamo.calcularFechasPago(tipoPlazo, numeroCuotas, fechaInicio);
+				try {
+					tamanioArray = fechasPago.size();
+					fechaFin = fechasPago.get(tamanioArray - 1);
+					// Busco el cliente de nuevo
+					codigoCliente = JOptionPane.showInputDialog("Verifique código del cliente");
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+
+			}
+			// Busco el código en la bd y lo adjunto al prestamo
+			ClienteDAO miCliente = new ClienteDAO();
+			ClienteVO cliente = miCliente.buscarCliente(codigoCliente);
+			if (cliente.getCodigoCliente() == null) {
+				JOptionPane.showMessageDialog(this, "Cliente no encontrado", "Alerta", JOptionPane.ERROR_MESSAGE);
+			} else {
+				// Cambio valores de etiquetas en la vista
+				jLabelNombreCliente.setText(cliente.getNombreCliente());
+				jLabelCodigo.setForeground(Color.RED);
+				jLabelCodigo.setText(cliente.getCodigoCliente() + "");
+				jLabelEmpresaResult.setText(cliente.getEmpresaCliente());
+
+				// edito el préstamo
+				// edito el movimiento
+				// limpio campos
+				// quito selección del checkbutton
+				// actualizo valores
+
+				// Verifico si ya han abonado dinero al préstamo
+				// Si han abonado no dejo editar
+				if (miPrestamo.prestamoTieneAbonos(codigoPrestamo)) {
+					JOptionPane.showMessageDialog(this,
+							"Este préstamo ya tiene saldo abonado, por tanto no es posible modificar sus parámetros",
+							"El préstamo no se puede editar", JOptionPane.ERROR_MESSAGE);
+					return;
+				} else {
+					// elimino los abonos asociados
+					miAbono.eliminarAbonosAsociados(codigoPrestamo);
+
+					// edito el prestamo
+					miPrestamo.editarPrestamo(montoPrestamo, tasaInteres, numeroCuotas, totalPagar, fechaInicio,
+							fechaFin, tipoPlazoMayus, codigoCliente);
+
+					// Creo los abonos correspondientes a ese préstamo
+					miAbono.crearAbonosPrestamo(totalPagar, numeroCuotas, fechasPago, codigoPrestamo);
+
+					// Registro el movimiento
+					miMovimiento.editarMovimiento(codigoPrestamo, fechaInicio, 0, montoPrestamo);
+
+					JOptionPane.showMessageDialog(this, "El préstamo se ha editado correctamente", "Información",
+							JOptionPane.INFORMATION_MESSAGE);
+					limpiarCamposPrestamo();
+					actualizaAbonos();
+					actualizaPrestamos();
+					actualizaReportes();
+				}
+
+			}
+
+			return;
+		}
 
 		if (validarCamposPrestamo()) {
 			// Recojo los datos necesarios
@@ -1491,14 +1582,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			String estadoPrestamo = "PENDIENTE";
 
 			// Agrego el prestamo
-			String codigoPrestamo = miPrestamo.agregarPrestamo(montoPrestamo, tasaInteres, numeroCuotas, totalPagar,
+			String codigoPrestamoN = miPrestamo.agregarPrestamo(montoPrestamo, tasaInteres, numeroCuotas, totalPagar,
 					totalPagado, fechaInicio, fechaFin, tipoPlazoMayus, codigoCliente, estadoPrestamo);
 
 			// Creo los abonos correspondientes a ese préstamo
-			miAbono.crearAbonosPrestamo(totalPagar, numeroCuotas, fechasPago, codigoPrestamo);
+			miAbono.crearAbonosPrestamo(totalPagar, numeroCuotas, fechasPago, codigoPrestamoN);
 
 			// Registro el movimiento
-			miMovimiento.agregarMovimiento(codigoPrestamo, fechaInicio, 0, montoPrestamo);
+			miMovimiento.agregarMovimiento(codigoPrestamoN, fechaInicio, 0, montoPrestamo);
 
 			JOptionPane.showMessageDialog(this, "El préstamo se ha creado correctamente", "Información",
 					JOptionPane.INFORMATION_MESSAGE);
@@ -1549,20 +1640,24 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		double montoPagado = 0;
 
 		if (jCheckBoxEditandoAbono.isSelected()) {
-			fechaPago = calendarioAbonos.getDate();
-			codigoAbono = jTextFieldCodigoAbono.getText();
-			montoPagado = Double.parseDouble(jTextField1.getText()) * 1000;
-			miAbono.editarAbonoPagado(codigoAbono, fechaPago, montoPagado);
-			// Edito el movimiento para actualizar cifras
-			miMovimiento.editarMovimiento(codigoAbono, fechaPago, montoPagado, 0);
-			JOptionPane.showMessageDialog(this, "Abono editado con éxito", "Edición exitosa",
-					JOptionPane.INFORMATION_MESSAGE);
-			limpiarCamposAbono();
-			jCheckBoxEditandoAbono.setSelected(false);
-			actualizaAbonos();
-			actualizaReportes();
-			actualizaPrestamos();
-			return;
+
+			if (validarCamposAbonoPrestamo()) {
+
+				fechaPago = calendarioAbonos.getDate();
+				codigoAbono = jTextFieldCodigoAbono.getText();
+				montoPagado = Double.parseDouble(jTextField1.getText()) * 1000;
+				miAbono.editarAbonoPagado(codigoAbono, fechaPago, montoPagado);
+				// Edito el movimiento para actualizar cifras
+				miMovimiento.editarMovimiento(codigoAbono, fechaPago, montoPagado, 0);
+				JOptionPane.showMessageDialog(this, "Abono editado con éxito", "Edición exitosa",
+						JOptionPane.INFORMATION_MESSAGE);
+				limpiarCamposAbono();
+				jCheckBoxEditandoAbono.setSelected(false);
+				actualizaAbonos();
+				actualizaReportes();
+				actualizaPrestamos();
+				return;
+			}
 		}
 
 		if (validarCamposAbonoPrestamo()) {
@@ -2544,7 +2639,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			}
 			jTextTasaInteres.setText(miPrestamo.getTasaInteresPrestamo() + "");
 			// Falta la fecha
-			Date fechaFormateada;
+			Date fechaFormateada = null;
 			try {
 				fechaFormateada = formato.parse(miPrestamo.getFechaInicioPrestamo());
 				calendarioPrestamos.setDate(fechaFormateada);
@@ -2576,14 +2671,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jLabelEmpresaResult.setText(miCliente.getEmpresaCliente());
 			jLabelCodigo.setText(miCliente.getCodigoCliente());
 			jLabelCodigo.setForeground(Color.RED);
-
-			// Las fechas de pago
-			ArrayList<Date> fechasPago = new ArrayList<Date>();
-			fechasPago = miPrestamoDAO.calcularFechasPago(tipoPlazo, miPrestamo.getNumeroCuotasPrestamo(),
-					calendarioPrestamos.getDate());
-			DefaultComboBoxModel modeloNuevo = new DefaultComboBoxModel();
-			modeloNuevo = llenaComboPlazos(fechasPago);
-			jComboFechasCobro.setModel(modeloNuevo);
+			jCheckBoxEditandoPrestamo.setSelected(true);
 
 		} else {
 			JOptionPane.showMessageDialog(this, "Verifique el código del préstamo", "Préstamo no encontrado",

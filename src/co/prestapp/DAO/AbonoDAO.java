@@ -584,6 +584,23 @@ public class AbonoDAO {
 		return respuesta;
 	}
 
+	public void eliminarAbonosAsociados(String codigoPrestamo) {
+
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		try {
+			CallableStatement miProcedimiento = conexion.prepareCall("{call eliminar_abonos_asociados(?)}");
+			miProcedimiento.setString(1, codigoPrestamo);
+			miProcedimiento.execute();
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para eliminar abonos asociados");
+			System.out.println(e.getMessage());
+
+		}
+	}
+
 	public void editarAbonoPagado(String codigoAbono, Date fechaPago, double montoPagado) {
 
 		Locale locale = new Locale("es", "CO");
@@ -608,17 +625,17 @@ public class AbonoDAO {
 
 		}
 		// Comparo fechas
-				if (fechaPagoF.before(fechaCobro)) {
-					System.out.println("Puntual");
-					puntualAbono = "SI";
-				} else {
-					if (fechaCobro.before(fechaPagoF)) {
-						System.out.println("No puntual");
-					} else {
-						System.out.println("Fechas iguales");
-						puntualAbono = "SI";
-					}
-				}
+		if (fechaPagoF.before(fechaCobro)) {
+			System.out.println("Puntual");
+			puntualAbono = "SI";
+		} else {
+			if (fechaCobro.before(fechaPagoF)) {
+				System.out.println("No puntual");
+			} else {
+				System.out.println("Fechas iguales");
+				puntualAbono = "SI";
+			}
+		}
 
 		try {
 			if (montoPagado >= formatoMoneda.parse(miAbono.getMontoACobrar()).doubleValue()) {

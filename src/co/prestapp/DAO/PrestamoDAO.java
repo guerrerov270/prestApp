@@ -7,12 +7,14 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.Locale;
 
+import co.prestapp.VO.AbonoVO;
 import co.prestapp.VO.PrestamoVO;
 import co.prestapp.connection.DBConnection;
 
@@ -839,5 +841,58 @@ public class PrestamoDAO {
 
 		return miPrestamo;
 	}// Fin buscarPrestamosConMatriz
+
+	public boolean prestamoTieneAbonos(String codigoPrestamo) {
+
+		boolean respuesta = false;
+		Locale locale = new Locale("es", "CO");
+		NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
+		PrestamoVO miPrestamo = buscarPrestamo(codigoPrestamo);
+
+		int montoPagado = 0;
+		try {
+			montoPagado = formatoMoneda.parse(miPrestamo.getSaldoPagadoPrestamo()).intValue();
+		} catch (ParseException e) {
+
+			e.printStackTrace();
+		}
+
+		if (montoPagado > 0) {
+			respuesta = true;
+		}
+
+		return respuesta;
+	}
+
+	public void editarPrestamo(float montoPrestamo, int tasaInteres, int numeroCuotas, double totalPagar,
+			Date fechaInicio, Date fechaFin, String tipoPlazoMayus, String codigoCliente) {
+
+		java.sql.Date fechaInicioFormateada = new java.sql.Date(fechaInicio.getTime());
+		java.sql.Date fechaFinFormateada = new java.sql.Date(fechaFin.getTime());
+
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		String codigoPrestamo = recuperarCodigoPrestamo();
+		try {
+			CallableStatement miProcedimiento = conexion.prepareCall("{call editar_prestamo(?,?,?,?,?,?,?,?,?)}");
+			miProcedimiento.setString(1, codigoPrestamo);
+			miProcedimiento.setDouble(2, montoPrestamo);
+			miProcedimiento.setInt(3, tasaInteres);
+			miProcedimiento.setInt(4, numeroCuotas);
+			miProcedimiento.setDouble(5, totalPagar);
+			miProcedimiento.setDate(6, fechaInicioFormateada);
+			miProcedimiento.setDate(7, fechaFinFormateada);
+			miProcedimiento.setString(8, tipoPlazoMayus);
+			miProcedimiento.setString(9, codigoCliente);
+			miProcedimiento.execute();
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para editar préstamo");
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+
+	}
 
 }// Fin clase
