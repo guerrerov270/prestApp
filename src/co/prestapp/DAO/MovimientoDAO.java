@@ -310,14 +310,14 @@ public class MovimientoDAO {
 
 	public float calcularTotalSalidas() {
 
-		float totalEntradas = 0;
+		float totalSalidas = 0;
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
 		try {
 			CallableStatement miProcedimiento = conexion.prepareCall("{call sumar_salidas_movimiento(?)}");
 			miProcedimiento.registerOutParameter(1, Types.NUMERIC);
 			miProcedimiento.executeQuery();
-			totalEntradas = miProcedimiento.getFloat(1);
+			totalSalidas = miProcedimiento.getFloat(1);
 			conexion.close();
 
 		} catch (SQLException e) {
@@ -325,7 +325,55 @@ public class MovimientoDAO {
 			System.out.println(e.getMessage());
 		}
 
-		return totalEntradas;
+		return totalSalidas;
 
 	}// Fin calcularTotalSalidas
+
+	public float calcularTotalEntradas(Date fechaInicio, Date fechaFin) {
+
+		java.sql.Date fechaInicioFormateada = new java.sql.Date(fechaInicio.getTime());
+		java.sql.Date fechaFinFormateada = new java.sql.Date(fechaFin.getTime());
+		float totalEntradas = 0;
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		try {
+			CallableStatement miProcedimiento = conexion.prepareCall("{call sumar_entradas_movimiento_fechas(?,?,?)}");
+			miProcedimiento.registerOutParameter(1, Types.NUMERIC);
+			miProcedimiento.setDate(2, fechaInicioFormateada);
+			miProcedimiento.setDate(3, fechaFinFormateada);
+			miProcedimiento.executeQuery();
+			totalEntradas = miProcedimiento.getFloat(1);
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para sumar entradas por fecha");
+			System.out.println(e.getMessage());
+		}
+
+		return totalEntradas;
+	}
+
+	public float calcularTotalSalidas(Date fechaInicio, Date fechaFin) {
+
+		java.sql.Date fechaInicioFormateada = new java.sql.Date(fechaInicio.getTime());
+		java.sql.Date fechaFinFormateada = new java.sql.Date(fechaFin.getTime());
+		float totalSalidas = 0;
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		try {
+			CallableStatement miProcedimiento = conexion.prepareCall("{call sumar_salidas_movimiento_fechas(?,?,?)}");
+			miProcedimiento.registerOutParameter(1, Types.NUMERIC);
+			miProcedimiento.setDate(2, fechaInicioFormateada);
+			miProcedimiento.setDate(3, fechaFinFormateada);
+			miProcedimiento.executeQuery();
+			totalSalidas = miProcedimiento.getFloat(1);
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para sumar salidas por fecha");
+			System.out.println(e.getMessage());
+		}
+
+		return totalSalidas;
+	}
 }

@@ -3,7 +3,6 @@ package co.prestapp.vista;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -58,6 +57,10 @@ import co.prestapp.reports.ReporteClientes;
 import co.prestapp.reports.ReporteClientesActivos;
 import co.prestapp.reports.ReporteClientesAlfa;
 import co.prestapp.reports.ReporteClientesNOActivos;
+import co.prestapp.reports.ReporteMovimientos;
+import co.prestapp.reports.ReporteMovimientosEntrada;
+import co.prestapp.reports.ReporteMovimientosFechas;
+import co.prestapp.reports.ReporteMovimientosSalida;
 import co.prestapp.reports.ReportePrestamos;
 import co.prestapp.reports.ReportePrestamosPagados;
 import co.prestapp.reports.ReportePrestamosPendientes;
@@ -114,9 +117,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JButton jButtonBuscarMovimientos;
 	private JLabel jLabelFechaFinMovimiento;
 	private JLabel jLabelFechaInicioMovimiento;
-	private JScrollPane jScrollPaneResultadosMovimiento;
-	private JPanel jPanelResultadoMovimientos;
-	private JPanel jPanelEntradaMovimientos;
 	private JPanel jPanelMovimientos;
 	private JCheckBox jCheckBoxEditandoAbono;
 	private JCheckBox jCheckBoxEdicionCliente;
@@ -202,7 +202,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTextField jTextNombre;
 	private JLabel jLabelEmpresa;
 	private JTable tablaResultados;
-	private JTable tablaMovimientos;
 	// Constantes para listados
 	private final String seleccioneUno = "Seleccione uno";
 	private final String listaClientes = "Listado de clientes registrados";
@@ -241,7 +240,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		actualizaAbonos();
 		actualizaClientes();
 		actualizaReportes();
-		actualizaMovimientos();
 		llenaComboListados();
 
 	}
@@ -841,28 +839,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jCheckBoxEdicionCliente.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 					}
-					// Aquí movimientos
-					jTabPestanias.addTab("Movimientos", jPanelMovimientos);
-					jPanelMovimientos.setFont(new java.awt.Font("Arial", 0, 16));
-					{
-						jPanelEntradaMovimientos = new JPanel();
-						jPanelMovimientos.add(jPanelEntradaMovimientos, BorderLayout.NORTH);
-						jPanelEntradaMovimientos.setLayout(null);
-						jPanelEntradaMovimientos.setPreferredSize(new java.awt.Dimension(909, 146));
-						jPanelEntradaMovimientos.setBorder(BorderFactory.createTitledBorder("Búsqueda"));
-					}
-					{
-						jPanelResultadoMovimientos = new JPanel();
-						BorderLayout jPanelResultadoMovimientosLayout = new BorderLayout();
-						jPanelMovimientos.add(jPanelResultadoMovimientos, BorderLayout.SOUTH);
-						jPanelResultadoMovimientos.setLayout(jPanelResultadoMovimientosLayout);
-						jPanelResultadoMovimientos.setPreferredSize(new java.awt.Dimension(909, 430));
-						jPanelResultadoMovimientos.setBorder(BorderFactory.createTitledBorder("Resultados"));
-						{
-							jScrollPaneResultadosMovimiento = new JScrollPane();
-							jPanelResultadoMovimientos.add(jScrollPaneResultadosMovimiento, BorderLayout.CENTER);
-						}
-					}
 					// Aquí listados
 					jTabPestanias.addTab("Listados", jPaneListados);
 					jPaneListados.setFont(new java.awt.Font("Arial", 0, 16));
@@ -1008,7 +984,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						{
 							jTextTotalentradas = new JTextField();
 							jPanelEstadisticas.add(jTextTotalentradas);
-							jTextTotalentradas.setEnabled(false);
+							jTextTotalentradas.setEditable(false);
 							jTextTotalentradas.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
@@ -1021,7 +997,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						{
 							jTextTotalSalidas = new JTextField();
 							jPanelEstadisticas.add(jTextTotalSalidas);
-							jTextTotalSalidas.setEnabled(false);
+							jTextTotalSalidas.setEditable(false);
 							jTextTotalSalidas.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 
@@ -1496,7 +1472,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			JOptionPane.showMessageDialog(this, "El préstamo se ha creado correctamente", "Información",
 					JOptionPane.INFORMATION_MESSAGE);
 			limpiarCamposPrestamo();
-			actualizaMovimientos();
 			actualizaPrestamos();
 			actualizaReportes();
 		}
@@ -1548,7 +1523,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			miAbono.editarAbonoPagado(codigoAbono, fechaPago, montoPagado);
 			// Edito el movimiento para actualizar cifras
 			miMovimiento.editarMovimiento(codigoAbono, fechaPago, montoPagado, 0);
-			actualizaMovimientos();
 			JOptionPane.showMessageDialog(this, "Abono editado con éxito", "Edición exitosa",
 					JOptionPane.INFORMATION_MESSAGE);
 			limpiarCamposAbono();
@@ -1570,7 +1544,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 				// Registro el movimiento
 				miMovimiento.agregarMovimiento(codigoAbono, fechaPago, montoPagado, 0);
-				actualizaMovimientos();
 				actualizaAbonos();
 				actualizaPrestamos();
 				actualizaAbonosPagados();
@@ -1602,20 +1575,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		JTableHeader th = jTableAbonosRecibidos.getTableHeader();
 		th.setFont(new java.awt.Font("Arial", 0, 16));
 		ajustaColumnasAContenido(jTableAbonosRecibidos);
-	}
-
-	private void actualizaMovimientos() {
-
-		MovimientoDAO miMovimiento = new MovimientoDAO();
-		String informacionMovimientos[][] = miMovimiento.obtenerMatrizMovimientos();
-		String titulos[] = miMovimiento.getColumnas();
-		tablaMovimientos = new JTable(informacionMovimientos, titulos);
-		jScrollPaneResultadosMovimiento.setViewportView(tablaMovimientos);
-		tablaMovimientos.setFont(new java.awt.Font("Arial", 0, 16));
-		JTableHeader th = tablaMovimientos.getTableHeader();
-		th.setFont(new java.awt.Font("Arial", 0, 16));
-		ajustaColumnasAContenido(tablaMovimientos);
-
 	}
 
 	private void actualizaAbonosPagados() {
@@ -1993,7 +1952,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReporteClientes.pdf";
+		String strNombrePDF = "ReporteClientes" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de clientes registrados, generado el: " + diaS + "/" + mesS + "/" + anio
 				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReporteClientes ejemplo = new ReporteClientes(strTituloPDF, strNombrePDF);
@@ -2025,7 +1984,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReporteClientesAlfa.pdf";
+		String strNombrePDF = "ReporteClientesAlfa" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de clientes registrados ordenados alfabéticamente, generado el: " + diaS + "/"
 				+ mesS + "/" + anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReporteClientesAlfa ejemplo = new ReporteClientesAlfa(strTituloPDF, strNombrePDF);
@@ -2057,7 +2016,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReporteClientesActivos.pdf";
+		String strNombrePDF = "ReporteClientesActivos" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de clientes activos registrados, generado el: " + diaS + "/" + mesS + "/" + anio
 				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReporteClientesActivos ejemplo = new ReporteClientesActivos(strTituloPDF, strNombrePDF);
@@ -2089,7 +2048,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReporteClientesNOActivos.pdf";
+		String strNombrePDF = "ReporteClientesNOActivos" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de clientes no activos registrados, generado el: " + diaS + "/" + mesS + "/"
 				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReporteClientesNOActivos ejemplo = new ReporteClientesNOActivos(strTituloPDF, strNombrePDF);
@@ -2132,7 +2091,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReportePrestamos.pdf";
+		String strNombrePDF = "ReportePrestamos" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de préstamos registrados, generado el: " + diaS + "/" + mesS + "/" + anio
 				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReportePrestamos ejemplo = new ReportePrestamos(strTituloPDF, strNombrePDF);
@@ -2166,7 +2125,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReportePrestamosPendientes.pdf";
+		String strNombrePDF = "ReportePrestamosPendientes" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de préstamos pendientes registrados, generado el: " + diaS + "/" + mesS + "/"
 				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReportePrestamosPendientes ejemplo = new ReportePrestamosPendientes(strTituloPDF, strNombrePDF);
@@ -2200,7 +2159,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReportePrestamosPagados.pdf";
+		String strNombrePDF = "ReportePrestamosPagados" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de préstamos pagados registrados, generado el: " + diaS + "/" + mesS + "/" + anio
 				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReportePrestamosPagados ejemplo = new ReportePrestamosPagados(strTituloPDF, strNombrePDF);
@@ -2234,7 +2193,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReportePrestamosVencidos.pdf";
+		String strNombrePDF = "ReportePrestamosVencidos" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de préstamos vencidos registrados, generado el: " + diaS + "/" + mesS + "/"
 				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReportePrestamosVencidos ejemplo = new ReportePrestamosVencidos(strTituloPDF, strNombrePDF);
@@ -2268,7 +2227,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReporteAbonos.pdf";
+		String strNombrePDF = "ReporteAbonos" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de abonos registrados, generado el: " + diaS + "/" + mesS + "/" + anio
 				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReporteAbonos ejemplo = new ReporteAbonos(strTituloPDF, strNombrePDF);
@@ -2302,7 +2261,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReporteAbonosPendientes.pdf";
+		String strNombrePDF = "ReporteAbonosPendientes" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de abonos pendientes, generado el: " + diaS + "/" + mesS + "/" + anio
 				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReporteAbonosPendientes ejemplo = new ReporteAbonosPendientes(strTituloPDF, strNombrePDF);
@@ -2336,7 +2295,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String minutoS = concatenaCero(minuto);
 		String segundoS = concatenaCero(segundo);
 
-		String strNombrePDF = "ReporteAbonosPagados.pdf";
+		String strNombrePDF = "ReporteAbonosPagados" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de abonos pagados, generado el: " + diaS + "/" + mesS + "/" + anio + "  a las "
 				+ " " + horaS + ":" + minutoS + ":" + segundoS;
 		ReporteAbonosPagados reporte = new ReporteAbonosPagados(strTituloPDF, strNombrePDF);
@@ -2348,6 +2307,139 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (respuesta == JOptionPane.YES_OPTION)
 			reporte.abrirPDF();
 
+	}
+
+	private void generarReporteMovimientos() {
+
+		// configuracion de la fecha actual
+		// Creamos un objeto de la clase Calendar.
+		Calendar fecha = new GregorianCalendar();
+		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
+		// Usando el método get y el parámetro correspondiente.
+		int anio = fecha.get(Calendar.YEAR);
+		int mes = fecha.get(Calendar.MONTH);
+		int dia = fecha.get(Calendar.DAY_OF_MONTH);
+		int hora = fecha.get(Calendar.HOUR_OF_DAY);
+		int minuto = fecha.get(Calendar.MINUTE);
+		int segundo = fecha.get(Calendar.SECOND);
+
+		String mesS = concatenaCero(mes + 1);
+		String diaS = concatenaCero(dia);
+		String horaS = concatenaCero(hora);
+		String minutoS = concatenaCero(minuto);
+		String segundoS = concatenaCero(segundo);
+
+		String strNombrePDF = "ReporteMovimientos" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
+		String strTituloPDF = "Reporte de movimientos resgistrados, generado el: " + diaS + "/" + mesS + "/" + anio
+				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+		ReporteMovimientos reporte = new ReporteMovimientos(strTituloPDF, strNombrePDF);
+		// Preguntar al usuario si desea abrir el documento PDF
+		int respuesta = JOptionPane.showConfirmDialog(null,
+				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		// Si la respuesta es SI, abrirlo
+		if (respuesta == JOptionPane.YES_OPTION)
+			reporte.abrirPDF();
+	}
+
+	private void generarReporteMovimientosEntrada() {
+
+		// configuracion de la fecha actual
+		// Creamos un objeto de la clase Calendar.
+		Calendar fecha = new GregorianCalendar();
+		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
+		// Usando el método get y el parámetro correspondiente.
+		int anio = fecha.get(Calendar.YEAR);
+		int mes = fecha.get(Calendar.MONTH);
+		int dia = fecha.get(Calendar.DAY_OF_MONTH);
+		int hora = fecha.get(Calendar.HOUR_OF_DAY);
+		int minuto = fecha.get(Calendar.MINUTE);
+		int segundo = fecha.get(Calendar.SECOND);
+
+		String mesS = concatenaCero(mes + 1);
+		String diaS = concatenaCero(dia);
+		String horaS = concatenaCero(hora);
+		String minutoS = concatenaCero(minuto);
+		String segundoS = concatenaCero(segundo);
+
+		String strNombrePDF = "ReporteMovimientosEntrada" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
+		String strTituloPDF = "Reporte de movimientos de entrada resgistrados, generado el: " + diaS + "/" + mesS + "/"
+				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+		ReporteMovimientosEntrada reporte = new ReporteMovimientosEntrada(strTituloPDF, strNombrePDF);
+		// Preguntar al usuario si desea abrir el documento PDF
+		int respuesta = JOptionPane.showConfirmDialog(null,
+				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		// Si la respuesta es SI, abrirlo
+		if (respuesta == JOptionPane.YES_OPTION)
+			reporte.abrirPDF();
+	}
+
+	private void generarReporteMovimientosSalida() {
+
+		// configuracion de la fecha actual
+		// Creamos un objeto de la clase Calendar.
+		Calendar fecha = new GregorianCalendar();
+		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
+		// Usando el método get y el parámetro correspondiente.
+		int anio = fecha.get(Calendar.YEAR);
+		int mes = fecha.get(Calendar.MONTH);
+		int dia = fecha.get(Calendar.DAY_OF_MONTH);
+		int hora = fecha.get(Calendar.HOUR_OF_DAY);
+		int minuto = fecha.get(Calendar.MINUTE);
+		int segundo = fecha.get(Calendar.SECOND);
+
+		String mesS = concatenaCero(mes + 1);
+		String diaS = concatenaCero(dia);
+		String horaS = concatenaCero(hora);
+		String minutoS = concatenaCero(minuto);
+		String segundoS = concatenaCero(segundo);
+
+		String strNombrePDF = "ReporteMovimientosSalida" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
+		String strTituloPDF = "Reporte de movimientos de salida resgistrados, generado el: " + diaS + "/" + mesS + "/"
+				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+		ReporteMovimientosSalida reporte = new ReporteMovimientosSalida(strTituloPDF, strNombrePDF);
+		// Preguntar al usuario si desea abrir el documento PDF
+		int respuesta = JOptionPane.showConfirmDialog(null,
+				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		// Si la respuesta es SI, abrirlo
+		if (respuesta == JOptionPane.YES_OPTION)
+			reporte.abrirPDF();
+	}
+
+	private void generarReporteMovimientosFechas(java.sql.Date fechaInicio, java.sql.Date fechaFin) {
+
+		// configuracion de la fecha actual
+		// Creamos un objeto de la clase Calendar.
+		Calendar fecha = new GregorianCalendar();
+		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
+		// Usando el método get y el parámetro correspondiente.
+		int anio = fecha.get(Calendar.YEAR);
+		int mes = fecha.get(Calendar.MONTH);
+		int dia = fecha.get(Calendar.DAY_OF_MONTH);
+		int hora = fecha.get(Calendar.HOUR_OF_DAY);
+		int minuto = fecha.get(Calendar.MINUTE);
+		int segundo = fecha.get(Calendar.SECOND);
+
+		String mesS = concatenaCero(mes + 1);
+		String diaS = concatenaCero(dia);
+		String horaS = concatenaCero(hora);
+		String minutoS = concatenaCero(minuto);
+		String segundoS = concatenaCero(segundo);
+
+		String strNombrePDF = "ReporteMovimientosFechas" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
+		String strTituloPDF = "Reporte de movimientos resgistrados por fecha, generado el: " + diaS + "/" + mesS + "/"
+				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+		ReporteMovimientosFechas reporte = new ReporteMovimientosFechas(strTituloPDF, strNombrePDF, fechaInicio,
+				fechaFin);
+		// Preguntar al usuario si desea abrir el documento PDF
+		int respuesta = JOptionPane.showConfirmDialog(null,
+				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		// Si la respuesta es SI, abrirlo
+		if (respuesta == JOptionPane.YES_OPTION)
+			reporte.abrirPDF();
 	}
 
 	private void jButtonEditarClienteActionPerformed(ActionEvent evt) {
@@ -2457,12 +2549,20 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			generarReporteAbonosPagados();
 			break;
 		case listaMovimientos:
+			generarReporteMovimientos();
 			break;
 		case listaMovimientosEntrada:
+			generarReporteMovimientosEntrada();
 			break;
 		case listaMovimientosSalida:
+			generarReporteMovimientosSalida();
 			break;
 		case listaMovimientosFechas:
+			java.sql.Date fechaInicioFormateada = new java.sql.Date(calendarioInicioMovimiento.getDate().getTime());
+			java.sql.Date fechaFinFormateada = new java.sql.Date(calendarioFinMovimiento.getDate().getTime());
+			generarReporteMovimientosFechas(fechaInicioFormateada, fechaFinFormateada);
+			calendarioInicioMovimiento.setDate(null);
+			calendarioFinMovimiento.setDate(null);
 			break;
 		}
 
@@ -2480,6 +2580,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String titulosPrestamo[] = miPrestamo.getColumnas();
 		MovimientoDAO miMovimiento = new MovimientoDAO();
 		String titulosMovimiento[] = miMovimiento.getColumnas();
+
+		Locale locale = new Locale("es", "CO");
+		NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
 
 		switch (listaSeleccionada) {
 		case seleccioneUno:
@@ -2613,8 +2716,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
 			thMovimientos.setFont(new java.awt.Font("Arial", 0, 16));
 			ajustaColumnasAContenido(tablaResultados);
-			jTextTotalentradas.setText(miMovimiento.calcularTotalEntradas() + "");
-			jTextTotalSalidas.setText(miMovimiento.calcularTotalSalidas() + "");
+			jTextTotalentradas.setText(formatoMoneda.format(miMovimiento.calcularTotalEntradas()) + "");
+			jTextTotalSalidas.setText(formatoMoneda.format(miMovimiento.calcularTotalSalidas()) + "");
 
 			break;
 		case listaMovimientosEntrada:
@@ -2626,6 +2729,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
 			thMovimientosEntrada.setFont(new java.awt.Font("Arial", 0, 16));
 			ajustaColumnasAContenido(tablaResultados);
+			jTextTotalentradas.setText(formatoMoneda.format(miMovimiento.calcularTotalEntradas()) + "");
+			jTextTotalSalidas.setText("");
 			break;
 		case listaMovimientosSalida:
 			miMovimiento = new MovimientoDAO();
@@ -2636,11 +2741,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
 			thMovimientosSalida.setFont(new java.awt.Font("Arial", 0, 16));
 			ajustaColumnasAContenido(tablaResultados);
+			jTextTotalentradas.setText("");
+			jTextTotalSalidas.setText(formatoMoneda.format(miMovimiento.calcularTotalSalidas()) + "");
 			break;
 		case listaMovimientosFechas:
 			calendarioInicioMovimiento.setEnabled(true);
 			calendarioFinMovimiento.setEnabled(true);
 			jButtonBuscarMovimientos.setEnabled(true);
+			jTextTotalentradas.setText("");
+			jTextTotalSalidas.setText("");
 			break;
 
 		}
@@ -2653,6 +2762,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String titulosMovimiento[] = miMovimiento.getColumnas();
 		Date fechaInicio = calendarioInicioMovimiento.getDate();
 		Date fechaFin = calendarioFinMovimiento.getDate();
+		Locale locale = new Locale("es", "CO");
+		NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
 		if (fechaInicio != null && fechaFin != null) {
 
 			miMovimiento = new MovimientoDAO();
@@ -2664,11 +2775,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
 			thMovimientos.setFont(new java.awt.Font("Arial", 0, 16));
 			ajustaColumnasAContenido(tablaResultados);
+			jTextTotalentradas
+					.setText(formatoMoneda.format(miMovimiento.calcularTotalEntradas(fechaInicio, fechaFin)) + "");
+			jTextTotalSalidas
+					.setText(formatoMoneda.format(miMovimiento.calcularTotalSalidas(fechaInicio, fechaFin)) + "");
 			calendarioInicioMovimiento.setEnabled(false);
 			calendarioFinMovimiento.setEnabled(false);
 			jButtonBuscarMovimientos.setEnabled(false);
-			calendarioInicioMovimiento.setDate(null);
-			calendarioFinMovimiento.setDate(null);
+
 		} else {
 			JOptionPane.showMessageDialog(this, "Debe especificar una fecha de inicio y una final", "Alerta",
 					JOptionPane.WARNING_MESSAGE);
