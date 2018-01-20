@@ -57,6 +57,10 @@ import co.prestapp.reports.ReporteClientes;
 import co.prestapp.reports.ReporteClientesActivos;
 import co.prestapp.reports.ReporteClientesAlfa;
 import co.prestapp.reports.ReporteClientesNOActivos;
+import co.prestapp.reports.ReporteMovimientos;
+import co.prestapp.reports.ReporteMovimientosEntrada;
+import co.prestapp.reports.ReporteMovimientosFechas;
+import co.prestapp.reports.ReporteMovimientosSalida;
 import co.prestapp.reports.ReportePrestamos;
 import co.prestapp.reports.ReportePrestamosPagados;
 import co.prestapp.reports.ReportePrestamosPendientes;
@@ -2349,6 +2353,139 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
+	private void generarReporteMovimientos() {
+
+		// configuracion de la fecha actual
+		// Creamos un objeto de la clase Calendar.
+		Calendar fecha = new GregorianCalendar();
+		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
+		// Usando el método get y el parámetro correspondiente.
+		int anio = fecha.get(Calendar.YEAR);
+		int mes = fecha.get(Calendar.MONTH);
+		int dia = fecha.get(Calendar.DAY_OF_MONTH);
+		int hora = fecha.get(Calendar.HOUR_OF_DAY);
+		int minuto = fecha.get(Calendar.MINUTE);
+		int segundo = fecha.get(Calendar.SECOND);
+
+		String mesS = concatenaCero(mes + 1);
+		String diaS = concatenaCero(dia);
+		String horaS = concatenaCero(hora);
+		String minutoS = concatenaCero(minuto);
+		String segundoS = concatenaCero(segundo);
+
+		String strNombrePDF = "ReporteMovimientos.pdf";
+		String strTituloPDF = "Reporte de movimientos resgistrados, generado el: " + diaS + "/" + mesS + "/" + anio
+				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+		ReporteMovimientos reporte = new ReporteMovimientos(strTituloPDF, strNombrePDF);
+		// Preguntar al usuario si desea abrir el documento PDF
+		int respuesta = JOptionPane.showConfirmDialog(null,
+				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		// Si la respuesta es SI, abrirlo
+		if (respuesta == JOptionPane.YES_OPTION)
+			reporte.abrirPDF();
+	}
+
+	private void generarReporteMovimientosEntrada() {
+
+		// configuracion de la fecha actual
+		// Creamos un objeto de la clase Calendar.
+		Calendar fecha = new GregorianCalendar();
+		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
+		// Usando el método get y el parámetro correspondiente.
+		int anio = fecha.get(Calendar.YEAR);
+		int mes = fecha.get(Calendar.MONTH);
+		int dia = fecha.get(Calendar.DAY_OF_MONTH);
+		int hora = fecha.get(Calendar.HOUR_OF_DAY);
+		int minuto = fecha.get(Calendar.MINUTE);
+		int segundo = fecha.get(Calendar.SECOND);
+
+		String mesS = concatenaCero(mes + 1);
+		String diaS = concatenaCero(dia);
+		String horaS = concatenaCero(hora);
+		String minutoS = concatenaCero(minuto);
+		String segundoS = concatenaCero(segundo);
+
+		String strNombrePDF = "ReporteMovimientosEntrada.pdf";
+		String strTituloPDF = "Reporte de movimientos de entrada resgistrados, generado el: " + diaS + "/" + mesS + "/"
+				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+		ReporteMovimientosEntrada reporte = new ReporteMovimientosEntrada(strTituloPDF, strNombrePDF);
+		// Preguntar al usuario si desea abrir el documento PDF
+		int respuesta = JOptionPane.showConfirmDialog(null,
+				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		// Si la respuesta es SI, abrirlo
+		if (respuesta == JOptionPane.YES_OPTION)
+			reporte.abrirPDF();
+	}
+
+	private void generarReporteMovimientosSalida() {
+
+		// configuracion de la fecha actual
+		// Creamos un objeto de la clase Calendar.
+		Calendar fecha = new GregorianCalendar();
+		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
+		// Usando el método get y el parámetro correspondiente.
+		int anio = fecha.get(Calendar.YEAR);
+		int mes = fecha.get(Calendar.MONTH);
+		int dia = fecha.get(Calendar.DAY_OF_MONTH);
+		int hora = fecha.get(Calendar.HOUR_OF_DAY);
+		int minuto = fecha.get(Calendar.MINUTE);
+		int segundo = fecha.get(Calendar.SECOND);
+
+		String mesS = concatenaCero(mes + 1);
+		String diaS = concatenaCero(dia);
+		String horaS = concatenaCero(hora);
+		String minutoS = concatenaCero(minuto);
+		String segundoS = concatenaCero(segundo);
+
+		String strNombrePDF = "ReporteMovimientosSalida.pdf";
+		String strTituloPDF = "Reporte de movimientos de salida resgistrados, generado el: " + diaS + "/" + mesS + "/"
+				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+		ReporteMovimientosSalida reporte = new ReporteMovimientosSalida(strTituloPDF, strNombrePDF);
+		// Preguntar al usuario si desea abrir el documento PDF
+		int respuesta = JOptionPane.showConfirmDialog(null,
+				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		// Si la respuesta es SI, abrirlo
+		if (respuesta == JOptionPane.YES_OPTION)
+			reporte.abrirPDF();
+	}
+
+	private void generarReporteMovimientosFechas(java.sql.Date fechaInicio, java.sql.Date fechaFin) {
+
+		// configuracion de la fecha actual
+		// Creamos un objeto de la clase Calendar.
+		Calendar fecha = new GregorianCalendar();
+		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
+		// Usando el método get y el parámetro correspondiente.
+		int anio = fecha.get(Calendar.YEAR);
+		int mes = fecha.get(Calendar.MONTH);
+		int dia = fecha.get(Calendar.DAY_OF_MONTH);
+		int hora = fecha.get(Calendar.HOUR_OF_DAY);
+		int minuto = fecha.get(Calendar.MINUTE);
+		int segundo = fecha.get(Calendar.SECOND);
+
+		String mesS = concatenaCero(mes + 1);
+		String diaS = concatenaCero(dia);
+		String horaS = concatenaCero(hora);
+		String minutoS = concatenaCero(minuto);
+		String segundoS = concatenaCero(segundo);
+
+		String strNombrePDF = "ReporteMovimientosFechas.pdf";
+		String strTituloPDF = "Reporte de movimientos resgistrados por fecha, generado el: " + diaS + "/" + mesS + "/"
+				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+		ReporteMovimientosFechas reporte = new ReporteMovimientosFechas(strTituloPDF, strNombrePDF, fechaInicio,
+				fechaFin);
+		// Preguntar al usuario si desea abrir el documento PDF
+		int respuesta = JOptionPane.showConfirmDialog(null,
+				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		// Si la respuesta es SI, abrirlo
+		if (respuesta == JOptionPane.YES_OPTION)
+			reporte.abrirPDF();
+	}
+
 	private void jButtonEditarClienteActionPerformed(ActionEvent evt) {
 
 		ClienteVO clienteEncontrado = null;
@@ -2456,12 +2593,20 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			generarReporteAbonosPagados();
 			break;
 		case listaMovimientos:
+			generarReporteMovimientos();
 			break;
 		case listaMovimientosEntrada:
+			generarReporteMovimientosEntrada();
 			break;
 		case listaMovimientosSalida:
+			generarReporteMovimientosSalida();
 			break;
 		case listaMovimientosFechas:
+			java.sql.Date fechaInicioFormateada = new java.sql.Date(calendarioInicioMovimiento.getDate().getTime());
+			java.sql.Date fechaFinFormateada = new java.sql.Date(calendarioFinMovimiento.getDate().getTime());
+			generarReporteMovimientosFechas(fechaInicioFormateada, fechaFinFormateada);
+			calendarioInicioMovimiento.setDate(null);
+			calendarioFinMovimiento.setDate(null);
 			break;
 		}
 
@@ -2674,8 +2819,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			calendarioInicioMovimiento.setEnabled(false);
 			calendarioFinMovimiento.setEnabled(false);
 			jButtonBuscarMovimientos.setEnabled(false);
-			calendarioInicioMovimiento.setDate(null);
-			calendarioFinMovimiento.setDate(null);
+
 		} else {
 			JOptionPane.showMessageDialog(this, "Debe especificar una fecha de inicio y una final", "Alerta",
 					JOptionPane.WARNING_MESSAGE);
