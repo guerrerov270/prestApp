@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class DBConnection {
 
 	Connection miConexion = null;
-	static String url = "jdbc:mysql://localhost:3306/test?autoReconnect=true&useSSL=false";
+	static String url = "jdbc:mysql://localhost:3306/prestapp?autoReconnect=true&useSSL=false";
 	static String user = "root";
 	static String password = "root";
 

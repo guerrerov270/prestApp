@@ -2037,7 +2037,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		fecha = fecha + "." + String.valueOf(c.get(Calendar.SECOND));
 
 		DBBackup backup = new DBBackup();
-		boolean resultado = backup.CrearBackup("localhost", "3306", "root", "root", "test",
+		boolean resultado = backup.CrearBackup("localhost", "3306", "root", "root", "prestapp",
 				"C:\\PrestApp\\backup" + "_" + fecha + ".sql");
 		if (resultado) {
 			JOptionPane.showMessageDialog(this, "Copia de seguridad generada con éxito", "Información",
