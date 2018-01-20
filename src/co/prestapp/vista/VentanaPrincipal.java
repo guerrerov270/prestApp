@@ -1514,8 +1514,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					miAbono.eliminarAbonosAsociados(codigoPrestamo);
 
 					// edito el prestamo
-					miPrestamo.editarPrestamo(montoPrestamo, tasaInteres, numeroCuotas, totalPagar, fechaInicio,
-							fechaFin, tipoPlazoMayus, codigoCliente);
+					miPrestamo.editarPrestamo(codigoPrestamo, montoPrestamo, tasaInteres, numeroCuotas, totalPagar,
+							fechaInicio, fechaFin, tipoPlazoMayus, codigoCliente);
 
 					// Creo los abonos correspondientes a ese préstamo
 					miAbono.crearAbonosPrestamo(totalPagar, numeroCuotas, fechasPago, codigoPrestamo);
@@ -1525,6 +1525,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 					JOptionPane.showMessageDialog(this, "El préstamo se ha editado correctamente", "Información",
 							JOptionPane.INFORMATION_MESSAGE);
+					jCheckBoxEditandoPrestamo.setSelected(false);
 					limpiarCamposPrestamo();
 					actualizaAbonos();
 					actualizaPrestamos();

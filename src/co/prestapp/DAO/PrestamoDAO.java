@@ -14,7 +14,6 @@ import java.util.Date;
 import java.util.Calendar;
 import java.util.Locale;
 
-import co.prestapp.VO.AbonoVO;
 import co.prestapp.VO.PrestamoVO;
 import co.prestapp.connection.DBConnection;
 
@@ -864,15 +863,14 @@ public class PrestamoDAO {
 		return respuesta;
 	}
 
-	public void editarPrestamo(float montoPrestamo, int tasaInteres, int numeroCuotas, double totalPagar,
-			Date fechaInicio, Date fechaFin, String tipoPlazoMayus, String codigoCliente) {
+	public void editarPrestamo(String codigoPrestamo, float montoPrestamo, int tasaInteres, int numeroCuotas,
+			double totalPagar, Date fechaInicio, Date fechaFin, String tipoPlazoMayus, String codigoCliente) {
 
 		java.sql.Date fechaInicioFormateada = new java.sql.Date(fechaInicio.getTime());
 		java.sql.Date fechaFinFormateada = new java.sql.Date(fechaFin.getTime());
 
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
-		String codigoPrestamo = recuperarCodigoPrestamo();
 		try {
 			CallableStatement miProcedimiento = conexion.prepareCall("{call editar_prestamo(?,?,?,?,?,?,?,?,?)}");
 			miProcedimiento.setString(1, codigoPrestamo);
