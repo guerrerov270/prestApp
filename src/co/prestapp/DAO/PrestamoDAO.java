@@ -793,4 +793,51 @@ public class PrestamoDAO {
 		return listaPrestamos;
 	}
 
+	public PrestamoVO buscarPrestamo(String codigoPrestamo) {
+
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		PrestamoVO miPrestamo = null;
+		DateFormat formatoFecha = new SimpleDateFormat("dd MMMM yyyy");
+		Locale locale = new Locale("es", "CO");
+		NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
+
+		try {
+			CallableStatement miProcedimiento = conexion.prepareCall("{call buscar_prestamo(?)}");
+			miProcedimiento.setString(1, codigoPrestamo);
+			ResultSet miRs = miProcedimiento.executeQuery();
+
+			while (miRs.next()) {
+				miPrestamo = new PrestamoVO();
+				miPrestamo.setIdPrestamo(miRs.getInt("idPrestamo"));
+				miPrestamo.setCodigoPrestamo(miRs.getString("codigoPrestamo"));
+				miPrestamo.setMontoPrestamo(formatoMoneda.format(miRs.getDouble("montoPrestamo")));
+				miPrestamo.setTasaInteresPrestamo(miRs.getInt("tasaInteresPrestamo"));
+				miPrestamo.setNumeroCuotasPrestamo(miRs.getInt("numeroCuotasprestamo"));
+				miPrestamo.setSaldoPendienteprestamo(formatoMoneda.format(miRs.getDouble("saldoPendientePrestamo")));
+				miPrestamo.setSaldoPagadoPrestamo(formatoMoneda.format(miRs.getDouble("saldoPagadoPrestamo")));
+				if (miRs.getDate("fechaInicioPrestamo") != null) {
+					miPrestamo.setFechaInicioPrestamo(formatoFecha.format(miRs.getDate("fechaInicioPrestamo")));
+				}
+				if (miRs.getDate("fechaFinPrestamo") != null) {
+					miPrestamo.setFechafinPrestamo(formatoFecha.format(miRs.getDate("fechaFinPrestamo")));
+				}
+
+				miPrestamo.setTipoPlazoPrestamo(miRs.getString("tipoPlazoPrestamo"));
+				miPrestamo.setcodigoClienteFK(miRs.getString("codigoClienteFK"));
+				miPrestamo.setEstadoPrestamo(miRs.getString("estadoPrestamo"));
+
+			}
+			miRs.close();
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para buscar préstamo");
+			System.out.println(e.getMessage());
+
+		}
+
+		return miPrestamo;
+	}// Fin buscarPrestamosConMatriz
+
 }// Fin clase

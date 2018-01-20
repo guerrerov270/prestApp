@@ -49,6 +49,7 @@ import co.prestapp.DAO.MovimientoDAO;
 import co.prestapp.DAO.PrestamoDAO;
 import co.prestapp.VO.AbonoVO;
 import co.prestapp.VO.ClienteVO;
+import co.prestapp.VO.PrestamoVO;
 import co.prestapp.connection.DBBackup;
 import co.prestapp.reports.ReporteAbonos;
 import co.prestapp.reports.ReporteAbonosPagados;
@@ -109,6 +110,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelTotalAbonosCobrados;
 	private JLabel jLabelTotalClientesactivos;
 	private JLabel jLabelCerosPrestamo;
+	private JLabel jLabelCodigoPrestamoOculto;
 	private JTextField jTextTotalSalidas;
 	private JTextField jTextTotalentradas;
 	private JLabel jLabelTotalSalidas;
@@ -418,7 +420,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jButtonEditarPrestamo.setIcon(new ImageIcon(otraimgEditar));
 								jPanelEntradasPrestamo.add(jButtonEditarPrestamo);
 								jButtonEditarPrestamo.setText("Editar");
-								jButtonEditarPrestamo.setBounds(185, 146, 130, 30);
+								jButtonEditarPrestamo.setBounds(189, 158, 130, 30);
 								jButtonEditarPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
 								jButtonEditarPrestamo.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
@@ -560,6 +562,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jLabelPesosPrestamo.setText("$");
 								jLabelPesosPrestamo.setBounds(149, 33, 19, 16);
 								jLabelPesosPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
+							}
+							{
+								jLabelCodigoPrestamoOculto = new JLabel();
+								jPanelEntradasPrestamo.add(jLabelCodigoPrestamoOculto);
+								jLabelCodigoPrestamoOculto.setBounds(289, 34, 10, 10);
+								jLabelCodigoPrestamoOculto.setVisible(false);
 							}
 
 						}
@@ -1552,6 +1560,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			limpiarCamposAbono();
 			jCheckBoxEditandoAbono.setSelected(false);
 			actualizaAbonos();
+			actualizaReportes();
+			actualizaPrestamos();
 			return;
 		}
 
@@ -2484,7 +2494,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
 		abonoEncontrado = miAbono.buscarAbono(codigoAbono);
 
-		if (abonoEncontrado.getCodigoAbono() != null) {
+		if (abonoEncontrado != null) {
 			jTextFieldCodigoAbono.setText(abonoEncontrado.getCodigoAbono());
 			Date fechaFormateada;
 			try {
@@ -2514,6 +2524,71 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private void jButtonEditarPrestamoPerformed(ActionEvent evt) {
 
 		String codigoPrestamo = JOptionPane.showInputDialog("Ingrese código del préstamo");
+		PrestamoDAO miPrestamoDAO = new PrestamoDAO();
+		ClienteDAO miClienteDAO = new ClienteDAO();
+		SimpleDateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
+		Locale locale = new Locale("es", "CO");
+		NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
+		PrestamoVO miPrestamo = miPrestamoDAO.buscarPrestamo(codigoPrestamo);
+		if (miPrestamo != null) {
+			// Relleno los campos con los datos del prestamo encontrado
+			jLabelCodigoPrestamoOculto.setText(miPrestamo.getCodigoPrestamo());
+
+			int monto;
+			try {
+				monto = formatoMoneda.parse(miPrestamo.getMontoPrestamo()).intValue();
+				jTextMonto.setText((monto / 1000) + "");
+			} catch (ParseException e) {
+
+				e.printStackTrace();
+			}
+			jTextTasaInteres.setText(miPrestamo.getTasaInteresPrestamo() + "");
+			// Falta la fecha
+			Date fechaFormateada;
+			try {
+				fechaFormateada = formato.parse(miPrestamo.getFechaInicioPrestamo());
+				calendarioPrestamos.setDate(fechaFormateada);
+			} catch (ParseException e) {
+
+				e.printStackTrace();
+			}
+
+			// Tipo de plazo
+			String tipoPlazo = miPrestamo.getTipoPlazoPrestamo();
+			switch (tipoPlazo) {
+			case "MENSUAL":
+				jComboPlazo.setSelectedIndex(1);
+				break;
+
+			case "QUINCENAL":
+				jComboPlazo.setSelectedIndex(2);
+				break;
+			case "SEMANAL":
+				jComboPlazo.setSelectedIndex(3);
+				break;
+			}
+			jTextNumeroCuotas.setText(miPrestamo.getNumeroCuotasPrestamo() + "");
+			jLabelTotalFormato.setText(miPrestamo.getSaldoPendienteprestamo());
+
+			// El cliente
+			ClienteVO miCliente = miClienteDAO.buscarCliente(miPrestamo.getIcodigoClienteFK());
+			jLabelNombreCliente.setText(miCliente.getNombreCliente());
+			jLabelEmpresaResult.setText(miCliente.getEmpresaCliente());
+			jLabelCodigo.setText(miCliente.getCodigoCliente());
+			jLabelCodigo.setForeground(Color.RED);
+
+			// Las fechas de pago
+			ArrayList<Date> fechasPago = new ArrayList<Date>();
+			fechasPago = miPrestamoDAO.calcularFechasPago(tipoPlazo, miPrestamo.getNumeroCuotasPrestamo(),
+					calendarioPrestamos.getDate());
+			DefaultComboBoxModel modeloNuevo = new DefaultComboBoxModel();
+			modeloNuevo = llenaComboPlazos(fechasPago);
+			jComboFechasCobro.setModel(modeloNuevo);
+
+		} else {
+			JOptionPane.showMessageDialog(this, "Verifique el código del préstamo", "Préstamo no encontrado",
+					JOptionPane.WARNING_MESSAGE);
+		}
 
 	}
 
