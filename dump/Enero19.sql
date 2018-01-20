@@ -40,7 +40,7 @@ CREATE TABLE `abono` (
   UNIQUE KEY `codigoAbono_UNIQUE` (`codigoAbono`),
   KEY `fk_abono_prestamo` (`abonoPrestamo`),
   CONSTRAINT `fk_abono_prestamo` FOREIGN KEY (`abonoPrestamo`) REFERENCES `prestamo` (`codigoPrestamo`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,7 +49,7 @@ CREATE TABLE `abono` (
 
 LOCK TABLES `abono` WRITE;
 /*!40000 ALTER TABLE `abono` DISABLE KEYS */;
-INSERT INTO `abono` VALUES (1,'A001',60000,90000,'SI','2018-01-15','2018-01-03','P001','SI','PAGADO',1),(2,'A002',60000,40000,'NO','2018-01-29','2018-01-12','P001','SI','PAGADO',2),(3,'A003',60000,60000,'SI','2018-02-12','2018-01-06','P001','SI','PAGADO',3),(4,'A004',60000,50000,'NO','2018-02-26','2018-01-06','P001','SI','PAGADO',4),(5,'A005',75000,75000,'SI','2018-01-18','2018-01-06','P002','SI','PAGADO',1),(6,'A006',75000,75000,'SI','2018-02-01','2018-01-11','P002','SI','PAGADO',2),(7,'A007',75000,75000,'SI','2018-02-15','2018-01-06','P002','SI','PAGADO',3),(8,'A008',75000,75000,'SI','2018-03-01','2018-01-06','P002','SI','PAGADO',4),(9,'A009',75000,75000,'SI','2018-03-15','2018-01-06','P002','SI','PAGADO',5),(10,'A010',75000,75000,'SI','2018-03-29','2018-01-06','P002','SI','PAGADO',6),(11,'A011',75000,75000,'SI','2018-04-12','2018-01-06','P002','SI','PAGADO',7),(12,'A012',75000,75000,'SI','2018-04-26','2018-01-06','P002','SI','PAGADO',8),(13,'A013',75000,75000,'SI','2018-05-10','2018-01-06','P002','SI','PAGADO',9),(14,'A014',75000,75000,'SI','2018-05-24','2018-01-06','P002','SI','PAGADO',10),(15,'A015',90000,90000,'SI','2018-01-25','2018-01-06','P003','SI','PAGADO',1),(16,'A016',90000,90000,'SI','2018-02-08','2018-01-06','P003','SI','PAGADO',2),(17,'A017',90000,90000,'SI','2018-02-22','2018-01-06','P003','SI','PAGADO',3),(18,'A018',90000,90000,'SI','2018-03-08','2018-01-06','P003','SI','PAGADO',4),(19,'A019',75000,70000,'NO','2018-01-20','2018-01-19','P004','SI','PAGADO',1),(20,'A020',75000,76000,'SI','2018-02-03','2018-01-06','P004','SI','PAGADO',2),(21,'A021',75000,76000,'SI','2018-02-17','2018-01-06','P004','SI','PAGADO',3),(22,'A022',75000,76000,'SI','2018-03-03','2018-01-06','P004','SI','PAGADO',4),(23,'A023',75000,232000,'SI','2018-03-17','2018-01-11','P004','SI','PAGADO',5),(24,'A024',75000,70000,'NO','2018-03-31','2018-01-09','P004','SI','PAGADO',6),(25,'A025',75000,150000,'SI','2018-04-14','2018-01-12','P004','SI','PAGADO',7),(26,'A026',75000,0,'NO','2018-04-28','2018-01-12','P004','SI','PAGADO',8),(27,'A027',75000,0,'NO','2018-05-12',NULL,'P004','NO','PENDIENTE',9),(28,'A028',75000,0,'NO','2018-05-26',NULL,'P004','NO','PENDIENTE',10),(29,'A029',100000,1000000,'SI','2018-02-06','2018-01-06','P005','SI','PAGADO',1),(30,'A030',100000,0,'NO','2018-03-06',NULL,'P005','NO','PENDIENTE',2),(31,'A031',100000,0,'NO','2018-04-06',NULL,'P005','NO','PENDIENTE',3),(32,'A032',100000,0,'NO','2018-05-06',NULL,'P005','NO','PENDIENTE',4),(33,'A033',100000,0,'NO','2018-06-06',NULL,'P005','NO','PENDIENTE',5),(34,'A034',100000,0,'NO','2018-07-06',NULL,'P005','NO','PENDIENTE',6),(35,'A035',100000,0,'NO','2018-08-06',NULL,'P005','NO','PENDIENTE',7),(36,'A036',100000,0,'NO','2018-09-06',NULL,'P005','NO','PENDIENTE',8),(37,'A037',100000,0,'NO','2018-10-06',NULL,'P005','NO','PENDIENTE',9),(38,'A038',100000,0,'NO','2018-11-06',NULL,'P005','NO','PENDIENTE',10),(39,'A039',70000,200000,'SI','2018-02-06','2018-01-06','P006','SI','PAGADO',1),(40,'A040',70000,80000,'SI','2018-03-06','2018-01-06','P006','SI','PAGADO',2),(41,'A041',70000,0,'NO','2018-04-06',NULL,'P006','NO','PENDIENTE',3),(42,'A042',70000,0,'NO','2018-05-06',NULL,'P006','NO','PENDIENTE',4),(43,'A043',27500,110000,'SI','2018-01-13','2018-01-06','P007','SI','PAGADO',1),(44,'A044',27500,0,'NO','2018-01-20',NULL,'P007','NO','PENDIENTE',2),(45,'A045',27500,0,'NO','2018-01-27',NULL,'P007','NO','PENDIENTE',3),(46,'A046',27500,0,'NO','2018-02-03',NULL,'P007','NO','PENDIENTE',4),(47,'A047',12000,120000,'SI','2018-01-13','2018-01-06','P008','SI','PAGADO',1),(48,'A048',12000,0,'NO','2018-01-20',NULL,'P008','NO','PENDIENTE',2),(49,'A049',12000,0,'NO','2018-01-27',NULL,'P008','NO','PENDIENTE',3),(50,'A050',12000,0,'NO','2018-02-03',NULL,'P008','NO','PENDIENTE',4),(51,'A051',12000,0,'NO','2018-02-10',NULL,'P008','NO','PENDIENTE',5),(52,'A052',12000,0,'NO','2018-02-17',NULL,'P008','NO','PENDIENTE',6),(53,'A053',12000,0,'NO','2018-02-24',NULL,'P008','NO','PENDIENTE',7),(54,'A054',12000,0,'NO','2018-03-03',NULL,'P008','NO','PENDIENTE',8),(55,'A055',12000,0,'NO','2018-03-10',NULL,'P008','NO','PENDIENTE',9),(56,'A056',12000,0,'NO','2018-03-17',NULL,'P008','NO','PENDIENTE',10),(67,'A057',150000,600000,'SI','2018-01-20','2018-01-12','P009','SI','PAGADO',1),(68,'A068',150000,0,'NO','2018-02-03',NULL,'P009','NO','PENDIENTE',2),(69,'A069',150000,0,'NO','2018-02-17',NULL,'P009','NO','PENDIENTE',3),(70,'A070',150000,0,'NO','2018-03-03',NULL,'P009','NO','PENDIENTE',4),(71,'A071',150000,600000,'SI','2018-01-22','2018-01-08','P010','SI','PAGADO',1),(72,'A072',150000,0,'NO','2018-02-05',NULL,'P010','NO','PENDIENTE',2),(73,'A073',150000,0,'NO','2018-02-19',NULL,'P010','NO','PENDIENTE',3),(74,'A074',150000,0,'NO','2018-03-05',NULL,'P010','NO','PENDIENTE',4),(75,'A075',175000,0,'NO','2018-02-08',NULL,'P011','NO','PENDIENTE',1),(76,'A076',175000,0,'NO','2018-03-08',NULL,'P011','NO','PENDIENTE',2),(77,'A077',175000,600000,'SI','2018-04-08','2018-01-12','P011','SI','PAGADO',3),(78,'A078',175000,100000,'NO','2018-05-08','2018-01-03','P011','SI','PAGADO',4),(79,'A079',20000,0,'NO','2017-02-02',NULL,'P012','NO','PENDIENTE',1),(80,'A080',20000,0,'NO','2017-03-02',NULL,'P012','NO','PENDIENTE',2),(81,'A081',20000,0,'NO','2017-04-02',NULL,'P012','NO','PENDIENTE',3),(82,'A082',20000,0,'NO','2017-05-02',NULL,'P012','NO','PENDIENTE',4),(83,'A083',20000,0,'NO','2017-06-02',NULL,'P012','NO','PENDIENTE',5),(84,'A084',20000,0,'NO','2017-07-02',NULL,'P012','NO','PENDIENTE',6),(85,'A085',20000,0,'NO','2017-08-02',NULL,'P012','NO','PENDIENTE',7),(86,'A086',20000,0,'NO','2017-09-02',NULL,'P012','NO','PENDIENTE',8),(87,'A087',20000,200000,'SI','2017-10-02','2018-01-12','P012','NO','PAGADO',9),(88,'A088',20000,0,'NO','2017-11-02',NULL,'P012','NO','PENDIENTE',10);
+INSERT INTO `abono` VALUES (1,'A001',60000,50000,'NO','2018-01-15','2018-01-16','P001','NO','PAGADO',1),(2,'A002',60000,40000,'NO','2018-01-29','2018-01-12','P001','SI','PAGADO',2),(3,'A003',60000,60000,'SI','2018-02-12','2018-01-06','P001','SI','PAGADO',3),(4,'A004',60000,50000,'NO','2018-02-26','2018-01-06','P001','SI','PAGADO',4),(5,'A005',75000,75000,'SI','2018-01-18','2018-01-06','P002','SI','PAGADO',1),(6,'A006',75000,75000,'SI','2018-02-01','2018-01-11','P002','SI','PAGADO',2),(7,'A007',75000,75000,'SI','2018-02-15','2018-01-06','P002','SI','PAGADO',3),(8,'A008',75000,75000,'SI','2018-03-01','2018-01-06','P002','SI','PAGADO',4),(9,'A009',75000,75000,'SI','2018-03-15','2018-01-06','P002','SI','PAGADO',5),(10,'A010',75000,75000,'SI','2018-03-29','2018-01-06','P002','SI','PAGADO',6),(11,'A011',75000,75000,'SI','2018-04-12','2018-01-06','P002','SI','PAGADO',7),(12,'A012',75000,75000,'SI','2018-04-26','2018-01-06','P002','SI','PAGADO',8),(13,'A013',75000,75000,'SI','2018-05-10','2018-01-06','P002','SI','PAGADO',9),(14,'A014',75000,75000,'SI','2018-05-24','2018-01-06','P002','SI','PAGADO',10),(15,'A015',90000,90000,'SI','2018-01-25','2018-01-06','P003','SI','PAGADO',1),(16,'A016',90000,90000,'SI','2018-02-08','2018-01-06','P003','SI','PAGADO',2),(17,'A017',90000,90000,'SI','2018-02-22','2018-01-06','P003','SI','PAGADO',3),(18,'A018',90000,90000,'SI','2018-03-08','2018-01-06','P003','SI','PAGADO',4),(19,'A019',75000,70000,'NO','2018-01-20','2018-01-19','P004','SI','PAGADO',1),(20,'A020',75000,76000,'SI','2018-02-03','2018-01-06','P004','SI','PAGADO',2),(21,'A021',75000,76000,'SI','2018-02-17','2018-01-06','P004','SI','PAGADO',3),(22,'A022',75000,76000,'SI','2018-03-03','2018-01-06','P004','SI','PAGADO',4),(23,'A023',75000,232000,'SI','2018-03-17','2018-01-11','P004','SI','PAGADO',5),(24,'A024',75000,70000,'NO','2018-03-31','2018-01-09','P004','SI','PAGADO',6),(25,'A025',75000,150000,'SI','2018-04-14','2018-01-12','P004','SI','PAGADO',7),(26,'A026',75000,0,'NO','2018-04-28','2018-01-12','P004','SI','PAGADO',8),(27,'A027',75000,0,'NO','2018-05-12',NULL,'P004','NO','PENDIENTE',9),(28,'A028',75000,0,'NO','2018-05-26',NULL,'P004','NO','PENDIENTE',10),(29,'A029',100000,1000000,'SI','2018-02-06','2018-01-06','P005','SI','PAGADO',1),(30,'A030',100000,50000,'NO','2018-03-06','2018-01-03','P005','SI','PAGADO',2),(31,'A031',100000,0,'NO','2018-04-06',NULL,'P005','NO','PENDIENTE',3),(32,'A032',100000,0,'NO','2018-05-06',NULL,'P005','NO','PENDIENTE',4),(33,'A033',100000,0,'NO','2018-06-06',NULL,'P005','NO','PENDIENTE',5),(34,'A034',100000,0,'NO','2018-07-06',NULL,'P005','NO','PENDIENTE',6),(35,'A035',100000,0,'NO','2018-08-06',NULL,'P005','NO','PENDIENTE',7),(36,'A036',100000,0,'NO','2018-09-06',NULL,'P005','NO','PENDIENTE',8),(37,'A037',100000,0,'NO','2018-10-06',NULL,'P005','NO','PENDIENTE',9),(38,'A038',100000,0,'NO','2018-11-06',NULL,'P005','NO','PENDIENTE',10),(39,'A039',70000,200000,'SI','2018-02-06','2018-01-06','P006','SI','PAGADO',1),(40,'A040',70000,80000,'SI','2018-03-06','2018-01-06','P006','SI','PAGADO',2),(41,'A041',70000,0,'NO','2018-04-06',NULL,'P006','NO','PENDIENTE',3),(42,'A042',70000,0,'NO','2018-05-06',NULL,'P006','NO','PENDIENTE',4),(43,'A043',27500,110000,'SI','2018-01-13','2018-01-06','P007','SI','PAGADO',1),(44,'A044',27500,0,'NO','2018-01-20',NULL,'P007','NO','PENDIENTE',2),(45,'A045',27500,0,'NO','2018-01-27',NULL,'P007','NO','PENDIENTE',3),(46,'A046',27500,0,'NO','2018-02-03',NULL,'P007','NO','PENDIENTE',4),(47,'A047',12000,120000,'SI','2018-01-13','2018-01-06','P008','SI','PAGADO',1),(48,'A048',12000,0,'NO','2018-01-20',NULL,'P008','NO','PENDIENTE',2),(49,'A049',12000,0,'NO','2018-01-27',NULL,'P008','NO','PENDIENTE',3),(50,'A050',12000,0,'NO','2018-02-03',NULL,'P008','NO','PENDIENTE',4),(51,'A051',12000,0,'NO','2018-02-10',NULL,'P008','NO','PENDIENTE',5),(52,'A052',12000,0,'NO','2018-02-17',NULL,'P008','NO','PENDIENTE',6),(53,'A053',12000,0,'NO','2018-02-24',NULL,'P008','NO','PENDIENTE',7),(54,'A054',12000,0,'NO','2018-03-03',NULL,'P008','NO','PENDIENTE',8),(55,'A055',12000,0,'NO','2018-03-10',NULL,'P008','NO','PENDIENTE',9),(56,'A056',12000,0,'NO','2018-03-17',NULL,'P008','NO','PENDIENTE',10),(67,'A057',150000,600000,'SI','2018-01-20','2018-01-12','P009','SI','PAGADO',1),(68,'A068',150000,0,'NO','2018-02-03',NULL,'P009','NO','PENDIENTE',2),(69,'A069',150000,0,'NO','2018-02-17',NULL,'P009','NO','PENDIENTE',3),(70,'A070',150000,0,'NO','2018-03-03',NULL,'P009','NO','PENDIENTE',4),(71,'A071',150000,600000,'SI','2018-01-22','2018-01-08','P010','SI','PAGADO',1),(72,'A072',150000,50000,'NO','2018-02-05','2018-01-11','P010','SI','PAGADO',2),(73,'A073',150000,0,'NO','2018-02-19',NULL,'P010','NO','PENDIENTE',3),(74,'A074',150000,0,'NO','2018-03-05',NULL,'P010','NO','PENDIENTE',4),(75,'A075',175000,0,'NO','2018-02-08',NULL,'P011','NO','PENDIENTE',1),(76,'A076',175000,0,'NO','2018-03-08',NULL,'P011','NO','PENDIENTE',2),(77,'A077',175000,600000,'SI','2018-04-08','2018-01-12','P011','SI','PAGADO',3),(78,'A078',175000,100000,'NO','2018-05-08','2018-01-03','P011','SI','PAGADO',4),(79,'A079',20000,0,'NO','2017-02-02',NULL,'P012','NO','PENDIENTE',1),(80,'A080',20000,0,'NO','2017-03-02',NULL,'P012','NO','PENDIENTE',2),(81,'A081',20000,0,'NO','2017-04-02',NULL,'P012','NO','PENDIENTE',3),(82,'A082',20000,0,'NO','2017-05-02',NULL,'P012','NO','PENDIENTE',4),(83,'A083',20000,0,'NO','2017-06-02',NULL,'P012','NO','PENDIENTE',5),(84,'A084',20000,0,'NO','2017-07-02',NULL,'P012','NO','PENDIENTE',6),(85,'A085',20000,0,'NO','2017-08-02',NULL,'P012','NO','PENDIENTE',7),(86,'A086',20000,0,'NO','2017-09-02',NULL,'P012','NO','PENDIENTE',8),(87,'A087',20000,200000,'SI','2017-10-02','2018-01-12','P012','NO','PAGADO',9),(88,'A088',20000,20000,'SI','2017-11-02','2018-01-18','P012','NO','PAGADO',10),(89,'A089',90000,80000,'NO','2018-02-01','2018-01-19','P013','SI','PAGADO',1),(90,'A090',90000,0,'NO','2018-02-15',NULL,'P013','NO','PENDIENTE',2),(91,'A091',90000,0,'NO','2018-03-01',NULL,'P013','NO','PENDIENTE',3),(92,'A092',90000,0,'NO','2018-03-15',NULL,'P013','NO','PENDIENTE',4);
 /*!40000 ALTER TABLE `abono` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -69,7 +69,7 @@ CREATE TABLE `cliente` (
   `estadoCliente` enum('ACTIVO','NO_ACTIVO','NO RECOMENDADO') DEFAULT 'NO_ACTIVO',
   PRIMARY KEY (`idCliente`),
   UNIQUE KEY `codigoCliente_UNIQUE` (`codigoCliente`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -78,8 +78,37 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (1,'C001','Julian Guerrero','NextU','Ingeniero','ACTIVO'),(2,'C002','Andres Sandoval','PSL','Tester','ACTIVO'),(3,'C003','Jorge Sanchez','Chispa','Domicilio',NULL),(4,'C004','','','',NULL),(5,'C005','','','',NULL),(6,'C006','Prueba de edicion','Empresa edicion','Referencia edicion',NULL),(7,'C007','','','',NULL),(8,'C008','','','',NULL),(9,'C009','','','',NULL),(10,'C010','','','',NULL),(11,'C011','Editando el 11','Empresa 11','Referencia 11',NULL),(12,'C012','','','',NULL),(13,'C013','','','',NULL),(14,'C014','','','',NULL),(15,'C015','','','',NULL),(16,'C016','','','',NULL),(17,'C017','','','',NULL),(18,'C018','','','',NULL),(19,'C019','','','',NULL),(20,'C020','','','',NULL),(21,'C021','','','',NULL),(22,'C022','Andres Herrera','ARA','Cajero','ACTIVO'),(23,'C023','Andres Perez','D1','Cajero',NULL),(24,'C024','','','',NULL),(25,'C025','Test','Test','Test',NULL),(26,'C026','','','',NULL),(27,'C027','Julian andres guerrero ome','','','ACTIVO'),(28,'C028','Prueba edcicion','Empresa editada','Es el hermano de...',NULL),(29,'C029','Andres Sandoval','','',NULL),(30,'C030','tEST','','','NO_ACTIVO'),(31,'C031','Test','','','NO_ACTIVO'),(32,'C032','hgbuhybh','','','NO_ACTIVO'),(33,'C033','Julian','pSL','Test dialogo','NO_ACTIVO'),(34,'C034','jkhjjjkjkklklkl','jklkljklklkl','mklkmlkmlmklkl','NO_ACTIVO'),(35,'C035','eeeeeeeeeeee','jknjknlnkjjkl','jklnjlknjklnjk','NO_ACTIVO'),(36,'C036','aaaaaaaaaaa','aaaaaaaa','aaaaaaa','NO_ACTIVO'),(37,'C037','aa','aa','aa','NO_ACTIVO'),(38,'C038','a','a','a','NO_ACTIVO'),(39,'C039','aaa','','','NO_ACTIVO'),(40,'C040','ee','','','NO_ACTIVO'),(41,'C041','qwerty','','','NO_ACTIVO'),(42,'C042','qwertyui','','','NO_ACTIVO'),(43,'C043','sssssss','','','NO_ACTIVO'),(44,'C044','yyyyyyyyyyyy','','','NO_ACTIVO'),(45,'C045','fffffffff','','','NO_ACTIVO');
+INSERT INTO `cliente` VALUES (1,'C001','Julian Guerrero','NextU','Ingeniero','ACTIVO'),(2,'C002','Andres Sandoval','PSL','Tester','ACTIVO'),(3,'C003','Jorge Sanchez','Chispa','Domicilio',NULL),(4,'C004','4','4','4',NULL),(5,'C005','Editando 5','Empresa 5','Referencia 5',NULL),(6,'C006','Prueba de edicion','Empresa edicion','Referencia edicion',NULL),(7,'C007','7','7','7',NULL),(8,'C008','','','',NULL),(9,'C009','','','',NULL),(10,'C010','','','',NULL),(11,'C011','Editando el 11','Empresa 11','Referencia 11',NULL),(12,'C012','','','',NULL),(13,'C013','','','',NULL),(14,'C014','','','',NULL),(15,'C015','','','',NULL),(16,'C016','','','',NULL),(17,'C017','','','',NULL),(18,'C018','','','',NULL),(19,'C019','','','',NULL),(20,'C020','','','',NULL),(21,'C021','','','',NULL),(22,'C022','Andres Herrera','ARA','Cajero','ACTIVO'),(23,'C023','Andres Perez','D1','Cajero',NULL),(24,'C024','','','',NULL),(25,'C025','Test','Test','Test',NULL),(26,'C026','','','',NULL),(27,'C027','Julian andres guerrero ome','','','ACTIVO'),(28,'C028','Prueba edcicion','Empresa editada','Es el hermano de...',NULL),(29,'C029','Andres Sandoval','','',NULL),(30,'C030','tEST','','','NO_ACTIVO'),(31,'C031','Test','','','NO_ACTIVO'),(32,'C032','hgbuhybh','','','NO_ACTIVO'),(33,'C033','Julian','pSL','Test dialogo','ACTIVO'),(34,'C034','jkhjjjkjkklklkl','jklkljklklkl','mklkmlkmlmklkl','NO_ACTIVO'),(35,'C035','eeeeeeeeeeee','jknjknlnkjjkl','jklnjlknjklnjk','NO_ACTIVO'),(36,'C036','aaaaaaaaaaa','aaaaaaaa','aaaaaaa','NO_ACTIVO'),(37,'C037','aa','aa','aa','NO_ACTIVO'),(38,'C038','a','a','a','NO_ACTIVO'),(39,'C039','aaa','','','NO_ACTIVO'),(40,'C040','ee','','','NO_ACTIVO'),(41,'C041','qwerty','','','NO_ACTIVO'),(42,'C042','qwertyui','','','NO_ACTIVO'),(43,'C043','sssssss','','','NO_ACTIVO'),(44,'C044','yyyyyyyyyyyy','','','NO_ACTIVO'),(45,'C045','fffffffff','','','NO_ACTIVO'),(46,'C046','gfdgfg','dggfgf','dfgdfgf','NO_ACTIVO');
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `movimiento`
+--
+
+DROP TABLE IF EXISTS `movimiento`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `movimiento` (
+  `idMovimiento` int(11) NOT NULL AUTO_INCREMENT,
+  `codigoMovimiento` varchar(10) NOT NULL,
+  `fechaMovimiento` date DEFAULT NULL,
+  `entradaMovimiento` decimal(10,0) DEFAULT '0',
+  `salidaMovimiento` decimal(10,0) DEFAULT '0',
+  `saldoMovimiento` decimal(10,0) DEFAULT '0',
+  PRIMARY KEY (`idMovimiento`),
+  UNIQUE KEY `codigoMovimiento_UNIQUE` (`codigoMovimiento`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `movimiento`
+--
+
+LOCK TABLES `movimiento` WRITE;
+/*!40000 ALTER TABLE `movimiento` DISABLE KEYS */;
+INSERT INTO `movimiento` VALUES (1,'P013','2018-01-18',0,300000,-300000),(2,'A089','2018-01-19',80000,0,80000);
+/*!40000 ALTER TABLE `movimiento` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -106,7 +135,7 @@ CREATE TABLE `prestamo` (
   UNIQUE KEY `codigoPrestamo_UNIQUE` (`codigoPrestamo`),
   KEY `fk_prestamo_cliente` (`codigoClienteFK`),
   CONSTRAINT `fk_prestamo_cliente` FOREIGN KEY (`codigoClienteFK`) REFERENCES `cliente` (`codigoCliente`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -115,7 +144,7 @@ CREATE TABLE `prestamo` (
 
 LOCK TABLES `prestamo` WRITE;
 /*!40000 ALTER TABLE `prestamo` DISABLE KEYS */;
-INSERT INTO `prestamo` VALUES (1,'P001',200000,10,4,240000,240000,'2018-01-01','2018-02-26','QUINCENAL','c001','PAGADO'),(2,'P002',500000,10,10,750000,750000,'2018-01-04','2018-05-24','QUINCENAL','c002','PAGADO'),(3,'P003',300000,10,4,360000,360000,'2018-01-11','2018-03-08','QUINCENAL','c002','PAGADO'),(4,'P004',500000,10,10,750000,750000,'2018-01-06','2018-05-26','QUINCENAL','c022','PAGADO'),(5,'P005',500000,10,10,1000000,1000000,'2018-01-06','2018-11-06','MENSUAL','C001','PAGADO'),(6,'P006',200000,10,4,280000,280000,'2018-01-06','2018-05-06','MENSUAL','c001','PAGADO'),(7,'P007',100000,10,4,110000,110000,'2018-01-06','2018-02-03','SEMANAL','c001','PAGADO'),(8,'P008',100000,10,10,120000,120000,'2018-01-06','2018-03-17','SEMANAL','c001','PAGADO'),(9,'P009',500000,10,4,600000,600000,'2018-01-06','2018-03-03','QUINCENAL','c001','PAGADO'),(10,'P010',500000,10,4,600000,600000,'2018-01-08','2018-03-05','QUINCENAL','c001','PAGADO'),(11,'P011',500000,10,4,700000,700000,'2018-01-08','2018-05-08','MENSUAL','c001','PAGADO'),(12,'P012',100000,10,10,200000,200000,'2017-01-02','2017-11-02','MENSUAL','c001','PAGADO');
+INSERT INTO `prestamo` VALUES (1,'P001',200000,10,4,240000,200000,'2018-01-01','2018-02-26','QUINCENAL','c001','PENDIENTE'),(2,'P002',500000,10,10,750000,750000,'2018-01-04','2018-05-24','QUINCENAL','c002','PAGADO'),(3,'P003',300000,10,4,360000,360000,'2018-01-11','2018-03-08','QUINCENAL','c002','PAGADO'),(4,'P004',500000,10,10,750000,750000,'2018-01-06','2018-05-26','QUINCENAL','c022','PAGADO'),(5,'P005',500000,10,10,1000000,1050000,'2018-01-06','2018-11-06','MENSUAL','C001','PAGADO'),(6,'P006',200000,10,4,280000,280000,'2018-01-06','2018-05-06','MENSUAL','c001','PAGADO'),(7,'P007',100000,10,4,110000,110000,'2018-01-06','2018-02-03','SEMANAL','c001','PAGADO'),(8,'P008',100000,10,10,120000,120000,'2018-01-06','2018-03-17','SEMANAL','c001','PAGADO'),(9,'P009',500000,10,4,600000,600000,'2018-01-06','2018-03-03','QUINCENAL','c001','PAGADO'),(10,'P010',500000,10,4,600000,650000,'2018-01-08','2018-03-05','QUINCENAL','c001','PAGADO'),(11,'P011',500000,10,4,700000,700000,'2018-01-08','2018-05-08','MENSUAL','c001','PAGADO'),(12,'P012',100000,10,10,200000,220000,'2017-01-02','2017-11-02','MENSUAL','c001','PAGADO'),(13,'P013',300000,10,4,360000,80000,'2018-01-18','2018-03-15','QUINCENAL','C033','PENDIENTE');
 /*!40000 ALTER TABLE `prestamo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -155,6 +184,27 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `agregar_cliente`(codigoCliente VARCHAR(10),nombreCliente VARCHAR(45),empresaCliente VARCHAR(45),referenciaCliente VARCHAR(45))
 INSERT INTO `test`.`cliente` (`codigoCliente`,`nombreCliente`, `empresaCliente`,`referenciaCliente`) VALUES (codigoCliente, nombreCliente, empresaCliente, referenciaCliente) ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `agregar_movimiento` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `agregar_movimiento`(codigoMovimientoE VARCHAR(10), fechaMovimientoE DATE, entradaMovimientoE DECIMAL, salidaMovimientoE DECIMAL)
+BEGIN
+	DECLARE saldoMovimientoE DECIMAL;
+    SET saldoMovimientoE=(entradaMovimientoE-salidaMovimientoE);
+	INSERT INTO `test`.`movimiento`(`codigoMovimiento`, `fechaMovimiento` , `entradaMovimiento`,`salidaMovimiento`, `saldoMovimiento` ) VALUES (codigoMovimientoE,fechaMovimientoE,entradaMovimientoE,salidaMovimientoE,saldoMovimientoE);
+END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -456,6 +506,25 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `editar_abono_pagado` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `editar_abono_pagado`(codigoAbonoE VARCHAR(10), fechaPagoE DATE, montoPagadoE DECIMAL, completoAbonoE ENUM('SI','NO'), puntualAbonoE ENUM('SI','NO'))
+BEGIN
+	UPDATE `test`.`abono` SET fechaPago=fechaPagoE, montoPagado=montoPagadoE, completoAbono=completoAbonoE, puntualAbono=puntualAbonoE WHERE codigoAbono=codigoAbonoE && estadoAbono='PAGADO';
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `editar_cliente` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -469,6 +538,27 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `editar_cliente`(codigoClienteE VARCHAR(10),nombreClienteE VARCHAR(45),empresaClienteE VARCHAR(45),referenciaClienteE VARCHAR(45))
 BEGIN
 	UPDATE `test`.`cliente` SET nombreCliente=nombreClienteE, empresaCliente=empresaClienteE, referenciaCliente=referenciaClienteE WHERE codigoCliente=codigoClienteE;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `editar_movimiento` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `editar_movimiento`(codigoMovimientoE VARCHAR(10), fechaMovimientoE DATE, entradaMovimientoE DECIMAL, salidaMovimientoE DECIMAL)
+BEGIN
+DECLARE saldoMovimientoE DECIMAL;
+    SET saldoMovimientoE=(entradaMovimientoE-salidaMovimientoE);
+	UPDATE `test`.`movimiento` SET fechaMovimiento=fechaMovimientoE, entradaMovimiento=entradaMovimientoE, salidaMovimiento=salidaMovimientoE, saldoMovimiento=saldoMovimientoE WHERE codigoMovimiento=codigoMovimientoE;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -754,6 +844,82 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `listar_movimientos` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `listar_movimientos`()
+BEGIN
+	SELECT * FROM movimiento;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `listar_movimientos_entrada` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `listar_movimientos_entrada`()
+BEGIN
+	SELECT * FROM movimiento WHERE entradaMovimiento>0;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `listar_movimientos_fechas` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `listar_movimientos_fechas`(fechaInicioE DATE, fechaFinE DATE)
+BEGIN
+		SELECT * FROM movimiento WHERE fechaMovimiento BETWEEN fechaInicioE AND fechaFinE;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `listar_movimientos_salida` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `listar_movimientos_salida`()
+BEGIN
+	SELECT * FROM movimiento WHERE salidaMovimiento>0;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `listar_prestamos` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -874,9 +1040,28 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `pagar_abono`(codigoAbonoE VARCHAR(10), fechaPagoE DATE, montoPagadoE DECIMAL, completoAbonoE ENUM('SI','NO'), puntualAbonoE ENUM('SI','NO'))
 BEGIN
-UPDATE `test`.`abono` SET fechaPago=fechaPagoE, montoPagado=montoPagadoE, estadoAbono='PAGADO', completoAbono=completoAbonoE, puntualAbono=puntualAbonoE WHERE codigoAbono=codigoAbonoE;
+UPDATE `test`.`abono` SET fechaPago=fechaPagoE, montoPagado=montoPagadoE, estadoAbono='PAGADO', completoAbono=completoAbonoE, puntualAbono=puntualAbonoE WHERE codigoAbono=codigoAbonoE && estadoAbono='PENDIENTE';
 
   end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sumar_entradas_movimiento` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sumar_entradas_movimiento`(OUT totalEntradas DECIMAL)
+BEGIN
+	SET totalEntradas=(SELECT SUM(entradaMovimiento) FROM movimiento);
+END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -900,6 +1085,25 @@ BEGIN
     UPDATE `test`.`prestamo` SET saldoPagadoPrestamo=total WHERE codigoPrestamo=abonoPrestamoE;
     END;
   end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sumar_salidas_movimiento` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sumar_salidas_movimiento`(OUT totalSalidas DECIMAL)
+BEGIN
+	SET totalSalidas=(SELECT SUM(salidaMovimiento) FROM movimiento);
+END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -1000,4 +1204,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-01-18 14:18:06
+-- Dump completed on 2018-01-19 15:46:02
