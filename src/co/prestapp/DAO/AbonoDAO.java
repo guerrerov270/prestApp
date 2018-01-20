@@ -240,18 +240,31 @@ public class AbonoDAO {
 		// Verifico si puntual y si completo
 		SimpleDateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
 		Date fechaCobro = null;
+		Date fechaPagoF = null;
+		String fechaPagoS = formato.format(fechaPago);
+
 		try {
 
 			fechaCobro = formato.parse(miAbono.getFechaACobrar());
+			fechaPagoF = formato.parse(fechaPagoS);
 
 		} catch (ParseException ex) {
 
 			ex.printStackTrace();
 
 		}
+
 		// Comparo fechas
-		if (fechaPago.before(fechaCobro)) {
+		if (fechaPagoF.before(fechaCobro)) {
+			System.out.println("Puntual");
 			puntualAbono = "SI";
+		} else {
+			if (fechaCobro.before(fechaPagoF)) {
+				System.out.println("No puntual");
+			} else {
+				System.out.println("Fechas iguales");
+				puntualAbono = "SI";
+			}
 		}
 
 		try {
@@ -582,9 +595,12 @@ public class AbonoDAO {
 		// Verifico si puntual y si completo
 		SimpleDateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
 		Date fechaCobro = null;
+		Date fechaPagoF = null;
+		String fechaPagoS = formato.format(fechaPago);
 		try {
 
 			fechaCobro = formato.parse(miAbono.getFechaACobrar());
+			fechaPagoF = formato.parse(fechaPagoS);
 
 		} catch (ParseException ex) {
 
@@ -592,9 +608,17 @@ public class AbonoDAO {
 
 		}
 		// Comparo fechas
-		if (fechaPago.before(fechaCobro)) {
-			puntualAbono = "SI";
-		}
+				if (fechaPagoF.before(fechaCobro)) {
+					System.out.println("Puntual");
+					puntualAbono = "SI";
+				} else {
+					if (fechaCobro.before(fechaPagoF)) {
+						System.out.println("No puntual");
+					} else {
+						System.out.println("Fechas iguales");
+						puntualAbono = "SI";
+					}
+				}
 
 		try {
 			if (montoPagado >= formatoMoneda.parse(miAbono.getMontoACobrar()).doubleValue()) {

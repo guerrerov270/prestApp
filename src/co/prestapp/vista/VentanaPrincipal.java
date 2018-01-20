@@ -151,6 +151,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelTotalPrestado;
 	private JPanel jPanelCifras;
 	private JButton jButtonGuardar;
+	private JButton jButtonEditarPrestamo;
 	private JTextField jTextCodigoPrestamo;
 	private JLabel jLabelCodigoPrestamo;
 	private JLabel jLabelFecha;
@@ -406,6 +407,26 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 									jButtonAceptarActionPerformed(evt);
 								}
 							});
+
+							{
+								URL urlDeLaImagenEditar = VentanaPrincipal.class.getClassLoader()
+										.getResource("co/prestapp/res/editar.png");
+								ImageIcon iconoEditar = new ImageIcon(urlDeLaImagenEditar);
+								Image imgEditar = iconoEditar.getImage();
+								Image otraimgEditar = imgEditar.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+								jButtonEditarPrestamo = new JButton();
+								jButtonEditarPrestamo.setIcon(new ImageIcon(otraimgEditar));
+								jPanelEntradasPrestamo.add(jButtonEditarPrestamo);
+								jButtonEditarPrestamo.setText("Editar");
+								jButtonEditarPrestamo.setBounds(185, 146, 130, 30);
+								jButtonEditarPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
+								jButtonEditarPrestamo.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent evt) {
+										jButtonEditarPrestamoPerformed(evt);
+									}
+								});
+							}
+
 							{
 								URL urlDeLaImagen1 = VentanaPrincipal.class.getClassLoader()
 										.getResource("co/prestapp/res/cancelar.png");
@@ -416,7 +437,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jButtonCancelarPrestamo.setIcon(new ImageIcon(otraimg1));
 								jPanelEntradasPrestamo.add(jButtonCancelarPrestamo);
 								jButtonCancelarPrestamo.setText("Cancelar");
-								jButtonCancelarPrestamo.setBounds(145, 157, 145, 30);
+								jButtonCancelarPrestamo.setBounds(362, 157, 145, 30);
 								jButtonCancelarPrestamo.setFont(new java.awt.Font("Arial", 0, 14));
 								jButtonCancelarPrestamo.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
@@ -711,6 +732,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jCheckBoxEditandoAbono.setText("Editando");
 							jCheckBoxEditandoAbono.setBounds(778, 170, 126, 20);
 							jCheckBoxEditandoAbono.setFont(new java.awt.Font("Arial", 0, 16));
+							jCheckBoxEditandoAbono.setEnabled(false);
 						}
 					}
 					jTabPestanias.addTab("Clientes", jPanelClientes);
@@ -837,6 +859,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jCheckBoxEdicionCliente.setText("Editando");
 							jCheckBoxEdicionCliente.setBounds(778, 103, 115, 20);
 							jCheckBoxEdicionCliente.setFont(new java.awt.Font("Arial", 0, 16));
+							jCheckBoxEdicionCliente.setEnabled(false);
 						}
 					}
 					// Aquí listados
@@ -1472,6 +1495,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			JOptionPane.showMessageDialog(this, "El préstamo se ha creado correctamente", "Información",
 					JOptionPane.INFORMATION_MESSAGE);
 			limpiarCamposPrestamo();
+			actualizaAbonos();
 			actualizaPrestamos();
 			actualizaReportes();
 		}
@@ -1546,7 +1570,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				miMovimiento.agregarMovimiento(codigoAbono, fechaPago, montoPagado, 0);
 				actualizaAbonos();
 				actualizaPrestamos();
-				actualizaAbonosPagados();
 				actualizaReportes();
 				JOptionPane.showMessageDialog(this, "Abono guardado correctamente", "Información",
 						JOptionPane.INFORMATION_MESSAGE);
@@ -1568,19 +1591,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 		AbonoDAO miAbono = new AbonoDAO();
 		String informacionAbonos[][] = miAbono.obtenerMatrizAbonos();
-		String titulos[] = miAbono.getColumnas();
-		jTableAbonosRecibidos = new JTable(informacionAbonos, titulos);
-		jScrollAbonosRecibidos.setViewportView(jTableAbonosRecibidos);
-		jTableAbonosRecibidos.setFont(new java.awt.Font("Arial", 0, 16));
-		JTableHeader th = jTableAbonosRecibidos.getTableHeader();
-		th.setFont(new java.awt.Font("Arial", 0, 16));
-		ajustaColumnasAContenido(jTableAbonosRecibidos);
-	}
-
-	private void actualizaAbonosPagados() {
-
-		AbonoDAO miAbono = new AbonoDAO();
-		String informacionAbonos[][] = miAbono.obtenerMatrizAbonosPagados();
 		String titulos[] = miAbono.getColumnas();
 		jTableAbonosRecibidos = new JTable(informacionAbonos, titulos);
 		jScrollAbonosRecibidos.setViewportView(jTableAbonosRecibidos);
@@ -2499,6 +2509,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					JOptionPane.WARNING_MESSAGE);
 
 		}
+	}
+
+	private void jButtonEditarPrestamoPerformed(ActionEvent evt) {
+
+		String codigoPrestamo = JOptionPane.showInputDialog("Ingrese código del préstamo");
+
 	}
 
 	private void jButtonGenerarBackupActionPerformed(ActionEvent evt) {
