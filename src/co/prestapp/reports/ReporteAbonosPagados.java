@@ -12,6 +12,8 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfWriter;
 import co.prestapp.DAO.AbonoDAO;
 import co.prestapp.connection.DBConnection;
+import co.prestapp.connection.DBError;
+
 import com.lowagie.text.pdf.PdfPTable;
 import java.sql.*;
 import java.text.DateFormat;
@@ -22,6 +24,7 @@ import java.util.Locale;
 public class ReporteAbonosPagados {
 
 	AbonoDAO miAbono = new AbonoDAO();
+	DBError error = new DBError();
 	private String strNombreDelPDF;
 	Color grisClaro = new Color(230, 230, 230);
 	Color azulClaro = new Color(124, 195, 255);
@@ -54,6 +57,7 @@ public class ReporteAbonosPagados {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".ReporteAbonosPagados");
 		}
 	}
 
@@ -170,6 +174,7 @@ public class ReporteAbonosPagados {
 			conexion.close();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".agregarTabla");
 		}
 
 		// Agregar la tabla con los datos al parrafo que nos llego como entrada
@@ -198,6 +203,7 @@ public class ReporteAbonosPagados {
 			Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + strNombreDelPDF);
 		} catch (IOException e) {
 			e.printStackTrace();
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".abrirPDF");
 		}
 	}
 }

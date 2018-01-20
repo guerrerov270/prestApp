@@ -12,12 +12,15 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfWriter;
 import co.prestapp.DAO.ClienteDAO;
 import co.prestapp.connection.DBConnection;
+import co.prestapp.connection.DBError;
+
 import com.lowagie.text.pdf.PdfPTable;
 import java.sql.*;
 
 public class ReporteClientesActivos {
 
 	ClienteDAO miCliente = new ClienteDAO();
+	DBError error = new DBError();
 	private String strNombreDelPDF;
 	Color grisClaro = new Color(230, 230, 230);
 	Color azulClaro = new Color(124, 195, 255);
@@ -50,6 +53,7 @@ public class ReporteClientesActivos {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".ReporteClientesActivos");
 		}
 	}
 
@@ -143,6 +147,7 @@ public class ReporteClientesActivos {
 			conexion.close();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".agregarTabla");
 		}
 
 		// Agregar la tabla con los datos al parrafo que nos llego como entrada
@@ -171,6 +176,7 @@ public class ReporteClientesActivos {
 			Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + strNombreDelPDF);
 		} catch (IOException e) {
 			e.printStackTrace();
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".abrirPDF");
 		}
 	}
 }
