@@ -3,7 +3,6 @@ package co.prestapp.vista;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -1008,7 +1007,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						{
 							jTextTotalentradas = new JTextField();
 							jPanelEstadisticas.add(jTextTotalentradas);
-							jTextTotalentradas.setEnabled(false);
+							jTextTotalentradas.setEditable(false);
 							jTextTotalentradas.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
@@ -1021,7 +1020,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						{
 							jTextTotalSalidas = new JTextField();
 							jPanelEstadisticas.add(jTextTotalSalidas);
-							jTextTotalSalidas.setEnabled(false);
+							jTextTotalSalidas.setEditable(false);
 							jTextTotalSalidas.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 
@@ -2626,6 +2625,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
 			thMovimientosEntrada.setFont(new java.awt.Font("Arial", 0, 16));
 			ajustaColumnasAContenido(tablaResultados);
+			jTextTotalentradas.setText(miMovimiento.calcularTotalEntradas() + "");
+			jTextTotalSalidas.setText("");
 			break;
 		case listaMovimientosSalida:
 			miMovimiento = new MovimientoDAO();
@@ -2636,11 +2637,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
 			thMovimientosSalida.setFont(new java.awt.Font("Arial", 0, 16));
 			ajustaColumnasAContenido(tablaResultados);
+			jTextTotalentradas.setText("");
+			jTextTotalSalidas.setText(miMovimiento.calcularTotalSalidas() + "");
 			break;
 		case listaMovimientosFechas:
 			calendarioInicioMovimiento.setEnabled(true);
 			calendarioFinMovimiento.setEnabled(true);
 			jButtonBuscarMovimientos.setEnabled(true);
+			jTextTotalentradas.setText("");
+			jTextTotalSalidas.setText("");
 			break;
 
 		}
@@ -2664,6 +2669,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
 			thMovimientos.setFont(new java.awt.Font("Arial", 0, 16));
 			ajustaColumnasAContenido(tablaResultados);
+			jTextTotalentradas.setText(miMovimiento.calcularTotalEntradas(fechaInicio, fechaFin) + "");
+			jTextTotalSalidas.setText(miMovimiento.calcularTotalSalidas(fechaInicio, fechaFin) + "");
 			calendarioInicioMovimiento.setEnabled(false);
 			calendarioFinMovimiento.setEnabled(false);
 			jButtonBuscarMovimientos.setEnabled(false);
