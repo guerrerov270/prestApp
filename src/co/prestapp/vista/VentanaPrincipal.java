@@ -51,6 +51,7 @@ import co.prestapp.VO.AbonoVO;
 import co.prestapp.VO.ClienteVO;
 import co.prestapp.VO.PrestamoVO;
 import co.prestapp.connection.DBBackup;
+import co.prestapp.connection.DBError;
 import co.prestapp.reports.ReporteAbonos;
 import co.prestapp.reports.ReporteAbonosPagados;
 import co.prestapp.reports.ReporteAbonosPendientes;
@@ -223,6 +224,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private final String listaMovimientosEntrada = "Listado de movimientos de entrada registrados";
 	private final String listaMovimientosSalida = "Listado de movimientos de salida registrados";
 	private final String listaMovimientosFechas = "Listado de movimientos entre fechas";
+	private DBError error= new DBError();
 
 	/**
 	 * Auto-generated main method to display this JFrame
@@ -537,6 +539,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 											jButtonCalcularActionPerformed(evt);
 										} catch (Exception e) {
 											System.out.println(e.getMessage());
+											error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".initGUI");
 										}
 									}
 								});
@@ -1266,6 +1269,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		} catch (Exception e) {
 			// add your error handling code here
 			e.printStackTrace();
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".initGUI");
 		}
 	}// Fin initGUI-------------------------------------------------------
 
@@ -1292,6 +1296,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		} catch (NumberFormatException e) {
 
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".jButtonClienteExisteActionPerformed");
 		}
 
 	}
@@ -1411,6 +1416,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				jLabelTotalFormato.setText(totalPagar + "");
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
+				error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".jButtonCalcularActionPerformed");
 			}
 
 		} // Fin if
@@ -1465,6 +1471,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					numeroCuotas = Integer.parseInt(jTextNumeroCuotas.getText());
 				} catch (NumberFormatException e) {
 					System.out.println(e.getMessage());
+					error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".jButtonAceptarActionPerformed");
 				}
 				tipoPlazo = (String) jComboPlazo.getSelectedItem();
 				tipoPlazoMayus = tipoPlazo.toUpperCase();
@@ -1481,6 +1488,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					codigoCliente = JOptionPane.showInputDialog("Verifique código del cliente");
 				} catch (Exception e) {
 					System.out.println(e.getMessage());
+					error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".jButtonAceptarActionPerformed");
 				}
 
 			}
@@ -1545,6 +1553,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				numeroCuotas = Integer.parseInt(jTextNumeroCuotas.getText());
 			} catch (NumberFormatException e) {
 				System.out.println(e.getMessage());
+				error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".jButtonAceptarActionPerformed");
 			}
 			tipoPlazo = (String) jComboPlazo.getSelectedItem();
 			tipoPlazoMayus = tipoPlazo.toUpperCase();
@@ -1563,6 +1572,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				codigoCliente = JOptionPane.showInputDialog("Verifique código del cliente");
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
+				error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".jButtonAceptarActionPerformed");
 			}
 
 		} // Fin de if de validar campos
@@ -1838,6 +1848,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".actualizaReportes");
 		}
 
 	}
@@ -2607,6 +2618,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			} catch (ParseException e) {
 
 				e.printStackTrace();
+				error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".jButtonEditarAbonoActionPerformed");
 			}
 
 			jCheckBoxEditandoAbono.setSelected(true);
@@ -2637,6 +2649,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			} catch (ParseException e) {
 
 				e.printStackTrace();
+				error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".jButtonEditarPrestamoPerformed");
 			}
 			jTextTasaInteres.setText(miPrestamo.getTasaInteresPrestamo() + "");
 			// Falta la fecha
@@ -2647,6 +2660,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			} catch (ParseException e) {
 
 				e.printStackTrace();
+				error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".jButtonEditarPrestamoPerformed");
 			}
 
 			// Tipo de plazo
