@@ -476,16 +476,10 @@ public class PrestamoDAO {
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
 		try {
-			CallableStatement miProcedimientoListar = conexion.prepareCall("{call listar_prestamos}");
-			CallableStatement miProcedimiento = conexion.prepareCall("{call calcular_total_prestado(?,?)}");
+			CallableStatement miProcedimiento = conexion.prepareCall("{call calcular_total_prestado(?)}");
 			miProcedimiento.registerOutParameter(1, Types.NUMERIC);
-			ResultSet miRs = miProcedimientoListar.executeQuery();
-
-			while (miRs.next()) {
-				miProcedimiento.setString(2, miRs.getString("codigoPrestamo"));
-				miProcedimiento.executeQuery();
-				totalPrestado = totalPrestado + miProcedimiento.getFloat(1);
-			}
+			miProcedimiento.executeQuery();
+			totalPrestado = miProcedimiento.getFloat(1);
 
 			conexion.close();
 
@@ -504,15 +498,10 @@ public class PrestamoDAO {
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
 		try {
-			CallableStatement miProcedimientoListar = conexion.prepareCall("{call listar_prestamos}");
-			CallableStatement miProcedimiento = conexion.prepareCall("{call calcular_total_recaudado(?,?)}");
+			CallableStatement miProcedimiento = conexion.prepareCall("{call calcular_total_recaudado(?)}");
 			miProcedimiento.registerOutParameter(1, Types.NUMERIC);
-			ResultSet miRs = miProcedimientoListar.executeQuery();
-			while (miRs.next()) {
-				miProcedimiento.setString(2, miRs.getString("codigoPrestamo"));
-				miProcedimiento.executeQuery();
-				totalRecaudado = totalRecaudado + miProcedimiento.getFloat(1);
-			}
+			miProcedimiento.executeQuery();
+			totalRecaudado = miProcedimiento.getFloat(1);
 
 			conexion.close();
 
@@ -531,15 +520,10 @@ public class PrestamoDAO {
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
 		try {
-			CallableStatement miProcedimientoListar = conexion.prepareCall("{call listar_prestamos}");
-			CallableStatement miProcedimiento = conexion.prepareCall("{call calcular_total_recaudo_pendiente(?,?)}");
+			CallableStatement miProcedimiento = conexion.prepareCall("{call calcular_total_recaudo_pendiente(?)}");
 			miProcedimiento.registerOutParameter(1, Types.NUMERIC);
-			ResultSet miRs = miProcedimientoListar.executeQuery();
-			while (miRs.next()) {
-				miProcedimiento.setString(2, miRs.getString("codigoPrestamo"));
-				miProcedimiento.executeQuery();
-				totalRecaudoPendiente = totalRecaudoPendiente + miProcedimiento.getFloat(1);
-			}
+			miProcedimiento.executeQuery();
+			totalRecaudoPendiente = miProcedimiento.getFloat(1);
 
 			conexion.close();
 
@@ -558,15 +542,11 @@ public class PrestamoDAO {
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
 		try {
-			CallableStatement miProcedimientoListar = conexion.prepareCall("{call listar_prestamos}");
-			CallableStatement miProcedimiento = conexion.prepareCall("{call calcular_intereses_recaudados(?,?)}");
+			CallableStatement miProcedimiento = conexion.prepareCall("{call calcular_intereses_recaudados(?)}");
 			miProcedimiento.registerOutParameter(1, Types.NUMERIC);
-			ResultSet miRs = miProcedimientoListar.executeQuery();
-			while (miRs.next()) {
-				miProcedimiento.setString(2, miRs.getString("codigoPrestamo"));
-				miProcedimiento.executeQuery();
-				interesesRecaudados = interesesRecaudados + miProcedimiento.getFloat(1);
-			}
+			miProcedimiento.executeQuery();
+			interesesRecaudados = miProcedimiento.getFloat(1);
+
 			conexion.close();
 
 		} catch (SQLException e) {
@@ -586,16 +566,11 @@ public class PrestamoDAO {
 		Connection conexion = miConexion.darConexion();
 
 		try {
-			CallableStatement miProcedimientoListar = conexion.prepareCall("{call listar_prestamos}");
-			CallableStatement miProcedimiento = conexion.prepareCall("{call calcular_intereses_a_recaudar(?,?)}");
+			CallableStatement miProcedimiento = conexion.prepareCall("{call calcular_intereses_a_recaudar(?)}");
 			miProcedimiento.registerOutParameter(1, Types.NUMERIC);
-			ResultSet miRs = miProcedimientoListar.executeQuery();
-			while (miRs.next()) {
-				miProcedimiento.setString(2, miRs.getString("codigoPrestamo"));
-				miProcedimiento.executeQuery();
-				interesesRecaudados = interesesRecaudados + miProcedimiento.getFloat(1);
+			miProcedimiento.executeQuery();
+			interesesRecaudados = interesesRecaudados + miProcedimiento.getFloat(1);
 
-			}
 			conexion.close();
 
 		} catch (SQLException e) {
