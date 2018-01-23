@@ -344,7 +344,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 									.getResource("co/prestapp/res/buscar.png");
 							ImageIcon icono1 = new ImageIcon(urlDeLaImagen2);
 							Image img1 = icono1.getImage();
-							Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							Image otraimg1 = img1.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
 							jButtonClienteExiste = new JButton();
 							jButtonClienteExiste.setIcon(new ImageIcon(otraimg1));
 							jPanelEntradasPrestamo.add(jButtonClienteExiste);
@@ -535,7 +535,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 										.getResource("co/prestapp/res/calcular.png");
 								ImageIcon icono1 = new ImageIcon(urlDeLaImagenCalcular);
 								Image img1 = icono1.getImage();
-								Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+								Image otraimg1 = img1.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
 								jButtonCalcular = new JButton();
 								jPanelEntradasPrestamo.add(jButtonCalcular);
 								jButtonCalcular.setIcon(new ImageIcon(otraimg1));
@@ -560,7 +560,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 									.getResource("co/prestapp/res/guardar.png");
 							ImageIcon icono = new ImageIcon(urlDeLaImagen);
 							Image img = icono.getImage();
-							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							Image otraimg = img.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
 							jButtonAceptar = new JButton();
 							jButtonAceptar.setIcon(new ImageIcon(otraimg));
 							jButtonAceptar.setBounds(9, 157, 130, 30);
@@ -578,7 +578,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 										.getResource("co/prestapp/res/editar.png");
 								ImageIcon iconoEditar = new ImageIcon(urlDeLaImagenEditar);
 								Image imgEditar = iconoEditar.getImage();
-								Image otraimgEditar = imgEditar.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+								Image otraimgEditar = imgEditar.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
 								jButtonEditarPrestamo = new JButton();
 								jButtonEditarPrestamo.setIcon(new ImageIcon(otraimgEditar));
 								jPanelEntradasPrestamo.add(jButtonEditarPrestamo);
@@ -596,7 +596,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 										.getResource("co/prestapp/res/cancelar.png");
 								ImageIcon icono1 = new ImageIcon(urlDeLaImagen1);
 								Image img1 = icono1.getImage();
-								Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+								Image otraimg1 = img1.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
 								JButton jButtonCancelarPrestamo = new JButton();
 								jButtonCancelarPrestamo.setIcon(new ImageIcon(otraimg1));
 								jPanelEntradasPrestamo.add(jButtonCancelarPrestamo);
@@ -649,7 +649,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 									.getResource("co/prestapp/res/buscar.png");
 							ImageIcon icono = new ImageIcon(urlDeLaImagen);
 							Image img = icono.getImage();
-							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							Image otraimg = img.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
 							jButtonBuscarPrestamo = new JButton();
 							jPanelAgregarAbono.add(jButtonBuscarPrestamo);
 							jButtonBuscarPrestamo.setIcon(new ImageIcon(otraimg));
@@ -888,7 +888,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						{
 							ImageIcon icono = new ImageIcon("src/co/prestapp/res/guardar.png");
 							Image img = icono.getImage();
-							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							Image otraimg = img.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
 							jButtonGuardarCliente = new JButton();
 							jButtonGuardarCliente.setIcon(new ImageIcon(otraimg));
 							jPanelAgregarCliente.add(jButtonGuardarCliente);
@@ -907,7 +907,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 									.getResource("co/prestapp/res/editar.png");
 							ImageIcon icono1 = new ImageIcon(urlDeLaImagen);
 							Image img1 = icono1.getImage();
-							Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							Image otraimg1 = img1.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
 							jButtonEditarCliente = new JButton();
 							jPanelAgregarCliente.add(jButtonEditarCliente);
 							jButtonEditarCliente.setIcon(new ImageIcon(otraimg1));
@@ -926,7 +926,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 									.getResource("co/prestapp/res/cancelar.png");
 							ImageIcon icono = new ImageIcon(urlDeLaImagen);
 							Image img = icono.getImage();
-							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							Image otraimg = img.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
 							jButtonCancelar = new JButton();
 							jButtonCancelar.setIcon(new ImageIcon(otraimg));
 							jPanelAgregarCliente.add(jButtonCancelar);
@@ -1019,7 +1019,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 									.getResource("co/prestapp/res/pdf.png");
 							ImageIcon icono1 = new ImageIcon(urlDeLaImagenpdf);
 							Image img1 = icono1.getImage();
-							Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							Image otraimg1 = img1.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
 							jButtonGenerarPDF = new JButton();
 							jButtonGenerarPDF.setIcon(new ImageIcon(otraimg1));
 							jPaneSeleccionListado.add(jButtonGenerarPDF);
@@ -1037,7 +1037,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 									.getResource("co/prestapp/res/backup.png");
 							ImageIcon iconoBackup = new ImageIcon(urlDeLaImagenBackup);
 							Image imgBackup = iconoBackup.getImage();
-							Image otraimgBackup = imgBackup.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							Image otraimgBackup = imgBackup.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
 							jButtonBackup = new JButton();
 							jButtonBackup.setIcon(new ImageIcon(otraimgBackup));
 							jPaneSeleccionListado.add(jButtonBackup);
@@ -1381,6 +1381,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			limpiarCamposCliente();
 			jCheckBoxEdicionCliente.setSelected(false);
 			actualizaClientes();
+			actualizaReportes();
 			return;
 		}
 		if (validarCamposCliente()) {
@@ -2860,6 +2861,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		case seleccioneUno:
 			tablaResultados = new JTable();
 			jScrollPaneResultados.setViewportView(tablaResultados);
+			calendarioInicioMovimiento.setEnabled(false);
+			calendarioFinMovimiento.setEnabled(false);
 			break;
 		case listaClientes:
 			miCliente = new ClienteDAO();
