@@ -2952,6 +2952,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jScrollPaneResultados.setViewportView(tablaResultados);
 			calendarioInicioMovimiento.setEnabled(false);
 			calendarioFinMovimiento.setEnabled(false);
+			jTextTotalentradas.setText("");
+			jTextTotalSalidas.setText("");
 			break;
 		case listaClientes:
 			miCliente = new ClienteDAO();
@@ -3198,8 +3200,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				JTableHeader thAbonosPenF = tablaResultados.getTableHeader();
 				thAbonosPenF.setFont(new java.awt.Font("Arial", 0, 16));
 				ajustaColumnasAContenido(tablaResultados);
-				jTextTotalSalidas
-				.setText(formatoMoneda.format(miAbono.calcularTotalRecaudoAbonosPendiente(fechaInicio, fechaFin)) + "");
+				jTextTotalSalidas.setText(
+						formatoMoneda.format(miAbono.calcularTotalRecaudoAbonosPendiente(fechaInicio, fechaFin)) + "");
 				jLabelTotalSalidas.setText("Total pendiente:");
 				return;
 			} else {
@@ -3223,8 +3225,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
 				thAbonosPagF.setFont(new java.awt.Font("Arial", 0, 16));
 				ajustaColumnasAContenido(tablaResultados);
-				jTextTotalentradas
-				.setText(formatoMoneda.format(miAbono.calcularTotalRecaudoAbonosRecibido(fechaInicio, fechaFin)) + "");
+				jTextTotalentradas.setText(
+						formatoMoneda.format(miAbono.calcularTotalRecaudoAbonosRecibido(fechaInicio, fechaFin)) + "");
 				jLabelTotalSalidas.setText("Total salidas:");
 				return;
 			} else {
