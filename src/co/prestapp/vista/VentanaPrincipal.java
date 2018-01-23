@@ -115,6 +115,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelTotalClientesactivos;
 	private JLabel jLabelCerosPrestamo;
 	private JLabel jLabelComplemento;
+	private JLabel jLabelComplemento2;
 	private JCheckBox jCheckBoxEditandoPrestamo;
 	private JLabel jLabelCodigoPrestamoOculto;
 	private JTextField jTextTotalSalidas;
@@ -639,21 +640,93 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jScrollAbonosRecibidos = new JScrollPane();
 						jPanelAbonos.add(jScrollAbonosRecibidos, BorderLayout.SOUTH);
 						jScrollAbonosRecibidos.setBounds(8, 263, 777, 381);
-						jScrollAbonosRecibidos.setPreferredSize(new java.awt.Dimension(909, 373));
+						jScrollAbonosRecibidos.setPreferredSize(new java.awt.Dimension(909, 401));
 						{
 
 						}
 					}
 					{
 						jPanelAgregarAbono = new JPanel();
+						GridLayout jPanelAgregarAbonoLayout = new GridLayout(4, 4);
+						jPanelAgregarAbonoLayout.setColumns(1);
+						jPanelAgregarAbonoLayout.setHgap(5);
+						jPanelAgregarAbonoLayout.setVgap(5);
 						jPanelAbonos.add(jPanelAgregarAbono, BorderLayout.NORTH);
-						jPanelAgregarAbono.setPreferredSize(new java.awt.Dimension(911, 204));
+						jPanelAgregarAbono.setPreferredSize(new java.awt.Dimension(911, 170));
 						jPanelAgregarAbono.setBorder(BorderFactory.createTitledBorder("Agregar abono"));
-						jPanelAgregarAbono.setLayout(null);
+						jPanelAgregarAbono.setLayout(jPanelAgregarAbonoLayout);
+						{
+							jLabelCodigoPrestamo = new JLabel();
+							jPanelAgregarAbono.add(jLabelCodigoPrestamo);
+							jLabelCodigoPrestamo.setText("Código préstamo:");
+							jLabelCodigoPrestamo.setBounds(17, 30, 178, 30);
+							jLabelCodigoPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
+						}
+						{
+							jTextCodigoPrestamo = new JTextField();
+							jPanelAgregarAbono.add(jTextCodigoPrestamo);
+							jTextCodigoPrestamo.setBounds(162, 30, 178, 30);
+							jTextCodigoPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
+						}
+						{
+							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/buscar.png");
+							ImageIcon icono = new ImageIcon(urlDeLaImagen);
+							Image img = icono.getImage();
+							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							jButtonBuscarPrestamo = new JButton();
+							jPanelAgregarAbono.add(jButtonBuscarPrestamo);
+							jButtonBuscarPrestamo.setIcon(new ImageIcon(otraimg));
+							jButtonBuscarPrestamo.setText("Buscar");
+							jButtonBuscarPrestamo.setBounds(376, 25, 130, 30);
+							jButtonBuscarPrestamo.setFont(new java.awt.Font("Arial", 0, 14));
+							jButtonBuscarPrestamo.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonBuscarPrestamoActionPerformed(evt);
+								}
+							});
+
+						}
+						{
+							jLabelComplemento2 = new JLabel();
+							jPanelAgregarAbono.add(jLabelComplemento2);
+							jLabelComplemento2.setBounds(12, 65, 65, 10);
+
+						}
+						
+						{
+							jLabelCodigoAbono = new JLabel();
+							jPanelAgregarAbono.add(jLabelCodigoAbono);
+							jLabelCodigoAbono.setText("Código abono:");
+							jLabelCodigoAbono.setBounds(381, 78, 178, 30);
+							jLabelCodigoAbono.setFont(new java.awt.Font("Arial", 0, 16));
+
+						}
+						{
+							jTextFieldCodigoAbono = new JTextField();
+							jPanelAgregarAbono.add(jTextFieldCodigoAbono);
+							jTextFieldCodigoAbono.setBounds(496, 78, 71, 30);
+							jTextFieldCodigoAbono.setFont(new java.awt.Font("Arial",0,16));
+
+						}
+						{
+							jLabelFecha = new JLabel();
+							jPanelAgregarAbono.add(jLabelFecha);
+							jLabelFecha.setText("Fecha:");
+							jLabelFecha.setBounds(17, 78, 178, 30);
+							jLabelFecha.setFont(new java.awt.Font("Arial", 0, 16));
+						}
+						
+						{
+							calendarioAbonos = new JDateChooser();
+							jPanelAgregarAbono.add(calendarioAbonos);
+							calendarioAbonos.setBounds(162, 78, 178, 30);
+							calendarioAbonos.setFont(new java.awt.Font("Arial", 0, 16));
+						}
 						{
 							jLabelMonto = new JLabel();
 							jPanelAgregarAbono.add(jLabelMonto);
-							jLabelMonto.setText("Monto a abonar:");
+							jLabelMonto.setText("Monto a abonar:                        $");
 							jLabelMonto.setBounds(592, 76, 146, 30);
 							jLabelMonto.setFont(new java.awt.Font("Arial", 0, 16));
 						}
@@ -679,31 +752,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							});
 						}
 						{
-							jLabelFecha = new JLabel();
-							jPanelAgregarAbono.add(jLabelFecha);
-							jLabelFecha.setText("Fecha:");
-							jLabelFecha.setBounds(17, 78, 178, 30);
-							jLabelFecha.setFont(new java.awt.Font("Arial", 0, 16));
+							jLabelCerosAbono = new JLabel();
+							jPanelAgregarAbono.add(jLabelCerosAbono);
+							jLabelCerosAbono.setText(".000");
+							jLabelCerosAbono.setBounds(810, 83, 48, 30);
+							jLabelCerosAbono.setFont(new java.awt.Font("Arial", 0, 18));
 						}
 						{
-							calendarioAbonos = new JDateChooser();
-							jPanelAgregarAbono.add(calendarioAbonos);
-							calendarioAbonos.setBounds(162, 78, 178, 30);
-							calendarioAbonos.setFont(new java.awt.Font("Arial", 0, 16));
+							jCheckBoxEditandoAbono = new JCheckBox();
+							jPanelAgregarAbono.add(jCheckBoxEditandoAbono);
+							jCheckBoxEditandoAbono.setText("Editando");
+							jCheckBoxEditandoAbono.setBounds(779, 181, 126, 20);
+							jCheckBoxEditandoAbono.setFont(new java.awt.Font("Arial", 0, 16));
+							jCheckBoxEditandoAbono.setEnabled(false);
 						}
-						{
-							jLabelCodigoPrestamo = new JLabel();
-							jPanelAgregarAbono.add(jLabelCodigoPrestamo);
-							jLabelCodigoPrestamo.setText("Código préstamo:");
-							jLabelCodigoPrestamo.setBounds(17, 30, 178, 30);
-							jLabelCodigoPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
-						}
-						{
-							jTextCodigoPrestamo = new JTextField();
-							jPanelAgregarAbono.add(jTextCodigoPrestamo);
-							jTextCodigoPrestamo.setBounds(162, 30, 178, 30);
-							jTextCodigoPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
-						}
+						
 						{
 							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
 									.getResource("co/prestapp/res/guardar.png");
@@ -719,6 +782,24 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jButtonGuardar.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
 									jButtonGuardarAbonoActionPerformed(evt);
+								}
+							});
+						}
+						{
+							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/editar.png");
+							ImageIcon icono = new ImageIcon(urlDeLaImagen);
+							Image img = icono.getImage();
+							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							jButtonEditarAbono = new JButton();
+							jButtonEditarAbono.setIcon(new ImageIcon(otraimg));
+							jPanelAgregarAbono.add(jButtonEditarAbono);
+							jButtonEditarAbono.setText("Editar");
+							jButtonEditarAbono.setBounds(185, 146, 130, 30);
+							jButtonEditarAbono.setFont(new java.awt.Font("Arial", 0, 16));
+							jButtonEditarAbono.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonEditarAbonoActionPerformed(evt);
 								}
 							});
 						}
@@ -744,80 +825,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							});
 
 						}
-						{
-							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
-									.getResource("co/prestapp/res/buscar.png");
-							ImageIcon icono = new ImageIcon(urlDeLaImagen);
-							Image img = icono.getImage();
-							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-							jButtonBuscarPrestamo = new JButton();
-							jPanelAgregarAbono.add(jButtonBuscarPrestamo);
-							jButtonBuscarPrestamo.setIcon(new ImageIcon(otraimg));
-							jButtonBuscarPrestamo.setText("Buscar");
-							jButtonBuscarPrestamo.setBounds(376, 25, 130, 30);
-							jButtonBuscarPrestamo.setFont(new java.awt.Font("Arial", 0, 14));
-							jButtonBuscarPrestamo.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent evt) {
-									jButtonBuscarPrestamoActionPerformed(evt);
-								}
-							});
-
-						}
-						{
-							jLabelCodigoAbono = new JLabel();
-							jPanelAgregarAbono.add(jLabelCodigoAbono);
-							jLabelCodigoAbono.setText("Código abono:");
-							jLabelCodigoAbono.setBounds(381, 78, 178, 30);
-							jLabelCodigoAbono.setFont(new java.awt.Font("Arial", 0, 16));
-
-						}
-						{
-							jTextFieldCodigoAbono = new JTextField();
-							jPanelAgregarAbono.add(jTextFieldCodigoAbono);
-							jTextFieldCodigoAbono.setBounds(496, 78, 71, 30);
-							jTextFieldCodigoAbono.setFont(new java.awt.Font("Arial",0,16));
-
-						}
-						{
-							jLabelCerosAbono = new JLabel();
-							jPanelAgregarAbono.add(jLabelCerosAbono);
-							jLabelCerosAbono.setText(".000");
-							jLabelCerosAbono.setBounds(810, 83, 48, 30);
-							jLabelCerosAbono.setFont(new java.awt.Font("Arial", 0, 18));
-						}
+						
+						
+						
 						{
 							jLabelPesosAbono = new JLabel();
 							jPanelAgregarAbono.add(jLabelPesosAbono);
-							jLabelPesosAbono.setText("$");
+							//jLabelPesosAbono.setText("$");
 							jLabelPesosAbono.setBounds(717, 79, 18, 30);
 							jLabelPesosAbono.setFont(new java.awt.Font("Arial", 0, 16));
 						}
-						{
-							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
-									.getResource("co/prestapp/res/editar.png");
-							ImageIcon icono = new ImageIcon(urlDeLaImagen);
-							Image img = icono.getImage();
-							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-							jButtonEditarAbono = new JButton();
-							jButtonEditarAbono.setIcon(new ImageIcon(otraimg));
-							jPanelAgregarAbono.add(jButtonEditarAbono);
-							jButtonEditarAbono.setText("Editar");
-							jButtonEditarAbono.setBounds(185, 146, 130, 30);
-							jButtonEditarAbono.setFont(new java.awt.Font("Arial", 0, 16));
-							jButtonEditarAbono.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent evt) {
-									jButtonEditarAbonoActionPerformed(evt);
-								}
-							});
-						}
-						{
-							jCheckBoxEditandoAbono = new JCheckBox();
-							jPanelAgregarAbono.add(jCheckBoxEditandoAbono);
-							jCheckBoxEditandoAbono.setText("Editando");
-							jCheckBoxEditandoAbono.setBounds(779, 181, 126, 20);
-							jCheckBoxEditandoAbono.setFont(new java.awt.Font("Arial", 0, 16));
-							jCheckBoxEditandoAbono.setEnabled(false);
-						}
+						
+						
 					}
 					jTabPestanias.addTab("Clientes", jPanelClientes);
 					jPanelClientes.setBorder(BorderFactory.createTitledBorder("Datos de clientes"));
