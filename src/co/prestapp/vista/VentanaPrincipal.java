@@ -298,22 +298,22 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jScrollReportes = new JScrollPane();
 						jPanelPrestamos.add(jScrollReportes, BorderLayout.SOUTH);
 						jScrollReportes.setBounds(8, 263, 777, 381);
-						jScrollReportes.setPreferredSize(new java.awt.Dimension(909, 372));
+						jScrollReportes.setPreferredSize(new java.awt.Dimension(909, 277));
 						{
 
 						}
 					}
 					{
 						jPanelEntradasPrestamo = new JPanel();
+						GridLayout jPanelEntradasPrestamoLayout = new GridLayout(8, 4, 5, 5);
 						jPanelPrestamos.add(jPanelEntradasPrestamo, BorderLayout.NORTH);
 						jPanelEntradasPrestamo.setBorder(BorderFactory.createTitledBorder("Datos préstamo"));
-						jPanelEntradasPrestamo.setLayout(null);
-						jPanelEntradasPrestamo.setPreferredSize(new java.awt.Dimension(921, 204));
+						jPanelEntradasPrestamo.setLayout(jPanelEntradasPrestamoLayout);
+						jPanelEntradasPrestamo.setPreferredSize(new java.awt.Dimension(909, 292));
 						{
 							jLabelMontoPrestamo = new JLabel();
-							jPanelEntradasPrestamo.add(jLabelMontoPrestamo, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-									GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-							jLabelMontoPrestamo.setText("Monto préstamo:");
+							jPanelEntradasPrestamo.add(jLabelMontoPrestamo);
+							jLabelMontoPrestamo.setText("Monto préstamo:                       $");
 							jLabelMontoPrestamo.setBounds(17, 30, 145, 30);
 							jLabelMontoPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
 						}
@@ -321,8 +321,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							// MaskFormatter formatoMoneda= new
 							// MaskFormatter("$ ###,###");
 							jTextMonto = new JFormattedTextField();
-							jPanelEntradasPrestamo.add(jTextMonto, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-									GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+							jPanelEntradasPrestamo.add(jTextMonto);
 							jTextMonto.setBounds(162, 30, 54, 30);
 							jTextMonto.setFont(new java.awt.Font("Arial", 0, 16));
 							jTextMonto.addKeyListener(new KeyAdapter() {
@@ -338,17 +337,41 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							});
 						}
 						{
+							jLabelCerosPrestamo = new JLabel();
+							jPanelEntradasPrestamo.add(jLabelCerosPrestamo);
+							jLabelCerosPrestamo.setText(".000");
+							jLabelCerosPrestamo.setBounds(216, 33, 55, 30);
+							jLabelCerosPrestamo.setFont(new java.awt.Font("Arial", 0, 18));
+						}
+						{
+							URL urlDeLaImagen2 = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/buscar.png");
+							ImageIcon icono1 = new ImageIcon(urlDeLaImagen2);
+							Image img1 = icono1.getImage();
+							Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							jButtonClienteExiste = new JButton();
+							jButtonClienteExiste.setIcon(new ImageIcon(otraimg1));
+							jPanelEntradasPrestamo.add(jButtonClienteExiste);
+							jButtonClienteExiste.setText("Cliente");
+							jButtonClienteExiste.setBounds(726, 78, 130, 30);
+							jButtonClienteExiste.setFont(new java.awt.Font("Arial", 0, 14));
+							jButtonClienteExiste.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonClienteExisteActionPerformed(evt);
+								}
+							});
+						}
+
+						{
 							jLabelTasaInteres = new JLabel();
-							jPanelEntradasPrestamo.add(jLabelTasaInteres, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
-									GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-							jLabelTasaInteres.setText("Tasa interés:");
+							jPanelEntradasPrestamo.add(jLabelTasaInteres);
+							jLabelTasaInteres.setText("Tasa interés:                             %");
 							jLabelTasaInteres.setBounds(362, 30, 178, 30);
 							jLabelTasaInteres.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
 							jTextTasaInteres = new JTextField();
-							jPanelEntradasPrestamo.add(jTextTasaInteres, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
-									GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+							jPanelEntradasPrestamo.add(jTextTasaInteres);
 							jTextTasaInteres.setBounds(477, 30, 71, 30);
 							jTextTasaInteres.setFont(new java.awt.Font("Arial", 0, 16));
 							jTextTasaInteres.addKeyListener(new KeyAdapter() {
@@ -363,26 +386,31 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								}
 							});
 						}
+
 						{
-							jLabelPocentaje = new JLabel();
-							jPanelEntradasPrestamo.add(jLabelPocentaje, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
-									GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-							jLabelPocentaje.setText("%");
-							jLabelPocentaje.setBounds(547, 31, 64, 30);
-							jLabelPocentaje.setFont(new java.awt.Font("Arial", 0, 16));
+							jLabelPesosPrestamo = new JLabel();
+							jPanelEntradasPrestamo.add(jLabelPesosPrestamo);
+							// jLabelPesosPrestamo.setText("$");
+							jLabelPesosPrestamo.setBounds(149, 33, 19, 30);
+							jLabelPesosPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
+						}
+						{
+							jLabelCliente = new JLabel();
+							jPanelEntradasPrestamo.add(jLabelCliente);
+							jLabelCliente.setText("Datos del cliente");
+							jLabelCliente.setBounds(591, 121, 132, 30);
+							jLabelCliente.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
 							jLabelNumeroCuotas = new JLabel();
-							jPanelEntradasPrestamo.add(jLabelNumeroCuotas, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
-									GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+							jPanelEntradasPrestamo.add(jLabelNumeroCuotas);
 							jLabelNumeroCuotas.setText("Número cuotas:");
 							jLabelNumeroCuotas.setBounds(361, 78, 178, 30);
 							jLabelNumeroCuotas.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
 							jTextNumeroCuotas = new JTextField();
-							jPanelEntradasPrestamo.add(jTextNumeroCuotas, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0,
-									GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+							jPanelEntradasPrestamo.add(jTextNumeroCuotas);
 							jTextNumeroCuotas.setBounds(476, 78, 71, 30);
 							jTextNumeroCuotas.setFont(new java.awt.Font("Arial", 0, 16));
 							jTextNumeroCuotas.addKeyListener(new KeyAdapter() {
@@ -398,25 +426,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							});
 						}
 						{
-							jLabelDiaCobro = new JLabel();
-							jPanelEntradasPrestamo.add(jLabelDiaCobro, new GridBagConstraints(3, 1, 1, 1, 0.0, 0.0,
-									GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-							jLabelDiaCobro.setText("Días de cobro:");
-							jLabelDiaCobro.setBounds(17, 121, 178, 30);
-							jLabelDiaCobro.setFont(new java.awt.Font("Arial", 0, 16));
+							jLabelCodigoPrestamoOculto = new JLabel();
+							jPanelEntradasPrestamo.add(jLabelCodigoPrestamoOculto);
+							jLabelCodigoPrestamoOculto.setBounds(289, 34, 10, 10);
+							jLabelCodigoPrestamoOculto.setVisible(false);
 						}
 						{
-							jLabelFechaInicio = new JLabel();
-							jPanelEntradasPrestamo.add(jLabelFechaInicio, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
-									GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-							jLabelFechaInicio.setText("Fecha de inicio:");
-							jLabelFechaInicio.setBounds(579, 30, 178, 30);
-							jLabelFechaInicio.setFont(new java.awt.Font("Arial", 0, 16));
+							jLabelCodigo = new JLabel();
+							jPanelEntradasPrestamo.add(jLabelCodigo);
+							jLabelCodigo.setText("Código");
+							jLabelCodigo.setBounds(593, 161, 121, 30);
+							jLabelCodigo.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
 							jLabelTipoPlazo = new JLabel();
-							jPanelEntradasPrestamo.add(jLabelTipoPlazo, new GridBagConstraints(3, 2, 1, 1, 0.0, 0.0,
-									GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+							jPanelEntradasPrestamo.add(jLabelTipoPlazo);
 							jLabelTipoPlazo.setText("Tipo de plazo:");
 							jLabelTipoPlazo.setBounds(17, 78, 178, 30);
 							jLabelTipoPlazo.setFont(new java.awt.Font("Arial", 0, 16));
@@ -425,14 +449,115 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							ComboBoxModel jComboPlazoModel = new DefaultComboBoxModel(
 									new String[] { "Seleccione uno", "Mensual", "Quincenal", "Semanal" });
 							jComboPlazo = new JComboBox();
-							jPanelEntradasPrestamo.add(jComboPlazo, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
-									GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+							jPanelEntradasPrestamo.add(jComboPlazo);
 							jComboPlazo.setModel(jComboPlazoModel);
 							jComboPlazo.setBounds(162, 78, 178, 30);
 							jComboPlazo.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
+							jLabelPocentaje = new JLabel();
+							jPanelEntradasPrestamo.add(jLabelPocentaje);
+						}
 
+						{
+							jLabelNombreCliente = new JLabel();
+							jPanelEntradasPrestamo.add(jLabelNombreCliente);
+							jLabelNombreCliente.setText("Nombre");
+							jLabelNombreCliente.setBounds(726, 121, 173, 30);
+							jLabelNombreCliente.setFont(new java.awt.Font("Arial", 0, 16));
+						}
+						{
+							jLabelFechaInicio = new JLabel();
+							jPanelEntradasPrestamo.add(jLabelFechaInicio);
+							jLabelFechaInicio.setText("Fecha de inicio:");
+							jLabelFechaInicio.setBounds(579, 30, 178, 30);
+							jLabelFechaInicio.setFont(new java.awt.Font("Arial", 0, 16));
+						}
+						{
+							calendarioPrestamos = new JDateChooser();
+							calendarioPrestamos.setLocale(new Locale("ES", "CO"));
+							calendarioPrestamos.setDateFormatString("dd/MM/yyyy");
+							jPanelEntradasPrestamo.add(calendarioPrestamos);
+							calendarioPrestamos.setBounds(712, 30, 178, 30);
+							calendarioPrestamos.setFont(new java.awt.Font("Arial", 0, 16));
+						}
+
+						{
+							jCheckBoxEditandoPrestamo = new JCheckBox();
+							jPanelEntradasPrestamo.add(jCheckBoxEditandoPrestamo);
+							jCheckBoxEditandoPrestamo.setText("Editando");
+							jCheckBoxEditandoPrestamo.setBounds(789, 178, 115, 20);
+							jCheckBoxEditandoPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
+							jCheckBoxEditandoPrestamo.setEnabled(false);
+						}
+						{
+							jLabelEmpresaResult = new JLabel();
+							jPanelEntradasPrestamo.add(jLabelEmpresaResult);
+							jLabelEmpresaResult.setText("Empresa");
+							jLabelEmpresaResult.setBounds(726, 161, 168, 30);
+							jLabelEmpresaResult.setFont(new java.awt.Font("Arial", 0, 16));
+
+						}
+
+						{
+							jLabelDiaCobro = new JLabel();
+							jPanelEntradasPrestamo.add(jLabelDiaCobro);
+							jLabelDiaCobro.setText("Días de cobro:");
+							jLabelDiaCobro.setBounds(17, 121, 178, 30);
+							jLabelDiaCobro.setFont(new java.awt.Font("Arial", 0, 16));
+						}
+						{
+
+							jComboFechasCobro = new JComboBox();
+							jPanelEntradasPrestamo.add(jComboFechasCobro);
+							DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+							modelo.addElement("Nada para mostrar");
+							jComboFechasCobro.setModel(modelo);
+							jComboFechasCobro.setBounds(162, 121, 178, 30);
+							jComboFechasCobro.setFont(new java.awt.Font("Arial", 0, 14));
+						}
+
+						{
+
+							{
+								jLabelTotalPago = new JLabel();
+								jPanelEntradasPrestamo.add(jLabelTotalPago);
+								jLabelTotalPago.setText("Total a pagar:  $");
+								jLabelTotalPago.setBounds(362, 121, 116, 30);
+								jLabelTotalPago.setFont(new java.awt.Font("Arial", 0, 16));
+							}
+							{
+								jLabelTotalFormato = new JLabel();
+								jPanelEntradasPrestamo.add(jLabelTotalFormato);
+								jLabelTotalFormato.setBounds(478, 122, 178, 30);
+								jLabelTotalFormato.setFont(new java.awt.Font("Arial", 0, 16));
+							}
+
+							{
+								URL urlDeLaImagenCalcular = VentanaPrincipal.class.getClassLoader()
+										.getResource("co/prestapp/res/calcular.png");
+								ImageIcon icono1 = new ImageIcon(urlDeLaImagenCalcular);
+								Image img1 = icono1.getImage();
+								Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+								jButtonCalcular = new JButton();
+								jPanelEntradasPrestamo.add(jButtonCalcular);
+								jButtonCalcular.setIcon(new ImageIcon(otraimg1));
+								jButtonCalcular.setText("Calcular");
+								jButtonCalcular.setBounds(579, 78, 130, 30);
+								jButtonCalcular.setFont(new java.awt.Font("Arial", 0, 14));
+								jButtonCalcular.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent evt) {
+										try {
+											jButtonCalcularActionPerformed(evt);
+										} catch (Exception e) {
+											System.out.println(e.getMessage());
+											error.guardarMensajeError(e.getMessage(),
+													this.getClass().getCanonicalName() + ".initGUI");
+										}
+									}
+								});
+
+							}
 							// Test de carga de imagenes dentro del jar
 							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
 									.getResource("co/prestapp/res/guardar.png");
@@ -469,7 +594,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 									}
 								});
 							}
-
 							{
 								URL urlDeLaImagen1 = VentanaPrincipal.class.getClassLoader()
 										.getResource("co/prestapp/res/cancelar.png");
@@ -488,137 +612,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 									}
 								});
 
-							}
-							{
-								jLabelCliente = new JLabel();
-								jPanelEntradasPrestamo.add(jLabelCliente);
-								jLabelCliente.setText("Cliente:");
-								jLabelCliente.setBounds(591, 121, 132, 30);
-								jLabelCliente.setFont(new java.awt.Font("Arial", 0, 16));
-							}
-							{
-								jLabelTotalPago = new JLabel();
-								jPanelEntradasPrestamo.add(jLabelTotalPago);
-								jLabelTotalPago.setText("Total a pagar:  $");
-								jLabelTotalPago.setBounds(362, 121, 116, 30);
-								jLabelTotalPago.setFont(new java.awt.Font("Arial", 0, 16));
-							}
-							{
-								jLabelTotalFormato = new JLabel();
-								jPanelEntradasPrestamo.add(jLabelTotalFormato);
-								jLabelTotalFormato.setBounds(478, 122, 178, 30);
-								jLabelTotalFormato.setFont(new java.awt.Font("Arial", 0, 16));
-							}
-							{
-								URL urlDeLaImagen2 = VentanaPrincipal.class.getClassLoader()
-										.getResource("co/prestapp/res/buscar.png");
-								ImageIcon icono1 = new ImageIcon(urlDeLaImagen2);
-								Image img1 = icono1.getImage();
-								Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-								jButtonClienteExiste = new JButton();
-								jButtonClienteExiste.setIcon(new ImageIcon(otraimg1));
-								jPanelEntradasPrestamo.add(jButtonClienteExiste);
-								jButtonClienteExiste.setText("Cliente");
-								jButtonClienteExiste.setBounds(726, 78, 130, 30);
-								jButtonClienteExiste.setFont(new java.awt.Font("Arial", 0, 14));
-								jButtonClienteExiste.addActionListener(new ActionListener() {
-									public void actionPerformed(ActionEvent evt) {
-										jButtonClienteExisteActionPerformed(evt);
-									}
-								});
-							}
-							{
-								calendarioPrestamos = new JDateChooser();
-								calendarioPrestamos.setLocale(new Locale("ES", "CO"));
-								calendarioPrestamos.setDateFormatString("dd/MM/yyyy");
-								jPanelEntradasPrestamo.add(calendarioPrestamos);
-								calendarioPrestamos.setBounds(712, 30, 178, 30);
-								calendarioPrestamos.setFont(new java.awt.Font("Arial", 0, 16));
-							}
-							{
-								jLabelNombreCliente = new JLabel();
-								jPanelEntradasPrestamo.add(jLabelNombreCliente);
-								jLabelNombreCliente.setText("Nombre");
-								jLabelNombreCliente.setBounds(726, 121, 173, 30);
-								jLabelNombreCliente.setFont(new java.awt.Font("Arial", 0, 16));
-							}
-							{
-								jLabelCodigo = new JLabel();
-								jPanelEntradasPrestamo.add(jLabelCodigo);
-								jLabelCodigo.setText("Código");
-								jLabelCodigo.setBounds(593, 161, 121, 30);
-								jLabelCodigo.setFont(new java.awt.Font("Arial", 0, 16));
-							}
-							{
-
-								jComboFechasCobro = new JComboBox();
-								jPanelEntradasPrestamo.add(jComboFechasCobro);
-								DefaultComboBoxModel modelo = new DefaultComboBoxModel();
-								modelo.addElement("Nada para mostrar");
-								jComboFechasCobro.setModel(modelo);
-								jComboFechasCobro.setBounds(162, 121, 178, 30);
-								jComboFechasCobro.setFont(new java.awt.Font("Arial", 0, 14));
-							}
-							{
-								URL urlDeLaImagenCalcular = VentanaPrincipal.class.getClassLoader()
-										.getResource("co/prestapp/res/calcular.png");
-								ImageIcon icono1 = new ImageIcon(urlDeLaImagenCalcular);
-								Image img1 = icono1.getImage();
-								Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-								jButtonCalcular = new JButton();
-								jPanelEntradasPrestamo.add(jButtonCalcular);
-								jButtonCalcular.setIcon(new ImageIcon(otraimg1));
-								jButtonCalcular.setText("Calcular");
-								jButtonCalcular.setBounds(579, 78, 130, 30);
-								jButtonCalcular.setFont(new java.awt.Font("Arial", 0, 14));
-								jButtonCalcular.addActionListener(new ActionListener() {
-									public void actionPerformed(ActionEvent evt) {
-										try {
-											jButtonCalcularActionPerformed(evt);
-										} catch (Exception e) {
-											System.out.println(e.getMessage());
-											error.guardarMensajeError(e.getMessage(),
-													this.getClass().getCanonicalName() + ".initGUI");
-										}
-									}
-								});
-
-							}
-							{
-								jLabelEmpresaResult = new JLabel();
-								jPanelEntradasPrestamo.add(jLabelEmpresaResult);
-								jLabelEmpresaResult.setText("Empresa");
-								jLabelEmpresaResult.setBounds(726, 161, 168, 30);
-								jLabelEmpresaResult.setFont(new java.awt.Font("Arial", 0, 16));
-
-							}
-							{
-								jLabelCerosPrestamo = new JLabel();
-								jPanelEntradasPrestamo.add(jLabelCerosPrestamo);
-								jLabelCerosPrestamo.setText(".000");
-								jLabelCerosPrestamo.setBounds(216, 33, 55, 30);
-								jLabelCerosPrestamo.setFont(new java.awt.Font("Arial", 0, 18));
-							}
-							{
-								jLabelPesosPrestamo = new JLabel();
-								jPanelEntradasPrestamo.add(jLabelPesosPrestamo);
-								jLabelPesosPrestamo.setText("$");
-								jLabelPesosPrestamo.setBounds(149, 33, 19, 30);
-								jLabelPesosPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
-							}
-							{
-								jLabelCodigoPrestamoOculto = new JLabel();
-								jPanelEntradasPrestamo.add(jLabelCodigoPrestamoOculto);
-								jLabelCodigoPrestamoOculto.setBounds(289, 34, 10, 10);
-								jLabelCodigoPrestamoOculto.setVisible(false);
-							}
-							{
-								jCheckBoxEditandoPrestamo = new JCheckBox();
-								jPanelEntradasPrestamo.add(jCheckBoxEditandoPrestamo);
-								jCheckBoxEditandoPrestamo.setText("Editando");
-								jCheckBoxEditandoPrestamo.setBounds(789, 178, 115, 20);
-								jCheckBoxEditandoPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
-								jCheckBoxEditandoPrestamo.setEnabled(false);
 							}
 
 						}
