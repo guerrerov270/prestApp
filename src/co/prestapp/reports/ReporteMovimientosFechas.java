@@ -76,10 +76,10 @@ public class ReporteMovimientosFechas {
 		ParrafoHoja.add(new Paragraph(strRotuloPDF));
 
 		agregarLineasEnBlanco(ParrafoHoja, 1);
-		ParrafoHoja.add(new Paragraph(
-				"El total de las entradas es:  " + formatoMoneda.format(miMovimiento.calcularTotalEntradas())));
-		ParrafoHoja.add(new Paragraph(
-				"El total de las salidas es:  " + formatoMoneda.format(miMovimiento.calcularTotalSalidas())));
+		ParrafoHoja.add(new Paragraph("El total de las entradas es:  "
+				+ formatoMoneda.format(miMovimiento.calcularTotalEntradas(fechaInicio, fechaFin))));
+		ParrafoHoja.add(new Paragraph("El total de las salidas es:  "
+				+ formatoMoneda.format(miMovimiento.calcularTotalSalidas(fechaInicio, fechaFin))));
 		ParrafoHoja.add(new Paragraph("Los datos corresponden a movimientos registrados entre el: "
 				+ formato.format(fechaInicio) + " y el " + formato.format(fechaFin) + ""));
 		// 1.- AGREGAMOS LA TABLA

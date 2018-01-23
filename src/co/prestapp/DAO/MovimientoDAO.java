@@ -313,7 +313,7 @@ public class MovimientoDAO {
 			conexion.close();
 
 		} catch (SQLException e) {
-			System.out.println("Error al ejecutar consulta para generar codigo de préstamo");
+			System.out.println("Error al ejecutar consulta para sumar entradas");
 			System.out.println(e.getMessage());
 			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".calcularTotalEntradas");
 		}
@@ -321,7 +321,7 @@ public class MovimientoDAO {
 		return totalEntradas;
 
 	}// Fin calcularTotalEntradas
-
+	
 	public float calcularTotalSalidas() {
 
 		float totalSalidas = 0;
@@ -335,7 +335,7 @@ public class MovimientoDAO {
 			conexion.close();
 
 		} catch (SQLException e) {
-			System.out.println("Error al ejecutar consulta para generar codigo de préstamo");
+			System.out.println("Error al ejecutar consulta para sumar salidas");
 			System.out.println(e.getMessage());
 			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".calcularTotalSalidas");
 		}
