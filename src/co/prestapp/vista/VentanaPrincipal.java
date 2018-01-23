@@ -3,6 +3,7 @@ package co.prestapp.vista;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -113,6 +114,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelTotalAbonosCobrados;
 	private JLabel jLabelTotalClientesactivos;
 	private JLabel jLabelCerosPrestamo;
+	private JLabel jLabelComplemento;
 	private JCheckBox jCheckBoxEditandoPrestamo;
 	private JLabel jLabelCodigoPrestamoOculto;
 	private JTextField jTextTotalSalidas;
@@ -833,9 +835,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					}
 					{
 						jPanelAgregarCliente = new JPanel();
+						GridLayout jPanelAgregarClienteLayout = new GridLayout(4, 2, 5, 5);
 						jPanelClientes.add(jPanelAgregarCliente, BorderLayout.NORTH);
 						jPanelAgregarCliente.setPreferredSize(new java.awt.Dimension(899, 132));
-						jPanelAgregarCliente.setLayout(null);
+						jPanelAgregarCliente.setLayout(jPanelAgregarClienteLayout);
 						{
 							jLabelNombre = new JLabel();
 							jPanelAgregarCliente.add(jLabelNombre);
@@ -845,24 +848,63 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 						}
 						{
-							jLabelEmpresa = new JLabel();
-							jPanelAgregarCliente.add(jLabelEmpresa);
-							jLabelEmpresa.setText("Empresa:");
-							jLabelEmpresa.setBounds(312, 19, 178, 30);
-							jLabelEmpresa.setFont(new java.awt.Font("Arial", 0, 16));
-						}
-						{
 							jTextNombre = new JTextField();
 							jPanelAgregarCliente.add(jTextNombre);
 							jTextNombre.setBounds(100, 19, 178, 30);
 							jTextNombre.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
+							jLabelCodigoCliente = new JLabel();
+							jPanelAgregarCliente.add(jLabelCodigoCliente);
+							jLabelCodigoCliente.setBounds(12, 65, 65, 10);
+
+						}
+						
+						{
+							jLabelEmpresa = new JLabel();
+							jPanelAgregarCliente.add(jLabelEmpresa);
+							jLabelEmpresa.setText("Empresa:");
+							jLabelEmpresa.setBounds(312, 19, 178, 30);
+							jLabelEmpresa.setFont(new java.awt.Font("Arial", 0, 16));
+						}
+						
+						{
 							jTextEmpresa = new JTextField();
 							jPanelAgregarCliente.add(jTextEmpresa);
 							jTextEmpresa.setBounds(403, 19, 178, 30);
 							jTextEmpresa.setFont(new java.awt.Font("Arial", 0, 16));
 						}
+						
+						{
+							jLabelComplemento = new JLabel();
+							jPanelAgregarCliente.add(jLabelComplemento);
+							jLabelComplemento.setBounds(12, 65, 65, 10);
+
+						}
+						{
+							jLabelReferencia = new JLabel();
+							jPanelAgregarCliente.add(jLabelReferencia);
+							jLabelReferencia.setText("Referencia:");
+							jLabelReferencia.setBounds(606, 19, 178, 30);
+							jLabelReferencia.setFont(new java.awt.Font("Arial", 0, 16));
+						}
+						{
+							jTextReferencia = new JTextField();
+							jPanelAgregarCliente.add(jTextReferencia);
+							jTextReferencia.setBounds(708, 19, 178, 30);
+							jTextReferencia.setFont(new java.awt.Font("Arial", 0, 16));
+						}
+						{
+							jCheckBoxEdicionCliente = new JCheckBox();
+							jPanelAgregarCliente.add(jCheckBoxEdicionCliente);
+							jCheckBoxEdicionCliente.setText("Editando");
+							jCheckBoxEdicionCliente.setBounds(784, 112, 115, 20);
+							jCheckBoxEdicionCliente.setFont(new java.awt.Font("Arial", 0, 16));
+							jCheckBoxEdicionCliente.setEnabled(false);
+						}
+						
+						
+						
 						{
 							ImageIcon icono = new ImageIcon("src/co/prestapp/res/guardar.png");
 							Image img = icono.getImage();
@@ -879,37 +921,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								}
 							});
 						}
-						{
-							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
-									.getResource("co/prestapp/res/cancelar.png");
-							ImageIcon icono = new ImageIcon(urlDeLaImagen);
-							Image img = icono.getImage();
-							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-							jButtonCancelar = new JButton();
-							jButtonCancelar.setIcon(new ImageIcon(otraimg));
-							jPanelAgregarCliente.add(jButtonCancelar);
-							jButtonCancelar.setText("Cancelar");
-							jButtonCancelar.setBounds(386, 90, 130, 30);
-							jButtonCancelar.setFont(new java.awt.Font("Arial", 0, 14));
-							jButtonCancelar.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent evt) {
-									jButtonCancelarActionPerformed(evt);
-								}
-							});
-						}
-						{
-							jLabelReferencia = new JLabel();
-							jPanelAgregarCliente.add(jLabelReferencia);
-							jLabelReferencia.setText("Referencia:");
-							jLabelReferencia.setBounds(606, 19, 178, 30);
-							jLabelReferencia.setFont(new java.awt.Font("Arial", 0, 16));
-						}
-						{
-							jTextReferencia = new JTextField();
-							jPanelAgregarCliente.add(jTextReferencia);
-							jTextReferencia.setBounds(708, 19, 178, 30);
-							jTextReferencia.setFont(new java.awt.Font("Arial", 0, 16));
-						}
+						
 						{
 							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
 									.getResource("co/prestapp/res/editar.png");
@@ -930,19 +942,24 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 						}
 						{
-							jLabelCodigoCliente = new JLabel();
-							jPanelAgregarCliente.add(jLabelCodigoCliente);
-							jLabelCodigoCliente.setBounds(12, 65, 65, 10);
-
+							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/cancelar.png");
+							ImageIcon icono = new ImageIcon(urlDeLaImagen);
+							Image img = icono.getImage();
+							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							jButtonCancelar = new JButton();
+							jButtonCancelar.setIcon(new ImageIcon(otraimg));
+							jPanelAgregarCliente.add(jButtonCancelar);
+							jButtonCancelar.setText("Cancelar");
+							jButtonCancelar.setBounds(386, 90, 130, 30);
+							jButtonCancelar.setFont(new java.awt.Font("Arial", 0, 14));
+							jButtonCancelar.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonCancelarActionPerformed(evt);
+								}
+							});
 						}
-						{
-							jCheckBoxEdicionCliente = new JCheckBox();
-							jPanelAgregarCliente.add(jCheckBoxEdicionCliente);
-							jCheckBoxEdicionCliente.setText("Editando");
-							jCheckBoxEdicionCliente.setBounds(784, 112, 115, 20);
-							jCheckBoxEdicionCliente.setFont(new java.awt.Font("Arial", 0, 16));
-							jCheckBoxEdicionCliente.setEnabled(false);
-						}
+						
 					}
 					// Aquí listados
 					jTabPestanias.addTab("Listados", jPaneListados);
@@ -1404,9 +1421,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private void jButtonCancelarActionPerformed(ActionEvent evt) {
 
 		limpiarCamposCliente();
-		ClienteDAO miCliente = new ClienteDAO();
-		String codigoCliente = miCliente.recuperarCodigoCliente();
-		System.out.println("Código de cliente:" + " " + codigoCliente);
+		jCheckBoxEdicionCliente.setSelected(false);
+		
 
 	}
 
