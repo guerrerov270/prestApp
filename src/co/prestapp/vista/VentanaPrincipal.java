@@ -229,7 +229,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private final String listaMovimientosEntrada = "Listado de movimientos de entrada registrados";
 	private final String listaMovimientosSalida = "Listado de movimientos de salida registrados";
 	private final String listaMovimientosFechas = "Listado de movimientos entre fechas";
-	private DBError error= new DBError();
+	private DBError error = new DBError();
 
 	/**
 	 * Auto-generated main method to display this JFrame
@@ -325,20 +325,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 									GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 							jTextMonto.setBounds(162, 30, 54, 30);
 							jTextMonto.setFont(new java.awt.Font("Arial", 0, 16));
-							jTextMonto.addKeyListener(new KeyAdapter()
-							{
-							   public void keyTyped(KeyEvent e)
-							   {
-							      char caracter = e.getKeyChar();
+							jTextMonto.addKeyListener(new KeyAdapter() {
+								public void keyTyped(KeyEvent e) {
+									char caracter = e.getKeyChar();
 
-							      // Verificar si la tecla pulsada no es un digito
-							      if(((caracter < '0') ||
-							         (caracter > '9')) &&
-							         (caracter != '\b' /*corresponde a BACK_SPACE*/))
-							      {
-							         e.consume();  // ignorar el evento de teclado
-							      }
-							   }
+									// Verificar si la tecla pulsada no es un digito
+									if (((caracter < '0') || (caracter > '9'))
+											&& (caracter != '\b' /* corresponde a BACK_SPACE */)) {
+										e.consume(); // ignorar el evento de teclado
+									}
+								}
 							});
 						}
 						{
@@ -355,20 +351,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 									GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 							jTextTasaInteres.setBounds(477, 30, 71, 30);
 							jTextTasaInteres.setFont(new java.awt.Font("Arial", 0, 16));
-							jTextTasaInteres.addKeyListener(new KeyAdapter()
-							{
-							   public void keyTyped(KeyEvent e)
-							   {
-							      char caracter = e.getKeyChar();
+							jTextTasaInteres.addKeyListener(new KeyAdapter() {
+								public void keyTyped(KeyEvent e) {
+									char caracter = e.getKeyChar();
 
-							      // Verificar si la tecla pulsada no es un digito
-							      if(((caracter < '0') ||
-							         (caracter > '9')) &&
-							         (caracter != '\b' /*corresponde a BACK_SPACE*/))
-							      {
-							         e.consume();  // ignorar el evento de teclado
-							      }
-							   }
+									// Verificar si la tecla pulsada no es un digito
+									if (((caracter < '0') || (caracter > '9'))
+											&& (caracter != '\b' /* corresponde a BACK_SPACE */)) {
+										e.consume(); // ignorar el evento de teclado
+									}
+								}
 							});
 						}
 						{
@@ -393,20 +385,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 									GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 							jTextNumeroCuotas.setBounds(476, 78, 71, 30);
 							jTextNumeroCuotas.setFont(new java.awt.Font("Arial", 0, 16));
-							jTextNumeroCuotas.addKeyListener(new KeyAdapter()
-							{
-							   public void keyTyped(KeyEvent e)
-							   {
-							      char caracter = e.getKeyChar();
+							jTextNumeroCuotas.addKeyListener(new KeyAdapter() {
+								public void keyTyped(KeyEvent e) {
+									char caracter = e.getKeyChar();
 
-							      // Verificar si la tecla pulsada no es un digito
-							      if(((caracter < '0') ||
-							         (caracter > '9')) &&
-							         (caracter != '\b' /*corresponde a BACK_SPACE*/))
-							      {
-							         e.consume();  // ignorar el evento de teclado
-							      }
-							   }
+									// Verificar si la tecla pulsada no es un digito
+									if (((caracter < '0') || (caracter > '9'))
+											&& (caracter != '\b' /* corresponde a BACK_SPACE */)) {
+										e.consume(); // ignorar el evento de teclado
+									}
+								}
 							});
 						}
 						{
@@ -589,7 +577,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 											jButtonCalcularActionPerformed(evt);
 										} catch (Exception e) {
 											System.out.println(e.getMessage());
-											error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".initGUI");
+											error.guardarMensajeError(e.getMessage(),
+													this.getClass().getCanonicalName() + ".initGUI");
 										}
 									}
 								});
@@ -640,19 +629,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jScrollAbonosRecibidos = new JScrollPane();
 						jPanelAbonos.add(jScrollAbonosRecibidos, BorderLayout.SOUTH);
 						jScrollAbonosRecibidos.setBounds(8, 263, 777, 381);
-						jScrollAbonosRecibidos.setPreferredSize(new java.awt.Dimension(909, 401));
+						jScrollAbonosRecibidos.setPreferredSize(new java.awt.Dimension(909, 390));
 						{
 
 						}
 					}
 					{
 						jPanelAgregarAbono = new JPanel();
-						GridLayout jPanelAgregarAbonoLayout = new GridLayout(4, 4);
-						jPanelAgregarAbonoLayout.setColumns(1);
-						jPanelAgregarAbonoLayout.setHgap(5);
-						jPanelAgregarAbonoLayout.setVgap(5);
+						GridLayout jPanelAgregarAbonoLayout = new GridLayout(5, 4, 5, 5);
 						jPanelAbonos.add(jPanelAgregarAbono, BorderLayout.NORTH);
-						jPanelAgregarAbono.setPreferredSize(new java.awt.Dimension(911, 170));
+						jPanelAgregarAbono.setPreferredSize(new java.awt.Dimension(909, 189));
 						jPanelAgregarAbono.setBorder(BorderFactory.createTitledBorder("Agregar abono"));
 						jPanelAgregarAbono.setLayout(jPanelAgregarAbonoLayout);
 						{
@@ -687,13 +673,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							});
 
 						}
-						{
-							jLabelComplemento2 = new JLabel();
-							jPanelAgregarAbono.add(jLabelComplemento2);
-							jLabelComplemento2.setBounds(12, 65, 65, 10);
 
-						}
-						
 						{
 							jLabelCodigoAbono = new JLabel();
 							jPanelAgregarAbono.add(jLabelCodigoAbono);
@@ -706,9 +686,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jTextFieldCodigoAbono = new JTextField();
 							jPanelAgregarAbono.add(jTextFieldCodigoAbono);
 							jTextFieldCodigoAbono.setBounds(496, 78, 71, 30);
-							jTextFieldCodigoAbono.setFont(new java.awt.Font("Arial",0,16));
+							jTextFieldCodigoAbono.setFont(new java.awt.Font("Arial", 0, 16));
 
 						}
+						{
+							jLabelComplemento2 = new JLabel();
+							jPanelAgregarAbono.add(jLabelComplemento2);
+							jLabelComplemento2.setBounds(12, 65, 65, 10);
+
+						}
+
 						{
 							jLabelFecha = new JLabel();
 							jPanelAgregarAbono.add(jLabelFecha);
@@ -716,47 +703,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jLabelFecha.setBounds(17, 78, 178, 30);
 							jLabelFecha.setFont(new java.awt.Font("Arial", 0, 16));
 						}
-						
+
 						{
 							calendarioAbonos = new JDateChooser();
 							jPanelAgregarAbono.add(calendarioAbonos);
 							calendarioAbonos.setBounds(162, 78, 178, 30);
 							calendarioAbonos.setFont(new java.awt.Font("Arial", 0, 16));
-						}
-						{
-							jLabelMonto = new JLabel();
-							jPanelAgregarAbono.add(jLabelMonto);
-							jLabelMonto.setText("Monto a abonar:                        $");
-							jLabelMonto.setBounds(592, 76, 146, 30);
-							jLabelMonto.setFont(new java.awt.Font("Arial", 0, 16));
-						}
-						{
-							jTextField1 = new JTextField();
-							jPanelAgregarAbono.add(jTextField1);
-							jTextField1.setBounds(730, 76, 80, 30);
-							jTextField1.setFont(new java.awt.Font("Arial", 0, 16));
-							jTextField1.addKeyListener(new KeyAdapter()
-							{
-							   public void keyTyped(KeyEvent e)
-							   {
-							      char caracter = e.getKeyChar();
-
-							      // Verificar si la tecla pulsada no es un digito
-							      if(((caracter < '0') ||
-							         (caracter > '9')) &&
-							         (caracter != '\b' /*corresponde a BACK_SPACE*/))
-							      {
-							         e.consume();  // ignorar el evento de teclado
-							      }
-							   }
-							});
-						}
-						{
-							jLabelCerosAbono = new JLabel();
-							jPanelAgregarAbono.add(jLabelCerosAbono);
-							jLabelCerosAbono.setText(".000");
-							jLabelCerosAbono.setBounds(810, 83, 48, 30);
-							jLabelCerosAbono.setFont(new java.awt.Font("Arial", 0, 18));
 						}
 						{
 							jCheckBoxEditandoAbono = new JCheckBox();
@@ -766,18 +718,49 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jCheckBoxEditandoAbono.setFont(new java.awt.Font("Arial", 0, 16));
 							jCheckBoxEditandoAbono.setEnabled(false);
 						}
-						
+						{
+							jLabelMonto = new JLabel();
+							jPanelAgregarAbono.add(jLabelMonto);
+							jLabelMonto.setText("Monto a abonar:                                          $");
+							jLabelMonto.setBounds(592, 76, 146, 30);
+							jLabelMonto.setFont(new java.awt.Font("Arial", 0, 16));
+						}
+						{
+							jTextField1 = new JTextField();
+							jPanelAgregarAbono.add(jTextField1);
+							jTextField1.setBounds(730, 76, 80, 30);
+							jTextField1.setFont(new java.awt.Font("Arial", 0, 16));
+							jTextField1.addKeyListener(new KeyAdapter() {
+								public void keyTyped(KeyEvent e) {
+									char caracter = e.getKeyChar();
+
+									// Verificar si la tecla pulsada no es un digito
+									if (((caracter < '0') || (caracter > '9'))
+											&& (caracter != '\b' /* corresponde a BACK_SPACE */)) {
+										e.consume(); // ignorar el evento de teclado
+									}
+								}
+							});
+						}
+						{
+							jLabelCerosAbono = new JLabel();
+							jPanelAgregarAbono.add(jLabelCerosAbono);
+							jLabelCerosAbono.setText(".000");
+							jLabelCerosAbono.setBounds(810, 83, 48, 30);
+							jLabelCerosAbono.setFont(new java.awt.Font("Arial", 0, 18));
+						}
+
 						{
 							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
 									.getResource("co/prestapp/res/guardar.png");
 							ImageIcon icono = new ImageIcon(urlDeLaImagen);
 							Image img = icono.getImage();
-							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							Image otraimg = img.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
 							jButtonGuardar = new JButton();
-							jButtonGuardar.setIcon(new ImageIcon(otraimg));
 							jPanelAgregarAbono.add(jButtonGuardar);
+							jButtonGuardar.setIcon(new ImageIcon(otraimg));
 							jButtonGuardar.setText("Guardar");
-							jButtonGuardar.setBounds(17, 147, 130, 30);
+							// jButtonGuardar.setBounds(17, 147, 130, 30);
 							jButtonGuardar.setFont(new java.awt.Font("Arial", 0, 14));
 							jButtonGuardar.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
@@ -790,12 +773,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 									.getResource("co/prestapp/res/editar.png");
 							ImageIcon icono = new ImageIcon(urlDeLaImagen);
 							Image img = icono.getImage();
-							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							Image otraimg = img.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
 							jButtonEditarAbono = new JButton();
-							jButtonEditarAbono.setIcon(new ImageIcon(otraimg));
 							jPanelAgregarAbono.add(jButtonEditarAbono);
+							jButtonEditarAbono.setIcon(new ImageIcon(otraimg));
 							jButtonEditarAbono.setText("Editar");
-							jButtonEditarAbono.setBounds(185, 146, 130, 30);
+							// jButtonEditarAbono.setBounds(185, 146, 130, 30);
 							jButtonEditarAbono.setFont(new java.awt.Font("Arial", 0, 16));
 							jButtonEditarAbono.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
@@ -803,17 +786,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								}
 							});
 						}
+
 						{
 							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
 									.getResource("co/prestapp/res/cancelar.png");
 							ImageIcon icono = new ImageIcon(urlDeLaImagen);
 							Image img = icono.getImage();
-							Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+							Image otraimg = img.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
 							jButtonCancelarAbono = new JButton();
 							jPanelAgregarAbono.add(jButtonCancelarAbono);
 							jButtonCancelarAbono.setIcon(new ImageIcon(otraimg));
 							jButtonCancelarAbono.setText("Cancelar");
-							jButtonCancelarAbono.setBounds(351, 147, 145, 30);
+							// jButtonCancelarAbono.setBounds(351, 147, 145, 30);
 							jButtonCancelarAbono.setFont(new java.awt.Font("Arial", 0, 14));
 							jButtonCancelarAbono.addActionListener(new ActionListener() {
 
@@ -825,18 +809,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							});
 
 						}
-						
-						
-						
-						{
-							jLabelPesosAbono = new JLabel();
-							jPanelAgregarAbono.add(jLabelPesosAbono);
-							//jLabelPesosAbono.setText("$");
-							jLabelPesosAbono.setBounds(717, 79, 18, 30);
-							jLabelPesosAbono.setFont(new java.awt.Font("Arial", 0, 16));
-						}
-						
-						
+
 					}
 					jTabPestanias.addTab("Clientes", jPanelClientes);
 					jPanelClientes.setBorder(BorderFactory.createTitledBorder("Datos de clientes"));
@@ -878,7 +851,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jLabelCodigoCliente.setBounds(12, 65, 65, 10);
 
 						}
-						
+
 						{
 							jLabelEmpresa = new JLabel();
 							jPanelAgregarCliente.add(jLabelEmpresa);
@@ -886,14 +859,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jLabelEmpresa.setBounds(312, 19, 178, 30);
 							jLabelEmpresa.setFont(new java.awt.Font("Arial", 0, 16));
 						}
-						
+
 						{
 							jTextEmpresa = new JTextField();
 							jPanelAgregarCliente.add(jTextEmpresa);
 							jTextEmpresa.setBounds(403, 19, 178, 30);
 							jTextEmpresa.setFont(new java.awt.Font("Arial", 0, 16));
 						}
-						
+
 						{
 							jLabelComplemento = new JLabel();
 							jPanelAgregarCliente.add(jLabelComplemento);
@@ -921,9 +894,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jCheckBoxEdicionCliente.setFont(new java.awt.Font("Arial", 0, 16));
 							jCheckBoxEdicionCliente.setEnabled(false);
 						}
-						
-						
-						
+
 						{
 							ImageIcon icono = new ImageIcon("src/co/prestapp/res/guardar.png");
 							Image img = icono.getImage();
@@ -940,7 +911,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								}
 							});
 						}
-						
+
 						{
 							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
 									.getResource("co/prestapp/res/editar.png");
@@ -978,7 +949,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								}
 							});
 						}
-						
+
 					}
 					// Aquí listados
 					jTabPestanias.addTab("Listados", jPaneListados);
@@ -1394,7 +1365,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		} catch (NumberFormatException e) {
 
 			System.out.println(e.getMessage());
-			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".jButtonClienteExisteActionPerformed");
+			error.guardarMensajeError(e.getMessage(),
+					this.getClass().getCanonicalName() + ".jButtonClienteExisteActionPerformed");
 		}
 
 	}
@@ -1441,7 +1413,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 		limpiarCamposCliente();
 		jCheckBoxEdicionCliente.setSelected(false);
-		
 
 	}
 
@@ -1513,7 +1484,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				jLabelTotalFormato.setText(totalPagar + "");
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
-				error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".jButtonCalcularActionPerformed");
+				error.guardarMensajeError(e.getMessage(),
+						this.getClass().getCanonicalName() + ".jButtonCalcularActionPerformed");
 			}
 
 		} // Fin if
@@ -1568,7 +1540,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					numeroCuotas = Integer.parseInt(jTextNumeroCuotas.getText());
 				} catch (NumberFormatException e) {
 					System.out.println(e.getMessage());
-					error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".jButtonAceptarActionPerformed");
+					error.guardarMensajeError(e.getMessage(),
+							this.getClass().getCanonicalName() + ".jButtonAceptarActionPerformed");
 				}
 				tipoPlazo = (String) jComboPlazo.getSelectedItem();
 				tipoPlazoMayus = tipoPlazo.toUpperCase();
@@ -1585,7 +1558,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					codigoCliente = JOptionPane.showInputDialog("Verifique código del cliente");
 				} catch (Exception e) {
 					System.out.println(e.getMessage());
-					error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".jButtonAceptarActionPerformed");
+					error.guardarMensajeError(e.getMessage(),
+							this.getClass().getCanonicalName() + ".jButtonAceptarActionPerformed");
 				}
 
 			}
@@ -1650,7 +1624,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				numeroCuotas = Integer.parseInt(jTextNumeroCuotas.getText());
 			} catch (NumberFormatException e) {
 				System.out.println(e.getMessage());
-				error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".jButtonAceptarActionPerformed");
+				error.guardarMensajeError(e.getMessage(),
+						this.getClass().getCanonicalName() + ".jButtonAceptarActionPerformed");
 			}
 			tipoPlazo = (String) jComboPlazo.getSelectedItem();
 			tipoPlazoMayus = tipoPlazo.toUpperCase();
@@ -1669,7 +1644,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				codigoCliente = JOptionPane.showInputDialog("Verifique código del cliente");
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
-				error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".jButtonAceptarActionPerformed");
+				error.guardarMensajeError(e.getMessage(),
+						this.getClass().getCanonicalName() + ".jButtonAceptarActionPerformed");
 			}
 
 		} // Fin de if de validar campos
@@ -1808,6 +1784,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		jTableAbonosRecibidos = new JTable(informacionAbonos, titulos);
 		jScrollAbonosRecibidos.setViewportView(jTableAbonosRecibidos);
 		jTableAbonosRecibidos.setFont(new java.awt.Font("Arial", 0, 16));
+		jTableAbonosRecibidos.setPreferredSize(new java.awt.Dimension(906, 400));
 		JTableHeader th = jTableAbonosRecibidos.getTableHeader();
 		th.setFont(new java.awt.Font("Arial", 0, 16));
 		ajustaColumnasAContenido(jTableAbonosRecibidos);
@@ -2715,7 +2692,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			} catch (ParseException e) {
 
 				e.printStackTrace();
-				error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".jButtonEditarAbonoActionPerformed");
+				error.guardarMensajeError(e.getMessage(),
+						this.getClass().getCanonicalName() + ".jButtonEditarAbonoActionPerformed");
 			}
 
 			jCheckBoxEditandoAbono.setSelected(true);
@@ -2746,7 +2724,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			} catch (ParseException e) {
 
 				e.printStackTrace();
-				error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".jButtonEditarPrestamoPerformed");
+				error.guardarMensajeError(e.getMessage(),
+						this.getClass().getCanonicalName() + ".jButtonEditarPrestamoPerformed");
 			}
 			jTextTasaInteres.setText(miPrestamo.getTasaInteresPrestamo() + "");
 			// Falta la fecha
@@ -2757,7 +2736,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			} catch (ParseException e) {
 
 				e.printStackTrace();
-				error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".jButtonEditarPrestamoPerformed");
+				error.guardarMensajeError(e.getMessage(),
+						this.getClass().getCanonicalName() + ".jButtonEditarPrestamoPerformed");
 			}
 
 			// Tipo de plazo
