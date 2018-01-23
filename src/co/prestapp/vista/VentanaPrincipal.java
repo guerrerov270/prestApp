@@ -3,11 +3,8 @@ package co.prestapp.vista;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -131,7 +128,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JCheckBox jCheckBoxEdicionCliente;
 	private JButton jButtonEditarAbono;
 	private JLabel jLabelPesosPrestamo;
-	private JLabel jLabelPesosAbono;
 	private JLabel jLabelCerosAbono;
 	private JButton jButtonBackup;
 	private JButton jButtonGenerarPDF;
@@ -298,18 +294,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jScrollReportes = new JScrollPane();
 						jPanelPrestamos.add(jScrollReportes, BorderLayout.SOUTH);
 						jScrollReportes.setBounds(8, 263, 777, 381);
-						jScrollReportes.setPreferredSize(new java.awt.Dimension(909, 277));
+						jScrollReportes.setPreferredSize(new java.awt.Dimension(909, 318));
 						{
 
 						}
 					}
 					{
 						jPanelEntradasPrestamo = new JPanel();
-						GridLayout jPanelEntradasPrestamoLayout = new GridLayout(8, 4, 5, 5);
+						GridLayout jPanelEntradasPrestamoLayout = new GridLayout(7, 4, 5, 5);
 						jPanelPrestamos.add(jPanelEntradasPrestamo, BorderLayout.NORTH);
 						jPanelEntradasPrestamo.setBorder(BorderFactory.createTitledBorder("Datos préstamo"));
 						jPanelEntradasPrestamo.setLayout(jPanelEntradasPrestamoLayout);
-						jPanelEntradasPrestamo.setPreferredSize(new java.awt.Dimension(909, 292));
+						jPanelEntradasPrestamo.setPreferredSize(new java.awt.Dimension(909, 258));
 						{
 							jLabelMontoPrestamo = new JLabel();
 							jPanelEntradasPrestamo.add(jLabelMontoPrestamo);
@@ -483,13 +479,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						}
 
 						{
-							jCheckBoxEditandoPrestamo = new JCheckBox();
-							jPanelEntradasPrestamo.add(jCheckBoxEditandoPrestamo);
-							jCheckBoxEditandoPrestamo.setText("Editando");
-							jCheckBoxEditandoPrestamo.setBounds(789, 178, 115, 20);
-							jCheckBoxEditandoPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
-							jCheckBoxEditandoPrestamo.setEnabled(false);
+							jLabelTotalPago = new JLabel();
+							jPanelEntradasPrestamo.add(jLabelTotalPago);
+							jLabelTotalPago.setText("Total a pagar:  $");
+							jLabelTotalPago.setBounds(362, 121, 116, 30);
+							jLabelTotalPago.setFont(new java.awt.Font("Arial", 0, 16));
 						}
+
 						{
 							jLabelEmpresaResult = new JLabel();
 							jPanelEntradasPrestamo.add(jLabelEmpresaResult);
@@ -518,19 +514,20 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						}
 
 						{
-
-							{
-								jLabelTotalPago = new JLabel();
-								jPanelEntradasPrestamo.add(jLabelTotalPago);
-								jLabelTotalPago.setText("Total a pagar:  $");
-								jLabelTotalPago.setBounds(362, 121, 116, 30);
-								jLabelTotalPago.setFont(new java.awt.Font("Arial", 0, 16));
-							}
 							{
 								jLabelTotalFormato = new JLabel();
 								jPanelEntradasPrestamo.add(jLabelTotalFormato);
 								jLabelTotalFormato.setBounds(478, 122, 178, 30);
 								jLabelTotalFormato.setFont(new java.awt.Font("Arial", 0, 16));
+							}
+
+							{
+								jCheckBoxEditandoPrestamo = new JCheckBox();
+								jPanelEntradasPrestamo.add(jCheckBoxEditandoPrestamo);
+								jCheckBoxEditandoPrestamo.setText("Editando");
+								jCheckBoxEditandoPrestamo.setBounds(789, 178, 115, 20);
+								jCheckBoxEditandoPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
+								jCheckBoxEditandoPrestamo.setEnabled(false);
 							}
 
 							{
@@ -1412,6 +1409,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private void jButtonCancelarPrestamoActionPerformed(ActionEvent evt) {
 
 		limpiarCamposPrestamo();
+		jCheckBoxEditandoPrestamo.setSelected(false);
 	}
 
 	private void limpiarCamposCliente() {
@@ -1766,6 +1764,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private void jButtonCancelarAbonoActionPerformed(ActionEvent e) {
 		limpiarCamposAbono();
+		jCheckBoxEditandoAbono.setSelected(false);
 	}
 
 	// -----------------Tablas------------------------------------------------------
@@ -1777,7 +1776,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		jTableAbonosRecibidos = new JTable(informacionAbonos, titulos);
 		jScrollAbonosRecibidos.setViewportView(jTableAbonosRecibidos);
 		jTableAbonosRecibidos.setFont(new java.awt.Font("Arial", 0, 16));
-		jTableAbonosRecibidos.setPreferredSize(new java.awt.Dimension(906, 400));
 		JTableHeader th = jTableAbonosRecibidos.getTableHeader();
 		th.setFont(new java.awt.Font("Arial", 0, 16));
 		ajustaColumnasAContenido(jTableAbonosRecibidos);
