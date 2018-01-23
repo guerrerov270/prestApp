@@ -10,7 +10,7 @@ import com.lowagie.text.Element;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfWriter;
-import co.prestapp.DAO.MovimientoDAO;
+import co.prestapp.DAO.AbonoDAO;
 import co.prestapp.connection.DBConnection;
 import co.prestapp.connection.DBError;
 
@@ -21,9 +21,9 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-public class ReporteMovimientosFechas {
+public class ReporteAbonosPendientesFecha {
 
-	MovimientoDAO miMovimiento = new MovimientoDAO();
+	AbonoDAO miAbono = new AbonoDAO();
 	DBError error = new DBError();
 	private String strNombreDelPDF;
 	Color grisClaro = new Color(230, 230, 230);
@@ -35,7 +35,7 @@ public class ReporteMovimientosFechas {
 	String strRotuloPDF;
 
 	// Metodo principal del ejemplo
-	public ReporteMovimientosFechas(String titulo, String nomPDF, Date fechaInicio, Date fechaFin) {
+	public ReporteAbonosPendientesFecha(String titulo, String nomPDF, Date fechaInicio, Date fechaFin) {
 		strRotuloPDF = titulo;
 		strNombreDelPDF = nomPDF;
 		try { // Hoja tamanio carta, rotarla (cambiar a horizontal)
@@ -57,7 +57,8 @@ public class ReporteMovimientosFechas {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".ReporteMovimientosFechas");
+			error.guardarMensajeError(e.getMessage(),
+					this.getClass().getCanonicalName() + ".ReporteAbonosPendientesFecha");
 		}
 	}
 
@@ -74,13 +75,8 @@ public class ReporteMovimientosFechas {
 		// agregarLineasEnBlanco(ParrafoHoja, 1);
 		// Colocar un encabezado (en mayusculas)
 		ParrafoHoja.add(new Paragraph(strRotuloPDF));
-
 		agregarLineasEnBlanco(ParrafoHoja, 1);
-		ParrafoHoja.add(new Paragraph(
-				"El total de las entradas es:  " + formatoMoneda.format(miMovimiento.calcularTotalEntradas())));
-		ParrafoHoja.add(new Paragraph(
-				"El total de las salidas es:  " + formatoMoneda.format(miMovimiento.calcularTotalSalidas())));
-		ParrafoHoja.add(new Paragraph("Los datos corresponden a movimientos registrados entre el: "
+		ParrafoHoja.add(new Paragraph("Los datos corresponden a abonos pendientes registrados entre el: "
 				+ formato.format(fechaInicio) + " y el " + formato.format(fechaFin) + ""));
 		// 1.- AGREGAMOS LA TABLA
 		agregarTabla(ParrafoHoja, fechaInicio, fechaFin);
@@ -106,15 +102,15 @@ public class ReporteMovimientosFechas {
 	private void agregarTabla(Paragraph parrafo, Date fechaInicio, Date fechaFin) {
 
 		// Anchos de las columnas
-		float anchosFilas[] = { 1f, 1f, 1f, 1f, 1f, 1f };
+		float anchosFilas[] = { 0.2f, 0.4f, 0.8f, 0.8f, 0.4f, 1f, 1f, 0.5f, 0.4f, 0.7f, 0.3f };
 		PdfPTable tabla = new PdfPTable(anchosFilas);
-		String rotulosColumnas[] = miMovimiento.getColumnas();
+		String rotulosColumnas[] = miAbono.getColumnas();
 		// Porcentaje que ocupa a lo ancho de la pagina del PDF
 		tabla.setWidthPercentage(100);
 		// Alineacion horizontal centrada
 		tabla.setHorizontalAlignment(Element.ALIGN_CENTER);
 		// agregar celda que ocupa las 9 columnas de los rotulos
-		PdfPCell cell = new PdfPCell(new Paragraph("Listado de movimientos entre fechas"));
+		PdfPCell cell = new PdfPCell(new Paragraph("Listado de abonos pendientes por fecha"));
 		cell.setColspan(11);
 		// Centrar contenido de celda
 		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -139,28 +135,43 @@ public class ReporteMovimientosFechas {
 
 			DBConnection miConexion = new DBConnection();
 			Connection conexion = miConexion.darConexion();
-			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_movimientos_fechas(?,?)}");
+			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_abonos_pendientes_por_fecha(?,?)}");
 			miProcedimiento.setDate(1, fechaInicio);
 			miProcedimiento.setDate(2, fechaFin);
 			ResultSet rs = miProcedimiento.executeQuery();
 
 			// Iterar Mientras haya una fila siguiente
-			while (rs.next()) { // Agregar 6 celdas
-				cell = new PdfPCell(new Paragraph(String.valueOf(rs.getInt("idMovimiento"))));
+			while (rs.next()) { // Agregar 9 celdas
+				cell = new PdfPCell(new Paragraph(String.valueOf(rs.getInt("idAbono"))));
 				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(rs.getString("codigoMovimiento")));
+				cell = new PdfPCell(new Paragraph(rs.getString("codigoAbono")));
 				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(String.valueOf(formatoFecha.format(rs.getDate("fechaMovimiento")))));
+				cell = new PdfPCell(new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("montoACobrar")))));
 				tabla.addCell(cell);
+				cell = new PdfPCell(new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("montoPagado")))));
+				tabla.addCell(cell);
+				cell = new PdfPCell(new Paragraph(rs.getString("completoAbono")));
+				tabla.addCell(cell);
+				if (rs.getDate("fechaACobrar") != null) {
+					cell = new PdfPCell(new Paragraph(String.valueOf(formatoFecha.format(rs.getDate("fechaACobrar")))));
+					tabla.addCell(cell);
+				}
 
-				cell = new PdfPCell(
-						new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("entradaMovimiento")))));
+				if (rs.getDate("fechaPago") != null) {
+					cell = new PdfPCell(new Paragraph(String.valueOf(formatoFecha.format(rs.getDate("fechaPago")))));
+					tabla.addCell(cell);
+				} else {
+					cell = new PdfPCell(new Paragraph(String.valueOf(rs.getDate("fechaPago"))));
+					tabla.addCell(cell);
+				}
+
+				cell = new PdfPCell(new Paragraph(rs.getString("abonoPrestamo")));
 				tabla.addCell(cell);
-				cell = new PdfPCell(
-						new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("salidaMovimiento")))));
+				cell = new PdfPCell(new Paragraph(rs.getString("puntualAbono")));
 				tabla.addCell(cell);
-				cell = new PdfPCell(
-						new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("saldoMovimiento")))));
+				cell = new PdfPCell(new Paragraph(rs.getString("estadoAbono")));
+				tabla.addCell(cell);
+				cell = new PdfPCell(new Paragraph(String.valueOf(rs.getInt("numeroAbono"))));
 				tabla.addCell(cell);
 
 			}
@@ -199,7 +210,6 @@ public class ReporteMovimientosFechas {
 		try {
 			Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + strNombreDelPDF);
 		} catch (IOException e) {
-			e.printStackTrace();
 			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".abrirPDF");
 		}
 	}

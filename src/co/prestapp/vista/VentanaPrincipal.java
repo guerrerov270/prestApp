@@ -54,7 +54,9 @@ import co.prestapp.connection.DBBackup;
 import co.prestapp.connection.DBError;
 import co.prestapp.reports.ReporteAbonos;
 import co.prestapp.reports.ReporteAbonosPagados;
+import co.prestapp.reports.ReporteAbonosPagadosFecha;
 import co.prestapp.reports.ReporteAbonosPendientes;
+import co.prestapp.reports.ReporteAbonosPendientesFecha;
 import co.prestapp.reports.ReporteClientes;
 import co.prestapp.reports.ReporteClientesActivos;
 import co.prestapp.reports.ReporteClientesAlfa;
@@ -2515,13 +2517,73 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
-	private void generarReporteAbonosPagadosFecha() {
-		// TODO Auto-generated method stub
+	private void generarReporteAbonosPagadosFecha(java.sql.Date fechaInicio, java.sql.Date fechaFin) {
+
+		// configuracion de la fecha actual
+		// Creamos un objeto de la clase Calendar.
+		Calendar fecha = new GregorianCalendar();
+		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
+		// Usando el método get y el parámetro correspondiente.
+		int anio = fecha.get(Calendar.YEAR);
+		int mes = fecha.get(Calendar.MONTH);
+		int dia = fecha.get(Calendar.DAY_OF_MONTH);
+		int hora = fecha.get(Calendar.HOUR_OF_DAY);
+		int minuto = fecha.get(Calendar.MINUTE);
+		int segundo = fecha.get(Calendar.SECOND);
+
+		String mesS = concatenaCero(mes + 1);
+		String diaS = concatenaCero(dia);
+		String horaS = concatenaCero(hora);
+		String minutoS = concatenaCero(minuto);
+		String segundoS = concatenaCero(segundo);
+
+		String strNombrePDF = "ReporteAbonosPagadosFecha" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
+		String strTituloPDF = "Reporte de abonos pagados por fecha, generado el: " + diaS + "/" + mesS + "/" + anio
+				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+		ReporteAbonosPagadosFecha reporte = new ReporteAbonosPagadosFecha(strTituloPDF, strNombrePDF, fechaInicio,
+				fechaFin);
+		// Preguntar al usuario si desea abrir el documento PDF
+		int respuesta = JOptionPane.showConfirmDialog(null,
+				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		// Si la respuesta es SI, abrirlo
+		if (respuesta == JOptionPane.YES_OPTION)
+			reporte.abrirPDF();
 
 	}
 
-	private void generarReporteAbonosPendientesFecha() {
-		// TODO Auto-generated method stub
+	private void generarReporteAbonosPendientesFecha(java.sql.Date fechaInicio, java.sql.Date fechaFin) {
+
+		// configuracion de la fecha actual
+		// Creamos un objeto de la clase Calendar.
+		Calendar fecha = new GregorianCalendar();
+		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
+		// Usando el método get y el parámetro correspondiente.
+		int anio = fecha.get(Calendar.YEAR);
+		int mes = fecha.get(Calendar.MONTH);
+		int dia = fecha.get(Calendar.DAY_OF_MONTH);
+		int hora = fecha.get(Calendar.HOUR_OF_DAY);
+		int minuto = fecha.get(Calendar.MINUTE);
+		int segundo = fecha.get(Calendar.SECOND);
+
+		String mesS = concatenaCero(mes + 1);
+		String diaS = concatenaCero(dia);
+		String horaS = concatenaCero(hora);
+		String minutoS = concatenaCero(minuto);
+		String segundoS = concatenaCero(segundo);
+
+		String strNombrePDF = "ReporteAbonosPendientesFecha" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
+		String strTituloPDF = "Reporte de abonos pendientes por fecha, generado el: " + diaS + "/" + mesS + "/" + anio
+				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+		ReporteAbonosPendientesFecha reporte = new ReporteAbonosPendientesFecha(strTituloPDF, strNombrePDF, fechaInicio,
+				fechaFin);
+		// Preguntar al usuario si desea abrir el documento PDF
+		int respuesta = JOptionPane.showConfirmDialog(null,
+				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		// Si la respuesta es SI, abrirlo
+		if (respuesta == JOptionPane.YES_OPTION)
+			reporte.abrirPDF();
 
 	}
 
@@ -2835,10 +2897,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			generarReporteAbonosPagados();
 			break;
 		case listaAbonosPendientesFecha:
-			generarReporteAbonosPendientesFecha();
+			java.sql.Date fechaInicioFormateadaPend = new java.sql.Date(calendarioInicioMovimiento.getDate().getTime());
+			java.sql.Date fechaFinFormateadaPend = new java.sql.Date(calendarioFinMovimiento.getDate().getTime());
+			generarReporteAbonosPendientesFecha(fechaInicioFormateadaPend, fechaFinFormateadaPend);
+			calendarioInicioMovimiento.setDate(null);
+			calendarioFinMovimiento.setDate(null);
 			break;
 		case listaAbonosPagadosFecha:
-			generarReporteAbonosPagadosFecha();
+			java.sql.Date fechaInicioFormateadaPag = new java.sql.Date(calendarioInicioMovimiento.getDate().getTime());
+			java.sql.Date fechaFinFormateadaPag = new java.sql.Date(calendarioFinMovimiento.getDate().getTime());
+			generarReporteAbonosPagadosFecha(fechaInicioFormateadaPag, fechaFinFormateadaPag);
+			calendarioInicioMovimiento.setDate(null);
+			calendarioFinMovimiento.setDate(null);
 			break;
 		case listaMovimientos:
 			generarReporteMovimientos();
