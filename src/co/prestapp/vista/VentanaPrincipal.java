@@ -263,6 +263,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			this.setTitle("PrestApp 1.0");
 			this.setFont(new java.awt.Font("Arial", 0, 16));
 			this.setResizable(false);
+			this.setFocusable(true);
 			{
 				jPanelContenedor = new JPanel();
 				BorderLayout jPanelContenedorLayout = new BorderLayout();
