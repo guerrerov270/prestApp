@@ -828,4 +828,58 @@ public class AbonoDAO {
 		return listaAbonos;
 	}
 
+	public float calcularTotalRecaudoAbonosRecibido(java.sql.Date fechaInicio, java.sql.Date fechaFin) {
+
+		java.sql.Date fechaInicioFormateada = new java.sql.Date(fechaInicio.getTime());
+		java.sql.Date fechaFinFormateada = new java.sql.Date(fechaFin.getTime());
+		float totalRecaudoRecibido = 0;
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		try {
+			CallableStatement miProcedimiento = conexion
+					.prepareCall("{call sumar_recaudo_recibido_abonos_fecha(?,?,?)}");
+			miProcedimiento.registerOutParameter(1, Types.NUMERIC);
+			miProcedimiento.setDate(2, fechaInicioFormateada);
+			miProcedimiento.setDate(3, fechaFinFormateada);
+			miProcedimiento.executeQuery();
+			totalRecaudoRecibido = miProcedimiento.getFloat(1);
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para sumar entradas por fecha");
+			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(),
+					this.getClass().getCanonicalName() + ".calcularTotalRecaudoAbonosRecibido");
+		}
+
+		return totalRecaudoRecibido;
+	}
+
+	public float calcularTotalRecaudoAbonosPendiente(java.sql.Date fechaInicio, java.sql.Date fechaFin) {
+
+		java.sql.Date fechaInicioFormateada = new java.sql.Date(fechaInicio.getTime());
+		java.sql.Date fechaFinFormateada = new java.sql.Date(fechaFin.getTime());
+		float totalRecaudoPendiente = 0;
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		try {
+			CallableStatement miProcedimiento = conexion
+					.prepareCall("{call sumar_recaudo_pendiente_abonos_fecha(?,?,?)}");
+			miProcedimiento.registerOutParameter(1, Types.NUMERIC);
+			miProcedimiento.setDate(2, fechaInicioFormateada);
+			miProcedimiento.setDate(3, fechaFinFormateada);
+			miProcedimiento.executeQuery();
+			totalRecaudoPendiente = miProcedimiento.getFloat(1);
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para sumar salidas por fecha");
+			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(),
+					this.getClass().getCanonicalName() + ".calcularTotalRecaudoAbonosPendiente");
+		}
+
+		return totalRecaudoPendiente;
+	}
+
 } // Fin AbonoDAO

@@ -76,6 +76,8 @@ public class ReporteAbonosPendientesFecha {
 		// Colocar un encabezado (en mayusculas)
 		ParrafoHoja.add(new Paragraph(strRotuloPDF));
 		agregarLineasEnBlanco(ParrafoHoja, 1);
+		ParrafoHoja.add(new Paragraph("El total de recaudo pendiente es:  "
+				+ formatoMoneda.format(miAbono.calcularTotalRecaudoAbonosPendiente(fechaInicio, fechaFin))));
 		ParrafoHoja.add(new Paragraph("Los datos corresponden a abonos pendientes registrados entre el: "
 				+ formato.format(fechaInicio) + " y el " + formato.format(fechaFin) + ""));
 		// 1.- AGREGAMOS LA TABLA

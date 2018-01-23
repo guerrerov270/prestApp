@@ -57,7 +57,8 @@ public class ReporteAbonosPagadosFecha {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".ReporteAbonosPagadosFecha");
+			error.guardarMensajeError(e.getMessage(),
+					this.getClass().getCanonicalName() + ".ReporteAbonosPagadosFecha");
 		}
 	}
 
@@ -75,6 +76,8 @@ public class ReporteAbonosPagadosFecha {
 		// Colocar un encabezado (en mayusculas)
 		ParrafoHoja.add(new Paragraph(strRotuloPDF));
 		agregarLineasEnBlanco(ParrafoHoja, 1);
+		ParrafoHoja.add(new Paragraph("El total de recaudo recibido es:  "
+				+ formatoMoneda.format(miAbono.calcularTotalRecaudoAbonosRecibido(fechaInicio, fechaFin))));
 		ParrafoHoja.add(new Paragraph("Los datos corresponden a abonos pagados registrados entre el: "
 				+ formato.format(fechaInicio) + " y el " + formato.format(fechaFin) + ""));
 		// 1.- AGREGAMOS LA TABLA
