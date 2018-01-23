@@ -221,10 +221,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private final String listaAbonos = "Listado de abonos registrados";
 	private final String listaAbonosPendientes = "Listado de abonos pendientes";
 	private final String listaAbonosPagados = "Listado de abonos pagados";
+	private final String listaAbonosPendientesFecha = "Listado de abonos pendientes por fecha";
+	private final String listaAbonosPagadosFecha = "Listado de abonos pagados por fecha";
 	private final String listaMovimientos = "Listado de movimientos registrados";
 	private final String listaMovimientosEntrada = "Listado de movimientos de entrada registrados";
 	private final String listaMovimientosSalida = "Listado de movimientos de salida registrados";
 	private final String listaMovimientosFechas = "Listado de movimientos entre fechas";
+
 	private DBError error = new DBError();
 
 	/**
@@ -2103,11 +2106,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private void llenaComboListados() {
 
-		ComboBoxModel<String> jComboListadosModel = new DefaultComboBoxModel<String>(
-				new String[] { seleccioneUno, listaClientes, listaClientesAlfa, listaClientesActivos,
-						listaClientesNoActivos, listaPrestamos, listaPrestamosPendientes, listaPrestamosPagados,
-						listaPrestamosVencidos, listaAbonos, listaAbonosPendientes, listaAbonosPagados,
-						listaMovimientos, listaMovimientosEntrada, listaMovimientosSalida, listaMovimientosFechas });
+		ComboBoxModel<String> jComboListadosModel = new DefaultComboBoxModel<String>(new String[] { seleccioneUno,
+				listaClientes, listaClientesAlfa, listaClientesActivos, listaClientesNoActivos, listaPrestamos,
+				listaPrestamosPendientes, listaPrestamosPagados, listaPrestamosVencidos, listaAbonos,
+				listaAbonosPendientes, listaAbonosPagados, listaAbonosPendientesFecha, listaAbonosPagadosFecha,
+				listaMovimientos, listaMovimientosEntrada, listaMovimientosSalida, listaMovimientosFechas });
 		jComboSeleccionListado.setModel(jComboListadosModel);
 
 	}
@@ -2512,6 +2515,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
+	private void generarReporteAbonosPagadosFecha() {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void generarReporteAbonosPendientesFecha() {
+		// TODO Auto-generated method stub
+
+	}
+
 	private void generarReporteMovimientos() {
 
 		// configuracion de la fecha actual
@@ -2821,6 +2834,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		case listaAbonosPagados:
 			generarReporteAbonosPagados();
 			break;
+		case listaAbonosPendientesFecha:
+			generarReporteAbonosPendientesFecha();
+			break;
+		case listaAbonosPagadosFecha:
+			generarReporteAbonosPagadosFecha();
+			break;
 		case listaMovimientos:
 			generarReporteMovimientos();
 			break;
@@ -2982,6 +3001,22 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			thAbonosPag.setFont(new java.awt.Font("Arial", 0, 16));
 			ajustaColumnasAContenido(tablaResultados);
 			break;
+		case listaAbonosPendientesFecha:
+			calendarioInicioMovimiento.setEnabled(true);
+			calendarioFinMovimiento.setEnabled(true);
+			jButtonBuscarMovimientos.setEnabled(true);
+			jTextTotalentradas.setText("");
+			jTextTotalSalidas.setText("");
+
+			break;
+		case listaAbonosPagadosFecha:
+			calendarioInicioMovimiento.setEnabled(true);
+			calendarioFinMovimiento.setEnabled(true);
+			jButtonBuscarMovimientos.setEnabled(true);
+			jTextTotalentradas.setText("");
+			jTextTotalSalidas.setText("");
+
+			break;
 		case listaMovimientos:
 			miMovimiento = new MovimientoDAO();
 			String informacionMovimientos[][] = miMovimiento.obtenerMatrizMovimientos();
@@ -3039,29 +3074,83 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		Date fechaFin = calendarioFinMovimiento.getDate();
 		Locale locale = new Locale("es", "CO");
 		NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
-		if (fechaInicio != null && fechaFin != null) {
+		AbonoDAO miAbono = new AbonoDAO();
+		String titulosAbono[] = miAbono.getColumnas();
 
-			miMovimiento = new MovimientoDAO();
-			String informacionMovimientosFechas[][] = miMovimiento.obtenerMatrizMovimientosFechas(fechaInicio,
-					fechaFin);
-			tablaResultados = new JTable(informacionMovimientosFechas, titulosMovimiento);
-			jScrollPaneResultados.setViewportView(tablaResultados);
-			JTableHeader thMovimientos = tablaResultados.getTableHeader();
-			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
-			thMovimientos.setFont(new java.awt.Font("Arial", 0, 16));
-			ajustaColumnasAContenido(tablaResultados);
-			jTextTotalentradas
-					.setText(formatoMoneda.format(miMovimiento.calcularTotalEntradas(fechaInicio, fechaFin)) + "");
-			jTextTotalSalidas
-					.setText(formatoMoneda.format(miMovimiento.calcularTotalSalidas(fechaInicio, fechaFin)) + "");
-			calendarioInicioMovimiento.setEnabled(false);
-			calendarioFinMovimiento.setEnabled(false);
-			jButtonBuscarMovimientos.setEnabled(false);
+		// Movimientos entre fechas seleccionado
+		if (jComboSeleccionListado.getSelectedIndex() == 17) {
 
-		} else {
-			JOptionPane.showMessageDialog(this, "Debe especificar una fecha de inicio y una final", "Alerta",
-					JOptionPane.WARNING_MESSAGE);
+			if (fechaInicio != null && fechaFin != null) {
+
+				miMovimiento = new MovimientoDAO();
+				String informacionMovimientosFechas[][] = miMovimiento.obtenerMatrizMovimientosFechas(fechaInicio,
+						fechaFin);
+				tablaResultados = new JTable(informacionMovimientosFechas, titulosMovimiento);
+				jScrollPaneResultados.setViewportView(tablaResultados);
+				JTableHeader thMovimientos = tablaResultados.getTableHeader();
+				tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+				thMovimientos.setFont(new java.awt.Font("Arial", 0, 16));
+				ajustaColumnasAContenido(tablaResultados);
+				jTextTotalentradas
+						.setText(formatoMoneda.format(miMovimiento.calcularTotalEntradas(fechaInicio, fechaFin)) + "");
+				jTextTotalSalidas
+						.setText(formatoMoneda.format(miMovimiento.calcularTotalSalidas(fechaInicio, fechaFin)) + "");
+				calendarioInicioMovimiento.setEnabled(false);
+				calendarioFinMovimiento.setEnabled(false);
+				jButtonBuscarMovimientos.setEnabled(false);
+				return;
+
+			} else {
+				JOptionPane.showMessageDialog(this, "Debe especificar una fecha de inicio y una final", "Alerta",
+						JOptionPane.WARNING_MESSAGE);
+			}
+
 		}
+
+		// Abonos pendientes seleccionado
+		if (jComboSeleccionListado.getSelectedIndex() == 12) {
+
+			if (fechaInicio != null && fechaFin != null) {
+
+				miAbono = new AbonoDAO();
+				String informacionAbonosPendientesFecha[][] = miAbono.obtenerMatrizAbonosPendientesFecha(fechaInicio,
+						fechaFin);
+				tablaResultados = new JTable(informacionAbonosPendientesFecha, titulosAbono);
+				jScrollPaneResultados.setViewportView(tablaResultados);
+				tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+				JTableHeader thAbonosPenF = tablaResultados.getTableHeader();
+				thAbonosPenF.setFont(new java.awt.Font("Arial", 0, 16));
+				ajustaColumnasAContenido(tablaResultados);
+				return;
+			} else {
+				JOptionPane.showMessageDialog(this, "Debe especificar una fecha de inicio y una final", "Alerta",
+						JOptionPane.WARNING_MESSAGE);
+			}
+
+		}
+
+		// Abonos pagados seleccionado
+		if (jComboSeleccionListado.getSelectedIndex() == 13) {
+
+			if (fechaInicio != null && fechaFin != null) {
+
+				miAbono = new AbonoDAO();
+				String informacionAbonosPagadosFecha[][] = miAbono.obtenerMatrizAbonosPagadosFecha(fechaInicio,
+						fechaFin);
+				tablaResultados = new JTable(informacionAbonosPagadosFecha, titulosAbono);
+				jScrollPaneResultados.setViewportView(tablaResultados);
+				JTableHeader thAbonosPagF = tablaResultados.getTableHeader();
+				tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+				thAbonosPagF.setFont(new java.awt.Font("Arial", 0, 16));
+				ajustaColumnasAContenido(tablaResultados);
+				return;
+			} else {
+				JOptionPane.showMessageDialog(this, "Debe especificar una fecha de inicio y una final", "Alerta",
+						JOptionPane.WARNING_MESSAGE);
+			}
+
+		}
+
 	}
 
 }
