@@ -481,7 +481,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						{
 							jLabelTotalPago = new JLabel();
 							jPanelEntradasPrestamo.add(jLabelTotalPago);
-							jLabelTotalPago.setText("Total a pagar:  $");
+							jLabelTotalPago.setText("Total a pagar:");
 							jLabelTotalPago.setBounds(362, 121, 116, 30);
 							jLabelTotalPago.setFont(new java.awt.Font("Arial", 0, 16));
 						}
@@ -1454,6 +1454,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		int numeroCuotas = 0;
 		Date fechaInicio = null;
 		PrestamoDAO miPrestamo = null;
+		Locale locale = new Locale("es", "CO");
+		NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
 
 		if (validarCamposCalcular()) {
 
@@ -1471,8 +1473,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				modeloNuevo = llenaComboPlazos(fechasPago);
 				jComboFechasCobro.setModel(modeloNuevo);
 
-				double totalPagar = miPrestamo.calcularPrestamo(montoPrestamo, tasaInteres, tipoPlazo, numeroCuotas);
-				jLabelTotalFormato.setText(totalPagar + "");
+				float totalPagar = miPrestamo.calcularPrestamo(montoPrestamo, tasaInteres, tipoPlazo, numeroCuotas);
+
+				jLabelTotalFormato.setText(formatoMoneda.format(totalPagar) + "");
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 				error.guardarMensajeError(e.getMessage(),
@@ -1546,7 +1549,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					tamanioArray = fechasPago.size();
 					fechaFin = fechasPago.get(tamanioArray - 1);
 					// Busco el cliente de nuevo
-					codigoCliente = JOptionPane.showInputDialog("Verifique código del cliente");
+					codigoCliente = jLabelCodigo.getText();
+					if (codigoCliente.equals("Código")) {
+						JOptionPane.showMessageDialog(this, "Cliente no encontrado", "Alerta",
+								JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+
 				} catch (Exception e) {
 					System.out.println(e.getMessage());
 					error.guardarMensajeError(e.getMessage(),
@@ -1632,7 +1641,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				tamanioArray = fechasPago.size();
 				fechaFin = fechasPago.get(tamanioArray - 1);
 				// Busco el cliente de nuevo
-				codigoCliente = JOptionPane.showInputDialog("Verifique código del cliente");
+				codigoCliente = jLabelCodigo.getText();
+				if (codigoCliente.equals("Código")) {
+					JOptionPane.showMessageDialog(this, "Cliente noffffffffffffffff encontrado", "Alerta",
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 				error.guardarMensajeError(e.getMessage(),
@@ -1966,12 +1980,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							JOptionPane.showMessageDialog(this, "Debe especificar un número de cuotas para el préstamo",
 									"Alerta", JOptionPane.WARNING_MESSAGE);
 						} else {
-
-							// Busco el código en la bd y lo adjunto al prestamo
-							ClienteDAO miCliente = new ClienteDAO();
-							ClienteVO cliente = miCliente
-									.buscarCliente(JOptionPane.showInputDialog("Ingrese el código del cliente"));
-							if (cliente == null) {
+							String codigoCliente = jLabelCodigo.getText();
+							if (codigoCliente.equals("Código")) {
 								JOptionPane.showMessageDialog(this, "Debe especificar un código de cliente válido",
 										"Alerta", JOptionPane.WARNING_MESSAGE);
 							} else {

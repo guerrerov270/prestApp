@@ -79,9 +79,9 @@ public class PrestamoDAO {
 		return encabezados;
 	}// Fin getColumnas
 
-	public double calcularPrestamo(double monto, int tasa, String tipoPlazo, int cuotas) {
+	public float calcularPrestamo(float monto, int tasa, String tipoPlazo, int cuotas) {
 
-		double totalPagar = 0;
+		float totalPagar = 0;
 		switch (tipoPlazo) {
 		case "Mensual":
 			totalPagar = (monto * tasa) / 100;
