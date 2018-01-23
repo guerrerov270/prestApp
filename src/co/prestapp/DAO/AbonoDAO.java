@@ -828,7 +828,7 @@ public class AbonoDAO {
 		return listaAbonos;
 	}
 
-	public float calcularTotalRecaudoAbonosRecibido(java.sql.Date fechaInicio, java.sql.Date fechaFin) {
+	public float calcularTotalRecaudoAbonosRecibido(Date fechaInicio, Date fechaFin) {
 
 		java.sql.Date fechaInicioFormateada = new java.sql.Date(fechaInicio.getTime());
 		java.sql.Date fechaFinFormateada = new java.sql.Date(fechaFin.getTime());
@@ -855,7 +855,7 @@ public class AbonoDAO {
 		return totalRecaudoRecibido;
 	}
 
-	public float calcularTotalRecaudoAbonosPendiente(java.sql.Date fechaInicio, java.sql.Date fechaFin) {
+	public float calcularTotalRecaudoAbonosPendiente(Date fechaInicio, Date fechaFin) {
 
 		java.sql.Date fechaInicioFormateada = new java.sql.Date(fechaInicio.getTime());
 		java.sql.Date fechaFinFormateada = new java.sql.Date(fechaFin.getTime());

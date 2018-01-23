@@ -3077,6 +3077,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jButtonBuscarMovimientos.setEnabled(true);
 			jTextTotalentradas.setText("");
 			jTextTotalSalidas.setText("");
+			jLabelTotalSalidas.setText("Total salidas:");
 
 			break;
 		case listaAbonosPagadosFecha:
@@ -3085,6 +3086,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jButtonBuscarMovimientos.setEnabled(true);
 			jTextTotalentradas.setText("");
 			jTextTotalSalidas.setText("");
+			jLabelTotalSalidas.setText("Total salidas:");
 
 			break;
 		case listaMovimientos:
@@ -3098,6 +3100,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			ajustaColumnasAContenido(tablaResultados);
 			jTextTotalentradas.setText(formatoMoneda.format(miMovimiento.calcularTotalEntradas()) + "");
 			jTextTotalSalidas.setText(formatoMoneda.format(miMovimiento.calcularTotalSalidas()) + "");
+			jLabelTotalSalidas.setText("Total salidas:");
 
 			break;
 		case listaMovimientosEntrada:
@@ -3111,6 +3114,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			ajustaColumnasAContenido(tablaResultados);
 			jTextTotalentradas.setText(formatoMoneda.format(miMovimiento.calcularTotalEntradas()) + "");
 			jTextTotalSalidas.setText("");
+			jLabelTotalSalidas.setText("Total salidas:");
 			break;
 		case listaMovimientosSalida:
 			miMovimiento = new MovimientoDAO();
@@ -3123,6 +3127,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			ajustaColumnasAContenido(tablaResultados);
 			jTextTotalentradas.setText("");
 			jTextTotalSalidas.setText(formatoMoneda.format(miMovimiento.calcularTotalSalidas()) + "");
+			jLabelTotalSalidas.setText("Total salidas:");
 			break;
 		case listaMovimientosFechas:
 			calendarioInicioMovimiento.setEnabled(true);
@@ -3130,6 +3135,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jButtonBuscarMovimientos.setEnabled(true);
 			jTextTotalentradas.setText("");
 			jTextTotalSalidas.setText("");
+			jLabelTotalSalidas.setText("Total salidas:");
 			break;
 
 		}
@@ -3165,6 +3171,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						.setText(formatoMoneda.format(miMovimiento.calcularTotalEntradas(fechaInicio, fechaFin)) + "");
 				jTextTotalSalidas
 						.setText(formatoMoneda.format(miMovimiento.calcularTotalSalidas(fechaInicio, fechaFin)) + "");
+				jLabelTotalSalidas.setText("Total salidas:");
 				calendarioInicioMovimiento.setEnabled(false);
 				calendarioFinMovimiento.setEnabled(false);
 				jButtonBuscarMovimientos.setEnabled(false);
@@ -3191,6 +3198,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				JTableHeader thAbonosPenF = tablaResultados.getTableHeader();
 				thAbonosPenF.setFont(new java.awt.Font("Arial", 0, 16));
 				ajustaColumnasAContenido(tablaResultados);
+				jTextTotalSalidas
+				.setText(formatoMoneda.format(miAbono.calcularTotalRecaudoAbonosPendiente(fechaInicio, fechaFin)) + "");
+				jLabelTotalSalidas.setText("Total pendiente:");
 				return;
 			} else {
 				JOptionPane.showMessageDialog(this, "Debe especificar una fecha de inicio y una final", "Alerta",
@@ -3213,6 +3223,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
 				thAbonosPagF.setFont(new java.awt.Font("Arial", 0, 16));
 				ajustaColumnasAContenido(tablaResultados);
+				jTextTotalentradas
+				.setText(formatoMoneda.format(miAbono.calcularTotalRecaudoAbonosRecibido(fechaInicio, fechaFin)) + "");
+				jLabelTotalSalidas.setText("Total salidas:");
 				return;
 			} else {
 				JOptionPane.showMessageDialog(this, "Debe especificar una fecha de inicio y una final", "Alerta",
