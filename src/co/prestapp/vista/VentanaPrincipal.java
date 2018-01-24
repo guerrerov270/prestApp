@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -292,6 +294,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					jTabPestanias = new JTabbedPane();
 					jPanelContenedor.add(jTabPestanias, BorderLayout.CENTER);
 					jTabPestanias.setBounds(8, 5, 782, 553);
+					jTabPestanias.addMouseListener(new MouseAdapter() {
+						public void mouseClicked(MouseEvent evt) {
+							jTabPestaniasMouseClicked(evt);
+						}
+					});
 
 					jTabPestanias.addTab("Préstamos", jPanelPrestamos);
 					jPanelPrestamos.setPreferredSize(new java.awt.Dimension(921, 547));
@@ -3237,6 +3244,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 		}
 
+	}
+	
+	private void jTabPestaniasMouseClicked(MouseEvent evt) {
+		System.out.println("jTabPestanias.mouseClicked, event="+evt);
+		//TODO add your code for jTabPestanias.mouseClicked
+		actualizaReportes();
 	}
 
 }
