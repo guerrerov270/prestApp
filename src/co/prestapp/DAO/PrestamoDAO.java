@@ -267,8 +267,7 @@ public class PrestamoDAO {
 			CallableStatement miProcedimientoVerificar = conexion.prepareCall("{call verificar_prestamo_pagado(?)}");
 			CallableStatement miProcedimientoVerificarClientes = conexion
 					.prepareCall("{call verificar_estado_clientes(?)}");
-			CallableStatement miProcedimientoActualizaCuotas = conexion
-					.prepareCall("{call actualizar_cuotas_pagadas(?)}");
+			CallableStatement miProcedimientoActualizaCuotas = conexion.prepareCall("{call actualizar_cuotas_pagadas(?)}");
 
 			// De los reportes
 
@@ -282,10 +281,12 @@ public class PrestamoDAO {
 				miProcedimientoVerificar.setString(1, miRs.getString("codigoPrestamo"));
 				miProcedimientoVencidos.setString(1, miRs.getString("codigoPrestamo"));
 				miProcedimientoVerificarClientes.setString(1, miRs.getString("codigoClienteFK"));
+				miProcedimientoActualizaCuotas.setString(1, miRs.getString("codigoPrestamo"));
 				miProcedimientoSumar.execute();
 				miProcedimientoVerificar.execute();
 				miProcedimientoVencidos.execute();
 				miProcedimientoVerificarClientes.execute();
+				miProcedimientoActualizaCuotas.execute();
 
 			}
 			miRs.close();
@@ -962,22 +963,8 @@ public class PrestamoDAO {
 	}
 
 	public String[] getColumnasRequerido() {
-		String encabezados[] = { "Nombre", "Referencia", "CódigoP", "Inicio", "Monto", "Resta", "Valor", "Debe" };
+		String encabezados[] = { "Nombre", "Referencia", "Préstamo", "Inicio", "Monto", "Resta", "Valor", "Debe" };
 		return encabezados;
-	}
-
-	public void actualizaCuotasPagadas() {
-
-		DBConnection miConexion = new DBConnection();
-		Connection conexion = miConexion.darConexion();
-		try {
-			CallableStatement miProcedimientoActualizaCuotas = conexion.prepareCall("{call actualizar_cuotas_pagadas}");
-			miProcedimientoActualizaCuotas.execute();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 	}
 
 }// Fin clase

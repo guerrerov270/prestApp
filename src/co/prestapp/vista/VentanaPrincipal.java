@@ -1706,7 +1706,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					jCheckBoxEditandoPrestamo.setSelected(false);
 					limpiarCamposPrestamo();
 					actualizaAbonos();
-					actualizaPrestamos();
+					//actualizaPrestamos();
+					actualizaPrestamosRequerido();
 					actualizaReportes();
 				}
 
@@ -1782,7 +1783,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					JOptionPane.INFORMATION_MESSAGE);
 			limpiarCamposPrestamo();
 			actualizaAbonos();
-			actualizaPrestamos();
+			//actualizaPrestamos();
+			actualizaPrestamosRequerido();
 			actualizaReportes();
 		}
 
@@ -1852,7 +1854,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				}
 
 				actualizaReportes();
-				actualizaPrestamos();
+				//actualizaPrestamos();
+				actualizaPrestamosRequerido();
 				return;
 			}
 		}
@@ -1877,7 +1880,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				} else {
 					actualizaPrestamoBuscado();
 				}
-				actualizaPrestamos();
+				//actualizaPrestamos();
+				actualizaPrestamosRequerido();
 				actualizaReportes();
 				JOptionPane.showMessageDialog(this, "Abono guardado correctamente", "Información",
 						JOptionPane.INFORMATION_MESSAGE);
