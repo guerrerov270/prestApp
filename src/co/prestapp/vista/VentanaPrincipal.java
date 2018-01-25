@@ -68,6 +68,7 @@ import co.prestapp.reports.ReporteMovimientosEntrada;
 import co.prestapp.reports.ReporteMovimientosFechas;
 import co.prestapp.reports.ReporteMovimientosSalida;
 import co.prestapp.reports.ReportePrestamos;
+import co.prestapp.reports.ReportePrestamosCatEmpresa;
 import co.prestapp.reports.ReportePrestamosPagados;
 import co.prestapp.reports.ReportePrestamosPendientes;
 import co.prestapp.reports.ReportePrestamosVencidos;
@@ -2499,6 +2500,40 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			ejemplo.abrirPDF();
 
 	}
+	
+	private void generarReportePrestamosPorEmpresa(String categoriaSeleccionada) {
+		
+		// configuracion de la fecha actual
+				// Creamos un objeto de la clase Calendar.
+				Calendar fecha = new GregorianCalendar();
+				// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
+				// Usando el método get y el parámetro correspondiente.
+				int anio = fecha.get(Calendar.YEAR);
+				int mes = fecha.get(Calendar.MONTH);
+				int dia = fecha.get(Calendar.DAY_OF_MONTH);
+				int hora = fecha.get(Calendar.HOUR_OF_DAY);
+				int minuto = fecha.get(Calendar.MINUTE);
+				int segundo = fecha.get(Calendar.SECOND);
+
+				String mesS = concatenaCero(mes + 1);
+				String diaS = concatenaCero(dia);
+				String horaS = concatenaCero(hora);
+				String minutoS = concatenaCero(minuto);
+				String segundoS = concatenaCero(segundo);
+
+				String strNombrePDF = "ReportePrestamosCategoriaEmpresa" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
+				String strTituloPDF = "Reporte de préstamos registrados por categoria, generado el: " + diaS + "/" + mesS + "/" + anio
+						+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+				ReportePrestamosCatEmpresa ejemplo = new ReportePrestamosCatEmpresa(strTituloPDF, strNombrePDF, categoriaSeleccionada);
+				// Preguntar al usuario si desea abrir el documento PDF
+				int respuesta = JOptionPane.showConfirmDialog(null,
+						"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				// Si la respuesta es SI, abrirlo
+				if (respuesta == JOptionPane.YES_OPTION)
+					ejemplo.abrirPDF();
+		
+	}
 
 	private void generarReportePrestamosPendientes() {
 
@@ -3109,6 +3144,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private void jButtonGenerarPDFActionPerformed(ActionEvent evt) {
 
 		String listaSeleccionada = (String) jComboSeleccionListado.getSelectedItem();
+		String categoriaSeleccionada = (String) jComboBoxCategoriaEmpresa.getSelectedItem(); 
 
 		switch (listaSeleccionada) {
 		case seleccioneUno:
@@ -3181,6 +3217,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		case listaClientesEmpresa:
 			break;
 		case listaPrestamosEmpresa:
+			generarReportePrestamosPorEmpresa(categoriaSeleccionada);
 
 			break;
 		case listaPrestamosPlazo:
@@ -3192,6 +3229,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		}
 
 	}
+
+	
 
 	// listaClientesEmpresa,
 	// listaPrestamosEmpresa, listaPrestamosPlazo, listaPrestamosCliente,
@@ -3534,7 +3573,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	// Hogarinfantil, Otro
 
 	private void jComboBoxCategoriaEmpresaActionPerformed(ActionEvent evt) {
-		// TODO add your code for jComboBoxCategoriaEmpresa.actionPerformed
 
 		PrestamoDAO miPrestamo = new PrestamoDAO();
 		String titulos[] = miPrestamo.getColumnasRequerido();
@@ -3546,6 +3584,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		case seleccioneUna:
 			JOptionPane.showMessageDialog(this, "Debe seleccionar una categoria", "Información",
 					JOptionPane.INFORMATION_MESSAGE);
+			tablaResultados = new JTable();
+			jScrollPaneResultados.setViewportView(tablaResultados);
 			break;
 		case SinCategoria:
 			miPrestamo = new PrestamoDAO();
