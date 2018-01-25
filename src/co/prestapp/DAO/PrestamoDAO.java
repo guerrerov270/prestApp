@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import co.prestapp.VO.PrestamoVO;
+import co.prestapp.VO.PrestamoVOResumido;
 import co.prestapp.connection.DBConnection;
 import co.prestapp.connection.DBError;
 
@@ -892,6 +893,75 @@ public class PrestamoDAO {
 			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".editarPrestamo");
 		}
 
+	}
+
+	public String[][] obtenerMatrizPrestamosRequerido() {
+
+		ArrayList<PrestamoVOResumido> listaPrestamos = buscarPrestamosConMatrizRequerido();
+
+		String matrizInfo[][] = new String[listaPrestamos.size()][8];
+
+		for (int i = 0; i < listaPrestamos.size(); i++) {
+			matrizInfo[i][0] = listaPrestamos.get(i).getNombreCliente() + "";
+			matrizInfo[i][1] = listaPrestamos.get(i).getReferenciaCliente() + "";
+			matrizInfo[i][2] = listaPrestamos.get(i).getCodigoPrestamo() + "";
+			matrizInfo[i][3] = listaPrestamos.get(i).getFechaInicioPrestamo() + "";
+			matrizInfo[i][4] = listaPrestamos.get(i).getMontoPrestamo() + "";
+			matrizInfo[i][5] = listaPrestamos.get(i).getNumeroCuotasPrestamo() + "";
+			matrizInfo[i][6] = listaPrestamos.get(i).getValorCuotaPrestamo() + "";
+			matrizInfo[i][7] = listaPrestamos.get(i).getSaldoPendientePrestamo() + "";
+		}
+
+		return matrizInfo;
+	}
+
+	private ArrayList<PrestamoVOResumido> buscarPrestamosConMatrizRequerido() {
+
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		ArrayList<PrestamoVOResumido> listaPrestamos = new ArrayList<PrestamoVOResumido>();
+		PrestamoVOResumido miPrestamo;
+		DateFormat formatoFecha = new SimpleDateFormat("dd MMMM yyyy");
+		Locale locale = new Locale("es", "CO");
+		NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
+
+		try {
+			CallableStatement miProcedimientoListar = conexion.prepareCall("{call listar_prestamos_requerido}");
+			ResultSet miRs = miProcedimientoListar.executeQuery();
+
+			while (miRs.next()) {
+				miPrestamo = new PrestamoVOResumido();
+
+				miPrestamo.setNombreCliente(miRs.getString("nombreCliente"));
+				miPrestamo.setReferenciaCliente(miRs.getString("referenciaCliente"));
+				miPrestamo.setCodigoPrestamo(miRs.getString("codigoPrestamo"));
+				if (miRs.getDate("fechaInicioPrestamo") != null) {
+					miPrestamo.setFechaInicioPrestamo(formatoFecha.format(miRs.getDate("fechaInicioPrestamo")));
+				}
+				miPrestamo.setMontoPrestamo(formatoMoneda.format(miRs.getDouble("montoPrestamo")));
+				miPrestamo.setNumeroCuotasPrestamo(miRs.getInt("numeroCuotasprestamo"));
+				miPrestamo.setValorCuotaPrestamo(formatoMoneda.format(miRs.getDouble("montoACobrar")));
+				miPrestamo.setSaldoPendientePrestamo(formatoMoneda.format(miRs.getDouble("saldoPendientePrestamo")));
+
+				listaPrestamos.add(miPrestamo);
+			}
+			miRs.close();
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para listar prestamos requeridos");
+			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(),
+					this.getClass().getCanonicalName() + ".buscarPrestamosConMatrizRequerido");
+
+		}
+
+		return listaPrestamos;
+	}
+
+	public String[] getColumnasRequerido() {
+		String encabezados[] = { "Nombre", "Referencia", "CódigoP", "Inicio", "Monto", "Resta", "Valor", "Debe" };
+		return encabezados;
 	}
 
 }// Fin clase

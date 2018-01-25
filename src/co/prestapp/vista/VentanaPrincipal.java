@@ -258,7 +258,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	public VentanaPrincipal() {
 		super();
 		initGUI();
-		actualizaPrestamos();
+		// actualizaPrestamos();
+		actualizaPrestamosRequerido();
 		actualizaAbonos();
 		actualizaClientes();
 		actualizaReportes();
@@ -1943,6 +1944,20 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		miPrestamo.actualizaPagos();
 		String informacionPrestamos[][] = miPrestamo.obtenerMatrizPrestamos();
 		String titulos[] = miPrestamo.getColumnas();
+		jTablePrestamos = new JTable(informacionPrestamos, titulos);
+		jScrollReportes.setViewportView(jTablePrestamos);
+		jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 16));
+		JTableHeader th = jTablePrestamos.getTableHeader();
+		th.setFont(new java.awt.Font("Arial", 0, 16));
+		ajustaColumnasAContenido(jTablePrestamos);
+	}
+
+	private void actualizaPrestamosRequerido() {
+
+		PrestamoDAO miPrestamo = new PrestamoDAO();
+		miPrestamo.actualizaPagos();
+		String informacionPrestamos[][] = miPrestamo.obtenerMatrizPrestamosRequerido();
+		String titulos[] = miPrestamo.getColumnasRequerido();
 		jTablePrestamos = new JTable(informacionPrestamos, titulos);
 		jScrollReportes.setViewportView(jTablePrestamos);
 		jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 16));
