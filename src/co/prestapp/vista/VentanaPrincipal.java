@@ -307,7 +307,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jScrollReportes = new JScrollPane();
 						jPanelPrestamos.add(jScrollReportes, BorderLayout.SOUTH);
 						jScrollReportes.setBounds(8, 263, 777, 381);
-						jScrollReportes.setPreferredSize(new java.awt.Dimension(909, 318));
+						jScrollReportes.setPreferredSize(new java.awt.Dimension(1041, 293));
 						{
 
 						}
@@ -632,7 +632,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jScrollAbonosRecibidos = new JScrollPane();
 						jPanelAbonos.add(jScrollAbonosRecibidos, BorderLayout.SOUTH);
 						jScrollAbonosRecibidos.setBounds(8, 263, 777, 381);
-						jScrollAbonosRecibidos.setPreferredSize(new java.awt.Dimension(909, 390));
+						jScrollAbonosRecibidos.setPreferredSize(new java.awt.Dimension(1041, 364));
 						{
 
 						}
@@ -823,7 +823,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jScrollPaneClientes = new JScrollPane();
 						jPanelClientes.add(jScrollPaneClientes, BorderLayout.SOUTH);
 						jScrollPaneClientes.setBounds(8, 263, 777, 381);
-						jScrollPaneClientes.setPreferredSize(new java.awt.Dimension(899, 419));
+						jScrollPaneClientes.setPreferredSize(new java.awt.Dimension(1031, 396));
 						{
 
 						}
@@ -1124,7 +1124,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jScrollPaneReportesPorFecha = new JScrollPane();
 						jPanelReportes.add(jScrollPaneReportesPorFecha, BorderLayout.SOUTH);
 						jScrollPaneReportesPorFecha.setBounds(82, 316, 740, 197);
-						jScrollPaneReportesPorFecha.setPreferredSize(new java.awt.Dimension(909, 243));
+						jScrollPaneReportesPorFecha.setPreferredSize(new java.awt.Dimension(1041, 220));
 					}
 					{
 						// Aquí el panel de cifras
@@ -1336,7 +1336,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				}
 			}
 			pack();
-			this.setSize(920, 640);
+			this.setSize(1048, 629);
 
 		} catch (Exception e) {
 			// add your error handling code here
