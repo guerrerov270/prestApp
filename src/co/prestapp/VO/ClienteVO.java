@@ -5,7 +5,8 @@ public class ClienteVO {
 	private int IDCliente;
 	private String codigoCliente;
 	private String nombreCliente;
-	private String empresaCliente;
+	private String empresaCliente; // SIN CATEGORIA, SEMANAL, IMPULSO, SUPERMERCADO, COMUN, VENDEDORES, DON POLLO,
+									// DROGUERIA, LA LOCURA, MR POMPY, COMUNICACIONES, MOCAWA, HOGAR INFANTIL, OTRO
 	private String referenciaCliente;
 	private String estadoCliente; // RECOMENDADO, NO RECOMENDADO, ERROR
 

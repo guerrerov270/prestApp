@@ -618,11 +618,12 @@ public class AbonoDAO {
 		}
 	}
 
-	public void editarAbonoPagado(String codigoAbono, Date fechaPago, double montoPagado) {
+	public void editarAbonoPagado(String codigoAbono, Date fechaPago, double montoPagado, Date fechaCobroEdicion) {
 
 		Locale locale = new Locale("es", "CO");
 		NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
 		java.sql.Date fechaFormateada = new java.sql.Date(fechaPago.getTime());
+		java.sql.Date fechaFormateadaCobro = new java.sql.Date(fechaCobroEdicion.getTime());
 		String completoAbono = "NO";
 		String puntualAbono = "NO";
 		AbonoVO miAbono = buscarAbono(codigoAbono);
@@ -668,12 +669,13 @@ public class AbonoDAO {
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
 		try {
-			CallableStatement miProcedimiento = conexion.prepareCall("{call editar_abono_pagado(?,?,?,?,?)}");
+			CallableStatement miProcedimiento = conexion.prepareCall("{call editar_abono_pagado(?,?,?,?,?,?)}");
 			miProcedimiento.setString(1, codigoAbono);
 			miProcedimiento.setDate(2, fechaFormateada);
 			miProcedimiento.setDouble(3, montoPagado);
 			miProcedimiento.setString(4, completoAbono);
 			miProcedimiento.setString(5, puntualAbono);
+			miProcedimiento.setDate(6, fechaFormateadaCobro);
 			miProcedimiento.execute();
 			conexion.close();
 

@@ -117,6 +117,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelCerosPrestamo;
 	private JLabel jLabelComplemento;
 	private JLabel jLabelComplemento2;
+	private JLabel jLabelComplemento3;
 	private JCheckBox jCheckBoxEditandoPrestamo;
 	private JLabel jLabelCodigoPrestamoOculto;
 	private JTextField jTextTotalSalidas;
@@ -192,12 +193,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JScrollPane jScrollReportes;
 	private JDateChooser calendarioPrestamos;
 	private JDateChooser calendarioAbonos;
+	private JDateChooser calendarioAbonosCobro;
 	private JDateChooser calendarioPrestamosPorfecha;
 	private JDateChooser calendarioAbonosPorFecha;
 	private JDateChooser calendarioInicioMovimiento;
 	private JDateChooser calendarioFinMovimiento;
 	private JLabel jLabelNombre;
-	private JTextField jTextEmpresa;
+	@SuppressWarnings("rawtypes")
+	private JComboBox jTextEmpresa;
 	private JLabel jLabelReferencia;
 	private JTextField jTextReferencia;
 	private JTextField jTextFieldCodigoAbono;
@@ -632,16 +635,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jScrollAbonosRecibidos = new JScrollPane();
 						jPanelAbonos.add(jScrollAbonosRecibidos, BorderLayout.SOUTH);
 						jScrollAbonosRecibidos.setBounds(8, 263, 777, 381);
-						jScrollAbonosRecibidos.setPreferredSize(new java.awt.Dimension(1041, 364));
+						jScrollAbonosRecibidos.setPreferredSize(new java.awt.Dimension(1037, 329));
 						{
 
 						}
 					}
 					{
 						jPanelAgregarAbono = new JPanel();
-						GridLayout jPanelAgregarAbonoLayout = new GridLayout(5, 4, 5, 5);
+						GridLayout jPanelAgregarAbonoLayout = new GridLayout(6, 3, 5, 5);
 						jPanelAbonos.add(jPanelAgregarAbono, BorderLayout.NORTH);
-						jPanelAgregarAbono.setPreferredSize(new java.awt.Dimension(909, 189));
+						jPanelAgregarAbono.setPreferredSize(new java.awt.Dimension(1037, 223));
 						jPanelAgregarAbono.setBorder(BorderFactory.createTitledBorder("Agregar abono"));
 						jPanelAgregarAbono.setLayout(jPanelAgregarAbonoLayout);
 						{
@@ -702,7 +705,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						{
 							jLabelFecha = new JLabel();
 							jPanelAgregarAbono.add(jLabelFecha);
-							jLabelFecha.setText("Fecha:");
+							jLabelFecha.setText("Fecha de pago:");
 							jLabelFecha.setBounds(17, 78, 178, 30);
 							jLabelFecha.setFont(new java.awt.Font("Arial", 0, 16));
 						}
@@ -751,6 +754,26 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jLabelCerosAbono.setText(".000");
 							jLabelCerosAbono.setBounds(810, 83, 48, 30);
 							jLabelCerosAbono.setFont(new java.awt.Font("Arial", 0, 18));
+						}
+						{
+							jLabelComplemento3 = new JLabel();
+							jPanelAgregarAbono.add(jLabelComplemento3);
+							jLabelComplemento3.setText("Fecha de cobro: (Sólo para edición)");
+							jLabelComplemento3.setBounds(12, 65, 65, 10);
+							jLabelComplemento3.setFont(new java.awt.Font("Arial", 0, 16));
+
+						}
+						{
+							calendarioAbonosCobro = new JDateChooser();
+							jPanelAgregarAbono.add(calendarioAbonosCobro);
+							calendarioAbonosCobro.setBounds(162, 78, 178, 30);
+							calendarioAbonosCobro.setFont(new java.awt.Font("Arial", 0, 16));
+						}
+						{
+							jLabelComplemento2 = new JLabel();
+							jPanelAgregarAbono.add(jLabelComplemento2);
+							jLabelComplemento2.setBounds(12, 65, 65, 10);
+
 						}
 
 						{
@@ -858,13 +881,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						{
 							jLabelEmpresa = new JLabel();
 							jPanelAgregarCliente.add(jLabelEmpresa);
-							jLabelEmpresa.setText("Empresa:");
+							jLabelEmpresa.setText("Categoría / Empresa:");
 							jLabelEmpresa.setBounds(312, 19, 178, 30);
 							jLabelEmpresa.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 
 						{
-							jTextEmpresa = new JTextField();
+							ComboBoxModel jComboEmpresaModel = new DefaultComboBoxModel(
+									new String[] { "Sin categoria", "Semanal", "Impulso", "Supermercados", "Común",
+											"Vendedores", "Don Pollo", "Droguería", "La Locura", "Mr Pompy",
+											"Comunicaciones", "Mocawa", "Hogar infantil", "Otra" });
+							jTextEmpresa = new JComboBox<>();
+							jTextEmpresa.setModel(jComboEmpresaModel);
 							jPanelAgregarCliente.add(jTextEmpresa);
 							jTextEmpresa.setBounds(403, 19, 178, 30);
 							jTextEmpresa.setFont(new java.awt.Font("Arial", 0, 16));
@@ -1386,7 +1414,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 			String codigoCliente = jLabelCodigoCliente.getText();
 			String nombre = jTextNombre.getText();
-			String empresa = jTextEmpresa.getText();
+			String empresa = (String) jTextEmpresa.getSelectedItem();
 			String referencia = jTextReferencia.getText();
 			miCliente.editarCliente(codigoCliente, nombre, empresa, referencia);
 			JOptionPane.showMessageDialog(this, "Cliente editado con éxito", "Edición exitosa",
@@ -1399,7 +1427,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		}
 		if (validarCamposCliente()) {
 			String nombre = jTextNombre.getText();
-			String empresa = jTextEmpresa.getText();
+			String empresa = (String) jTextEmpresa.getSelectedItem();
 			String referencia = jTextReferencia.getText();
 			ClienteDAO miCliente = new ClienteDAO();
 			miCliente.agregarCliente(nombre, empresa, referencia);
@@ -1429,7 +1457,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private void limpiarCamposCliente() {
 
 		jTextNombre.setText("");
-		jTextEmpresa.setText("");
+		jTextEmpresa.setSelectedIndex(0);
 		jTextReferencia.setText("");
 
 	}
@@ -1739,6 +1767,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		AbonoVO miAbonoVO = new AbonoVO();
 		MovimientoDAO miMovimiento = new MovimientoDAO();
 		Date fechaPago = null;
+		Date fechaCobro = null;
 		String codigoAbono = "";
 		double montoPagado = 0;
 
@@ -1747,15 +1776,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			if (validarCamposAbonoPrestamo()) {
 
 				fechaPago = calendarioAbonos.getDate();
+				fechaCobro = calendarioAbonosCobro.getDate();
 				codigoAbono = jTextFieldCodigoAbono.getText();
 				montoPagado = Double.parseDouble(jTextField1.getText()) * 1000;
-				miAbono.editarAbonoPagado(codigoAbono, fechaPago, montoPagado);
+				miAbono.editarAbonoPagado(codigoAbono, fechaPago, montoPagado, fechaCobro);
 				// Edito el movimiento para actualizar cifras
 				miMovimiento.editarMovimiento(codigoAbono, fechaPago, montoPagado, 0);
 				JOptionPane.showMessageDialog(this, "Abono editado con éxito", "Edición exitosa",
 						JOptionPane.INFORMATION_MESSAGE);
 				limpiarCamposAbono();
 				jCheckBoxEditandoAbono.setSelected(false);
+				calendarioAbonosCobro.setEnabled(false);
 				actualizaAbonos();
 				actualizaReportes();
 				actualizaPrestamos();
@@ -1793,6 +1824,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private void jButtonCancelarAbonoActionPerformed(ActionEvent e) {
 		limpiarCamposAbono();
 		jCheckBoxEditandoAbono.setSelected(false);
+		calendarioAbonosCobro.setEnabled(false);
 	}
 
 	// -----------------Tablas------------------------------------------------------
@@ -2737,7 +2769,61 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 		if (clienteEncontrado.getCodigoCliente() != null) {
 			jTextNombre.setText(clienteEncontrado.getNombreCliente());
-			jTextEmpresa.setText(clienteEncontrado.getEmpresaCliente());
+
+			// Tipo de plazo
+			// ComboBoxModel jComboEmpresaModel = new DefaultComboBoxModel(
+			// new String[] { "Sin categoria", "Semanal", "Impulso", "Supermercados",
+			// "Común",
+			// "Vendedores", "Don Pollo", "Droguería", "La Locura", "Mr Pompy",
+			// "Comunicaciones", "Mocawa", "Hogar infantil", "Otra" });
+
+			String categoria = clienteEncontrado.getEmpresaCliente();
+			switch (categoria) {
+			case "SIN CATEGORIA":
+				jTextEmpresa.setSelectedIndex(0);
+				break;
+			case "SEMANAL":
+				jTextEmpresa.setSelectedIndex(1);
+				break;
+			case "IMPULSO":
+				jTextEmpresa.setSelectedIndex(2);
+				break;
+			case "SUPERMERCADOS":
+				jTextEmpresa.setSelectedIndex(3);
+				break;
+			case "COMUN":
+				jTextEmpresa.setSelectedIndex(4);
+				break;
+			case "VENDEDORES":
+				jTextEmpresa.setSelectedIndex(5);
+				break;
+			case "DON POLLO":
+				jTextEmpresa.setSelectedIndex(6);
+				break;
+			case "DROGUERIA":
+				jTextEmpresa.setSelectedIndex(7);
+				break;
+			case "LA LOCURA":
+				jTextEmpresa.setSelectedIndex(8);
+				break;
+			case "MR POMPY":
+				jTextEmpresa.setSelectedIndex(9);
+				break;
+
+			case "COMUNICACIONES":
+				jTextEmpresa.setSelectedIndex(10);
+				break;
+			case "MOCAWA":
+				jTextEmpresa.setSelectedIndex(11);
+				break;
+			case "HOGAR INFANTIL":
+				jTextEmpresa.setSelectedIndex(12);
+				break;
+			case "OTRA":
+				jTextEmpresa.setSelectedIndex(13);
+				break;
+			}
+
 			jTextReferencia.setText(clienteEncontrado.getReferenciaCliente());
 			jLabelCodigoCliente.setText(clienteEncontrado.getCodigoCliente());
 			jLabelCodigoCliente.setVisible(false);
@@ -2763,9 +2849,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		if (abonoEncontrado != null) {
 			jTextFieldCodigoAbono.setText(abonoEncontrado.getCodigoAbono());
 			Date fechaFormateada;
+			Date fechaFormateadaCobro;
 			try {
 				fechaFormateada = formato.parse(abonoEncontrado.getFechaPago());
 				calendarioAbonos.setDate(fechaFormateada);
+
+				// Fecha de cobro
+				fechaFormateadaCobro = formato.parse(abonoEncontrado.getFechaACobrar());
+				calendarioAbonosCobro.setDate(fechaFormateadaCobro);
 			} catch (ParseException e) {
 
 				e.printStackTrace();
@@ -2782,6 +2873,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			}
 
 			jCheckBoxEditandoAbono.setSelected(true);
+			calendarioAbonosCobro.setEnabled(true);
 		} else {
 			JOptionPane.showMessageDialog(this, "Verifique el código del abono", "Abono no encontrado",
 					JOptionPane.WARNING_MESSAGE);
@@ -3245,10 +3337,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		}
 
 	}
-	
+
 	private void jTabPestaniasMouseClicked(MouseEvent evt) {
-		System.out.println("jTabPestanias.mouseClicked, event="+evt);
-		//TODO add your code for jTabPestanias.mouseClicked
 		actualizaReportes();
 	}
 
