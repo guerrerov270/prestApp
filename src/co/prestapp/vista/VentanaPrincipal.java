@@ -1956,6 +1956,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 		PrestamoDAO miPrestamo = new PrestamoDAO();
 		miPrestamo.actualizaPagos();
+		// miPrestamo.actualizaCuotasPagadas();
 		String informacionPrestamos[][] = miPrestamo.obtenerMatrizPrestamosRequerido();
 		String titulos[] = miPrestamo.getColumnasRequerido();
 		jTablePrestamos = new JTable(informacionPrestamos, titulos);

@@ -267,6 +267,8 @@ public class PrestamoDAO {
 			CallableStatement miProcedimientoVerificar = conexion.prepareCall("{call verificar_prestamo_pagado(?)}");
 			CallableStatement miProcedimientoVerificarClientes = conexion
 					.prepareCall("{call verificar_estado_clientes(?)}");
+			CallableStatement miProcedimientoActualizaCuotas = conexion
+					.prepareCall("{call actualizar_cuotas_pagadas(?)}");
 
 			// De los reportes
 
@@ -962,6 +964,20 @@ public class PrestamoDAO {
 	public String[] getColumnasRequerido() {
 		String encabezados[] = { "Nombre", "Referencia", "CódigoP", "Inicio", "Monto", "Resta", "Valor", "Debe" };
 		return encabezados;
+	}
+
+	public void actualizaCuotasPagadas() {
+
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		try {
+			CallableStatement miProcedimientoActualizaCuotas = conexion.prepareCall("{call actualizar_cuotas_pagadas}");
+			miProcedimientoActualizaCuotas.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 }// Fin clase
