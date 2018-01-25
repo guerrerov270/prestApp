@@ -117,7 +117,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelTotalAbonosCobrados;
 	private JLabel jLabelTotalClientesactivos;
 	private JLabel jLabelCerosPrestamo;
-	private JComboBox jComboBoxCategoriaEmpresa;
+	private JComboBox<String> jComboBoxCategoriaEmpresa;
 	private JLabel jLabelCategoríaEmpresa;
 	private JLabel jLabelComplemento;
 	private JLabel jLabelComplemento2;
@@ -231,11 +231,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private final String listaClientesNoActivos = "Listado de clientes no activos";
 
 	// Nuevos
-	private final String listaClientesEmpresa = "Listado de clientes por empresa/categoria";
+	// private final String listaClientesEmpresa = "Listado de clientes por
+	// empresa/categoria";
 	private final String listaPrestamosEmpresa = "Listado de préstamos por empresa/categoria";
-	private final String listaPrestamosPlazo = "Listado de préstamos por tipo de plazo";
+	// private final String listaPrestamosPlazo = "Listado de préstamos por tipo de
+	// plazo";
 	private final String listaPrestamosCliente = "Listado de préstamos de un cliente";
-	private final String listaAbonosCliente = "Listado de abonos por cliente";
+	// private final String listaAbonosCliente = "Listado de abonos por cliente";
 
 	private final String listaPrestamos = "Listado de préstamos registrados";
 	private final String listaPrestamosPendientes = "Listado de préstamos pendientes";
@@ -1183,6 +1185,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jComboBoxCategoriaEmpresa.setModel(jComboBoxCategoriaEmpresaModel);
 							jComboBoxCategoriaEmpresa.setBounds(267, 112, 316, 30);
 							jComboBoxCategoriaEmpresa.setFont(new java.awt.Font("Arial", 0, 16));
+							jComboBoxCategoriaEmpresa.setEnabled(false);
 							jComboBoxCategoriaEmpresa.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
 									jComboBoxCategoriaEmpresaActionPerformed(evt);
@@ -1665,7 +1668,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		double totalPagar = 0;
 		double totalPagado = 0;
 		Date fechaInicio = null;
-		int tamanioArray = 0;
 		// La ultima fecha del arreglo
 		Date fechaFin = null;
 		String codigoCliente = "";
@@ -1694,7 +1696,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				// Fecha de fin
 				fechasPago = miPrestamo.calcularFechasPago(tipoPlazo, numeroCuotas, fechaInicio);
 				try {
-					tamanioArray = fechasPago.size();
 					fechaFin = calendarioFinPrestamo.getDate();
 
 					// Busco el cliente de nuevo
@@ -1789,7 +1790,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			// Fecha de fin
 			fechasPago = miPrestamo.calcularFechasPago(tipoPlazo, numeroCuotas, fechaInicio);
 			try {
-				tamanioArray = fechasPago.size();
 				fechaFin = calendarioFinPrestamo.getDate();
 				// Busco el cliente de nuevo
 				codigoCliente = jLabelCodigo.getText();
@@ -2286,12 +2286,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private void llenaComboListados() {
 
-		ComboBoxModel<String> jComboListadosModel = new DefaultComboBoxModel<String>(new String[] { seleccioneUno,
-				listaClientes, listaClientesAlfa, listaClientesActivos, listaClientesNoActivos, listaClientesEmpresa,
-				listaPrestamosEmpresa, listaPrestamosPlazo, listaPrestamosCliente, listaAbonosCliente, listaPrestamos,
-				listaPrestamosPendientes, listaPrestamosPagados, listaPrestamosVencidos, listaAbonos,
-				listaAbonosPendientes, listaAbonosPagados, listaAbonosPendientesFecha, listaAbonosPagadosFecha,
-				listaMovimientos, listaMovimientosEntrada, listaMovimientosSalida, listaMovimientosFechas });
+		ComboBoxModel<String> jComboListadosModel = new DefaultComboBoxModel<String>(
+				new String[] { seleccioneUno, listaClientes, listaClientesAlfa, listaClientesActivos,
+						listaClientesNoActivos, listaPrestamosEmpresa, listaPrestamosCliente, listaPrestamos,
+						listaPrestamosPendientes, listaPrestamosPagados, listaPrestamosVencidos, listaAbonos,
+						listaAbonosPendientes, listaAbonosPagados, listaAbonosPendientesFecha, listaAbonosPagadosFecha,
+						listaMovimientos, listaMovimientosEntrada, listaMovimientosSalida, listaMovimientosFechas });
 		jComboSeleccionListado.setModel(jComboListadosModel);
 
 	}
@@ -2500,39 +2500,41 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			ejemplo.abrirPDF();
 
 	}
-	
+
 	private void generarReportePrestamosPorEmpresa(String categoriaSeleccionada) {
-		
+
 		// configuracion de la fecha actual
-				// Creamos un objeto de la clase Calendar.
-				Calendar fecha = new GregorianCalendar();
-				// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
-				// Usando el método get y el parámetro correspondiente.
-				int anio = fecha.get(Calendar.YEAR);
-				int mes = fecha.get(Calendar.MONTH);
-				int dia = fecha.get(Calendar.DAY_OF_MONTH);
-				int hora = fecha.get(Calendar.HOUR_OF_DAY);
-				int minuto = fecha.get(Calendar.MINUTE);
-				int segundo = fecha.get(Calendar.SECOND);
+		// Creamos un objeto de la clase Calendar.
+		Calendar fecha = new GregorianCalendar();
+		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
+		// Usando el método get y el parámetro correspondiente.
+		int anio = fecha.get(Calendar.YEAR);
+		int mes = fecha.get(Calendar.MONTH);
+		int dia = fecha.get(Calendar.DAY_OF_MONTH);
+		int hora = fecha.get(Calendar.HOUR_OF_DAY);
+		int minuto = fecha.get(Calendar.MINUTE);
+		int segundo = fecha.get(Calendar.SECOND);
 
-				String mesS = concatenaCero(mes + 1);
-				String diaS = concatenaCero(dia);
-				String horaS = concatenaCero(hora);
-				String minutoS = concatenaCero(minuto);
-				String segundoS = concatenaCero(segundo);
+		String mesS = concatenaCero(mes + 1);
+		String diaS = concatenaCero(dia);
+		String horaS = concatenaCero(hora);
+		String minutoS = concatenaCero(minuto);
+		String segundoS = concatenaCero(segundo);
 
-				String strNombrePDF = "ReportePrestamosCategoriaEmpresa" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
-				String strTituloPDF = "Reporte de préstamos registrados por categoria, generado el: " + diaS + "/" + mesS + "/" + anio
-						+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
-				ReportePrestamosCatEmpresa ejemplo = new ReportePrestamosCatEmpresa(strTituloPDF, strNombrePDF, categoriaSeleccionada);
-				// Preguntar al usuario si desea abrir el documento PDF
-				int respuesta = JOptionPane.showConfirmDialog(null,
-						"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
-						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-				// Si la respuesta es SI, abrirlo
-				if (respuesta == JOptionPane.YES_OPTION)
-					ejemplo.abrirPDF();
-		
+		String strNombrePDF = "ReportePrestamosCategoriaEmpresa" + diaS + mesS + anio + horaS + minutoS + segundoS
+				+ ".pdf";
+		String strTituloPDF = "Reporte de préstamos registrados por categoria, generado el: " + diaS + "/" + mesS + "/"
+				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+		ReportePrestamosCatEmpresa ejemplo = new ReportePrestamosCatEmpresa(strTituloPDF, strNombrePDF,
+				categoriaSeleccionada);
+		// Preguntar al usuario si desea abrir el documento PDF
+		int respuesta = JOptionPane.showConfirmDialog(null,
+				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		// Si la respuesta es SI, abrirlo
+		if (respuesta == JOptionPane.YES_OPTION)
+			ejemplo.abrirPDF();
+
 	}
 
 	private void generarReportePrestamosPendientes() {
@@ -3144,7 +3146,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private void jButtonGenerarPDFActionPerformed(ActionEvent evt) {
 
 		String listaSeleccionada = (String) jComboSeleccionListado.getSelectedItem();
-		String categoriaSeleccionada = (String) jComboBoxCategoriaEmpresa.getSelectedItem(); 
+		String categoriaSeleccionada = (String) jComboBoxCategoriaEmpresa.getSelectedItem();
 
 		switch (listaSeleccionada) {
 		case seleccioneUno:
@@ -3214,23 +3216,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			calendarioInicioMovimiento.setDate(null);
 			calendarioFinMovimiento.setDate(null);
 			break;
-		case listaClientesEmpresa:
-			break;
 		case listaPrestamosEmpresa:
 			generarReportePrestamosPorEmpresa(categoriaSeleccionada);
-
-			break;
-		case listaPrestamosPlazo:
+			jComboBoxCategoriaEmpresa.setEnabled(false);
 			break;
 		case listaPrestamosCliente:
 			break;
-		case listaAbonosCliente:
-			break;
+		
 		}
 
 	}
-
-	
 
 	// listaClientesEmpresa,
 	// listaPrestamosEmpresa, listaPrestamosPlazo, listaPrestamosCliente,
@@ -3445,20 +3440,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jTextTotalSalidas.setText("");
 			jLabelTotalSalidas.setText("Total salidas:");
 			break;
-		case listaClientesEmpresa:
-			jComboBoxCategoriaEmpresa.setEnabled(true);
-			break;
 		case listaPrestamosEmpresa:
 			jComboBoxCategoriaEmpresa.setEnabled(true);
 			break;
-		case listaPrestamosPlazo:
-			jComboBoxCategoriaEmpresa.setEnabled(true);
-			break;
 		case listaPrestamosCliente:
-			jComboBoxCategoriaEmpresa.setEnabled(true);
-			break;
-		case listaAbonosCliente:
-			jComboBoxCategoriaEmpresa.setEnabled(true);
+			String codigoCliente=JOptionPane.showInputDialog("Ingrese código del cliente");
 			break;
 
 		}

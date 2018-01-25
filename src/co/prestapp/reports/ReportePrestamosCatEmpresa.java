@@ -96,7 +96,7 @@ public class ReportePrestamosCatEmpresa {
 	private void agregarTabla(Paragraph parrafo, String categoriaSeleccionada) {
 
 		// Anchos de las columnas
-		float anchosFilas[] = { 0.8f, 0.8f, 0.8f, 0.8f, 0.8f, 0.8f, 0.8f, 0.8f, 0.8f, 0.8f };
+		float anchosFilas[] = { 1f, 1f, 1f, 0.8f, 1f, 1f, 1f, 0.5f, 1f, 1f };
 		PdfPTable tabla = new PdfPTable(anchosFilas);
 		String rotulosColumnas[] = miPrestamo.getColumnasRequerido();
 		// Porcentaje que ocupa a lo ancho de la pagina del PDF
@@ -105,7 +105,7 @@ public class ReportePrestamosCatEmpresa {
 		tabla.setHorizontalAlignment(Element.ALIGN_CENTER);
 		// agregar celda que ocupa las 9 columnas de los rotulos
 		PdfPCell cell = new PdfPCell(new Paragraph("Listado de préstamos por categoría"));
-		cell.setColspan(12);
+		cell.setColspan(10);
 		// Centrar contenido de celda
 		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		// Color de fondo de la celda
