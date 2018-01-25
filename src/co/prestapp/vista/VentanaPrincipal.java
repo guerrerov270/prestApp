@@ -118,6 +118,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelComplemento;
 	private JLabel jLabelComplemento2;
 	private JLabel jLabelComplemento3;
+	private JLabel jLabelComplemento4;
+	private JLabel jLabelComplemento5;
+	private JLabel jLabelComplemento6;
 	private JCheckBox jCheckBoxEditandoPrestamo;
 	private JLabel jLabelCodigoPrestamoOculto;
 	private JTextField jTextTotalSalidas;
@@ -192,6 +195,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JTable jTablePrestamos;
 	private JScrollPane jScrollReportes;
 	private JDateChooser calendarioPrestamos;
+	private JDateChooser calendarioFinPrestamo;
 	private JDateChooser calendarioAbonos;
 	private JDateChooser calendarioAbonosCobro;
 	private JDateChooser calendarioPrestamosPorfecha;
@@ -545,6 +549,33 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jCheckBoxEditandoPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
 								jCheckBoxEditandoPrestamo.setEnabled(false);
 							}
+							{
+								jLabelComplemento4 = new JLabel();
+								jPanelEntradasPrestamo.add(jLabelComplemento4);
+								jLabelComplemento4.setText("Fecha de fin: (Sólo para edición)");
+								jLabelComplemento4.setBounds(12, 65, 65, 10);
+								jLabelComplemento4.setFont(new java.awt.Font("Arial", 0, 16));
+
+							}
+							{
+								calendarioFinPrestamo = new JDateChooser();
+								jPanelEntradasPrestamo.add(calendarioAbonosCobro);
+								calendarioFinPrestamo.setBounds(162, 78, 178, 30);
+								calendarioFinPrestamo.setEnabled(false);
+								calendarioFinPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
+							}
+							{
+								jLabelComplemento5 = new JLabel();
+								jPanelEntradasPrestamo.add(jLabelComplemento5);
+								jLabelComplemento5.setBounds(12, 65, 65, 10);
+
+							}
+							{
+								jLabelComplemento6 = new JLabel();
+								jPanelEntradasPrestamo.add(jLabelComplemento6);
+								jLabelComplemento6.setBounds(12, 65, 65, 10);
+
+							}
 
 							{
 								URL urlDeLaImagenCalcular = VentanaPrincipal.class.getClassLoader()
@@ -767,6 +798,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							calendarioAbonosCobro = new JDateChooser();
 							jPanelAgregarAbono.add(calendarioAbonosCobro);
 							calendarioAbonosCobro.setBounds(162, 78, 178, 30);
+							calendarioAbonosCobro.setEnabled(false);
 							calendarioAbonosCobro.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
@@ -1484,6 +1516,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		jTextFieldCodigoAbono.setText("");
 		jTextField1.setText("");
 		calendarioAbonos.setDate(null);
+		calendarioAbonosCobro.setDate(null);
 
 	}
 
