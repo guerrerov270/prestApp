@@ -101,6 +101,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JButton jButtonCancelarAbono;
 	private JButton jButtonAbonoPorFecha;
 	private JButton jButtonPrestamoPorFecha;
+	private JButton jButtonVerTodosAbono;
 	private JLabel jLabelAbonosPorFecha;
 	private JLabel jLabelPrestadoPorFecha;
 	private JTable jTableReportesPorFecha;
@@ -314,18 +315,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jScrollReportes = new JScrollPane();
 						jPanelPrestamos.add(jScrollReportes, BorderLayout.SOUTH);
 						jScrollReportes.setBounds(8, 263, 777, 381);
-						jScrollReportes.setPreferredSize(new java.awt.Dimension(1041, 293));
+						jScrollReportes.setPreferredSize(new java.awt.Dimension(1037, 253));
 						{
 
 						}
 					}
 					{
 						jPanelEntradasPrestamo = new JPanel();
-						GridLayout jPanelEntradasPrestamoLayout = new GridLayout(7, 4, 5, 5);
+						GridLayout jPanelEntradasPrestamoLayout = new GridLayout(8, 4, 5, 5);
 						jPanelPrestamos.add(jPanelEntradasPrestamo, BorderLayout.NORTH);
 						jPanelEntradasPrestamo.setBorder(BorderFactory.createTitledBorder("Datos préstamo"));
 						jPanelEntradasPrestamo.setLayout(jPanelEntradasPrestamoLayout);
-						jPanelEntradasPrestamo.setPreferredSize(new java.awt.Dimension(909, 258));
+						jPanelEntradasPrestamo.setPreferredSize(new java.awt.Dimension(1037, 295));
 						{
 							jLabelMontoPrestamo = new JLabel();
 							jPanelEntradasPrestamo.add(jLabelMontoPrestamo);
@@ -540,15 +541,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jLabelTotalFormato.setBounds(478, 122, 178, 30);
 								jLabelTotalFormato.setFont(new java.awt.Font("Arial", 0, 16));
 							}
-
 							{
-								jCheckBoxEditandoPrestamo = new JCheckBox();
-								jPanelEntradasPrestamo.add(jCheckBoxEditandoPrestamo);
-								jCheckBoxEditandoPrestamo.setText("Editando");
-								jCheckBoxEditandoPrestamo.setBounds(789, 178, 115, 20);
-								jCheckBoxEditandoPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
-								jCheckBoxEditandoPrestamo.setEnabled(false);
+								jLabelComplemento6 = new JLabel();
+								jPanelEntradasPrestamo.add(jLabelComplemento6);
+								jLabelComplemento6.setText("Referencia");
+								jLabelComplemento6.setBounds(12, 65, 65, 10);
+								jLabelComplemento6.setFont(new java.awt.Font("Arial", 0, 16));
+
 							}
+
 							{
 								jLabelComplemento4 = new JLabel();
 								jPanelEntradasPrestamo.add(jLabelComplemento4);
@@ -559,9 +560,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							}
 							{
 								calendarioFinPrestamo = new JDateChooser();
-								jPanelEntradasPrestamo.add(calendarioAbonosCobro);
+								jPanelEntradasPrestamo.add(calendarioFinPrestamo);
 								calendarioFinPrestamo.setBounds(162, 78, 178, 30);
-								calendarioFinPrestamo.setEnabled(false);
 								calendarioFinPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
 							}
 							{
@@ -571,10 +571,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 							}
 							{
-								jLabelComplemento6 = new JLabel();
-								jPanelEntradasPrestamo.add(jLabelComplemento6);
-								jLabelComplemento6.setBounds(12, 65, 65, 10);
-
+								jCheckBoxEditandoPrestamo = new JCheckBox();
+								jPanelEntradasPrestamo.add(jCheckBoxEditandoPrestamo);
+								jCheckBoxEditandoPrestamo.setText("Editando");
+								jCheckBoxEditandoPrestamo.setBounds(789, 178, 115, 20);
+								jCheckBoxEditandoPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
+								jCheckBoxEditandoPrestamo.setEnabled(false);
 							}
 
 							{
@@ -727,9 +729,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 						}
 						{
-							jLabelComplemento2 = new JLabel();
-							jPanelAgregarAbono.add(jLabelComplemento2);
-							jLabelComplemento2.setBounds(12, 65, 65, 10);
+							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/actualizar.png");
+							ImageIcon icono = new ImageIcon(urlDeLaImagen);
+							Image img = icono.getImage();
+							Image otraimg = img.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
+							jButtonVerTodosAbono = new JButton();
+							jButtonVerTodosAbono.setIcon(new ImageIcon(otraimg));
+							jButtonVerTodosAbono.setText("Ver todos");
+							jPanelAgregarAbono.add(jButtonVerTodosAbono);
+							jButtonVerTodosAbono.setFont(new java.awt.Font("Arial", 0, 14));
+							jButtonVerTodosAbono.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButtonVerTodosAbonoActionPerformed(evt);
+								}
+							});
 
 						}
 
@@ -1423,6 +1437,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				jLabelCodigo.setForeground(Color.RED);
 				jLabelCodigo.setText(cliente.getCodigoCliente() + "");
 				jLabelEmpresaResult.setText(cliente.getEmpresaCliente());
+				jLabelComplemento6.setText(cliente.getReferenciaCliente());
 			}
 
 		} catch (NumberFormatException e) {
@@ -1508,6 +1523,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		jLabelCodigo.setText("Código");
 		jLabelEmpresaResult.setText("Empresa");
 		calendarioPrestamos.setDate(null);
+		calendarioFinPrestamo.setDate(null);
 
 	}
 
@@ -1528,7 +1544,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String tipoPlazo = "";
 		int numeroCuotas = 0;
 		Date fechaInicio = null;
+		Date fechaFin = null;
 		PrestamoDAO miPrestamo = null;
+		int tamanioArray = 0;
 		Locale locale = new Locale("es", "CO");
 		NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
 
@@ -1545,6 +1563,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				ArrayList<Date> fechasPago = miPrestamo.calcularFechasPago(tipoPlazo, numeroCuotas, fechaInicio);
 				@SuppressWarnings("rawtypes")
 				DefaultComboBoxModel modeloNuevo = new DefaultComboBoxModel();
+				tamanioArray = fechasPago.size();
+				fechaFin = fechasPago.get(tamanioArray - 1);
+				calendarioFinPrestamo.setDate(fechaFin);
 				modeloNuevo = llenaComboPlazos(fechasPago);
 				jComboFechasCobro.setModel(modeloNuevo);
 
@@ -1622,7 +1643,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				fechasPago = miPrestamo.calcularFechasPago(tipoPlazo, numeroCuotas, fechaInicio);
 				try {
 					tamanioArray = fechasPago.size();
-					fechaFin = fechasPago.get(tamanioArray - 1);
+					fechaFin = calendarioFinPrestamo.getDate();
+
 					// Busco el cliente de nuevo
 					codigoCliente = jLabelCodigo.getText();
 					if (codigoCliente.equals("Código")) {
@@ -1664,6 +1686,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							"El préstamo no se puede editar", JOptionPane.ERROR_MESSAGE);
 					return;
 				} else {
+
 					// elimino los abonos asociados
 					miAbono.eliminarAbonosAsociados(codigoPrestamo);
 
@@ -1714,12 +1737,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			fechasPago = miPrestamo.calcularFechasPago(tipoPlazo, numeroCuotas, fechaInicio);
 			try {
 				tamanioArray = fechasPago.size();
-				fechaFin = fechasPago.get(tamanioArray - 1);
+				fechaFin = calendarioFinPrestamo.getDate();
 				// Busco el cliente de nuevo
 				codigoCliente = jLabelCodigo.getText();
 				if (codigoCliente.equals("Código")) {
-					JOptionPane.showMessageDialog(this, "Cliente noffffffffffffffff encontrado", "Alerta",
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(this, "Cliente no encontrado", "Alerta", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 			} catch (Exception e) {
@@ -1820,7 +1842,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				limpiarCamposAbono();
 				jCheckBoxEditandoAbono.setSelected(false);
 				calendarioAbonosCobro.setEnabled(false);
-				actualizaAbonos();
+
+				// Ver todos o uno
+				if (jTextCodigoPrestamo.getText().isEmpty()) {
+					actualizaAbonos();
+				} else {
+					actualizaPrestamoBuscado();
+				}
+
 				actualizaReportes();
 				actualizaPrestamos();
 				return;
@@ -1840,7 +1869,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 				// Registro el movimiento
 				miMovimiento.agregarMovimiento(codigoAbono, fechaPago, montoPagado, 0);
-				actualizaAbonos();
+
+				// Ver todos o uno
+				if (jTextCodigoPrestamo.getText().isEmpty()) {
+					actualizaAbonos();
+				} else {
+					actualizaPrestamoBuscado();
+				}
 				actualizaPrestamos();
 				actualizaReportes();
 				JOptionPane.showMessageDialog(this, "Abono guardado correctamente", "Información",
@@ -2938,11 +2973,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						this.getClass().getCanonicalName() + ".jButtonEditarPrestamoPerformed");
 			}
 			jTextTasaInteres.setText(miPrestamo.getTasaInteresPrestamo() + "");
+
 			// Falta la fecha
 			Date fechaFormateada = null;
+			Date fechaFinFormateada = null;
 			try {
 				fechaFormateada = formato.parse(miPrestamo.getFechaInicioPrestamo());
 				calendarioPrestamos.setDate(fechaFormateada);
+				fechaFinFormateada = formato.parse(miPrestamo.getFechafinPrestamo());
+				calendarioFinPrestamo.setEnabled(true);
+				calendarioFinPrestamo.setDate(fechaFinFormateada);
 			} catch (ParseException e) {
 
 				e.printStackTrace();
@@ -3373,6 +3413,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private void jTabPestaniasMouseClicked(MouseEvent evt) {
 		actualizaReportes();
+	}
+
+	private void jButtonVerTodosAbonoActionPerformed(ActionEvent evt) {
+		actualizaAbonos();
 	}
 
 }
