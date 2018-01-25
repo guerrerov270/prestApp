@@ -2010,7 +2010,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 		PrestamoDAO miPrestamo = new PrestamoDAO();
 		miPrestamo.actualizaPagos();
-		// miPrestamo.actualizaCuotasPagadas();
 		String informacionPrestamos[][] = miPrestamo.obtenerMatrizPrestamosRequerido();
 		String titulos[] = miPrestamo.getColumnasRequerido();
 		jTablePrestamos = new JTable(informacionPrestamos, titulos);
@@ -3182,6 +3181,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		case listaClientesEmpresa:
 			break;
 		case listaPrestamosEmpresa:
+
 			break;
 		case listaPrestamosPlazo:
 			break;
@@ -3413,10 +3413,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jComboBoxCategoriaEmpresa.setEnabled(true);
 			break;
 		case listaPrestamosPlazo:
+			jComboBoxCategoriaEmpresa.setEnabled(true);
 			break;
 		case listaPrestamosCliente:
+			jComboBoxCategoriaEmpresa.setEnabled(true);
 			break;
 		case listaAbonosCliente:
+			jComboBoxCategoriaEmpresa.setEnabled(true);
 			break;
 
 		}
@@ -3533,6 +3536,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private void jComboBoxCategoriaEmpresaActionPerformed(ActionEvent evt) {
 		// TODO add your code for jComboBoxCategoriaEmpresa.actionPerformed
 
+		PrestamoDAO miPrestamo = new PrestamoDAO();
+		String titulos[] = miPrestamo.getColumnasRequerido();
+		String informacionPrestamos[][] = null;
+		JTableHeader th = null;
+
 		String categoriaSeleccionada = (String) jComboBoxCategoriaEmpresa.getSelectedItem();
 		switch (categoriaSeleccionada) {
 		case seleccioneUna:
@@ -3540,45 +3548,171 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					JOptionPane.INFORMATION_MESSAGE);
 			break;
 		case SinCategoria:
+			miPrestamo = new PrestamoDAO();
+			miPrestamo.actualizaPagos();
+			informacionPrestamos = miPrestamo.obtenerMatrizPrestamosRequerido(SinCategoria);
+			jTablePrestamos = new JTable(informacionPrestamos, titulos);
+			jScrollPaneResultados.setViewportView(jTablePrestamos);
+			jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 14));
+			th = jTablePrestamos.getTableHeader();
+			th.setFont(new java.awt.Font("Arial", 0, 14));
+			ajustaColumnasAContenido(jTablePrestamos);
 
 			break;
 		case Semanal:
+			miPrestamo = new PrestamoDAO();
+			miPrestamo.actualizaPagos();
+			informacionPrestamos = miPrestamo.obtenerMatrizPrestamosRequerido(Semanal);
+			jTablePrestamos = new JTable(informacionPrestamos, titulos);
+			jScrollPaneResultados.setViewportView(jTablePrestamos);
+			jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 14));
+			th = jTablePrestamos.getTableHeader();
+			th.setFont(new java.awt.Font("Arial", 0, 14));
+			ajustaColumnasAContenido(jTablePrestamos);
 
 			break;
 		case Impulso:
+			miPrestamo = new PrestamoDAO();
+			miPrestamo.actualizaPagos();
+			informacionPrestamos = miPrestamo.obtenerMatrizPrestamosRequerido(Impulso);
+			jTablePrestamos = new JTable(informacionPrestamos, titulos);
+			jScrollPaneResultados.setViewportView(jTablePrestamos);
+			jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 14));
+			th = jTablePrestamos.getTableHeader();
+			th.setFont(new java.awt.Font("Arial", 0, 14));
+			ajustaColumnasAContenido(jTablePrestamos);
 
 			break;
 		case Supermercados:
+			miPrestamo = new PrestamoDAO();
+			miPrestamo.actualizaPagos();
+			informacionPrestamos = miPrestamo.obtenerMatrizPrestamosRequerido(Supermercados);
+			jTablePrestamos = new JTable(informacionPrestamos, titulos);
+			jScrollPaneResultados.setViewportView(jTablePrestamos);
+			jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 14));
+			th = jTablePrestamos.getTableHeader();
+			th.setFont(new java.awt.Font("Arial", 0, 14));
+			ajustaColumnasAContenido(jTablePrestamos);
 
 			break;
 		case Comun:
+			miPrestamo = new PrestamoDAO();
+			miPrestamo.actualizaPagos();
+			informacionPrestamos = miPrestamo.obtenerMatrizPrestamosRequerido(Comun);
+			jTablePrestamos = new JTable(informacionPrestamos, titulos);
+			jScrollPaneResultados.setViewportView(jTablePrestamos);
+			jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 14));
+			th = jTablePrestamos.getTableHeader();
+			th.setFont(new java.awt.Font("Arial", 0, 14));
+			ajustaColumnasAContenido(jTablePrestamos);
 
 			break;
 		case Vendedores:
+			miPrestamo = new PrestamoDAO();
+			miPrestamo.actualizaPagos();
+			informacionPrestamos = miPrestamo.obtenerMatrizPrestamosRequerido(Vendedores);
+			jTablePrestamos = new JTable(informacionPrestamos, titulos);
+			jScrollPaneResultados.setViewportView(jTablePrestamos);
+			jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 14));
+			th = jTablePrestamos.getTableHeader();
+			th.setFont(new java.awt.Font("Arial", 0, 14));
+			ajustaColumnasAContenido(jTablePrestamos);
 
 			break;
 		case DonPollo:
+			miPrestamo = new PrestamoDAO();
+			miPrestamo.actualizaPagos();
+			informacionPrestamos = miPrestamo.obtenerMatrizPrestamosRequerido(DonPollo);
+			jTablePrestamos = new JTable(informacionPrestamos, titulos);
+			jScrollPaneResultados.setViewportView(jTablePrestamos);
+			jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 14));
+			th = jTablePrestamos.getTableHeader();
+			th.setFont(new java.awt.Font("Arial", 0, 14));
+			ajustaColumnasAContenido(jTablePrestamos);
 
 			break;
 		case Drogueria:
+			miPrestamo = new PrestamoDAO();
+			miPrestamo.actualizaPagos();
+			informacionPrestamos = miPrestamo.obtenerMatrizPrestamosRequerido(Drogueria);
+			jTablePrestamos = new JTable(informacionPrestamos, titulos);
+			jScrollPaneResultados.setViewportView(jTablePrestamos);
+			jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 14));
+			th = jTablePrestamos.getTableHeader();
+			th.setFont(new java.awt.Font("Arial", 0, 14));
+			ajustaColumnasAContenido(jTablePrestamos);
 
 			break;
 		case LaLocura:
+			miPrestamo = new PrestamoDAO();
+			miPrestamo.actualizaPagos();
+			informacionPrestamos = miPrestamo.obtenerMatrizPrestamosRequerido(LaLocura);
+			jTablePrestamos = new JTable(informacionPrestamos, titulos);
+			jScrollPaneResultados.setViewportView(jTablePrestamos);
+			jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 14));
+			th = jTablePrestamos.getTableHeader();
+			th.setFont(new java.awt.Font("Arial", 0, 14));
+			ajustaColumnasAContenido(jTablePrestamos);
 
 			break;
 		case MrPompy:
+			miPrestamo = new PrestamoDAO();
+			miPrestamo.actualizaPagos();
+			informacionPrestamos = miPrestamo.obtenerMatrizPrestamosRequerido(MrPompy);
+			jTablePrestamos = new JTable(informacionPrestamos, titulos);
+			jScrollPaneResultados.setViewportView(jTablePrestamos);
+			jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 14));
+			th = jTablePrestamos.getTableHeader();
+			th.setFont(new java.awt.Font("Arial", 0, 14));
+			ajustaColumnasAContenido(jTablePrestamos);
 
 			break;
 		case Comunicaciones:
+			miPrestamo = new PrestamoDAO();
+			miPrestamo.actualizaPagos();
+			informacionPrestamos = miPrestamo.obtenerMatrizPrestamosRequerido(Comunicaciones);
+			jTablePrestamos = new JTable(informacionPrestamos, titulos);
+			jScrollPaneResultados.setViewportView(jTablePrestamos);
+			jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 14));
+			th = jTablePrestamos.getTableHeader();
+			th.setFont(new java.awt.Font("Arial", 0, 14));
+			ajustaColumnasAContenido(jTablePrestamos);
 
 			break;
 		case Mocawa:
+			miPrestamo = new PrestamoDAO();
+			miPrestamo.actualizaPagos();
+			informacionPrestamos = miPrestamo.obtenerMatrizPrestamosRequerido(Mocawa);
+			jTablePrestamos = new JTable(informacionPrestamos, titulos);
+			jScrollPaneResultados.setViewportView(jTablePrestamos);
+			jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 14));
+			th = jTablePrestamos.getTableHeader();
+			th.setFont(new java.awt.Font("Arial", 0, 14));
+			ajustaColumnasAContenido(jTablePrestamos);
 
 			break;
 		case Hogarinfantil:
+			miPrestamo = new PrestamoDAO();
+			miPrestamo.actualizaPagos();
+			informacionPrestamos = miPrestamo.obtenerMatrizPrestamosRequerido(Hogarinfantil);
+			jTablePrestamos = new JTable(informacionPrestamos, titulos);
+			jScrollPaneResultados.setViewportView(jTablePrestamos);
+			jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 14));
+			th = jTablePrestamos.getTableHeader();
+			th.setFont(new java.awt.Font("Arial", 0, 14));
+			ajustaColumnasAContenido(jTablePrestamos);
 
 			break;
 		case Otro:
+			miPrestamo = new PrestamoDAO();
+			miPrestamo.actualizaPagos();
+			informacionPrestamos = miPrestamo.obtenerMatrizPrestamosRequerido(Otro);
+			jTablePrestamos = new JTable(informacionPrestamos, titulos);
+			jScrollPaneResultados.setViewportView(jTablePrestamos);
+			jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 14));
+			th = jTablePrestamos.getTableHeader();
+			th.setFont(new java.awt.Font("Arial", 0, 14));
+			ajustaColumnasAContenido(jTablePrestamos);
 
 			break;
 		}
