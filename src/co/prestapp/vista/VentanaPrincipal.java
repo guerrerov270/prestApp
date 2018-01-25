@@ -3247,8 +3247,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	}
 	
 	private void jTabPestaniasMouseClicked(MouseEvent evt) {
-		System.out.println("jTabPestanias.mouseClicked, event="+evt);
-		//TODO add your code for jTabPestanias.mouseClicked
 		actualizaReportes();
 	}
 
