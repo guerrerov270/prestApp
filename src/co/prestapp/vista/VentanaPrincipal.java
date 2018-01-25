@@ -228,13 +228,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private final String listaClientesAlfa = "Listado de clientes alfabéticamente";
 	private final String listaClientesActivos = "Listado de clientes activos";
 	private final String listaClientesNoActivos = "Listado de clientes no activos";
-	
-	//Nuevos
+
+	// Nuevos
 	private final String listaClientesEmpresa = "Listado de clientes por empresa/categoria";
 	private final String listaPrestamosEmpresa = "Listado de préstamos por empresa/categoria";
 	private final String listaPrestamosPlazo = "Listado de préstamos por tipo de plazo";
 	private final String listaPrestamosCliente = "Listado de préstamos de un cliente";
-	
+	private final String listaAbonosCliente = "Listado de abonos por cliente";
+
 	private final String listaPrestamos = "Listado de préstamos registrados";
 	private final String listaPrestamosPendientes = "Listado de préstamos pendientes";
 	private final String listaPrestamosPagados = "Listado de préstamos pagados";
@@ -2286,7 +2287,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private void llenaComboListados() {
 
 		ComboBoxModel<String> jComboListadosModel = new DefaultComboBoxModel<String>(new String[] { seleccioneUno,
-				listaClientes, listaClientesAlfa, listaClientesActivos, listaClientesNoActivos, listaPrestamos,
+				listaClientes, listaClientesAlfa, listaClientesActivos, listaClientesNoActivos, listaClientesEmpresa,
+				listaPrestamosEmpresa, listaPrestamosPlazo, listaPrestamosCliente, listaAbonosCliente, listaPrestamos,
 				listaPrestamosPendientes, listaPrestamosPagados, listaPrestamosVencidos, listaAbonos,
 				listaAbonosPendientes, listaAbonosPagados, listaAbonosPendientesFecha, listaAbonosPagadosFecha,
 				listaMovimientos, listaMovimientosEntrada, listaMovimientosSalida, listaMovimientosFechas });
@@ -3177,9 +3179,23 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			calendarioInicioMovimiento.setDate(null);
 			calendarioFinMovimiento.setDate(null);
 			break;
+		case listaClientesEmpresa:
+			break;
+		case listaPrestamosEmpresa:
+			break;
+		case listaPrestamosPlazo:
+			break;
+		case listaPrestamosCliente:
+			break;
+		case listaAbonosCliente:
+			break;
 		}
 
 	}
+
+	// listaClientesEmpresa,
+	// listaPrestamosEmpresa, listaPrestamosPlazo, listaPrestamosCliente,
+	// listaAbonosCliente,
 
 	private void jComboSeleccionListadoActionPerformed(ActionEvent evt) {
 
@@ -3390,6 +3406,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jTextTotalSalidas.setText("");
 			jLabelTotalSalidas.setText("Total salidas:");
 			break;
+		case listaClientesEmpresa:
+			jComboBoxCategoriaEmpresa.setEnabled(true);
+			break;
+		case listaPrestamosEmpresa:
+			jComboBoxCategoriaEmpresa.setEnabled(true);
+			break;
+		case listaPrestamosPlazo:
+			break;
+		case listaPrestamosCliente:
+			break;
+		case listaAbonosCliente:
+			break;
 
 		}
 
@@ -3497,9 +3525,63 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		actualizaAbonos();
 	}
 
+	// seleccioneUna, SinCategoria, Semanal, Impulso, Supermercados, Comun,
+	// Vendedores,
+	// DonPollo, Drogueria, LaLocura, MrPompy, Comunicaciones, Mocawa,
+	// Hogarinfantil, Otro
+
 	private void jComboBoxCategoriaEmpresaActionPerformed(ActionEvent evt) {
-		System.out.println("jComboBoxCategoriaEmpresa.actionPerformed, event=" + evt);
 		// TODO add your code for jComboBoxCategoriaEmpresa.actionPerformed
+
+		String categoriaSeleccionada = (String) jComboBoxCategoriaEmpresa.getSelectedItem();
+		switch (categoriaSeleccionada) {
+		case seleccioneUna:
+			JOptionPane.showMessageDialog(this, "Debe seleccionar una categoria", "Información",
+					JOptionPane.INFORMATION_MESSAGE);
+			break;
+		case SinCategoria:
+
+			break;
+		case Semanal:
+
+			break;
+		case Impulso:
+
+			break;
+		case Supermercados:
+
+			break;
+		case Comun:
+
+			break;
+		case Vendedores:
+
+			break;
+		case DonPollo:
+
+			break;
+		case Drogueria:
+
+			break;
+		case LaLocura:
+
+			break;
+		case MrPompy:
+
+			break;
+		case Comunicaciones:
+
+			break;
+		case Mocawa:
+
+			break;
+		case Hogarinfantil:
+
+			break;
+		case Otro:
+
+			break;
+		}
 	}
 
 }
