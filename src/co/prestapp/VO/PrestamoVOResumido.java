@@ -3,13 +3,15 @@ package co.prestapp.VO;
 public class PrestamoVOResumido {
 
 	private String nombreCliente;
+	private String empresaCliente;
 	private String referenciaCliente;
 	private String codigoPrestamo;
 	private String fechaInicioPrestamo;
 	private String montoPrestamo;
+	private String tipoPlazo;
 	private int numeroCuotasPrestamo;
 	private String valorCuotaPrestamo;
-	private String saldoPendientePrestamo;
+	private String saldoRestantePrestamo;
 	
 	public String getNombreCliente() {
 		return nombreCliente;
@@ -54,10 +56,22 @@ public class PrestamoVOResumido {
 		this.valorCuotaPrestamo = valorCuotaPrestamo;
 	}
 	public String getSaldoPendientePrestamo() {
-		return saldoPendientePrestamo;
+		return saldoRestantePrestamo;
 	}
 	public void setSaldoPendientePrestamo(String saldoPendientePrestamo) {
-		this.saldoPendientePrestamo = saldoPendientePrestamo;
+		this.saldoRestantePrestamo = saldoPendientePrestamo;
+	}
+	public String getEmpresaCliente() {
+		return empresaCliente;
+	}
+	public void setEmpresaCliente(String empresaCliente) {
+		this.empresaCliente = empresaCliente;
+	}
+	public String getTipoPlazo() {
+		return tipoPlazo;
+	}
+	public void setTipoPlazo(String tipoPlazo) {
+		this.tipoPlazo = tipoPlazo;
 	}
 	
 	

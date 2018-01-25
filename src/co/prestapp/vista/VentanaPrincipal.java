@@ -316,7 +316,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jScrollReportes = new JScrollPane();
 						jPanelPrestamos.add(jScrollReportes, BorderLayout.SOUTH);
 						jScrollReportes.setBounds(8, 263, 777, 381);
-						jScrollReportes.setPreferredSize(new java.awt.Dimension(1037, 253));
+						jScrollReportes.setPreferredSize(new java.awt.Dimension(1057, 378));
 						{
 
 						}
@@ -669,7 +669,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jScrollAbonosRecibidos = new JScrollPane();
 						jPanelAbonos.add(jScrollAbonosRecibidos, BorderLayout.SOUTH);
 						jScrollAbonosRecibidos.setBounds(8, 263, 777, 381);
-						jScrollAbonosRecibidos.setPreferredSize(new java.awt.Dimension(1037, 329));
+						jScrollAbonosRecibidos.setPreferredSize(new java.awt.Dimension(1057, 451));
 						{
 
 						}
@@ -893,7 +893,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jScrollPaneClientes = new JScrollPane();
 						jPanelClientes.add(jScrollPaneClientes, BorderLayout.SOUTH);
 						jScrollPaneClientes.setBounds(8, 263, 777, 381);
-						jScrollPaneClientes.setPreferredSize(new java.awt.Dimension(1031, 396));
+						jScrollPaneClientes.setPreferredSize(new java.awt.Dimension(1047, 516));
 						{
 
 						}
@@ -1199,7 +1199,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jScrollPaneReportesPorFecha = new JScrollPane();
 						jPanelReportes.add(jScrollPaneReportesPorFecha, BorderLayout.SOUTH);
 						jScrollPaneReportesPorFecha.setBounds(82, 316, 740, 197);
-						jScrollPaneReportesPorFecha.setPreferredSize(new java.awt.Dimension(1041, 220));
+						jScrollPaneReportesPorFecha.setPreferredSize(new java.awt.Dimension(1057, 340));
 					}
 					{
 						// Aquí el panel de cifras
@@ -1411,7 +1411,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				}
 			}
 			pack();
-			this.setSize(1048, 629);
+			this.setSize(1068, 750);
 
 		} catch (Exception e) {
 			// add your error handling code here
@@ -1908,9 +1908,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String titulos[] = miAbono.getColumnas();
 		jTableAbonosRecibidos = new JTable(informacionAbonos, titulos);
 		jScrollAbonosRecibidos.setViewportView(jTableAbonosRecibidos);
-		jTableAbonosRecibidos.setFont(new java.awt.Font("Arial", 0, 16));
+		jTableAbonosRecibidos.setFont(new java.awt.Font("Arial", 0, 14));
 		JTableHeader th = jTableAbonosRecibidos.getTableHeader();
-		th.setFont(new java.awt.Font("Arial", 0, 16));
+		th.setFont(new java.awt.Font("Arial", 0, 14));
 		ajustaColumnasAContenido(jTableAbonosRecibidos);
 	}
 
@@ -1922,9 +1922,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String titulos[] = miPrestamo.getColumnas();
 		jTableReportesPorFecha = new JTable(informacionPrestamosPorFecha, titulos);
 		jScrollPaneReportesPorFecha.setViewportView(jTableReportesPorFecha);
-		jTableReportesPorFecha.setFont(new java.awt.Font("Arial", 0, 16));
+		jTableReportesPorFecha.setFont(new java.awt.Font("Arial", 0, 14));
 		JTableHeader th = jTableReportesPorFecha.getTableHeader();
-		th.setFont(new java.awt.Font("Arial", 0, 16));
+		th.setFont(new java.awt.Font("Arial", 0, 14));
 		ajustaColumnasAContenido(jTableReportesPorFecha);
 	}
 
@@ -1936,9 +1936,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String titulos[] = miAbono.getColumnas();
 		jTableReportesPorFecha = new JTable(informacionAbonosPorFecha, titulos);
 		jScrollPaneReportesPorFecha.setViewportView(jTableReportesPorFecha);
-		jTableReportesPorFecha.setFont(new java.awt.Font("Arial", 0, 16));
+		jTableReportesPorFecha.setFont(new java.awt.Font("Arial", 0, 14));
 		JTableHeader th = jTableReportesPorFecha.getTableHeader();
-		th.setFont(new java.awt.Font("Arial", 0, 16));
+		th.setFont(new java.awt.Font("Arial", 0, 14));
 		ajustaColumnasAContenido(jTableReportesPorFecha);
 	}
 
@@ -1950,9 +1950,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String titulos[] = miPrestamo.getColumnas();
 		jTablePrestamos = new JTable(informacionPrestamos, titulos);
 		jScrollReportes.setViewportView(jTablePrestamos);
-		jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 16));
+		jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 14));
 		JTableHeader th = jTablePrestamos.getTableHeader();
-		th.setFont(new java.awt.Font("Arial", 0, 16));
+		th.setFont(new java.awt.Font("Arial", 0, 14));
 		ajustaColumnasAContenido(jTablePrestamos);
 	}
 
@@ -1965,9 +1965,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String titulos[] = miPrestamo.getColumnasRequerido();
 		jTablePrestamos = new JTable(informacionPrestamos, titulos);
 		jScrollReportes.setViewportView(jTablePrestamos);
-		jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 16));
+		jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 14));
 		JTableHeader th = jTablePrestamos.getTableHeader();
-		th.setFont(new java.awt.Font("Arial", 0, 16));
+		th.setFont(new java.awt.Font("Arial", 0, 14));
 		ajustaColumnasAContenido(jTablePrestamos);
 	}
 
@@ -1978,9 +1978,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String titulos[] = miCliente.getColumnas();
 		jTableClientes = new JTable(informacionClientes, titulos);
 		jScrollPaneClientes.setViewportView(jTableClientes);
-		jTableClientes.setFont(new java.awt.Font("Arial", 0, 16));
+		jTableClientes.setFont(new java.awt.Font("Arial", 0, 14));
 		JTableHeader th = jTableClientes.getTableHeader();
-		th.setFont(new java.awt.Font("Arial", 0, 16));
+		th.setFont(new java.awt.Font("Arial", 0, 14));
 		ajustaColumnasAContenido(jTableClientes);
 
 	}
@@ -1994,9 +1994,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			String titulos[] = miAbono.getColumnas();
 			jTableAbonosRecibidos = new JTable(informacionAbonos, titulos);
 			jScrollAbonosRecibidos.setViewportView(jTableAbonosRecibidos);
-			jTableAbonosRecibidos.setFont(new java.awt.Font("Arial", 0, 16));
+			jTableAbonosRecibidos.setFont(new java.awt.Font("Arial", 0, 14));
 			JTableHeader th = jTableAbonosRecibidos.getTableHeader();
-			th.setFont(new java.awt.Font("Arial", 0, 16));
+			th.setFont(new java.awt.Font("Arial", 0, 14));
 			ajustaColumnasAContenido(jTableAbonosRecibidos);
 
 		} else {
