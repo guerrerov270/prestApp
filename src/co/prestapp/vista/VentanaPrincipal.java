@@ -116,6 +116,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelTotalAbonosCobrados;
 	private JLabel jLabelTotalClientesactivos;
 	private JLabel jLabelCerosPrestamo;
+	private JComboBox jComboBoxCategoriaEmpresa;
+	private JLabel jLabelCategoríaEmpresa;
 	private JLabel jLabelComplemento;
 	private JLabel jLabelComplemento2;
 	private JLabel jLabelComplemento3;
@@ -226,6 +228,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private final String listaClientesAlfa = "Listado de clientes alfabéticamente";
 	private final String listaClientesActivos = "Listado de clientes activos";
 	private final String listaClientesNoActivos = "Listado de clientes no activos";
+	
+	//Nuevos
+	private final String listaClientesEmpresa = "Listado de clientes por empresa/categoria";
+	private final String listaPrestamosEmpresa = "Listado de préstamos por empresa/categoria";
+	private final String listaPrestamosPlazo = "Listado de préstamos por tipo de plazo";
+	private final String listaPrestamosCliente = "Listado de préstamos de un cliente";
+	
 	private final String listaPrestamos = "Listado de préstamos registrados";
 	private final String listaPrestamosPendientes = "Listado de préstamos pendientes";
 	private final String listaPrestamosPagados = "Listado de préstamos pagados";
@@ -239,6 +248,23 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private final String listaMovimientosEntrada = "Listado de movimientos de entrada registrados";
 	private final String listaMovimientosSalida = "Listado de movimientos de salida registrados";
 	private final String listaMovimientosFechas = "Listado de movimientos entre fechas";
+	// SIN CATEGORIA, SEMANAL, IMPULSO, SUPERMERCADO, COMUN, VENDEDORES, DON POLLO,
+	// DROGUERIA, LA LOCURA, MR POMPY, COMUNICACIONES, MOCAWA, HOGAR INFANTIL, OTRO
+	private final String seleccioneUna = "Seleccione una";
+	private final String SinCategoria = "SIN CATEGORIA";
+	private final String Semanal = "SEMANAL";
+	private final String Impulso = "IMPULSO";
+	private final String Supermercados = "SUPERMERCADOS";
+	private final String Comun = "COMÚN";
+	private final String Vendedores = "VENDEDORES";
+	private final String DonPollo = "DON POLLO";
+	private final String Drogueria = "DROGUERIA";
+	private final String LaLocura = "LA LOCURA";
+	private final String MrPompy = "MR POMPY";
+	private final String Comunicaciones = "COMUNICACIONES";
+	private final String Mocawa = "MOCAWA";
+	private final String Hogarinfantil = "HOGAR INFANTIL";
+	private final String Otro = "OTRO";
 
 	private DBError error = new DBError();
 
@@ -264,6 +290,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		actualizaClientes();
 		actualizaReportes();
 		llenaComboListados();
+		llenaComboCategoriaEmpresa();
 
 	}
 
@@ -1036,14 +1063,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						// Panel superior
 						jPaneSeleccionListado = new JPanel();
 						jPaneListados.add(jPaneSeleccionListado, BorderLayout.NORTH);
-						jPaneSeleccionListado.setPreferredSize(new java.awt.Dimension(909, 99));
+						jPaneSeleccionListado.setPreferredSize(new java.awt.Dimension(1057, 153));
 						jPaneSeleccionListado.setBorder(BorderFactory.createTitledBorder("Listados"));
 						jPaneSeleccionListado.setLayout(null);
 						{
 							jButtonBuscarMovimientos = new JButton();
 							jPaneSeleccionListado.add(jButtonBuscarMovimientos);
 							jButtonBuscarMovimientos.setText("Buscar");
-							jButtonBuscarMovimientos.setBounds(665, 60, 229, 30);
+							jButtonBuscarMovimientos.setBounds(795, 61, 229, 30);
 							jButtonBuscarMovimientos.setFont(new java.awt.Font("Arial", 0, 16));
 							jButtonBuscarMovimientos.setEnabled(false);
 							jButtonBuscarMovimientos.addActionListener(new ActionListener() {
@@ -1057,7 +1084,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jPaneSeleccionListado.add(calendarioFinMovimiento);
 							calendarioFinMovimiento.setLocale(new Locale("ES", "CO"));
 							calendarioFinMovimiento.setDateFormatString("dd/MM/yyyy");
-							calendarioFinMovimiento.setBounds(483, 60, 170, 30);
+							calendarioFinMovimiento.setBounds(601, 61, 170, 30);
 							calendarioFinMovimiento.setFont(new java.awt.Font("Arial", 0, 16));
 							calendarioFinMovimiento.setEnabled(false);
 						}
@@ -1065,7 +1092,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jLabelFechaFinMovimiento = new JLabel();
 							jPaneSeleccionListado.add(jLabelFechaFinMovimiento);
 							jLabelFechaFinMovimiento.setText("Fecha fin:");
-							jLabelFechaFinMovimiento.setBounds(355, 60, 132, 30);
+							jLabelFechaFinMovimiento.setBounds(473, 60, 132, 30);
 							jLabelFechaFinMovimiento.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
@@ -1080,7 +1107,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jPaneSeleccionListado.add(calendarioInicioMovimiento);
 							calendarioInicioMovimiento.setLocale(new Locale("ES", "CO"));
 							calendarioInicioMovimiento.setDateFormatString("dd/MM/yyyy");
-							calendarioInicioMovimiento.setBounds(155, 60, 178, 30);
+							calendarioInicioMovimiento.setBounds(267, 60, 178, 30);
 							calendarioInicioMovimiento.setFont(new java.awt.Font("Arial", 0, 16));
 							calendarioInicioMovimiento.setEnabled(false);
 
@@ -1095,7 +1122,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 							jComboSeleccionListado = new JComboBox();
 							jPaneSeleccionListado.add(jComboSeleccionListado);
-							jComboSeleccionListado.setBounds(159, 16, 316, 30);
+							jComboSeleccionListado.setBounds(265, 13, 316, 30);
 							jComboSeleccionListado.setFont(new java.awt.Font("Arial", 0, 16));
 							jComboSeleccionListado.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
@@ -1113,7 +1140,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jPaneSeleccionListado.add(jButtonGenerarPDF);
 
 							jButtonGenerarPDF.setText("Generar PDF");
-							jButtonGenerarPDF.setBounds(483, 14, 170, 30);
+							jButtonGenerarPDF.setBounds(601, 14, 170, 30);
 							jButtonGenerarPDF.setFont(new java.awt.Font("Arial", 0, 16));
 							jButtonGenerarPDF.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
@@ -1130,7 +1157,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jButtonBackup.setIcon(new ImageIcon(otraimgBackup));
 							jPaneSeleccionListado.add(jButtonBackup);
 							jButtonBackup.setText("Copia de seguridad");
-							jButtonBackup.setBounds(664, 14, 229, 30);
+							jButtonBackup.setBounds(795, 14, 229, 30);
 							jButtonBackup.setFont(new java.awt.Font("Arial", 0, 16));
 							jButtonBackup.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
@@ -1138,6 +1165,27 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								}
 							});
 
+						}
+						{
+							jLabelCategoríaEmpresa = new JLabel();
+							jPaneSeleccionListado.add(jLabelCategoríaEmpresa);
+							jLabelCategoríaEmpresa.setText("Categoría/Empresa:");
+							jLabelCategoríaEmpresa.setBounds(12, 112, 143, 30);
+							jLabelCategoríaEmpresa.setFont(new java.awt.Font("Arial", 0, 16));
+						}
+						{
+							ComboBoxModel jComboBoxCategoriaEmpresaModel = new DefaultComboBoxModel(
+									new String[] { "Item One", "Item Two" });
+							jComboBoxCategoriaEmpresa = new JComboBox();
+							jPaneSeleccionListado.add(jComboBoxCategoriaEmpresa);
+							jComboBoxCategoriaEmpresa.setModel(jComboBoxCategoriaEmpresaModel);
+							jComboBoxCategoriaEmpresa.setBounds(267, 112, 316, 30);
+							jComboBoxCategoriaEmpresa.setFont(new java.awt.Font("Arial", 0, 16));
+							jComboBoxCategoriaEmpresa.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jComboBoxCategoriaEmpresaActionPerformed(evt);
+								}
+							});
 						}
 					}
 					{
@@ -1152,6 +1200,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							// Componentes del panel inferior
 							jScrollPaneResultados = new JScrollPane();
 							jPanListaResultados.add(jScrollPaneResultados, BorderLayout.CENTER);
+							jScrollPaneResultados.setPreferredSize(new java.awt.Dimension(1047, 444));
 						}
 					}
 					{
@@ -1706,7 +1755,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					jCheckBoxEditandoPrestamo.setSelected(false);
 					limpiarCamposPrestamo();
 					actualizaAbonos();
-					//actualizaPrestamos();
+					// actualizaPrestamos();
 					actualizaPrestamosRequerido();
 					actualizaReportes();
 				}
@@ -1783,7 +1832,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					JOptionPane.INFORMATION_MESSAGE);
 			limpiarCamposPrestamo();
 			actualizaAbonos();
-			//actualizaPrestamos();
+			// actualizaPrestamos();
 			actualizaPrestamosRequerido();
 			actualizaReportes();
 		}
@@ -1854,7 +1903,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				}
 
 				actualizaReportes();
-				//actualizaPrestamos();
+				// actualizaPrestamos();
 				actualizaPrestamosRequerido();
 				return;
 			}
@@ -1880,7 +1929,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				} else {
 					actualizaPrestamoBuscado();
 				}
-				//actualizaPrestamos();
+				// actualizaPrestamos();
 				actualizaPrestamosRequerido();
 				actualizaReportes();
 				JOptionPane.showMessageDialog(this, "Abono guardado correctamente", "Información",
@@ -2242,6 +2291,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				listaAbonosPendientes, listaAbonosPagados, listaAbonosPendientesFecha, listaAbonosPagadosFecha,
 				listaMovimientos, listaMovimientosEntrada, listaMovimientosSalida, listaMovimientosFechas });
 		jComboSeleccionListado.setModel(jComboListadosModel);
+
+	}
+
+	private void llenaComboCategoriaEmpresa() {
+
+		ComboBoxModel<String> jComboCategoriasModel = new DefaultComboBoxModel<String>(
+				new String[] { seleccioneUna, SinCategoria, Semanal, Impulso, Supermercados, Comun, Vendedores,
+						DonPollo, Drogueria, LaLocura, MrPompy, Comunicaciones, Mocawa, Hogarinfantil, Otro });
+		jComboBoxCategoriaEmpresa.setModel(jComboCategoriasModel);
 
 	}
 
@@ -3153,9 +3211,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			String informacionClientes[][] = miCliente.obtenerMatrizClientes();
 			tablaResultados = new JTable(informacionClientes, titulosCliente);
 			jScrollPaneResultados.setViewportView(tablaResultados);
-			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 14));
 			JTableHeader thClientes = tablaResultados.getTableHeader();
-			thClientes.setFont(new java.awt.Font("Arial", 0, 16));
+			thClientes.setFont(new java.awt.Font("Arial", 0, 14));
 			ajustaColumnasAContenido(tablaResultados);
 			break;
 		case listaClientesAlfa:
@@ -3163,9 +3221,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			String informacionClientesAlfa[][] = miCliente.obtenerMatrizClientesAlfa();
 			tablaResultados = new JTable(informacionClientesAlfa, titulosCliente);
 			jScrollPaneResultados.setViewportView(tablaResultados);
-			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 14));
 			JTableHeader thClientesAlfa = tablaResultados.getTableHeader();
-			thClientesAlfa.setFont(new java.awt.Font("Arial", 0, 16));
+			thClientesAlfa.setFont(new java.awt.Font("Arial", 0, 14));
 			ajustaColumnasAContenido(tablaResultados);
 			break;
 		case listaClientesActivos:
@@ -3173,9 +3231,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			String informacionClientesActivos[][] = miCliente.obtenerMatrizClientesActivos();
 			tablaResultados = new JTable(informacionClientesActivos, titulosCliente);
 			jScrollPaneResultados.setViewportView(tablaResultados);
-			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 14));
 			JTableHeader thClientesActivos = tablaResultados.getTableHeader();
-			thClientesActivos.setFont(new java.awt.Font("Arial", 0, 16));
+			thClientesActivos.setFont(new java.awt.Font("Arial", 0, 14));
 			ajustaColumnasAContenido(tablaResultados);
 			break;
 		case listaClientesNoActivos:
@@ -3183,9 +3241,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			String informacionClientesNOActivos[][] = miCliente.obtenerMatrizClientesNOActivos();
 			tablaResultados = new JTable(informacionClientesNOActivos, titulosCliente);
 			jScrollPaneResultados.setViewportView(tablaResultados);
-			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 14));
 			JTableHeader thClientesNOActivos = tablaResultados.getTableHeader();
-			thClientesNOActivos.setFont(new java.awt.Font("Arial", 0, 16));
+			thClientesNOActivos.setFont(new java.awt.Font("Arial", 0, 14));
 			ajustaColumnasAContenido(tablaResultados);
 			break;
 		case listaPrestamos:
@@ -3194,9 +3252,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			String informacionPrestamos[][] = miPrestamo.obtenerMatrizPrestamos();
 			tablaResultados = new JTable(informacionPrestamos, titulosPrestamo);
 			jScrollPaneResultados.setViewportView(tablaResultados);
-			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 14));
 			JTableHeader thPrestamos = tablaResultados.getTableHeader();
-			thPrestamos.setFont(new java.awt.Font("Arial", 0, 16));
+			thPrestamos.setFont(new java.awt.Font("Arial", 0, 14));
 			ajustaColumnasAContenido(tablaResultados);
 			break;
 		case listaPrestamosPendientes:
@@ -3205,9 +3263,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			String informacionPrestamosPendientes[][] = miPrestamo.obtenerMatrizPrestamosPendientes();
 			tablaResultados = new JTable(informacionPrestamosPendientes, titulosPrestamo);
 			jScrollPaneResultados.setViewportView(tablaResultados);
-			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 14));
 			JTableHeader thPrestamosPendientes = tablaResultados.getTableHeader();
-			thPrestamosPendientes.setFont(new java.awt.Font("Arial", 0, 16));
+			thPrestamosPendientes.setFont(new java.awt.Font("Arial", 0, 14));
 			ajustaColumnasAContenido(tablaResultados);
 			break;
 		case listaPrestamosPagados:
@@ -3216,9 +3274,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			String informacionPrestamosPagados[][] = miPrestamo.obtenerMatrizPrestamosPagados();
 			tablaResultados = new JTable(informacionPrestamosPagados, titulosPrestamo);
 			jScrollPaneResultados.setViewportView(tablaResultados);
-			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 14));
 			JTableHeader thPrestamosPagados = tablaResultados.getTableHeader();
-			thPrestamosPagados.setFont(new java.awt.Font("Arial", 0, 16));
+			thPrestamosPagados.setFont(new java.awt.Font("Arial", 0, 14));
 			ajustaColumnasAContenido(tablaResultados);
 			break;
 		case listaPrestamosVencidos:
@@ -3227,9 +3285,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			if (informacionPrestamosVencidos != null) {
 				tablaResultados = new JTable(informacionPrestamosVencidos, titulosPrestamo);
 				jScrollPaneResultados.setViewportView(tablaResultados);
-				tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+				tablaResultados.setFont(new java.awt.Font("Arial", 0, 14));
 				JTableHeader thPrestamosVencidos = tablaResultados.getTableHeader();
-				thPrestamosVencidos.setFont(new java.awt.Font("Arial", 0, 16));
+				thPrestamosVencidos.setFont(new java.awt.Font("Arial", 0, 14));
 				ajustaColumnasAContenido(tablaResultados);
 
 			} else {
@@ -3241,9 +3299,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			String informacionAbonos[][] = miAbono.obtenerMatrizAbonos();
 			tablaResultados = new JTable(informacionAbonos, titulosAbono);
 			jScrollPaneResultados.setViewportView(tablaResultados);
-			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 14));
 			JTableHeader thAbonos = tablaResultados.getTableHeader();
-			thAbonos.setFont(new java.awt.Font("Arial", 0, 16));
+			thAbonos.setFont(new java.awt.Font("Arial", 0, 14));
 			ajustaColumnasAContenido(tablaResultados);
 			break;
 		case listaAbonosPendientes:
@@ -3251,9 +3309,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			String informacionAbonosPendientes[][] = miAbono.obtenerMatrizAbonosPendientes();
 			tablaResultados = new JTable(informacionAbonosPendientes, titulosAbono);
 			jScrollPaneResultados.setViewportView(tablaResultados);
-			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 14));
 			JTableHeader thAbonosPen = tablaResultados.getTableHeader();
-			thAbonosPen.setFont(new java.awt.Font("Arial", 0, 16));
+			thAbonosPen.setFont(new java.awt.Font("Arial", 0, 14));
 			ajustaColumnasAContenido(tablaResultados);
 			break;
 		case listaAbonosPagados:
@@ -3262,8 +3320,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			tablaResultados = new JTable(informacionAbonosPagados, titulosAbono);
 			jScrollPaneResultados.setViewportView(tablaResultados);
 			JTableHeader thAbonosPag = tablaResultados.getTableHeader();
-			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
-			thAbonosPag.setFont(new java.awt.Font("Arial", 0, 16));
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 14));
+			thAbonosPag.setFont(new java.awt.Font("Arial", 0, 14));
 			ajustaColumnasAContenido(tablaResultados);
 			break;
 		case listaAbonosPendientesFecha:
@@ -3290,8 +3348,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			tablaResultados = new JTable(informacionMovimientos, titulosMovimiento);
 			jScrollPaneResultados.setViewportView(tablaResultados);
 			JTableHeader thMovimientos = tablaResultados.getTableHeader();
-			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
-			thMovimientos.setFont(new java.awt.Font("Arial", 0, 16));
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 14));
+			thMovimientos.setFont(new java.awt.Font("Arial", 0, 14));
 			ajustaColumnasAContenido(tablaResultados);
 			jTextTotalentradas.setText(formatoMoneda.format(miMovimiento.calcularTotalEntradas()) + "");
 			jTextTotalSalidas.setText(formatoMoneda.format(miMovimiento.calcularTotalSalidas()) + "");
@@ -3304,8 +3362,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			tablaResultados = new JTable(informacionMovimientosEntrada, titulosMovimiento);
 			jScrollPaneResultados.setViewportView(tablaResultados);
 			JTableHeader thMovimientosEntrada = tablaResultados.getTableHeader();
-			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
-			thMovimientosEntrada.setFont(new java.awt.Font("Arial", 0, 16));
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 14));
+			thMovimientosEntrada.setFont(new java.awt.Font("Arial", 0, 14));
 			ajustaColumnasAContenido(tablaResultados);
 			jTextTotalentradas.setText(formatoMoneda.format(miMovimiento.calcularTotalEntradas()) + "");
 			jTextTotalSalidas.setText("");
@@ -3317,8 +3375,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			tablaResultados = new JTable(informacionMovimientosSalida, titulosMovimiento);
 			jScrollPaneResultados.setViewportView(tablaResultados);
 			JTableHeader thMovimientosSalida = tablaResultados.getTableHeader();
-			tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
-			thMovimientosSalida.setFont(new java.awt.Font("Arial", 0, 16));
+			tablaResultados.setFont(new java.awt.Font("Arial", 0, 14));
+			thMovimientosSalida.setFont(new java.awt.Font("Arial", 0, 14));
 			ajustaColumnasAContenido(tablaResultados);
 			jTextTotalentradas.setText("");
 			jTextTotalSalidas.setText(formatoMoneda.format(miMovimiento.calcularTotalSalidas()) + "");
@@ -3359,8 +3417,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				tablaResultados = new JTable(informacionMovimientosFechas, titulosMovimiento);
 				jScrollPaneResultados.setViewportView(tablaResultados);
 				JTableHeader thMovimientos = tablaResultados.getTableHeader();
-				tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
-				thMovimientos.setFont(new java.awt.Font("Arial", 0, 16));
+				tablaResultados.setFont(new java.awt.Font("Arial", 0, 14));
+				thMovimientos.setFont(new java.awt.Font("Arial", 0, 14));
 				ajustaColumnasAContenido(tablaResultados);
 				jTextTotalentradas
 						.setText(formatoMoneda.format(miMovimiento.calcularTotalEntradas(fechaInicio, fechaFin)) + "");
@@ -3389,9 +3447,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						fechaFin);
 				tablaResultados = new JTable(informacionAbonosPendientesFecha, titulosAbono);
 				jScrollPaneResultados.setViewportView(tablaResultados);
-				tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
+				tablaResultados.setFont(new java.awt.Font("Arial", 0, 14));
 				JTableHeader thAbonosPenF = tablaResultados.getTableHeader();
-				thAbonosPenF.setFont(new java.awt.Font("Arial", 0, 16));
+				thAbonosPenF.setFont(new java.awt.Font("Arial", 0, 14));
 				ajustaColumnasAContenido(tablaResultados);
 				jTextTotalSalidas.setText(
 						formatoMoneda.format(miAbono.calcularTotalRecaudoAbonosPendiente(fechaInicio, fechaFin)) + "");
@@ -3415,8 +3473,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				tablaResultados = new JTable(informacionAbonosPagadosFecha, titulosAbono);
 				jScrollPaneResultados.setViewportView(tablaResultados);
 				JTableHeader thAbonosPagF = tablaResultados.getTableHeader();
-				tablaResultados.setFont(new java.awt.Font("Arial", 0, 16));
-				thAbonosPagF.setFont(new java.awt.Font("Arial", 0, 16));
+				tablaResultados.setFont(new java.awt.Font("Arial", 0, 14));
+				thAbonosPagF.setFont(new java.awt.Font("Arial", 0, 14));
 				ajustaColumnasAContenido(tablaResultados);
 				jTextTotalentradas.setText(
 						formatoMoneda.format(miAbono.calcularTotalRecaudoAbonosRecibido(fechaInicio, fechaFin)) + "");
@@ -3437,6 +3495,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private void jButtonVerTodosAbonoActionPerformed(ActionEvent evt) {
 		actualizaAbonos();
+	}
+
+	private void jComboBoxCategoriaEmpresaActionPerformed(ActionEvent evt) {
+		System.out.println("jComboBoxCategoriaEmpresa.actionPerformed, event=" + evt);
+		// TODO add your code for jComboBoxCategoriaEmpresa.actionPerformed
 	}
 
 }
