@@ -507,7 +507,7 @@ public class AbonoDAO {
 		java.sql.Date fechaSeleccionadaFormateada = new java.sql.Date(fechaSeleccionada.getTime());
 
 		try {
-			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_abonos_pagados_por_fecha(?)}");
+			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_abonos_pagados_una_fecha(?)}");
 			miProcedimiento.setDate(1, fechaSeleccionadaFormateada);
 			ResultSet miRs = miProcedimiento.executeQuery();
 			DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
