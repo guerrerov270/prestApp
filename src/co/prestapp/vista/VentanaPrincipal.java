@@ -1993,6 +1993,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		ajustaColumnasAContenido(jTableReportesPorFecha);
 	}
 
+	@SuppressWarnings("unused")
 	private void actualizaPrestamos() {
 
 		PrestamoDAO miPrestamo = new PrestamoDAO();
@@ -3444,7 +3445,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jComboBoxCategoriaEmpresa.setEnabled(true);
 			break;
 		case listaPrestamosCliente:
-			String codigoCliente=JOptionPane.showInputDialog("Ingrese código del cliente");
+			@SuppressWarnings("unused") String codigoCliente=JOptionPane.showInputDialog("Ingrese código del cliente");
 			break;
 
 		}
