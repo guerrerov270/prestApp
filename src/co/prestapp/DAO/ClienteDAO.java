@@ -11,8 +11,8 @@ import co.prestapp.connection.DBConnection;
 import co.prestapp.connection.DBError;
 
 public class ClienteDAO {
-	
-	DBError error= new DBError();
+
+	DBError error = new DBError();
 
 	public void agregarCliente(String nombre, String empresa, String referencia) {
 
@@ -66,7 +66,7 @@ public class ClienteDAO {
 
 	public String[] getColumnas() {
 
-		String encabezados[] = { "#", "Código", "Nombre", "Empresa", "Referencia", "Estado" };
+		String encabezados[] = { "Código", "Nombre", "Empresa", "Referencia", "Estado" };
 		return encabezados;
 	}// Fin getColumnas
 
@@ -107,7 +107,8 @@ public class ClienteDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para contar clientes registrados");
 			System.out.println(e.getMessage());
-			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".contarClientesRegistrados");
+			error.guardarMensajeError(e.getMessage(),
+					this.getClass().getCanonicalName() + ".contarClientesRegistrados");
 		}
 
 		return totalRegistrados;
@@ -136,6 +137,21 @@ public class ClienteDAO {
 	}
 
 	// ------------------------------------------------------VO-------------------------------------------
+	public void verificarEstadoCliente(String codigoCliente) {
+
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		CallableStatement miProcedimientoVerificarClientes;
+		try {
+			miProcedimientoVerificarClientes = conexion.prepareCall("{call verificar_estado_clientes(?)}");
+			miProcedimientoVerificarClientes.setString(1, codigoCliente);
+			miProcedimientoVerificarClientes.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 
 	public ArrayList<ClienteVO> buscarClientesConMatriz() {
 
@@ -145,19 +161,20 @@ public class ClienteDAO {
 		ClienteVO miCliente;
 		try {
 			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_clientes}");
+
 			ResultSet miRs = miProcedimiento.executeQuery();
 
 			while (miRs.next()) {
 				miCliente = new ClienteVO();
-				miCliente.setIDCliente(miRs.getInt("idCliente"));
 				miCliente.setCodigoCliente(miRs.getString("codigoCliente"));
 				miCliente.setNombreCliente(miRs.getString("nombreCliente"));
 				miCliente.setEmpresaCliente(miRs.getString("empresaCliente"));
 				miCliente.setReferenciaCliente(miRs.getString("referenciaCliente"));
 				miCliente.setEstadoCliente(miRs.getString("estadoCliente"));
-
+				verificarEstadoCliente(miRs.getString("codigoCliente"));
 				listaClientes.add(miCliente);
 			}
+
 			miRs.close();
 			conexion.close();
 
@@ -177,12 +194,11 @@ public class ClienteDAO {
 		String matrizInfo[][] = new String[listaClientes.size()][6];
 
 		for (int i = 0; i < listaClientes.size(); i++) {
-			matrizInfo[i][0] = listaClientes.get(i).getIDCliente() + "";
-			matrizInfo[i][1] = listaClientes.get(i).getCodigoCliente() + "";
-			matrizInfo[i][2] = listaClientes.get(i).getNombreCliente() + "";
-			matrizInfo[i][3] = listaClientes.get(i).getEmpresaCliente() + "";
-			matrizInfo[i][4] = listaClientes.get(i).getReferenciaCliente() + "";
-			matrizInfo[i][5] = listaClientes.get(i).getEstadoCliente() + "";
+			matrizInfo[i][0] = listaClientes.get(i).getCodigoCliente() + "";
+			matrizInfo[i][1] = listaClientes.get(i).getNombreCliente() + "";
+			matrizInfo[i][2] = listaClientes.get(i).getEmpresaCliente() + "";
+			matrizInfo[i][3] = listaClientes.get(i).getReferenciaCliente() + "";
+			matrizInfo[i][4] = listaClientes.get(i).getEstadoCliente() + "";
 		}
 
 		return matrizInfo;
@@ -253,7 +269,8 @@ public class ClienteDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para listar clientes");
 			System.out.println(e.getMessage());
-			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".buscarClientesConMatrizAlfa");
+			error.guardarMensajeError(e.getMessage(),
+					this.getClass().getCanonicalName() + ".buscarClientesConMatrizAlfa");
 
 		}
 		return listaClientes;
@@ -303,7 +320,8 @@ public class ClienteDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para listar clientes");
 			System.out.println(e.getMessage());
-			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".buscarClientesConMatrizActivos");
+			error.guardarMensajeError(e.getMessage(),
+					this.getClass().getCanonicalName() + ".buscarClientesConMatrizActivos");
 
 		}
 		return listaClientes;
@@ -353,7 +371,8 @@ public class ClienteDAO {
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar consulta para listar clientes");
 			System.out.println(e.getMessage());
-			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".buscarClientesConMatrizNOActivos");
+			error.guardarMensajeError(e.getMessage(),
+					this.getClass().getCanonicalName() + ".buscarClientesConMatrizNOActivos");
 
 		}
 		return listaClientes;

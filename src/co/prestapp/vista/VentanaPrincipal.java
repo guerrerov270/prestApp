@@ -285,11 +285,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	public VentanaPrincipal() {
 		super();
 		initGUI();
-		// actualizaPrestamos();
-		actualizaPrestamosRequerido();
-		actualizaAbonos();
-		actualizaClientes();
-		actualizaReportes();
+		actualizaTodo();
 		llenaComboListados();
 		llenaComboCategoriaEmpresa();
 
@@ -570,6 +566,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jPanelEntradasPrestamo.add(calendarioFinPrestamo, "5, 4");
 								calendarioFinPrestamo.setBounds(162, 78, 178, 30);
 								calendarioFinPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
+								calendarioFinPrestamo.setEnabled(false);
 							}
 							{
 								jCheckBoxEditandoPrestamo = new JCheckBox();
@@ -661,10 +658,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 							}
 							{
+								URL urlDeLaImagen1 = VentanaPrincipal.class.getClassLoader()
+										.getResource("co/prestapp/res/noPagado.png");
+								ImageIcon icono1 = new ImageIcon(urlDeLaImagen1);
+								Image img1 = icono1.getImage();
+								Image otraimg1 = img1.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
 								jButtonEliminarPrestamo = new JButton();
+								jButtonEliminarPrestamo.setIcon(new ImageIcon(otraimg1));
 								jPanelEntradasPrestamo.add(jButtonEliminarPrestamo, "5, 5");
 								jButtonEliminarPrestamo.setText("Eliminar");
 								jButtonEliminarPrestamo.setFont(new java.awt.Font("Arial", 0, 14));
+								jButtonEliminarPrestamo.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent evt) {
+										jButtonEliminarPrestamoActionPerformed(evt);
+									}
+								});
 							}
 							{
 								jLabel1 = new JLabel();
@@ -1242,8 +1250,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					{
 						// Aquí el panel de cifras
 						jPanelCifras = new JPanel();
-						TableLayout jPanelCifrasLayout = new TableLayout(
-								new double[][] { { 10, 200, 150,50, 10, 200, 150,50, 10 }, { 30, 30, 30, 30, 30, 30,30 } });
+						TableLayout jPanelCifrasLayout = new TableLayout(new double[][] {
+								{ 10, 200, 150, 50, 10, 200, 150, 50, 10 }, { 30, 30, 30, 30, 30, 30, 30 } });
 						jPanelCifrasLayout.setHGap(5);
 						jPanelCifrasLayout.setVGap(5);
 						jPanelReportes.add(jPanelCifras, BorderLayout.NORTH);
@@ -1511,8 +1519,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					JOptionPane.INFORMATION_MESSAGE);
 			limpiarCamposCliente();
 			jCheckBoxEdicionCliente.setSelected(false);
-			actualizaClientes();
-			actualizaReportes();
+			actualizaTodo();
 			return;
 		}
 		if (validarCamposCliente()) {
@@ -1524,8 +1531,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			JOptionPane.showMessageDialog(this, "Cliente guardado con éxito", "Información",
 					JOptionPane.INFORMATION_MESSAGE);
 			limpiarCamposCliente();
-			actualizaClientes();
-			actualizaReportes();
+			actualizaTodo();
 
 		}
 
@@ -1568,6 +1574,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		jLabelComplemento6.setText("Referencia");
 		calendarioPrestamos.setDate(null);
 		calendarioFinPrestamo.setDate(null);
+		calendarioFinPrestamo.setEnabled(false);
 
 	}
 
@@ -1659,7 +1666,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		Date fechaInicio = null;
 		// La ultima fecha del arreglo
 		Date fechaFin = null;
-		String codigoCliente = "";
+		String codigoCliente = jLabelCodigo.getText();
 		String codigoPrestamo = jLabelCodigoPrestamoOculto.getText();
 		ArrayList<Date> fechasPago = new ArrayList<Date>();
 
@@ -1746,10 +1753,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							JOptionPane.INFORMATION_MESSAGE);
 					jCheckBoxEditandoPrestamo.setSelected(false);
 					limpiarCamposPrestamo();
-					actualizaAbonos();
-					// actualizaPrestamos();
-					actualizaPrestamosRequerido();
-					actualizaReportes();
+					actualizaTodo();
 				}
 
 			}
@@ -1822,10 +1826,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			JOptionPane.showMessageDialog(this, "El préstamo se ha creado correctamente", "Información",
 					JOptionPane.INFORMATION_MESSAGE);
 			limpiarCamposPrestamo();
-			actualizaAbonos();
-			// actualizaPrestamos();
-			actualizaPrestamosRequerido();
-			actualizaReportes();
+			actualizaTodo();
 		}
 
 	}
@@ -1893,9 +1894,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					actualizaPrestamoBuscado();
 				}
 
-				actualizaReportes();
-				// actualizaPrestamos();
 				actualizaPrestamosRequerido();
+				actualizaClientes();
+				actualizaReportes();
 				return;
 			}
 		}
@@ -1920,8 +1921,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				} else {
 					actualizaPrestamoBuscado();
 				}
-				// actualizaPrestamos();
 				actualizaPrestamosRequerido();
+				actualizaClientes();
 				actualizaReportes();
 				JOptionPane.showMessageDialog(this, "Abono guardado correctamente", "Información",
 						JOptionPane.INFORMATION_MESSAGE);
@@ -1941,6 +1942,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	}
 
 	// -----------------Tablas------------------------------------------------------
+	private void actualizaTodo() {
+
+		actualizaPrestamosRequerido();
+		actualizaAbonos();
+		actualizaReportes();
+		actualizaClientes();
+
+	}
+
 	private void actualizaAbonos() {
 
 		AbonoDAO miAbono = new AbonoDAO();
@@ -1982,7 +1992,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		ajustaColumnasAContenido(jTableReportesPorFecha);
 	}
 
-	@SuppressWarnings("unused")
 	private void actualizaPrestamos() {
 
 		PrestamoDAO miPrestamo = new PrestamoDAO();
@@ -2159,7 +2168,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								JOptionPane.showMessageDialog(this, "Debe especificar un código de cliente válido",
 										"Alerta", JOptionPane.WARNING_MESSAGE);
 							} else {
-								resultado = true;
+								if (calendarioFinPrestamo.getDate() == null) {
+									JOptionPane.showMessageDialog(this,
+											"Debe presionar <Calcular> para obtener la fecha final del préstamo",
+											"Alerta", JOptionPane.WARNING_MESSAGE);
+								} else {
+									resultado = true;
+								}
+
 							}
 
 						}
@@ -3732,6 +3748,25 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			ajustaColumnasAContenido(jTablePrestamos);
 
 			break;
+		}
+	}
+
+	private void jButtonEliminarPrestamoActionPerformed(ActionEvent evt) {
+
+		PrestamoDAO miPrestamoDAO = new PrestamoDAO();
+		String codigoPrestamo = JOptionPane.showInputDialog("Ingrese código del préstamo");
+		PrestamoVO miPrestamo = miPrestamoDAO.buscarPrestamo(codigoPrestamo);
+		if (miPrestamo != null) {
+			miPrestamoDAO.eliminarPrestamo(codigoPrestamo);
+			JOptionPane.showMessageDialog(this, "Préstamo eliminado con éxito", "Eliminación exitosa",
+					JOptionPane.INFORMATION_MESSAGE);
+			miPrestamoDAO.actualizaPagos();
+			actualizaTodo();
+
+		} else {
+			JOptionPane.showMessageDialog(this, "Verifique el código del préstamo", "Préstamo no encontrado",
+					JOptionPane.WARNING_MESSAGE);
+
 		}
 	}
 

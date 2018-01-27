@@ -1042,4 +1042,22 @@ public class PrestamoDAO {
 		return listaPrestamos;
 	}
 
+	public void eliminarPrestamo(String codigoPrestamo) {
+
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		try {
+			CallableStatement miProcedimiento = conexion.prepareCall("{call eliminar_prestamo(?)}");
+			miProcedimiento.setString(1, codigoPrestamo);
+			miProcedimiento.executeQuery();
+			conexion.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al ejecutar consulta para eliminar préstamo");
+			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".eliminarPrestamo");
+		}
+
+	}
+
 }// Fin clase
