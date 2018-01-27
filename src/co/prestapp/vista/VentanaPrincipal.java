@@ -691,21 +691,26 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					}
 					{
 						jPanelAgregarAbono = new JPanel();
-						GridLayout jPanelAgregarAbonoLayout = new GridLayout(6, 3, 5, 5);
+						TableLayout jPanelAgregarAbonoLayout = new TableLayout
+								(new double[][] {
+									{ 10, 200, 98,98,195,195,200,10 },
+									{ 30, 30, 30, 30,30,30} });
+						jPanelAgregarAbonoLayout.setHGap(5);
+						jPanelAgregarAbonoLayout.setVGap(5);
 						jPanelAbonos.add(jPanelAgregarAbono, BorderLayout.NORTH);
 						jPanelAgregarAbono.setPreferredSize(new java.awt.Dimension(1037, 223));
 						jPanelAgregarAbono.setBorder(BorderFactory.createTitledBorder("Agregar abono"));
 						jPanelAgregarAbono.setLayout(jPanelAgregarAbonoLayout);
 						{
 							jLabelCodigoPrestamo = new JLabel();
-							jPanelAgregarAbono.add(jLabelCodigoPrestamo);
+							jPanelAgregarAbono.add(jLabelCodigoPrestamo, "0, 0");
 							jLabelCodigoPrestamo.setText("Código préstamo:");
 							jLabelCodigoPrestamo.setBounds(17, 30, 178, 30);
 							jLabelCodigoPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
 							jTextCodigoPrestamo = new JTextField();
-							jPanelAgregarAbono.add(jTextCodigoPrestamo);
+							jPanelAgregarAbono.add(jTextCodigoPrestamo, "1, 0");
 							jTextCodigoPrestamo.setBounds(162, 30, 178, 30);
 							jTextCodigoPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
 						}
@@ -716,7 +721,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							Image img = icono.getImage();
 							Image otraimg = img.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
 							jButtonBuscarPrestamo = new JButton();
-							jPanelAgregarAbono.add(jButtonBuscarPrestamo);
+							jPanelAgregarAbono.add(jButtonBuscarPrestamo, "2, 0");
 							jButtonBuscarPrestamo.setIcon(new ImageIcon(otraimg));
 							jButtonBuscarPrestamo.setText("Buscar");
 							jButtonBuscarPrestamo.setBounds(376, 25, 130, 30);
@@ -731,7 +736,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 						{
 							jLabelCodigoAbono = new JLabel();
-							jPanelAgregarAbono.add(jLabelCodigoAbono);
+							jPanelAgregarAbono.add(jLabelCodigoAbono, "3, 0");
 							jLabelCodigoAbono.setText("Código abono:");
 							jLabelCodigoAbono.setBounds(381, 78, 178, 30);
 							jLabelCodigoAbono.setFont(new java.awt.Font("Arial", 0, 16));
@@ -739,7 +744,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						}
 						{
 							jTextFieldCodigoAbono = new JTextField();
-							jPanelAgregarAbono.add(jTextFieldCodigoAbono);
+							jPanelAgregarAbono.add(jTextFieldCodigoAbono, "0, 1");
 							jTextFieldCodigoAbono.setBounds(496, 78, 71, 30);
 							jTextFieldCodigoAbono.setFont(new java.awt.Font("Arial", 0, 16));
 
@@ -753,7 +758,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jButtonVerTodosAbono = new JButton();
 							jButtonVerTodosAbono.setIcon(new ImageIcon(otraimg));
 							jButtonVerTodosAbono.setText("Ver todos");
-							jPanelAgregarAbono.add(jButtonVerTodosAbono);
+							jPanelAgregarAbono.add(jButtonVerTodosAbono, "1, 1");
 							jButtonVerTodosAbono.setFont(new java.awt.Font("Arial", 0, 14));
 							jButtonVerTodosAbono.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
@@ -765,7 +770,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 						{
 							jLabelFecha = new JLabel();
-							jPanelAgregarAbono.add(jLabelFecha);
+							jPanelAgregarAbono.add(jLabelFecha, "2, 1");
 							jLabelFecha.setText("Fecha de pago:");
 							jLabelFecha.setBounds(17, 78, 178, 30);
 							jLabelFecha.setFont(new java.awt.Font("Arial", 0, 16));
@@ -773,13 +778,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 						{
 							calendarioAbonos = new JDateChooser();
-							jPanelAgregarAbono.add(calendarioAbonos);
+							jPanelAgregarAbono.add(calendarioAbonos, "3, 1");
 							calendarioAbonos.setBounds(162, 78, 178, 30);
 							calendarioAbonos.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
 							jCheckBoxEditandoAbono = new JCheckBox();
-							jPanelAgregarAbono.add(jCheckBoxEditandoAbono);
+							jPanelAgregarAbono.add(jCheckBoxEditandoAbono, "0, 2");
 							jCheckBoxEditandoAbono.setText("Editando");
 							jCheckBoxEditandoAbono.setBounds(779, 181, 126, 20);
 							jCheckBoxEditandoAbono.setFont(new java.awt.Font("Arial", 0, 16));
@@ -787,14 +792,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						}
 						{
 							jLabelMonto = new JLabel();
-							jPanelAgregarAbono.add(jLabelMonto);
+							jPanelAgregarAbono.add(jLabelMonto, "1, 2");
 							jLabelMonto.setText("Monto a abonar:                                          $");
 							jLabelMonto.setBounds(592, 76, 146, 30);
 							jLabelMonto.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
 							jTextField1 = new JTextField();
-							jPanelAgregarAbono.add(jTextField1);
+							jPanelAgregarAbono.add(jTextField1, "2, 2");
 							jTextField1.setBounds(730, 76, 80, 30);
 							jTextField1.setFont(new java.awt.Font("Arial", 0, 16));
 							jTextField1.addKeyListener(new KeyAdapter() {
@@ -811,14 +816,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						}
 						{
 							jLabelCerosAbono = new JLabel();
-							jPanelAgregarAbono.add(jLabelCerosAbono);
+							jPanelAgregarAbono.add(jLabelCerosAbono, "3, 2");
 							jLabelCerosAbono.setText(".000");
 							jLabelCerosAbono.setBounds(810, 83, 48, 30);
 							jLabelCerosAbono.setFont(new java.awt.Font("Arial", 0, 18));
 						}
 						{
 							jLabelComplemento3 = new JLabel();
-							jPanelAgregarAbono.add(jLabelComplemento3);
+							jPanelAgregarAbono.add(jLabelComplemento3, "0, 3");
 							jLabelComplemento3.setText("Fecha de cobro: (Sólo para edición)");
 							jLabelComplemento3.setBounds(12, 65, 65, 10);
 							jLabelComplemento3.setFont(new java.awt.Font("Arial", 0, 16));
@@ -826,14 +831,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						}
 						{
 							calendarioAbonosCobro = new JDateChooser();
-							jPanelAgregarAbono.add(calendarioAbonosCobro);
+							jPanelAgregarAbono.add(calendarioAbonosCobro, "1, 3");
 							calendarioAbonosCobro.setBounds(162, 78, 178, 30);
 							calendarioAbonosCobro.setEnabled(false);
 							calendarioAbonosCobro.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
 							jLabelComplemento2 = new JLabel();
-							jPanelAgregarAbono.add(jLabelComplemento2);
+							jPanelAgregarAbono.add(jLabelComplemento2, "2, 3");
 							jLabelComplemento2.setBounds(12, 65, 65, 10);
 
 						}
@@ -845,7 +850,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							Image img = icono.getImage();
 							Image otraimg = img.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
 							jButtonGuardar = new JButton();
-							jPanelAgregarAbono.add(jButtonGuardar);
+							jPanelAgregarAbono.add(jButtonGuardar, "3, 3");
 							jButtonGuardar.setIcon(new ImageIcon(otraimg));
 							jButtonGuardar.setText("Guardar");
 							// jButtonGuardar.setBounds(17, 147, 130, 30);
@@ -863,7 +868,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							Image img = icono.getImage();
 							Image otraimg = img.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
 							jButtonEditarAbono = new JButton();
-							jPanelAgregarAbono.add(jButtonEditarAbono);
+							jPanelAgregarAbono.add(jButtonEditarAbono, "0, 4");
 							jButtonEditarAbono.setIcon(new ImageIcon(otraimg));
 							jButtonEditarAbono.setText("Editar");
 							// jButtonEditarAbono.setBounds(185, 146, 130, 30);
@@ -882,7 +887,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							Image img = icono.getImage();
 							Image otraimg = img.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
 							jButtonCancelarAbono = new JButton();
-							jPanelAgregarAbono.add(jButtonCancelarAbono);
+							jPanelAgregarAbono.add(jButtonCancelarAbono, "1, 4");
 							jButtonCancelarAbono.setIcon(new ImageIcon(otraimg));
 							jButtonCancelarAbono.setText("Cancelar");
 							// jButtonCancelarAbono.setBounds(351, 147, 145, 30);
