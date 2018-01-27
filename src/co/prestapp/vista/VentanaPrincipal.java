@@ -117,12 +117,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelTotalAbonosPendientes;
 	private JLabel jLabelTotalAbonosCobrados;
 	private JLabel jLabelTotalClientesactivos;
-	private JLabel jLabelCerosPrestamo;
+	private JLabel jLabel1;
 	private JButton jButtonEliminarPrestamo;
 	private JComboBox<String> jComboBoxCategoriaEmpresa;
 	private JLabel jLabelCategoríaEmpresa;
 	private JLabel jLabelComplemento;
-	private JLabel jLabelComplemento2;
 	private JLabel jLabelComplemento3;
 	private JLabel jLabelComplemento4;
 	private JLabel jLabelComplemento6;
@@ -352,9 +351,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					}
 					{
 						jPanelEntradasPrestamo = new JPanel();
-						TableLayout jPanelEntradasPrestamoLayout = new TableLayout(new double[][] {
-								{ 10, 200, 98,98,195,195,200,10 },
-								{ 30, 30, 30, 30,30,30} });
+						TableLayout jPanelEntradasPrestamoLayout = new TableLayout(
+								new double[][] { { 10, 200, 98, 98, 195, 195, 200, 10 }, { 30, 30, 30, 30, 30, 30 } });
 						jPanelEntradasPrestamoLayout.setHGap(5);
 						jPanelEntradasPrestamoLayout.setVGap(5);
 						jPanelPrestamos.add(jPanelEntradasPrestamo, BorderLayout.NORTH);
@@ -388,13 +386,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							});
 						}
 						{
-							jLabelCerosPrestamo = new JLabel();
-							jPanelEntradasPrestamo.add(jLabelCerosPrestamo, "3, 0");
-							jLabelCerosPrestamo.setText(".000");
-							jLabelCerosPrestamo.setBounds(216, 33, 55, 30);
-							jLabelCerosPrestamo.setFont(new java.awt.Font("Arial", 0, 18));
-						}
-						{
 							URL urlDeLaImagen2 = VentanaPrincipal.class.getClassLoader()
 									.getResource("co/prestapp/res/buscar.png");
 							ImageIcon icono1 = new ImageIcon(urlDeLaImagen2);
@@ -422,7 +413,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						}
 						{
 							jTextTasaInteres = new JTextField();
-							jPanelEntradasPrestamo.add(jTextTasaInteres, "2, 1");
+							jPanelEntradasPrestamo.add(jTextTasaInteres, "2, 1, 3, 1");
 							jTextTasaInteres.setBounds(477, 30, 71, 30);
 							jTextTasaInteres.setFont(new java.awt.Font("Arial", 0, 16));
 							jTextTasaInteres.addKeyListener(new KeyAdapter() {
@@ -447,7 +438,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						}
 						{
 							jTextNumeroCuotas = new JTextField();
-							jPanelEntradasPrestamo.add(jTextNumeroCuotas, "2, 2");
+							jPanelEntradasPrestamo.add(jTextNumeroCuotas, "2, 2, 3, 2");
 							jTextNumeroCuotas.setBounds(476, 78, 71, 30);
 							jTextNumeroCuotas.setFont(new java.awt.Font("Arial", 0, 16));
 							jTextNumeroCuotas.addKeyListener(new KeyAdapter() {
@@ -643,7 +634,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jPanelEntradasPrestamo.add(jButtonEditarPrestamo, "4, 5");
 								jButtonEditarPrestamo.setText("Editar");
 								jButtonEditarPrestamo.setBounds(189, 158, 130, 30);
-								jButtonEditarPrestamo.setFont(new java.awt.Font("Arial",0,14));
+								jButtonEditarPrestamo.setFont(new java.awt.Font("Arial", 0, 14));
 								jButtonEditarPrestamo.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent evt) {
 										jButtonEditarPrestamoPerformed(evt);
@@ -673,7 +664,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 								jButtonEliminarPrestamo = new JButton();
 								jPanelEntradasPrestamo.add(jButtonEliminarPrestamo, "5, 5");
 								jButtonEliminarPrestamo.setText("Eliminar");
-								jButtonEliminarPrestamo.setFont(new java.awt.Font("Arial",0,14));
+								jButtonEliminarPrestamo.setFont(new java.awt.Font("Arial", 0, 14));
+							}
+							{
+								jLabel1 = new JLabel();
+								jPanelEntradasPrestamo.add(jLabel1, "3, 0");
+								jLabel1.setText(".000");
+								jLabel1.setFont(new java.awt.Font("Arial", 0, 18));
+								jLabel1.setBounds(810, 83, 48, 30);
 							}
 
 						}
@@ -691,10 +689,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					}
 					{
 						jPanelAgregarAbono = new JPanel();
-						TableLayout jPanelAgregarAbonoLayout = new TableLayout
-								(new double[][] {
-									{ 10, 200, 98,98,195,195,200,10 },
-									{ 30, 30, 30, 30,30} });
+						TableLayout jPanelAgregarAbonoLayout = new TableLayout(
+								new double[][] { { 10, 200, 98, 98, 195, 195, 200, 10 }, { 30, 30, 30, 30, 30 } });
 						jPanelAgregarAbonoLayout.setHGap(5);
 						jPanelAgregarAbonoLayout.setVGap(5);
 						jPanelAbonos.add(jPanelAgregarAbono, BorderLayout.NORTH);
@@ -710,7 +706,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						}
 						{
 							jTextCodigoPrestamo = new JTextField();
-							jPanelAgregarAbono.add(jTextCodigoPrestamo, "2, 0");
+							jPanelAgregarAbono.add(jTextCodigoPrestamo, "2, 0, 3, 0");
 							jTextCodigoPrestamo.setBounds(162, 30, 178, 30);
 							jTextCodigoPrestamo.setFont(new java.awt.Font("Arial", 0, 16));
 						}
@@ -721,11 +717,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							Image img = icono.getImage();
 							Image otraimg = img.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
 							jButtonBuscarPrestamo = new JButton();
-							jPanelAgregarAbono.add(jButtonBuscarPrestamo, "3, 0");
+							jPanelAgregarAbono.add(jButtonBuscarPrestamo, "4, 0");
 							jButtonBuscarPrestamo.setIcon(new ImageIcon(otraimg));
-							jButtonBuscarPrestamo.setText("Buscar");
 							jButtonBuscarPrestamo.setBounds(376, 25, 130, 30);
 							jButtonBuscarPrestamo.setFont(new java.awt.Font("Arial", 0, 14));
+							jButtonBuscarPrestamo.setText("Buscar");
 							jButtonBuscarPrestamo.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
 									jButtonBuscarPrestamoActionPerformed(evt);
@@ -744,7 +740,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						}
 						{
 							jTextFieldCodigoAbono = new JTextField();
-							jPanelAgregarAbono.add(jTextFieldCodigoAbono, "2, 1");
+							jPanelAgregarAbono.add(jTextFieldCodigoAbono, "2, 1, 3, 1");
 							jTextFieldCodigoAbono.setBounds(496, 78, 71, 30);
 							jTextFieldCodigoAbono.setFont(new java.awt.Font("Arial", 0, 16));
 
@@ -758,7 +754,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jButtonVerTodosAbono = new JButton();
 							jButtonVerTodosAbono.setIcon(new ImageIcon(otraimg));
 							jButtonVerTodosAbono.setText("Ver todos");
-							jPanelAgregarAbono.add(jButtonVerTodosAbono, "4, 0");
+							jPanelAgregarAbono.add(jButtonVerTodosAbono, "5, 0");
 							jButtonVerTodosAbono.setFont(new java.awt.Font("Arial", 0, 14));
 							jButtonVerTodosAbono.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
@@ -836,12 +832,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							calendarioAbonosCobro.setEnabled(false);
 							calendarioAbonosCobro.setFont(new java.awt.Font("Arial", 0, 16));
 						}
-						{
-							jLabelComplemento2 = new JLabel();
-							jPanelAgregarAbono.add(jLabelComplemento2, "2, 3");
-							jLabelComplemento2.setBounds(12, 65, 65, 10);
-
-						}
 
 						{
 							URL urlDeLaImagen = VentanaPrincipal.class.getClassLoader()
@@ -913,20 +903,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jScrollPaneClientes = new JScrollPane();
 						jPanelClientes.add(jScrollPaneClientes, BorderLayout.SOUTH);
 						jScrollPaneClientes.setBounds(8, 263, 777, 381);
-						jScrollPaneClientes.setPreferredSize(new java.awt.Dimension(1047, 516));
+						jScrollPaneClientes.setPreferredSize(new java.awt.Dimension(1047, 536));
 						{
 
 						}
 					}
 					{
 						jPanelAgregarCliente = new JPanel();
-						GridLayout jPanelAgregarClienteLayout = new GridLayout(4, 2, 5, 5);
+						TableLayout jPanelAgregarClienteLayout = new TableLayout(
+								new double[][] { { 10, 200, 98, 98, 195, 195, 200, 10 }, { 30, 30, 30, 30 } });
 						jPanelClientes.add(jPanelAgregarCliente, BorderLayout.NORTH);
-						jPanelAgregarCliente.setPreferredSize(new java.awt.Dimension(899, 132));
+						jPanelAgregarCliente.setPreferredSize(new java.awt.Dimension(1047, 130));
 						jPanelAgregarCliente.setLayout(jPanelAgregarClienteLayout);
 						{
 							jLabelNombre = new JLabel();
-							jPanelAgregarCliente.add(jLabelNombre);
+							jPanelAgregarCliente.add(jLabelNombre, "1, 0");
 							jLabelNombre.setText("Nombre:");
 							jLabelNombre.setBounds(12, 19, 178, 30);
 							jLabelNombre.setFont(new java.awt.Font("Arial", 0, 16));
@@ -934,20 +925,20 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						}
 						{
 							jTextNombre = new JTextField();
-							jPanelAgregarCliente.add(jTextNombre);
+							jPanelAgregarCliente.add(jTextNombre, "2, 0, 4, 0");
 							jTextNombre.setBounds(100, 19, 178, 30);
 							jTextNombre.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
 							jLabelCodigoCliente = new JLabel();
-							jPanelAgregarCliente.add(jLabelCodigoCliente);
+							jPanelAgregarCliente.add(jLabelCodigoCliente, "2, 0");
 							jLabelCodigoCliente.setBounds(12, 65, 65, 10);
 
 						}
 
 						{
 							jLabelEmpresa = new JLabel();
-							jPanelAgregarCliente.add(jLabelEmpresa);
+							jPanelAgregarCliente.add(jLabelEmpresa, "1, 1");
 							jLabelEmpresa.setText("Categoría / Empresa:");
 							jLabelEmpresa.setBounds(312, 19, 178, 30);
 							jLabelEmpresa.setFont(new java.awt.Font("Arial", 0, 16));
@@ -960,33 +951,33 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 											"Comunicaciones", "Mocawa", "Hogar infantil", "Otra" });
 							jTextEmpresa = new JComboBox<>();
 							jTextEmpresa.setModel(jComboEmpresaModel);
-							jPanelAgregarCliente.add(jTextEmpresa);
+							jPanelAgregarCliente.add(jTextEmpresa, "2, 1, 4, 1");
 							jTextEmpresa.setBounds(403, 19, 178, 30);
 							jTextEmpresa.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 
 						{
 							jLabelComplemento = new JLabel();
-							jPanelAgregarCliente.add(jLabelComplemento);
+							jPanelAgregarCliente.add(jLabelComplemento, "1, 1");
 							jLabelComplemento.setBounds(12, 65, 65, 10);
 
 						}
 						{
 							jLabelReferencia = new JLabel();
-							jPanelAgregarCliente.add(jLabelReferencia);
+							jPanelAgregarCliente.add(jLabelReferencia, "1, 2");
 							jLabelReferencia.setText("Referencia:");
 							jLabelReferencia.setBounds(606, 19, 178, 30);
 							jLabelReferencia.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
 							jTextReferencia = new JTextField();
-							jPanelAgregarCliente.add(jTextReferencia);
+							jPanelAgregarCliente.add(jTextReferencia, "2, 2, 4, 2");
 							jTextReferencia.setBounds(708, 19, 178, 30);
 							jTextReferencia.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
 							jCheckBoxEdicionCliente = new JCheckBox();
-							jPanelAgregarCliente.add(jCheckBoxEdicionCliente);
+							jPanelAgregarCliente.add(jCheckBoxEdicionCliente, "6, 3");
 							jCheckBoxEdicionCliente.setText("Editando");
 							jCheckBoxEdicionCliente.setBounds(784, 112, 115, 20);
 							jCheckBoxEdicionCliente.setFont(new java.awt.Font("Arial", 0, 16));
@@ -999,7 +990,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							Image otraimg = img.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
 							jButtonGuardarCliente = new JButton();
 							jButtonGuardarCliente.setIcon(new ImageIcon(otraimg));
-							jPanelAgregarCliente.add(jButtonGuardarCliente);
+							jPanelAgregarCliente.add(jButtonGuardarCliente, "2, 3, 3, 3");
 							jButtonGuardarCliente.setText("Guardar");
 							jButtonGuardarCliente.setBounds(12, 90, 130, 30);
 							jButtonGuardarCliente.setFont(new java.awt.Font("Arial", 0, 14));
@@ -1017,7 +1008,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							Image img1 = icono1.getImage();
 							Image otraimg1 = img1.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
 							jButtonEditarCliente = new JButton();
-							jPanelAgregarCliente.add(jButtonEditarCliente);
+							jPanelAgregarCliente.add(jButtonEditarCliente, "4, 3");
 							jButtonEditarCliente.setIcon(new ImageIcon(otraimg1));
 							jButtonEditarCliente.setText("Editar");
 							jButtonEditarCliente.setBounds(198, 90, 130, 30);
@@ -1037,7 +1028,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							Image otraimg = img.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
 							jButtonCancelar = new JButton();
 							jButtonCancelar.setIcon(new ImageIcon(otraimg));
-							jPanelAgregarCliente.add(jButtonCancelar);
+							jPanelAgregarCliente.add(jButtonCancelar, "5, 3");
 							jButtonCancelar.setText("Cancelar");
 							jButtonCancelar.setBounds(386, 90, 130, 30);
 							jButtonCancelar.setFont(new java.awt.Font("Arial", 0, 14));
@@ -1055,13 +1046,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					{
 						// Panel superior
 						jPaneSeleccionListado = new JPanel();
+						TableLayout jPaneSeleccionListadoLayout = new TableLayout(
+								new double[][] { { 10, 200, 98, 98, 195, 195, 200, 10 }, { 30, 30, 30 } });
+						jPaneSeleccionListadoLayout.setHGap(5);
+						jPaneSeleccionListadoLayout.setVGap(5);
 						jPaneListados.add(jPaneSeleccionListado, BorderLayout.NORTH);
-						jPaneSeleccionListado.setPreferredSize(new java.awt.Dimension(1057, 153));
+						jPaneSeleccionListado.setPreferredSize(new java.awt.Dimension(1057, 123));
 						jPaneSeleccionListado.setBorder(BorderFactory.createTitledBorder("Listados"));
-						jPaneSeleccionListado.setLayout(null);
+						jPaneSeleccionListado.setLayout(jPaneSeleccionListadoLayout);
 						{
 							jButtonBuscarMovimientos = new JButton();
-							jPaneSeleccionListado.add(jButtonBuscarMovimientos);
+							jPaneSeleccionListado.add(jButtonBuscarMovimientos, "6, 1");
 							jButtonBuscarMovimientos.setText("Buscar");
 							jButtonBuscarMovimientos.setBounds(795, 61, 229, 30);
 							jButtonBuscarMovimientos.setFont(new java.awt.Font("Arial", 0, 16));
@@ -1074,7 +1069,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						}
 						{
 							calendarioFinMovimiento = new JDateChooser();
-							jPaneSeleccionListado.add(calendarioFinMovimiento);
+							jPaneSeleccionListado.add(calendarioFinMovimiento, "5, 1");
 							calendarioFinMovimiento.setLocale(new Locale("ES", "CO"));
 							calendarioFinMovimiento.setDateFormatString("dd/MM/yyyy");
 							calendarioFinMovimiento.setBounds(601, 61, 170, 30);
@@ -1083,21 +1078,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						}
 						{
 							jLabelFechaFinMovimiento = new JLabel();
-							jPaneSeleccionListado.add(jLabelFechaFinMovimiento);
+							jPaneSeleccionListado.add(jLabelFechaFinMovimiento, "4, 1");
 							jLabelFechaFinMovimiento.setText("Fecha fin:");
 							jLabelFechaFinMovimiento.setBounds(473, 60, 132, 30);
 							jLabelFechaFinMovimiento.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
 							jLabelFechaInicioMovimiento = new JLabel();
-							jPaneSeleccionListado.add(jLabelFechaInicioMovimiento);
+							jPaneSeleccionListado.add(jLabelFechaInicioMovimiento, "1, 1");
 							jLabelFechaInicioMovimiento.setText("Fecha inicio:");
 							jLabelFechaInicioMovimiento.setBounds(12, 60, 143, 30);
 							jLabelFechaInicioMovimiento.setFont(new java.awt.Font("Arial", 0, 16));
 						}
 						{
 							calendarioInicioMovimiento = new JDateChooser();
-							jPaneSeleccionListado.add(calendarioInicioMovimiento);
+							jPaneSeleccionListado.add(calendarioInicioMovimiento, "2, 1, 3, 1");
 							calendarioInicioMovimiento.setLocale(new Locale("ES", "CO"));
 							calendarioInicioMovimiento.setDateFormatString("dd/MM/yyyy");
 							calendarioInicioMovimiento.setBounds(267, 60, 178, 30);
@@ -1108,13 +1103,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						{
 							// Componentes del panel superior
 							jLabelSeleccioneListado = new JLabel();
-							jPaneSeleccionListado.add(jLabelSeleccioneListado);
+							jPaneSeleccionListado.add(jLabelSeleccioneListado, "1, 0");
 							jLabelSeleccioneListado.setText("Seleccione listado:");
 							jLabelSeleccioneListado.setBounds(12, 19, 172, 25);
 							jLabelSeleccioneListado.setFont(new java.awt.Font("Arial", 0, 16));
 
 							jComboSeleccionListado = new JComboBox();
-							jPaneSeleccionListado.add(jComboSeleccionListado);
+							jPaneSeleccionListado.add(jComboSeleccionListado, "2, 0, 4, 0");
 							jComboSeleccionListado.setBounds(265, 13, 316, 30);
 							jComboSeleccionListado.setFont(new java.awt.Font("Arial", 0, 16));
 							jComboSeleccionListado.addActionListener(new ActionListener() {
@@ -1130,7 +1125,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							Image otraimg1 = img1.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
 							jButtonGenerarPDF = new JButton();
 							jButtonGenerarPDF.setIcon(new ImageIcon(otraimg1));
-							jPaneSeleccionListado.add(jButtonGenerarPDF);
+							jPaneSeleccionListado.add(jButtonGenerarPDF, "5, 0");
 
 							jButtonGenerarPDF.setText("Generar PDF");
 							jButtonGenerarPDF.setBounds(601, 14, 170, 30);
@@ -1148,8 +1143,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							Image otraimgBackup = imgBackup.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
 							jButtonBackup = new JButton();
 							jButtonBackup.setIcon(new ImageIcon(otraimgBackup));
-							jPaneSeleccionListado.add(jButtonBackup);
-							jButtonBackup.setText("Copia de seguridad");
+							jPaneSeleccionListado.add(jButtonBackup, "6, 0");
+							jButtonBackup.setText("Copia seguridad");
 							jButtonBackup.setBounds(795, 14, 229, 30);
 							jButtonBackup.setFont(new java.awt.Font("Arial", 0, 16));
 							jButtonBackup.addActionListener(new ActionListener() {
@@ -1161,7 +1156,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						}
 						{
 							jLabelCategoríaEmpresa = new JLabel();
-							jPaneSeleccionListado.add(jLabelCategoríaEmpresa);
+							jPaneSeleccionListado.add(jLabelCategoríaEmpresa, "1, 2");
 							jLabelCategoríaEmpresa.setText("Categoría/Empresa:");
 							jLabelCategoríaEmpresa.setBounds(12, 112, 143, 30);
 							jLabelCategoríaEmpresa.setFont(new java.awt.Font("Arial", 0, 16));
@@ -1170,7 +1165,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							ComboBoxModel jComboBoxCategoriaEmpresaModel = new DefaultComboBoxModel(
 									new String[] { "Item One", "Item Two" });
 							jComboBoxCategoriaEmpresa = new JComboBox();
-							jPaneSeleccionListado.add(jComboBoxCategoriaEmpresa);
+							jPaneSeleccionListado.add(jComboBoxCategoriaEmpresa, "2, 2, 4, 2");
 							jComboBoxCategoriaEmpresa.setModel(jComboBoxCategoriaEmpresaModel);
 							jComboBoxCategoriaEmpresa.setBounds(267, 112, 316, 30);
 							jComboBoxCategoriaEmpresa.setFont(new java.awt.Font("Arial", 0, 16));
@@ -1242,169 +1237,173 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jScrollPaneReportesPorFecha = new JScrollPane();
 						jPanelReportes.add(jScrollPaneReportesPorFecha, BorderLayout.SOUTH);
 						jScrollPaneReportesPorFecha.setBounds(82, 316, 740, 197);
-						jScrollPaneReportesPorFecha.setPreferredSize(new java.awt.Dimension(1057, 340));
+						jScrollPaneReportesPorFecha.setPreferredSize(new java.awt.Dimension(1057, 415));
 					}
 					{
 						// Aquí el panel de cifras
 						jPanelCifras = new JPanel();
+						TableLayout jPanelCifrasLayout = new TableLayout(
+								new double[][] { { 10, 200, 150,50, 10, 200, 150,50, 10 }, { 30, 30, 30, 30, 30, 30,30 } });
+						jPanelCifrasLayout.setHGap(5);
+						jPanelCifrasLayout.setVGap(5);
 						jPanelReportes.add(jPanelCifras, BorderLayout.NORTH);
-						jPanelCifras.setLayout(null);
+						jPanelCifras.setLayout(jPanelCifrasLayout);
 						jPanelCifras.setBorder(BorderFactory.createTitledBorder("Cifras"));
-						jPanelCifras.setPreferredSize(new java.awt.Dimension(905, 335));
+						jPanelCifras.setPreferredSize(new java.awt.Dimension(1057, 267));
 						{
 							// Componentes del panel de cifras
 							jLabelTotalPrestado = new JLabel();
-							jPanelCifras.add(jLabelTotalPrestado);
+							jPanelCifras.add(jLabelTotalPrestado, "1, 0");
 							jLabelTotalPrestado.setText("Total prestado:");
 							jLabelTotalPrestado.setBounds(17, 30, 211, 23);
 							jLabelTotalPrestado.setFont(new java.awt.Font("Arial", 0, 16));
 
 							jLabelTotalrecibido = new JLabel();
-							jPanelCifras.add(jLabelTotalrecibido);
+							jPanelCifras.add(jLabelTotalrecibido, "1, 2");
 							jLabelTotalrecibido.setText("Total recaudado:");
 							jLabelTotalrecibido.setBounds(17, 117, 211, 23);
 							jLabelTotalrecibido.setFont(new java.awt.Font("Arial", 0, 16));
 
 							jTextTotalPrestado = new JTextField();
-							jPanelCifras.add(jTextTotalPrestado);
+							jPanelCifras.add(jTextTotalPrestado, "2, 0");
 							jTextTotalPrestado.setBounds(226, 30, 178, 23);
 							jTextTotalPrestado.setFont(new java.awt.Font("Arial", 0, 16));
 							jTextTotalPrestado.setEditable(false);
 
 							jTextTotalRecaudado = new JTextField();
-							jPanelCifras.add(jTextTotalRecaudado);
+							jPanelCifras.add(jTextTotalRecaudado, "2, 2");
 							jTextTotalRecaudado.setBounds(226, 117, 178, 23);
 							jTextTotalRecaudado.setFont(new java.awt.Font("Arial", 0, 16));
 							jTextTotalRecaudado.setEditable(false);
 
 							jLabelInteresesRecaudados = new JLabel();
-							jPanelCifras.add(jLabelInteresesRecaudados);
+							jPanelCifras.add(jLabelInteresesRecaudados, "1, 3");
 							jLabelInteresesRecaudados.setText("Intereses recaudados:");
 							jLabelInteresesRecaudados.setBounds(17, 160, 210, 23);
 							jLabelInteresesRecaudados.setFont(new java.awt.Font("Arial", 0, 16));
 
 							jTextInteresesRecaudados = new JTextField();
-							jPanelCifras.add(jTextInteresesRecaudados);
+							jPanelCifras.add(jTextInteresesRecaudados, "2, 3");
 							jTextInteresesRecaudados.setBounds(226, 160, 178, 23);
 							jTextInteresesRecaudados.setFont(new java.awt.Font("Arial", 0, 16));
 							jTextInteresesRecaudados.setEditable(false);
 
 							jLabelTotalPrestamosActivos = new JLabel();
-							jPanelCifras.add(jLabelTotalPrestamosActivos);
+							jPanelCifras.add(jLabelTotalPrestamosActivos, "1, 5");
 							jLabelTotalPrestamosActivos.setText("Total préstamos activos:");
 							jLabelTotalPrestamosActivos.setBounds(17, 247, 210, 23);
 							jLabelTotalPrestamosActivos.setFont(new java.awt.Font("Arial", 0, 16));
 
 							jTextTotalPrestamosActivos = new JTextField();
-							jPanelCifras.add(jTextTotalPrestamosActivos);
+							jPanelCifras.add(jTextTotalPrestamosActivos, "2, 5");
 							jTextTotalPrestamosActivos.setBounds(226, 247, 178, 23);
 							jTextTotalPrestamosActivos.setFont(new java.awt.Font("Arial", 0, 16));
 							jTextTotalPrestamosActivos.setEditable(false);
 
 							jLabelTotalPrestamosFinalizados = new JLabel();
-							jPanelCifras.add(jLabelTotalPrestamosFinalizados);
+							jPanelCifras.add(jLabelTotalPrestamosFinalizados, "5, 0");
 							jLabelTotalPrestamosFinalizados.setText("Total préstamos finalizados:");
 							jLabelTotalPrestamosFinalizados.setBounds(448, 30, 209, 23);
 							jLabelTotalPrestamosFinalizados.setFont(new java.awt.Font("Arial", 0, 16));
 
 							jTextTotalPrestamosFinalizados = new JTextField();
-							jPanelCifras.add(jTextTotalPrestamosFinalizados);
+							jPanelCifras.add(jTextTotalPrestamosFinalizados, "6, 0");
 							jTextTotalPrestamosFinalizados.setBounds(710, 30, 178, 23);
 							jTextTotalPrestamosFinalizados.setFont(new java.awt.Font("Arial", 0, 16));
 							jTextTotalPrestamosFinalizados.setEditable(false);
 
 							jLabelTotalPrestamosVencidos = new JLabel();
-							jPanelCifras.add(jLabelTotalPrestamosVencidos);
+							jPanelCifras.add(jLabelTotalPrestamosVencidos, "5, 1");
 							jLabelTotalPrestamosVencidos.setText("Total préstamos vencidos:");
 							jLabelTotalPrestamosVencidos.setBounds(448, 73, 212, 23);
 							jLabelTotalPrestamosVencidos.setFont(new java.awt.Font("Arial", 0, 16));
 
 							jTextTotalprestamosVencidos = new JTextField();
-							jPanelCifras.add(jTextTotalprestamosVencidos);
+							jPanelCifras.add(jTextTotalprestamosVencidos, "6, 1");
 							jTextTotalprestamosVencidos.setBounds(710, 73, 178, 23);
 							jTextTotalprestamosVencidos.setFont(new java.awt.Font("Arial", 0, 16));
 							jTextTotalprestamosVencidos.setEditable(false);
 
 							jLabelTotalclientesRegistrados = new JLabel();
-							jPanelCifras.add(jLabelTotalclientesRegistrados);
+							jPanelCifras.add(jLabelTotalclientesRegistrados, "5, 4");
 							jLabelTotalclientesRegistrados.setText("Total clientes registrados:");
 							jLabelTotalclientesRegistrados.setBounds(448, 204, 178, 23);
 							jLabelTotalclientesRegistrados.setFont(new java.awt.Font("Arial", 0, 16));
 
 							jTextTotalClientesactivos = new JTextField();
-							jPanelCifras.add(jTextTotalClientesactivos);
+							jPanelCifras.add(jTextTotalClientesactivos, "6, 5");
 							jTextTotalClientesactivos.setBounds(710, 247, 178, 23);
 							jTextTotalClientesactivos.setFont(new java.awt.Font("Arial", 0, 16));
 							jTextTotalClientesactivos.setEditable(false);
 
 							jTextTotalclientesRegistrados = new JTextField();
-							jPanelCifras.add(jTextTotalclientesRegistrados);
+							jPanelCifras.add(jTextTotalclientesRegistrados, "6, 4");
 							jTextTotalclientesRegistrados.setBounds(710, 204, 178, 23);
 							jTextTotalclientesRegistrados.setFont(new java.awt.Font("Arial", 0, 16));
 							jTextTotalclientesRegistrados.setEditable(false);
 
 							jLabelTotalClientesactivos = new JLabel();
-							jPanelCifras.add(jLabelTotalClientesactivos);
+							jPanelCifras.add(jLabelTotalClientesactivos, "5, 5");
 							jLabelTotalClientesactivos.setText("Total clientes activos:");
 							jLabelTotalClientesactivos.setBounds(448, 247, 178, 23);
 							jLabelTotalClientesactivos.setFont(new java.awt.Font("Arial", 0, 16));
 
 							jLabelTotalAbonosCobrados = new JLabel();
-							jPanelCifras.add(jLabelTotalAbonosCobrados);
+							jPanelCifras.add(jLabelTotalAbonosCobrados, "5, 2");
 							jLabelTotalAbonosCobrados.setText("Total abonos cobrados:");
 							jLabelTotalAbonosCobrados.setBounds(448, 117, 178, 23);
 							jLabelTotalAbonosCobrados.setFont(new java.awt.Font("Arial", 0, 16));
 
 							jLabelTotalAbonosPendientes = new JLabel();
-							jPanelCifras.add(jLabelTotalAbonosPendientes);
+							jPanelCifras.add(jLabelTotalAbonosPendientes, "5, 3");
 							jLabelTotalAbonosPendientes.setText("Total abonos pendientes:");
 							jLabelTotalAbonosPendientes.setBounds(448, 160, 178, 23);
 							jLabelTotalAbonosPendientes.setFont(new java.awt.Font("Arial", 0, 16));
 
 							jTextTotalAbonosCobrados = new JTextField();
-							jPanelCifras.add(jTextTotalAbonosCobrados);
+							jPanelCifras.add(jTextTotalAbonosCobrados, "6, 2");
 							jTextTotalAbonosCobrados.setBounds(710, 117, 178, 23);
 							jTextTotalAbonosCobrados.setFont(new java.awt.Font("Arial", 0, 16));
 							jTextTotalAbonosCobrados.setEditable(false);
 
 							jTextTotalAbonosPendientes = new JTextField();
-							jPanelCifras.add(jTextTotalAbonosPendientes);
+							jPanelCifras.add(jTextTotalAbonosPendientes, "6, 3");
 							jTextTotalAbonosPendientes.setBounds(710, 160, 178, 23);
 							jTextTotalAbonosPendientes.setFont(new java.awt.Font("Arial", 0, 16));
 							jTextTotalAbonosPendientes.setEditable(false);
 
 							jLabelTotalRecaudoPendiente = new JLabel();
-							jPanelCifras.add(jLabelTotalRecaudoPendiente);
+							jPanelCifras.add(jLabelTotalRecaudoPendiente, "1, 1");
 							jLabelTotalRecaudoPendiente.setText("Total recaudo pendiente:");
 							jLabelTotalRecaudoPendiente.setBounds(17, 73, 178, 23);
 							jLabelTotalRecaudoPendiente.setFont(new java.awt.Font("Arial", 0, 16));
 
 							jTextTotalrecaudoPendiente = new JTextField();
-							jPanelCifras.add(jTextTotalrecaudoPendiente);
+							jPanelCifras.add(jTextTotalrecaudoPendiente, "2, 1");
 							jTextTotalrecaudoPendiente.setBounds(226, 73, 178, 23);
 							jTextTotalrecaudoPendiente.setFont(new java.awt.Font("Arial", 0, 16));
 							jTextTotalrecaudoPendiente.setEditable(false);
 
 							jLabelInteresesPendientesRecaudo = new JLabel();
-							jPanelCifras.add(jLabelInteresesPendientesRecaudo);
+							jPanelCifras.add(jLabelInteresesPendientesRecaudo, "1, 4");
 							jLabelInteresesPendientesRecaudo.setText("Interses a recaudar");
 							jLabelInteresesPendientesRecaudo.setBounds(17, 204, 178, 23);
 							jLabelInteresesPendientesRecaudo.setFont(new java.awt.Font("Arial", 0, 16));
 
 							jTextIntersesePendientesRecaudo = new JTextField();
-							jPanelCifras.add(jTextIntersesePendientesRecaudo);
+							jPanelCifras.add(jTextIntersesePendientesRecaudo, "2, 4");
 							jTextIntersesePendientesRecaudo.setBounds(226, 204, 178, 23);
 							jTextIntersesePendientesRecaudo.setFont(new java.awt.Font("Arial", 0, 16));
 							jTextIntersesePendientesRecaudo.setEditable(false);
 
 							jLabelPrestadoPorFecha = new JLabel();
-							jPanelCifras.add(jLabelPrestadoPorFecha);
+							jPanelCifras.add(jLabelPrestadoPorFecha, "1, 6");
 							jLabelPrestadoPorFecha.setText("Préstamos por fecha:");
 							jLabelPrestadoPorFecha.setBounds(17, 291, 209, 23);
 							jLabelPrestadoPorFecha.setFont(new java.awt.Font("Arial", 0, 16));
 
 							jLabelAbonosPorFecha = new JLabel();
-							jPanelCifras.add(jLabelAbonosPorFecha);
+							jPanelCifras.add(jLabelAbonosPorFecha, "5, 6");
 							jLabelAbonosPorFecha.setText("Abonos pagados por fecha:");
 							jLabelAbonosPorFecha.setBounds(448, 291, 249, 23);
 							jLabelAbonosPorFecha.setFont(new java.awt.Font("Arial", 0, 16));
@@ -1415,7 +1414,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							Image img1 = icono1.getImage();
 							Image otraimg1 = img1.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 							jButtonPrestamoPorFecha = new JButton();
-							jPanelCifras.add(jButtonPrestamoPorFecha);
+							jPanelCifras.add(jButtonPrestamoPorFecha, "3, 6");
 							jButtonPrestamoPorFecha.setIcon(new ImageIcon(otraimg1));
 							jButtonPrestamoPorFecha.setBounds(357, 282, 49, 38);
 							jButtonPrestamoPorFecha.addActionListener(new ActionListener() {
@@ -1425,7 +1424,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							});
 
 							jButtonAbonoPorFecha = new JButton();
-							jPanelCifras.add(jButtonAbonoPorFecha);
+							jPanelCifras.add(jButtonAbonoPorFecha, "7, 6");
 							jButtonAbonoPorFecha.setIcon(new ImageIcon(otraimg1));
 							// jButtonAbonoPorFecha.setText("Buscar");
 							jButtonAbonoPorFecha.setBounds(844, 281, 49, 38);
@@ -1438,14 +1437,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							calendarioPrestamosPorfecha = new JDateChooser();
 							calendarioPrestamosPorfecha.setLocale(new Locale("ES", "CO"));
 							calendarioPrestamosPorfecha.setDateFormatString("dd/MM/yyyy");
-							jPanelCifras.add(calendarioPrestamosPorfecha);
+							jPanelCifras.add(calendarioPrestamosPorfecha, "2, 6");
 							calendarioPrestamosPorfecha.setBounds(225, 291, 132, 23);
 							calendarioPrestamosPorfecha.setFont(new java.awt.Font("Arial", 0, 16));
 
 							calendarioAbonosPorFecha = new JDateChooser();
 							calendarioAbonosPorFecha.setLocale(new Locale("ES", "CO"));
 							calendarioAbonosPorFecha.setDateFormatString("dd/MM/yyyy");
-							jPanelCifras.add(calendarioAbonosPorFecha);
+							jPanelCifras.add(calendarioAbonosPorFecha, "6, 6");
 							calendarioAbonosPorFecha.setBounds(712, 291, 132, 23);
 							calendarioAbonosPorFecha.setFont(new java.awt.Font("Arial", 0, 16));
 						}
