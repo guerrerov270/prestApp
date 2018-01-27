@@ -911,7 +911,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jScrollPaneClientes = new JScrollPane();
 						jPanelClientes.add(jScrollPaneClientes, BorderLayout.SOUTH);
 						jScrollPaneClientes.setBounds(8, 263, 777, 381);
-						jScrollPaneClientes.setPreferredSize(new java.awt.Dimension(1047, 536));
+						jScrollPaneClientes.setPreferredSize(new java.awt.Dimension(1015, 521));
 						{
 
 						}
@@ -920,8 +920,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jPanelAgregarCliente = new JPanel();
 						TableLayout jPanelAgregarClienteLayout = new TableLayout(
 								new double[][] { { 10, 200, 98, 98, 195, 195, 200, 10 }, { 30, 30, 30, 30 } });
+						jPanelAgregarClienteLayout.setHGap(5);
+						jPanelAgregarClienteLayout.setVGap(5);
 						jPanelClientes.add(jPanelAgregarCliente, BorderLayout.NORTH);
-						jPanelAgregarCliente.setPreferredSize(new java.awt.Dimension(1047, 130));
+						jPanelAgregarCliente.setPreferredSize(new java.awt.Dimension(1015, 142));
 						jPanelAgregarCliente.setLayout(jPanelAgregarClienteLayout);
 						{
 							jLabelNombre = new JLabel();
