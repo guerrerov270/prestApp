@@ -357,7 +357,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 					{
 						jPanelEntradasPrestamo = new JPanel();
 						TableLayout jPanelEntradasPrestamoLayout = new TableLayout(new double[][] {
-								{ 10, 180, 150, 40,150,150,150,150,10 },
+								{ 8, 180, 75,75,150,150,150,150,8 },
 								{ 30, 30, 30, 30,30,30,30} });
 						jPanelEntradasPrestamoLayout.setHGap(10);
 						jPanelEntradasPrestamoLayout.setVGap(10);
@@ -511,7 +511,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						}
 						{
 							jLabelPocentaje = new JLabel();
-							jPanelEntradasPrestamo.add(jLabelPocentaje, "2, 3");
+							jPanelEntradasPrestamo.add(jLabelPocentaje, "2,3,3,3,f,f");
 						}
 
 						{
@@ -532,7 +532,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							calendarioPrestamos = new JDateChooser();
 							calendarioPrestamos.setLocale(new Locale("ES", "CO"));
 							calendarioPrestamos.setDateFormatString("dd/MM/yyyy");
-							jPanelEntradasPrestamo.add(calendarioPrestamos, "2, 4");
+							jPanelEntradasPrestamo.add(calendarioPrestamos, "2, 4, 3, 4");
 							calendarioPrestamos.setBounds(712, 30, 178, 30);
 							calendarioPrestamos.setFont(new java.awt.Font("Arial", 0, 16));
 						}
@@ -604,7 +604,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							}
 							{
 								jLabelComplemento5 = new JLabel();
-								jPanelEntradasPrestamo.add(jLabelComplemento5, "2, 5");
+								jPanelEntradasPrestamo.add(jLabelComplemento5, "2, 5, 3, 5");
 								jLabelComplemento5.setBounds(12, 65, 65, 10);
 
 							}
