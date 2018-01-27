@@ -228,15 +228,14 @@ public class ClienteDAO {
 	public String[][] obtenerMatrizClientesAlfa() {
 		ArrayList<ClienteVO> listaClientes = buscarClientesConMatrizAlfa();
 
-		String matrizInfo[][] = new String[listaClientes.size()][6];
+		String matrizInfo[][] = new String[listaClientes.size()][5];
 
 		for (int i = 0; i < listaClientes.size(); i++) {
-			matrizInfo[i][0] = listaClientes.get(i).getIDCliente() + "";
-			matrizInfo[i][1] = listaClientes.get(i).getCodigoCliente() + "";
-			matrizInfo[i][2] = listaClientes.get(i).getNombreCliente() + "";
-			matrizInfo[i][3] = listaClientes.get(i).getEmpresaCliente() + "";
-			matrizInfo[i][4] = listaClientes.get(i).getReferenciaCliente() + "";
-			matrizInfo[i][5] = listaClientes.get(i).getEstadoCliente() + "";
+			matrizInfo[i][0] = listaClientes.get(i).getCodigoCliente() + "";
+			matrizInfo[i][1] = listaClientes.get(i).getNombreCliente() + "";
+			matrizInfo[i][2] = listaClientes.get(i).getEmpresaCliente() + "";
+			matrizInfo[i][3] = listaClientes.get(i).getReferenciaCliente() + "";
+			matrizInfo[i][4] = listaClientes.get(i).getEstadoCliente() + "";
 		}
 
 		return matrizInfo;
@@ -254,7 +253,6 @@ public class ClienteDAO {
 
 			while (miRs.next()) {
 				miCliente = new ClienteVO();
-				miCliente.setIDCliente(miRs.getInt("idCliente"));
 				miCliente.setCodigoCliente(miRs.getString("codigoCliente"));
 				miCliente.setNombreCliente(miRs.getString("nombreCliente"));
 				miCliente.setEmpresaCliente(miRs.getString("empresaCliente"));
@@ -279,15 +277,14 @@ public class ClienteDAO {
 	public String[][] obtenerMatrizClientesActivos() {
 		ArrayList<ClienteVO> listaClientes = buscarClientesConMatrizActivos();
 
-		String matrizInfo[][] = new String[listaClientes.size()][6];
+		String matrizInfo[][] = new String[listaClientes.size()][5];
 
 		for (int i = 0; i < listaClientes.size(); i++) {
-			matrizInfo[i][0] = listaClientes.get(i).getIDCliente() + "";
-			matrizInfo[i][1] = listaClientes.get(i).getCodigoCliente() + "";
-			matrizInfo[i][2] = listaClientes.get(i).getNombreCliente() + "";
-			matrizInfo[i][3] = listaClientes.get(i).getEmpresaCliente() + "";
-			matrizInfo[i][4] = listaClientes.get(i).getReferenciaCliente() + "";
-			matrizInfo[i][5] = listaClientes.get(i).getEstadoCliente() + "";
+			matrizInfo[i][0] = listaClientes.get(i).getCodigoCliente() + "";
+			matrizInfo[i][1] = listaClientes.get(i).getNombreCliente() + "";
+			matrizInfo[i][2] = listaClientes.get(i).getEmpresaCliente() + "";
+			matrizInfo[i][3] = listaClientes.get(i).getReferenciaCliente() + "";
+			matrizInfo[i][4] = listaClientes.get(i).getEstadoCliente() + "";
 		}
 
 		return matrizInfo;
@@ -305,7 +302,6 @@ public class ClienteDAO {
 
 			while (miRs.next()) {
 				miCliente = new ClienteVO();
-				miCliente.setIDCliente(miRs.getInt("idCliente"));
 				miCliente.setCodigoCliente(miRs.getString("codigoCliente"));
 				miCliente.setNombreCliente(miRs.getString("nombreCliente"));
 				miCliente.setEmpresaCliente(miRs.getString("empresaCliente"));
@@ -330,15 +326,14 @@ public class ClienteDAO {
 	public String[][] obtenerMatrizClientesNOActivos() {
 		ArrayList<ClienteVO> listaClientes = buscarClientesConMatrizNOActivos();
 
-		String matrizInfo[][] = new String[listaClientes.size()][6];
+		String matrizInfo[][] = new String[listaClientes.size()][5];
 
 		for (int i = 0; i < listaClientes.size(); i++) {
-			matrizInfo[i][0] = listaClientes.get(i).getIDCliente() + "";
-			matrizInfo[i][1] = listaClientes.get(i).getCodigoCliente() + "";
-			matrizInfo[i][2] = listaClientes.get(i).getNombreCliente() + "";
-			matrizInfo[i][3] = listaClientes.get(i).getEmpresaCliente() + "";
-			matrizInfo[i][4] = listaClientes.get(i).getReferenciaCliente() + "";
-			matrizInfo[i][5] = listaClientes.get(i).getEstadoCliente() + "";
+			matrizInfo[i][0] = listaClientes.get(i).getCodigoCliente() + "";
+			matrizInfo[i][1] = listaClientes.get(i).getNombreCliente() + "";
+			matrizInfo[i][2] = listaClientes.get(i).getEmpresaCliente() + "";
+			matrizInfo[i][3] = listaClientes.get(i).getReferenciaCliente() + "";
+			matrizInfo[i][4] = listaClientes.get(i).getEstadoCliente() + "";
 		}
 
 		return matrizInfo;
@@ -356,7 +351,6 @@ public class ClienteDAO {
 
 			while (miRs.next()) {
 				miCliente = new ClienteVO();
-				miCliente.setIDCliente(miRs.getInt("idCliente"));
 				miCliente.setCodigoCliente(miRs.getString("codigoCliente"));
 				miCliente.setNombreCliente(miRs.getString("nombreCliente"));
 				miCliente.setEmpresaCliente(miRs.getString("empresaCliente"));

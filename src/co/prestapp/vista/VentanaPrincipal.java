@@ -3620,43 +3620,43 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			generarReportePrestamosPorEmpresa(SinCategoria);
 			break;
 		case Semanal:
-
+			generarReportePrestamosPorEmpresa(Semanal);
 			break;
 		case Impulso:
-
+			generarReportePrestamosPorEmpresa(Impulso);
 			break;
 		case Supermercados:
-
+			generarReportePrestamosPorEmpresa(Supermercados);
 			break;
 		case Comun:
-
+			generarReportePrestamosPorEmpresa(Comun);
 			break;
 		case Vendedores:
-
+			generarReportePrestamosPorEmpresa(Vendedores);
 			break;
 		case DonPollo:
-
+			generarReportePrestamosPorEmpresa(DonPollo);
 			break;
 		case Drogueria:
-
+			generarReportePrestamosPorEmpresa(Drogueria);
 			break;
 		case LaLocura:
-
+			generarReportePrestamosPorEmpresa(LaLocura);
 			break;
 		case MrPompy:
-
+			generarReportePrestamosPorEmpresa(MrPompy);
 			break;
 		case Comunicaciones:
-
+			generarReportePrestamosPorEmpresa(Comunicaciones);
 			break;
 		case Mocawa:
-
+			generarReportePrestamosPorEmpresa(Mocawa);
 			break;
 		case Hogarinfantil:
-
+			generarReportePrestamosPorEmpresa(Hogarinfantil);
 			break;
 		case Otro:
-
+			generarReportePrestamosPorEmpresa(Otro);
 			break;
 		}
 	}
