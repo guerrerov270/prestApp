@@ -316,34 +316,32 @@ public class PrestamoDAO {
 
 	public String[][] obtenerMatrizPrestamosPorFecha(Date fechaSeleccionada) {
 
-		ArrayList<PrestamoVO> listaPrestamos = buscarPrestamosPorFecha(fechaSeleccionada);
+		ArrayList<PrestamoVOResumido> listaPrestamos = buscarPrestamosPorFecha(fechaSeleccionada);
 
-		String matrizInfo[][] = new String[listaPrestamos.size()][12];
+		String matrizInfo[][] = new String[listaPrestamos.size()][10];
 
 		for (int i = 0; i < listaPrestamos.size(); i++) {
-			matrizInfo[i][0] = listaPrestamos.get(i).getIdPrestamo() + "";
-			matrizInfo[i][1] = listaPrestamos.get(i).getCodigoPrestamo() + "";
-			matrizInfo[i][2] = listaPrestamos.get(i).getMontoPrestamo() + "";
-			matrizInfo[i][3] = listaPrestamos.get(i).getTasaInteresPrestamo() + "";
-			matrizInfo[i][4] = listaPrestamos.get(i).getNumeroCuotasPrestamo() + "";
-			matrizInfo[i][5] = listaPrestamos.get(i).getSaldoPendienteprestamo() + "";
-			matrizInfo[i][6] = listaPrestamos.get(i).getSaldoPagadoPrestamo() + "";
-			matrizInfo[i][7] = listaPrestamos.get(i).getFechaInicioPrestamo() + "";
-			matrizInfo[i][8] = listaPrestamos.get(i).getFechafinPrestamo() + "";
-			matrizInfo[i][9] = listaPrestamos.get(i).getTipoPlazoPrestamo() + "";
-			matrizInfo[i][10] = listaPrestamos.get(i).getIcodigoClienteFK() + "";
-			matrizInfo[i][11] = listaPrestamos.get(i).getEstadoPrestamo() + "";
+			matrizInfo[i][0] = listaPrestamos.get(i).getNombreCliente() + "";
+			matrizInfo[i][1] = listaPrestamos.get(i).getEmpresaCliente() + "";
+			matrizInfo[i][2] = listaPrestamos.get(i).getReferenciaCliente() + "";
+			matrizInfo[i][3] = listaPrestamos.get(i).getCodigoPrestamo() + "";
+			matrizInfo[i][4] = listaPrestamos.get(i).getFechaInicioPrestamo() + "";
+			matrizInfo[i][5] = listaPrestamos.get(i).getMontoPrestamo() + "";
+			matrizInfo[i][6] = listaPrestamos.get(i).getTipoPlazo() + "";
+			matrizInfo[i][7] = listaPrestamos.get(i).getNumeroCuotasPrestamo() + "";
+			matrizInfo[i][8] = listaPrestamos.get(i).getValorCuotaPrestamo() + "";
+			matrizInfo[i][9] = listaPrestamos.get(i).getSaldoPendientePrestamo() + "";
 		}
 
 		return matrizInfo;
 	}
 
-	private ArrayList<PrestamoVO> buscarPrestamosPorFecha(Date fechaSeleccionada) {
+	private ArrayList<PrestamoVOResumido> buscarPrestamosPorFecha(Date fechaSeleccionada) {
 
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
-		ArrayList<PrestamoVO> listaPrestamos = new ArrayList<PrestamoVO>();
-		PrestamoVO miPrestamo;
+		ArrayList<PrestamoVOResumido> listaPrestamos = new ArrayList<PrestamoVOResumido>();
+		PrestamoVOResumido miPrestamo;
 		DateFormat formatoFecha = new SimpleDateFormat("dd MMMM yyyy");
 		Locale locale = new Locale("es", "CO");
 		NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
@@ -355,24 +353,20 @@ public class PrestamoDAO {
 			ResultSet miRs = miProcedimientoListar.executeQuery();
 
 			while (miRs.next()) {
-				miPrestamo = new PrestamoVO();
-				miPrestamo.setIdPrestamo(miRs.getInt("idPrestamo"));
+				miPrestamo = new PrestamoVOResumido();
+
+				miPrestamo.setNombreCliente(miRs.getString("nombreCliente"));
+				miPrestamo.setEmpresaCliente(miRs.getString("empresaCliente"));
+				miPrestamo.setReferenciaCliente(miRs.getString("referenciaCliente"));
 				miPrestamo.setCodigoPrestamo(miRs.getString("codigoPrestamo"));
-				miPrestamo.setMontoPrestamo(formatoMoneda.format(miRs.getDouble("montoPrestamo")));
-				miPrestamo.setTasaInteresPrestamo(miRs.getInt("tasaInteresPrestamo"));
-				miPrestamo.setNumeroCuotasPrestamo(miRs.getInt("numeroCuotasprestamo"));
-				miPrestamo.setSaldoPendienteprestamo(formatoMoneda.format(miRs.getDouble("saldoPendientePrestamo")));
-				miPrestamo.setSaldoPagadoPrestamo(formatoMoneda.format(miRs.getDouble("saldoPagadoPrestamo")));
 				if (miRs.getDate("fechaInicioPrestamo") != null) {
 					miPrestamo.setFechaInicioPrestamo(formatoFecha.format(miRs.getDate("fechaInicioPrestamo")));
 				}
-				if (miRs.getDate("fechaFinPrestamo") != null) {
-					miPrestamo.setFechafinPrestamo(formatoFecha.format(miRs.getDate("fechaFinPrestamo")));
-				}
-
-				miPrestamo.setTipoPlazoPrestamo(miRs.getString("tipoPlazoPrestamo"));
-				miPrestamo.setcodigoClienteFK(miRs.getString("codigoClienteFK"));
-				miPrestamo.setEstadoPrestamo(miRs.getString("estadoPrestamo"));
+				miPrestamo.setMontoPrestamo(formatoMoneda.format(miRs.getDouble("montoPrestamo")));
+				miPrestamo.setTipoPlazo(miRs.getString("tipoPlazoPrestamo"));
+				miPrestamo.setNumeroCuotasPrestamo(miRs.getInt("numeroCuotasprestamo"));
+				miPrestamo.setValorCuotaPrestamo(formatoMoneda.format(miRs.getDouble("montoACobrar")));
+				miPrestamo.setSaldoPendientePrestamo(formatoMoneda.format(miRs.getDouble("saldoRestantePrestamo")));
 
 				listaPrestamos.add(miPrestamo);
 			}
