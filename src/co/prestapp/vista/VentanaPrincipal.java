@@ -1061,7 +1061,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						jPaneSeleccionListadoLayout.setHGap(5);
 						jPaneSeleccionListadoLayout.setVGap(5);
 						jPaneListados.add(jPaneSeleccionListado, BorderLayout.NORTH);
-						jPaneSeleccionListado.setPreferredSize(new java.awt.Dimension(1057, 123));
+						jPaneSeleccionListado.setPreferredSize(new java.awt.Dimension(1025, 132));
 						jPaneSeleccionListado.setBorder(BorderFactory.createTitledBorder("Listados"));
 						jPaneSeleccionListado.setLayout(jPaneSeleccionListadoLayout);
 						{
@@ -1193,7 +1193,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						BorderLayout jPanListaResultadosLayout = new BorderLayout();
 						jPanListaResultados.setLayout(jPanListaResultadosLayout);
 						jPaneListados.add(jPanListaResultados, BorderLayout.CENTER);
-						jPanListaResultados.setPreferredSize(new java.awt.Dimension(909, 400));
+						jPanListaResultados.setPreferredSize(new java.awt.Dimension(1025, 493));
 						jPanListaResultados.setBorder(BorderFactory.createTitledBorder("Resultados"));
 						{
 							// Componentes del panel inferior
@@ -2296,10 +2296,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 		ComboBoxModel<String> jComboListadosModel = new DefaultComboBoxModel<String>(
 				new String[] { seleccioneUno, listaClientes, listaClientesAlfa, listaClientesActivos,
-						listaClientesNoActivos, listaPrestamosEmpresa, listaPrestamosCliente, listaPrestamos,
-						listaPrestamosPendientes, listaPrestamosPagados, listaPrestamosVencidos, listaAbonos,
-						listaAbonosPendientes, listaAbonosPagados, listaAbonosPendientesFecha, listaAbonosPagadosFecha,
-						listaMovimientos, listaMovimientosEntrada, listaMovimientosSalida, listaMovimientosFechas });
+						listaClientesNoActivos, listaPrestamosCliente, listaPrestamos, listaPrestamosPendientes,
+						listaPrestamosPagados, listaPrestamosVencidos, listaAbonos, listaAbonosPendientes,
+						listaAbonosPagados, listaMovimientosEntrada, listaMovimientosSalida, listaMovimientosFechas });
 		jComboSeleccionListado.setModel(jComboListadosModel);
 
 	}
@@ -2310,6 +2309,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				new String[] { seleccioneUna, SinCategoria, Semanal, Impulso, Supermercados, Comun, Vendedores,
 						DonPollo, Drogueria, LaLocura, MrPompy, Comunicaciones, Mocawa, Hogarinfantil, Otro });
 		jComboBoxCategoriaEmpresa.setModel(jComboCategoriasModel);
+		jComboBoxCategoriaEmpresa.setEnabled(false);
 
 	}
 
@@ -3193,23 +3193,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			break;
 		case listaAbonosPagados:
 			generarReporteAbonosPagados();
-			break;
-		case listaAbonosPendientesFecha:
-			java.sql.Date fechaInicioFormateadaPend = new java.sql.Date(calendarioInicioMovimiento.getDate().getTime());
-			java.sql.Date fechaFinFormateadaPend = new java.sql.Date(calendarioFinMovimiento.getDate().getTime());
-			generarReporteAbonosPendientesFecha(fechaInicioFormateadaPend, fechaFinFormateadaPend);
-			calendarioInicioMovimiento.setDate(null);
-			calendarioFinMovimiento.setDate(null);
-			break;
-		case listaAbonosPagadosFecha:
-			java.sql.Date fechaInicioFormateadaPag = new java.sql.Date(calendarioInicioMovimiento.getDate().getTime());
-			java.sql.Date fechaFinFormateadaPag = new java.sql.Date(calendarioFinMovimiento.getDate().getTime());
-			generarReporteAbonosPagadosFecha(fechaInicioFormateadaPag, fechaFinFormateadaPag);
-			calendarioInicioMovimiento.setDate(null);
-			calendarioFinMovimiento.setDate(null);
-			break;
-		case listaMovimientos:
-			generarReporteMovimientos();
 			break;
 		case listaMovimientosEntrada:
 			generarReporteMovimientosEntrada();
