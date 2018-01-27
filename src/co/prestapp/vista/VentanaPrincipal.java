@@ -117,6 +117,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelTotalAbonosPendientes;
 	private JLabel jLabelTotalAbonosCobrados;
 	private JLabel jLabelTotalClientesactivos;
+	private JButton jButton1;
 	private JLabel jLabel1;
 	private JButton jButtonEliminarPrestamo;
 	private JComboBox<String> jComboBoxCategoriaEmpresa;
@@ -1179,10 +1180,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jComboBoxCategoriaEmpresa.setModel(jComboBoxCategoriaEmpresaModel);
 							jComboBoxCategoriaEmpresa.setBounds(267, 112, 316, 30);
 							jComboBoxCategoriaEmpresa.setFont(new java.awt.Font("Arial", 0, 16));
-							jComboBoxCategoriaEmpresa.setEnabled(false);
 							jComboBoxCategoriaEmpresa.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
 									jComboBoxCategoriaEmpresaActionPerformed(evt);
+								}
+							});
+						}
+						{
+							jButton1 = new JButton();
+							jPaneSeleccionListado.add(jButton1, "5, 2");
+							jButton1.setText("Generar PDF");
+							jButton1.setFont(new java.awt.Font("Arial", 0, 16));
+							jButton1.setBounds(601, 14, 170, 30);
+							jButton1.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent evt) {
+									jButton1ActionPerformed(evt);
 								}
 							});
 						}
@@ -2309,7 +2321,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				new String[] { seleccioneUna, SinCategoria, Semanal, Impulso, Supermercados, Comun, Vendedores,
 						DonPollo, Drogueria, LaLocura, MrPompy, Comunicaciones, Mocawa, Hogarinfantil, Otro });
 		jComboBoxCategoriaEmpresa.setModel(jComboCategoriasModel);
-		jComboBoxCategoriaEmpresa.setEnabled(false);
 
 	}
 
@@ -2749,109 +2760,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
-	private void generarReporteAbonosPagadosFecha(java.sql.Date fechaInicio, java.sql.Date fechaFin) {
-
-		// configuracion de la fecha actual
-		// Creamos un objeto de la clase Calendar.
-		Calendar fecha = new GregorianCalendar();
-		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
-		// Usando el método get y el parámetro correspondiente.
-		int anio = fecha.get(Calendar.YEAR);
-		int mes = fecha.get(Calendar.MONTH);
-		int dia = fecha.get(Calendar.DAY_OF_MONTH);
-		int hora = fecha.get(Calendar.HOUR_OF_DAY);
-		int minuto = fecha.get(Calendar.MINUTE);
-		int segundo = fecha.get(Calendar.SECOND);
-
-		String mesS = concatenaCero(mes + 1);
-		String diaS = concatenaCero(dia);
-		String horaS = concatenaCero(hora);
-		String minutoS = concatenaCero(minuto);
-		String segundoS = concatenaCero(segundo);
-
-		String strNombrePDF = "ReporteAbonosPagadosFecha" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
-		String strTituloPDF = "Reporte de abonos pagados por fecha, generado el: " + diaS + "/" + mesS + "/" + anio
-				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
-		ReporteAbonosPagadosFecha reporte = new ReporteAbonosPagadosFecha(strTituloPDF, strNombrePDF, fechaInicio,
-				fechaFin);
-		// Preguntar al usuario si desea abrir el documento PDF
-		int respuesta = JOptionPane.showConfirmDialog(null,
-				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
-				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-		// Si la respuesta es SI, abrirlo
-		if (respuesta == JOptionPane.YES_OPTION)
-			reporte.abrirPDF();
-
-	}
-
-	private void generarReporteAbonosPendientesFecha(java.sql.Date fechaInicio, java.sql.Date fechaFin) {
-
-		// configuracion de la fecha actual
-		// Creamos un objeto de la clase Calendar.
-		Calendar fecha = new GregorianCalendar();
-		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
-		// Usando el método get y el parámetro correspondiente.
-		int anio = fecha.get(Calendar.YEAR);
-		int mes = fecha.get(Calendar.MONTH);
-		int dia = fecha.get(Calendar.DAY_OF_MONTH);
-		int hora = fecha.get(Calendar.HOUR_OF_DAY);
-		int minuto = fecha.get(Calendar.MINUTE);
-		int segundo = fecha.get(Calendar.SECOND);
-
-		String mesS = concatenaCero(mes + 1);
-		String diaS = concatenaCero(dia);
-		String horaS = concatenaCero(hora);
-		String minutoS = concatenaCero(minuto);
-		String segundoS = concatenaCero(segundo);
-
-		String strNombrePDF = "ReporteAbonosPendientesFecha" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
-		String strTituloPDF = "Reporte de abonos pendientes por fecha, generado el: " + diaS + "/" + mesS + "/" + anio
-				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
-		ReporteAbonosPendientesFecha reporte = new ReporteAbonosPendientesFecha(strTituloPDF, strNombrePDF, fechaInicio,
-				fechaFin);
-		// Preguntar al usuario si desea abrir el documento PDF
-		int respuesta = JOptionPane.showConfirmDialog(null,
-				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
-				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-		// Si la respuesta es SI, abrirlo
-		if (respuesta == JOptionPane.YES_OPTION)
-			reporte.abrirPDF();
-
-	}
-
-	private void generarReporteMovimientos() {
-
-		// configuracion de la fecha actual
-		// Creamos un objeto de la clase Calendar.
-		Calendar fecha = new GregorianCalendar();
-		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
-		// Usando el método get y el parámetro correspondiente.
-		int anio = fecha.get(Calendar.YEAR);
-		int mes = fecha.get(Calendar.MONTH);
-		int dia = fecha.get(Calendar.DAY_OF_MONTH);
-		int hora = fecha.get(Calendar.HOUR_OF_DAY);
-		int minuto = fecha.get(Calendar.MINUTE);
-		int segundo = fecha.get(Calendar.SECOND);
-
-		String mesS = concatenaCero(mes + 1);
-		String diaS = concatenaCero(dia);
-		String horaS = concatenaCero(hora);
-		String minutoS = concatenaCero(minuto);
-		String segundoS = concatenaCero(segundo);
-
-		String strNombrePDF = "ReporteMovimientos" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
-		String strTituloPDF = "Reporte de movimientos resgistrados, generado el: " + diaS + "/" + mesS + "/" + anio
-				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
-		ReporteMovimientos reporte = new ReporteMovimientos(strTituloPDF, strNombrePDF);
-		// Preguntar al usuario si desea abrir el documento PDF
-		int respuesta = JOptionPane.showConfirmDialog(null,
-				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
-				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-		// Si la respuesta es SI, abrirlo
-		if (respuesta == JOptionPane.YES_OPTION)
-			reporte.abrirPDF();
-	}
-
 	private void generarReporteMovimientosEntrada() {
 
 		// configuracion de la fecha actual
@@ -3154,7 +3062,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private void jButtonGenerarPDFActionPerformed(ActionEvent evt) {
 
 		String listaSeleccionada = (String) jComboSeleccionListado.getSelectedItem();
-		String categoriaSeleccionada = (String) jComboBoxCategoriaEmpresa.getSelectedItem();
 
 		switch (listaSeleccionada) {
 		case seleccioneUno:
@@ -3206,10 +3113,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			generarReporteMovimientosFechas(fechaInicioFormateada, fechaFinFormateada);
 			calendarioInicioMovimiento.setDate(null);
 			calendarioFinMovimiento.setDate(null);
-			break;
-		case listaPrestamosEmpresa:
-			generarReportePrestamosPorEmpresa(categoriaSeleccionada);
-			jComboBoxCategoriaEmpresa.setEnabled(false);
 			break;
 		case listaPrestamosCliente:
 			break;
@@ -3451,11 +3354,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		Date fechaFin = calendarioFinMovimiento.getDate();
 		Locale locale = new Locale("es", "CO");
 		NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
-		AbonoDAO miAbono = new AbonoDAO();
-		String titulosAbono[] = miAbono.getColumnas();
 
 		// Movimientos entre fechas seleccionado
-		if (jComboSeleccionListado.getSelectedIndex() == 17) {
+		if (jComboSeleccionListado.getSelectedIndex() == 15) {
 
 			if (fechaInicio != null && fechaFin != null) {
 
@@ -3478,56 +3379,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				jButtonBuscarMovimientos.setEnabled(false);
 				return;
 
-			} else {
-				JOptionPane.showMessageDialog(this, "Debe especificar una fecha de inicio y una final", "Alerta",
-						JOptionPane.WARNING_MESSAGE);
-			}
-
-		}
-
-		// Abonos pendientes seleccionado
-		if (jComboSeleccionListado.getSelectedIndex() == 12) {
-
-			if (fechaInicio != null && fechaFin != null) {
-
-				miAbono = new AbonoDAO();
-				String informacionAbonosPendientesFecha[][] = miAbono.obtenerMatrizAbonosPendientesFecha(fechaInicio,
-						fechaFin);
-				tablaResultados = new JTable(informacionAbonosPendientesFecha, titulosAbono);
-				jScrollPaneResultados.setViewportView(tablaResultados);
-				tablaResultados.setFont(new java.awt.Font("Arial", 0, 14));
-				JTableHeader thAbonosPenF = tablaResultados.getTableHeader();
-				thAbonosPenF.setFont(new java.awt.Font("Arial", 0, 14));
-				ajustaColumnasAContenido(tablaResultados);
-				jTextTotalSalidas.setText(
-						formatoMoneda.format(miAbono.calcularTotalRecaudoAbonosPendiente(fechaInicio, fechaFin)) + "");
-				jLabelTotalSalidas.setText("Total pendiente:");
-				return;
-			} else {
-				JOptionPane.showMessageDialog(this, "Debe especificar una fecha de inicio y una final", "Alerta",
-						JOptionPane.WARNING_MESSAGE);
-			}
-
-		}
-
-		// Abonos pagados seleccionado
-		if (jComboSeleccionListado.getSelectedIndex() == 13) {
-
-			if (fechaInicio != null && fechaFin != null) {
-
-				miAbono = new AbonoDAO();
-				String informacionAbonosPagadosFecha[][] = miAbono.obtenerMatrizAbonosPagadosFecha(fechaInicio,
-						fechaFin);
-				tablaResultados = new JTable(informacionAbonosPagadosFecha, titulosAbono);
-				jScrollPaneResultados.setViewportView(tablaResultados);
-				JTableHeader thAbonosPagF = tablaResultados.getTableHeader();
-				tablaResultados.setFont(new java.awt.Font("Arial", 0, 14));
-				thAbonosPagF.setFont(new java.awt.Font("Arial", 0, 14));
-				ajustaColumnasAContenido(tablaResultados);
-				jTextTotalentradas.setText(
-						formatoMoneda.format(miAbono.calcularTotalRecaudoAbonosRecibido(fechaInicio, fechaFin)) + "");
-				jLabelTotalSalidas.setText("Total salidas:");
-				return;
 			} else {
 				JOptionPane.showMessageDialog(this, "Debe especificar una fecha de inicio y una final", "Alerta",
 						JOptionPane.WARNING_MESSAGE);
@@ -3752,6 +3603,61 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			JOptionPane.showMessageDialog(this, "Verifique el código del préstamo", "Préstamo no encontrado",
 					JOptionPane.WARNING_MESSAGE);
 
+		}
+	}
+
+	private void jButton1ActionPerformed(ActionEvent evt) {
+
+		String categoriaSeleccionada = (String) jComboBoxCategoriaEmpresa.getSelectedItem();
+		switch (categoriaSeleccionada) {
+		case seleccioneUna:
+			JOptionPane.showMessageDialog(this, "Debe seleccionar una categoria", "Información",
+					JOptionPane.INFORMATION_MESSAGE);
+			tablaResultados = new JTable();
+			jScrollPaneResultados.setViewportView(tablaResultados);
+			break;
+		case SinCategoria:
+			generarReportePrestamosPorEmpresa(SinCategoria);
+			break;
+		case Semanal:
+
+			break;
+		case Impulso:
+
+			break;
+		case Supermercados:
+
+			break;
+		case Comun:
+
+			break;
+		case Vendedores:
+
+			break;
+		case DonPollo:
+
+			break;
+		case Drogueria:
+
+			break;
+		case LaLocura:
+
+			break;
+		case MrPompy:
+
+			break;
+		case Comunicaciones:
+
+			break;
+		case Mocawa:
+
+			break;
+		case Hogarinfantil:
+
+			break;
+		case Otro:
+
+			break;
 		}
 	}
 
