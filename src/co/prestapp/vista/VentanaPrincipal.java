@@ -1983,7 +1983,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		Date fechaSeleccionada = calendarioPrestamosPorfecha.getDate();
 		PrestamoDAO miPrestamo = new PrestamoDAO();
 		String informacionPrestamosPorFecha[][] = miPrestamo.obtenerMatrizPrestamosPorFecha(fechaSeleccionada);
-		String titulos[] = miPrestamo.getColumnas();
+		String titulos[] = miPrestamo.getColumnasRequerido();
 		jTableReportesPorFecha = new JTable(informacionPrestamosPorFecha, titulos);
 		jScrollPaneReportesPorFecha.setViewportView(jTableReportesPorFecha);
 		jTableReportesPorFecha.setFont(new java.awt.Font("Arial", 0, 14));
@@ -2006,25 +2006,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		ajustaColumnasAContenido(jTableReportesPorFecha);
 	}
 
-	private void actualizaPrestamos() {
-
-		PrestamoDAO miPrestamo = new PrestamoDAO();
-		miPrestamo.actualizaPagos();
-		String informacionPrestamos[][] = miPrestamo.obtenerMatrizPrestamos();
-		String titulos[] = miPrestamo.getColumnas();
-		jTablePrestamos = new JTable(informacionPrestamos, titulos);
-		jScrollReportes.setViewportView(jTablePrestamos);
-		jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 14));
-		JTableHeader th = jTablePrestamos.getTableHeader();
-		th.setFont(new java.awt.Font("Arial", 0, 14));
-		ajustaColumnasAContenido(jTablePrestamos);
-	}
-
 	private void actualizaPrestamosRequerido() {
 
 		PrestamoDAO miPrestamo = new PrestamoDAO();
 		miPrestamo.actualizaPagos();
-		String informacionPrestamos[][] = miPrestamo.obtenerMatrizPrestamosRequerido();
+		String informacionPrestamos[][] = miPrestamo.obtenerMatrizPrestamosPendientes();
 		String titulos[] = miPrestamo.getColumnasRequerido();
 		jTablePrestamos = new JTable(informacionPrestamos, titulos);
 		jScrollReportes.setViewportView(jTablePrestamos);
@@ -3134,7 +3120,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		ClienteDAO miCliente = new ClienteDAO();
 		String titulosCliente[] = miCliente.getColumnas();
 		PrestamoDAO miPrestamo = new PrestamoDAO();
-		String titulosPrestamo[] = miPrestamo.getColumnas();
+		String titulosPrestamo[] = miPrestamo.getColumnasRequerido();
 		MovimientoDAO miMovimiento = new MovimientoDAO();
 		String titulosMovimiento[] = miMovimiento.getColumnas();
 
@@ -3193,7 +3179,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		case listaPrestamos:
 			miPrestamo = new PrestamoDAO();
 			miPrestamo.actualizaPagos();
-			String informacionPrestamos[][] = miPrestamo.obtenerMatrizPrestamos();
+			String informacionPrestamos[][] = miPrestamo.obtenerMatrizPrestamosRequerido();
 			tablaResultados = new JTable(informacionPrestamos, titulosPrestamo);
 			jScrollPaneResultados.setViewportView(tablaResultados);
 			tablaResultados.setFont(new java.awt.Font("Arial", 0, 14));

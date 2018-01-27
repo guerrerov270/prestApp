@@ -98,7 +98,7 @@ public class ReportePrestamosPagados {
 		// Anchos de las columnas
 		float anchosFilas[] = { 0.2f, 0.4f, 0.8f, 0.3f, 0.4f, 0.8f, 0.8f, 0.7f, 0.7f, 0.7f, 0.4f, 0.6f };
 		PdfPTable tabla = new PdfPTable(anchosFilas);
-		String rotulosColumnas[] = miPrestamo.getColumnas();
+		String rotulosColumnas[] = miPrestamo.getColumnasRequerido();
 		// Porcentaje que ocupa a lo ancho de la pagina del PDF
 		tabla.setWidthPercentage(100);
 		// Alineacion horizontal centrada
