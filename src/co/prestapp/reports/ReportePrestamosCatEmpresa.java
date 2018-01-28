@@ -35,7 +35,7 @@ public class ReportePrestamosCatEmpresa {
 	String strRotuloPDF;
 
 	// Metodo principal del ejemplo
-	public ReportePrestamosCatEmpresa(String titulo, String nomPDF, String categoriaSeleccionada) {
+	public ReportePrestamosCatEmpresa(String titulo, String nomPDF, String categoriaSeleccionada, String tituloTabla) {
 		strRotuloPDF = titulo;
 		strNombreDelPDF = nomPDF;
 		try { // Hoja tamanio carta, rotarla (cambiar a horizontal)
@@ -49,7 +49,7 @@ public class ReportePrestamosCatEmpresa {
 			document.open();
 
 			agregarMetaDatos(document);
-			agregarContenido(document, categoriaSeleccionada);
+			agregarContenido(document, categoriaSeleccionada, tituloTabla);
 
 			document.close();
 
@@ -64,7 +64,8 @@ public class ReportePrestamosCatEmpresa {
 	// agrega el contenido del documento; para este ejemplo agrega una tabla con
 	// datos y una imagen
 	// Espera como entrada el documento donde agregara el contenido
-	private void agregarContenido(Document document, String categoriaSeleccionada) throws DocumentException {
+	private void agregarContenido(Document document, String categoriaSeleccionada, String tituloTabla)
+			throws DocumentException {
 		Paragraph ParrafoHoja = new Paragraph();
 
 		// Agregamos una linea en blanco al principio del documento
@@ -73,7 +74,12 @@ public class ReportePrestamosCatEmpresa {
 		ParrafoHoja.add(new Paragraph(strRotuloPDF));
 		// agregarLineasEnBlanco(ParrafoHoja, 1);
 		// 1.- AGREGAMOS LA TABLA
-		agregarTabla(ParrafoHoja, categoriaSeleccionada);
+		try {
+			agregarTabla(ParrafoHoja, categoriaSeleccionada, tituloTabla);
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".agregarTabla");
+		}
 		// Agregar 2 lineas en blanco
 		agregarLineasEnBlanco(ParrafoHoja, 2);
 		// 2.- AGREGAMOS LA IMAGEN
@@ -93,18 +99,18 @@ public class ReportePrestamosCatEmpresa {
 	// Se conecta al DBMS MySQL , obtiene los datos de la tabla (SELECT) y los
 	// acomoda en una tabla JTable de iText.
 	// Espera como entrada el parrafo donde agregara la tabla
-	private void agregarTabla(Paragraph parrafo, String categoriaSeleccionada) {
+	private void agregarTabla(Paragraph parrafo, String categoriaSeleccionada, String tituloTabla) throws SQLException {
 
 		// Anchos de las columnas
-		float anchosFilas[] = { 1f, 1f, 1f, 0.8f, 1f, 1f, 1f, 0.5f, 1f, 1f };
+		float anchosFilas[] = { 1.4f, 1f, 1f, 0.4f, 1f, 1f, 1f, 0.5f, 1f, 1f };
 		PdfPTable tabla = new PdfPTable(anchosFilas);
-		String rotulosColumnas[] = miPrestamo.getColumnasRequerido();
+		String rotulosColumnas[] = miPrestamo.getColumnasRequeridoReportes();
 		// Porcentaje que ocupa a lo ancho de la pagina del PDF
 		tabla.setWidthPercentage(100);
 		// Alineacion horizontal centrada
 		tabla.setHorizontalAlignment(Element.ALIGN_CENTER);
 		// agregar celda que ocupa las 9 columnas de los rotulos
-		PdfPCell cell = new PdfPCell(new Paragraph("Listado de préstamos por categoría"));
+		PdfPCell cell = new PdfPCell(new Paragraph(tituloTabla));
 		cell.setColspan(10);
 		// Centrar contenido de celda
 		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -125,51 +131,57 @@ public class ReportePrestamosCatEmpresa {
 			tabla.addCell(cell);
 		}
 
-		try {
-
-			DBConnection miConexion = new DBConnection();
-			Connection conexion = miConexion.darConexion();
-			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_prestamos_req_categoria(?)}");
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		CallableStatement miProcedimiento;
+		ResultSet rs;
+		if (categoriaSeleccionada.equals("todos")) {
+			miProcedimiento = conexion.prepareCall("{call listar_prestamos_requerido}");
+		} else if (categoriaSeleccionada.equals("pendientes")) {
+			miProcedimiento = conexion.prepareCall("{call listar_prestamos_pendientes}");
+		} else if (categoriaSeleccionada.equals("pagados")) {
+			miProcedimiento = conexion.prepareCall("{call listar_prestamos_pagados}");
+		} else if (categoriaSeleccionada.equals("vencidos")) {
+			miProcedimiento = conexion.prepareCall("{call listar_prestamos_vencidos}");
+		} else {
+			miProcedimiento = conexion.prepareCall("{call listar_prestamos_req_categoria(?)}");
 			miProcedimiento.setString(1, categoriaSeleccionada);
-			ResultSet rs = miProcedimiento.executeQuery();
-
-			// Iterar Mientras haya una fila siguiente
-			while (rs.next()) { // Agregar 10 celdas
-				cell = new PdfPCell(new Paragraph(rs.getString("nombreCliente")));
-				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(rs.getString("empresaCliente")));
-				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(rs.getString("referenciaCliente")));
-				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(rs.getString("codigoPrestamo")));
-				tabla.addCell(cell);
-				if (rs.getDate("fechaInicioPrestamo") != null) {
-					cell = new PdfPCell(
-							new Paragraph(String.valueOf(formatoFecha.format(rs.getDate("fechaInicioPrestamo")))));
-					tabla.addCell(cell);
-				}
-				cell = new PdfPCell(new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("montoPrestamo")))));
-				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(rs.getString("tipoPlazoPrestamo")));
-				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(String.valueOf(rs.getInt("numeroCuotasprestamo"))));
-				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("montoACobrar")))));
-				tabla.addCell(cell);
-				cell = new PdfPCell(
-						new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("saldoRestantePrestamo")))));
-				tabla.addCell(cell);
-
-			}
-
-			// Cerrar los objetos de manejo de BD
-			rs.close(); // ResultSet
-			// estSQL1.close();
-			conexion.close();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".agregarTabla");
 		}
+
+		rs = miProcedimiento.executeQuery();
+
+		// Iterar Mientras haya una fila siguiente
+		while (rs.next()) { // Agregar 10 celdas
+			cell = new PdfPCell(new Paragraph(rs.getString("nombreCliente")));
+			tabla.addCell(cell);
+			cell = new PdfPCell(new Paragraph(rs.getString("empresaCliente")));
+			tabla.addCell(cell);
+			cell = new PdfPCell(new Paragraph(rs.getString("referenciaCliente")));
+			tabla.addCell(cell);
+			cell = new PdfPCell(new Paragraph(rs.getString("codigoPrestamo")));
+			tabla.addCell(cell);
+			if (rs.getDate("fechaInicioPrestamo") != null) {
+				cell = new PdfPCell(
+						new Paragraph(String.valueOf(formatoFecha.format(rs.getDate("fechaInicioPrestamo")))));
+				tabla.addCell(cell);
+			}
+			cell = new PdfPCell(new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("montoPrestamo")))));
+			tabla.addCell(cell);
+			cell = new PdfPCell(new Paragraph(rs.getString("tipoPlazoPrestamo")));
+			tabla.addCell(cell);
+			cell = new PdfPCell(new Paragraph(String.valueOf(rs.getInt("numeroCuotasprestamo"))));
+			tabla.addCell(cell);
+			cell = new PdfPCell(new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("montoACobrar")))));
+			tabla.addCell(cell);
+			cell = new PdfPCell(
+					new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("saldoRestantePrestamo")))));
+			tabla.addCell(cell);
+
+		}
+
+		// Cerrar los objetos de manejo de BD
+		rs.close();
+		conexion.close();
 
 		// Agregar la tabla con los datos al parrafo que nos llego como entrada
 		parrafo.add(tabla);

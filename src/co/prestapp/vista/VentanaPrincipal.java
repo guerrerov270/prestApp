@@ -56,22 +56,15 @@ import co.prestapp.connection.DBBackup;
 import co.prestapp.connection.DBError;
 import co.prestapp.reports.ReporteAbonos;
 import co.prestapp.reports.ReporteAbonosPagados;
-import co.prestapp.reports.ReporteAbonosPagadosFecha;
 import co.prestapp.reports.ReporteAbonosPendientes;
-import co.prestapp.reports.ReporteAbonosPendientesFecha;
 import co.prestapp.reports.ReporteClientes;
 import co.prestapp.reports.ReporteClientesActivos;
 import co.prestapp.reports.ReporteClientesAlfa;
 import co.prestapp.reports.ReporteClientesNOActivos;
-import co.prestapp.reports.ReporteMovimientos;
 import co.prestapp.reports.ReporteMovimientosEntrada;
 import co.prestapp.reports.ReporteMovimientosFechas;
 import co.prestapp.reports.ReporteMovimientosSalida;
-import co.prestapp.reports.ReportePrestamos;
 import co.prestapp.reports.ReportePrestamosCatEmpresa;
-import co.prestapp.reports.ReportePrestamosPagados;
-import co.prestapp.reports.ReportePrestamosPendientes;
-import co.prestapp.reports.ReportePrestamosVencidos;
 
 import com.toedter.calendar.JDateChooser;
 import info.clearthought.layout.TableLayout;
@@ -244,8 +237,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private final String listaAbonos = "Listado de abonos registrados";
 	private final String listaAbonosPendientes = "Listado de abonos pendientes";
 	private final String listaAbonosPagados = "Listado de abonos pagados";
-	private final String listaAbonosPendientesFecha = "Listado de abonos pendientes por fecha";
-	private final String listaAbonosPagadosFecha = "Listado de abonos pagados por fecha";
 	private final String listaMovimientos = "Listado de movimientos registrados";
 	private final String listaMovimientosEntrada = "Listado de movimientos de entrada registrados";
 	private final String listaMovimientosSalida = "Listado de movimientos de salida registrados";
@@ -2495,7 +2486,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String strNombrePDF = "ReportePrestamos" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de préstamos registrados, generado el: " + diaS + "/" + mesS + "/" + anio
 				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
-		ReportePrestamos ejemplo = new ReportePrestamos(strTituloPDF, strNombrePDF);
+		String tituloTabla = "Listado de todos los préstamos registrados";
+		ReportePrestamosCatEmpresa ejemplo = new ReportePrestamosCatEmpresa(strTituloPDF, strNombrePDF, "todos",
+				tituloTabla);
 		// Preguntar al usuario si desea abrir el documento PDF
 		int respuesta = JOptionPane.showConfirmDialog(null,
 				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
@@ -2530,8 +2523,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				+ ".pdf";
 		String strTituloPDF = "Reporte de préstamos registrados por categoria, generado el: " + diaS + "/" + mesS + "/"
 				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+		String tituloTabla = "Listado de préstamos por categoría: " + categoriaSeleccionada;
 		ReportePrestamosCatEmpresa ejemplo = new ReportePrestamosCatEmpresa(strTituloPDF, strNombrePDF,
-				categoriaSeleccionada);
+				categoriaSeleccionada, tituloTabla);
 		// Preguntar al usuario si desea abrir el documento PDF
 		int respuesta = JOptionPane.showConfirmDialog(null,
 				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
@@ -2565,7 +2559,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String strNombrePDF = "ReportePrestamosPendientes" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de préstamos pendientes registrados, generado el: " + diaS + "/" + mesS + "/"
 				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
-		ReportePrestamosPendientes ejemplo = new ReportePrestamosPendientes(strTituloPDF, strNombrePDF);
+		String tituloTabla = "Listado de préstamos pendientes";
+		ReportePrestamosCatEmpresa ejemplo = new ReportePrestamosCatEmpresa(strTituloPDF, strNombrePDF, "pendientes",
+				tituloTabla);
 		// Preguntar al usuario si desea abrir el documento PDF
 		int respuesta = JOptionPane.showConfirmDialog(null,
 				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
@@ -2599,7 +2595,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String strNombrePDF = "ReportePrestamosPagados" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de préstamos pagados registrados, generado el: " + diaS + "/" + mesS + "/" + anio
 				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
-		ReportePrestamosPagados ejemplo = new ReportePrestamosPagados(strTituloPDF, strNombrePDF);
+		String tituloTabla = "Listado de préstamos pagados";
+		ReportePrestamosCatEmpresa ejemplo = new ReportePrestamosCatEmpresa(strTituloPDF, strNombrePDF, "pagados",
+				tituloTabla);
 		// Preguntar al usuario si desea abrir el documento PDF
 		int respuesta = JOptionPane.showConfirmDialog(null,
 				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
@@ -2633,7 +2631,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String strNombrePDF = "ReportePrestamosVencidos" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 		String strTituloPDF = "Reporte de préstamos vencidos registrados, generado el: " + diaS + "/" + mesS + "/"
 				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
-		ReportePrestamosVencidos ejemplo = new ReportePrestamosVencidos(strTituloPDF, strNombrePDF);
+		String tituloTabla = "Listado de préstamos vencidos";
+		ReportePrestamosCatEmpresa ejemplo = new ReportePrestamosCatEmpresa(strTituloPDF, strNombrePDF, "vencidos",
+				tituloTabla);
 		// Preguntar al usuario si desea abrir el documento PDF
 		int respuesta = JOptionPane.showConfirmDialog(null,
 				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",

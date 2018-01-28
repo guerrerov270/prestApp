@@ -868,6 +868,12 @@ public class PrestamoDAO {
 				"Cuota", "Debe" };
 		return encabezados;
 	}
+	
+	public String[] getColumnasRequeridoReportes() {
+		String encabezados[] = { "Nombre", "Empresa", "Referencia", "Cod.", "Inicio", "Monto", "Plazo", "Resta",
+				"Cuota", "Debe" };
+		return encabezados;
+	}
 
 	public String[][] obtenerMatrizPrestamosRequerido(String categoria) {
 
