@@ -3254,24 +3254,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			thAbonosPag.setFont(new java.awt.Font("Arial", 0, 14));
 			ajustaColumnasAContenido(tablaResultados);
 			break;
-		case listaAbonosPendientesFecha:
-			calendarioInicioMovimiento.setEnabled(true);
-			calendarioFinMovimiento.setEnabled(true);
-			jButtonBuscarMovimientos.setEnabled(true);
-			jTextTotalentradas.setText("");
-			jTextTotalSalidas.setText("");
-			jLabelTotalSalidas.setText("Total salidas:");
-
-			break;
-		case listaAbonosPagadosFecha:
-			calendarioInicioMovimiento.setEnabled(true);
-			calendarioFinMovimiento.setEnabled(true);
-			jButtonBuscarMovimientos.setEnabled(true);
-			jTextTotalentradas.setText("");
-			jTextTotalSalidas.setText("");
-			jLabelTotalSalidas.setText("Total salidas:");
-
-			break;
 		case listaMovimientos:
 			miMovimiento = new MovimientoDAO();
 			String informacionMovimientos[][] = miMovimiento.obtenerMatrizMovimientos();
@@ -3324,8 +3306,23 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jComboBoxCategoriaEmpresa.setEnabled(true);
 			break;
 		case listaPrestamosCliente:
-			@SuppressWarnings("unused")
 			String codigoCliente = JOptionPane.showInputDialog("Ingrese código del cliente");
+			miPrestamo = new PrestamoDAO();
+			ClienteVO cliente = miCliente.buscarCliente(codigoCliente);
+			if (cliente.getCodigoCliente() == null) {
+				JOptionPane.showMessageDialog(this, "Cliente no encontrado", "Alerta", JOptionPane.ERROR_MESSAGE);
+			} else {
+
+				miPrestamo.actualizaPagos();
+				informacionPrestamos = miPrestamo.obtenerMatrizPrestamosRequeridoCliente(codigoCliente);
+				jTablePrestamos = new JTable(informacionPrestamos, titulosPrestamo);
+				jScrollPaneResultados.setViewportView(jTablePrestamos);
+				jTablePrestamos.setFont(new java.awt.Font("Arial", 0, 14));
+				JTableHeader thPrestCli = jTablePrestamos.getTableHeader();
+				thPrestCli = jTablePrestamos.getTableHeader();
+				thPrestCli.setFont(new java.awt.Font("Arial", 0, 14));
+				ajustaColumnasAContenido(jTablePrestamos);
+			}
 			break;
 
 		}
