@@ -341,20 +341,16 @@ public class AbonoDAO {
 
 	public String[][] obtenerMatrizAbonosPendientes() {
 		ArrayList<AbonoVO> listaAbonos = buscarAbonosPendientesConMatriz();
-		String matrizInfo[][] = new String[listaAbonos.size()][11];
+		String matrizInfo[][] = new String[listaAbonos.size()][7];
 
 		for (int i = 0; i < listaAbonos.size(); i++) {
-			matrizInfo[i][0] = listaAbonos.get(i).getIDAbono() + "";
-			matrizInfo[i][1] = listaAbonos.get(i).getCodigoAbono() + "";
-			matrizInfo[i][2] = listaAbonos.get(i).getMontoACobrar() + "";
-			matrizInfo[i][3] = listaAbonos.get(i).getMontoPagado() + "";
-			matrizInfo[i][4] = listaAbonos.get(i).getCompletoAbono() + "";
-			matrizInfo[i][5] = listaAbonos.get(i).getFechaACobrar() + "";
-			matrizInfo[i][6] = listaAbonos.get(i).getFechaPago() + "";
-			matrizInfo[i][7] = listaAbonos.get(i).getAbonoPrestamo() + "";
-			matrizInfo[i][8] = listaAbonos.get(i).getPuntualAbono() + "";
-			matrizInfo[i][9] = listaAbonos.get(i).getEstadoAbono() + "";
-			matrizInfo[i][10] = listaAbonos.get(i).getNumeroAbono() + "";
+			matrizInfo[i][0] = listaAbonos.get(i).getCodigoAbono() + "";
+			matrizInfo[i][1] = listaAbonos.get(i).getMontoACobrar() + "";
+			matrizInfo[i][2] = listaAbonos.get(i).getMontoPagado() + "";
+			matrizInfo[i][3] = listaAbonos.get(i).getFechaACobrar() + "";
+			matrizInfo[i][4] = listaAbonos.get(i).getFechaPago() + "";
+			matrizInfo[i][5] = listaAbonos.get(i).getAbonoPrestamo() + "";
+			matrizInfo[i][6] = listaAbonos.get(i).getEstadoAbono() + "";
 		}
 
 		return matrizInfo;
@@ -374,19 +370,15 @@ public class AbonoDAO {
 
 			while (miRs.next()) {
 				miAbono = new AbonoVO();
-				miAbono.setIDAbono(miRs.getInt("idAbono"));
 				miAbono.setCodigoAbono(miRs.getString("codigoAbono"));
 				miAbono.setMontoACobrar(formatoMoneda.format(miRs.getDouble("montoACobrar")));
 				miAbono.setMontoPagado(formatoMoneda.format(miRs.getDouble("montoPagado")));
-				miAbono.setCompletoAbono(miRs.getString("completoAbono"));
 				miAbono.setFechaACobrar(formato.format(miRs.getDate("fechaACobrar")));
 				if (miRs.getDate("fechaPago") != null) {
 					miAbono.setFechaPago(formato.format(miRs.getDate("fechaPago")));
 				}
 				miAbono.setAbonoPrestamo(miRs.getString("abonoPrestamo"));
-				miAbono.setPuntualAbono(miRs.getString("puntualAbono"));
 				miAbono.setEstadoAbono(miRs.getString("estadoAbono"));
-				miAbono.setNumeroAbono(miRs.getInt("numeroAbono"));
 
 				listaAbonos.add(miAbono);
 			}
@@ -405,20 +397,16 @@ public class AbonoDAO {
 
 	public String[][] obtenerMatrizAbonosPagados() {
 		ArrayList<AbonoVO> listaAbonos = buscarAbonosPagadosConMatriz();
-		String matrizInfo[][] = new String[listaAbonos.size()][11];
+		String matrizInfo[][] = new String[listaAbonos.size()][7];
 
 		for (int i = 0; i < listaAbonos.size(); i++) {
-			matrizInfo[i][0] = listaAbonos.get(i).getIDAbono() + "";
-			matrizInfo[i][1] = listaAbonos.get(i).getCodigoAbono() + "";
-			matrizInfo[i][2] = listaAbonos.get(i).getMontoACobrar() + "";
-			matrizInfo[i][3] = listaAbonos.get(i).getMontoPagado() + "";
-			matrizInfo[i][4] = listaAbonos.get(i).getCompletoAbono() + "";
-			matrizInfo[i][5] = listaAbonos.get(i).getFechaACobrar() + "";
-			matrizInfo[i][6] = listaAbonos.get(i).getFechaPago() + "";
-			matrizInfo[i][7] = listaAbonos.get(i).getAbonoPrestamo() + "";
-			matrizInfo[i][8] = listaAbonos.get(i).getPuntualAbono() + "";
-			matrizInfo[i][9] = listaAbonos.get(i).getEstadoAbono() + "";
-			matrizInfo[i][10] = listaAbonos.get(i).getNumeroAbono() + "";
+			matrizInfo[i][0] = listaAbonos.get(i).getCodigoAbono() + "";
+			matrizInfo[i][1] = listaAbonos.get(i).getMontoACobrar() + "";
+			matrizInfo[i][2] = listaAbonos.get(i).getMontoPagado() + "";
+			matrizInfo[i][3] = listaAbonos.get(i).getFechaACobrar() + "";
+			matrizInfo[i][4] = listaAbonos.get(i).getFechaPago() + "";
+			matrizInfo[i][5] = listaAbonos.get(i).getAbonoPrestamo() + "";
+			matrizInfo[i][6] = listaAbonos.get(i).getEstadoAbono() + "";
 		}
 
 		return matrizInfo;
@@ -438,19 +426,15 @@ public class AbonoDAO {
 
 			while (miRs.next()) {
 				miAbono = new AbonoVO();
-				miAbono.setIDAbono(miRs.getInt("idAbono"));
 				miAbono.setCodigoAbono(miRs.getString("codigoAbono"));
 				miAbono.setMontoACobrar(formatoMoneda.format(miRs.getDouble("montoACobrar")));
 				miAbono.setMontoPagado(formatoMoneda.format(miRs.getDouble("montoPagado")));
-				miAbono.setCompletoAbono(miRs.getString("completoAbono"));
 				miAbono.setFechaACobrar(formato.format(miRs.getDate("fechaACobrar")));
 				if (miRs.getDate("fechaPago") != null) {
 					miAbono.setFechaPago(formato.format(miRs.getDate("fechaPago")));
 				}
 				miAbono.setAbonoPrestamo(miRs.getString("abonoPrestamo"));
-				miAbono.setPuntualAbono(miRs.getString("puntualAbono"));
 				miAbono.setEstadoAbono(miRs.getString("estadoAbono"));
-				miAbono.setNumeroAbono(miRs.getInt("numeroAbono"));
 
 				listaAbonos.add(miAbono);
 			}
@@ -470,20 +454,16 @@ public class AbonoDAO {
 	public String[][] obtenerMatrizAbonosPorFecha(Date fechaSeleccionada) {
 
 		ArrayList<AbonoVO> listaAbonos = buscarAbonosPagadosPorFechaConMatriz(fechaSeleccionada);
-		String matrizInfo[][] = new String[listaAbonos.size()][11];
+		String matrizInfo[][] = new String[listaAbonos.size()][7];
 
 		for (int i = 0; i < listaAbonos.size(); i++) {
-			matrizInfo[i][0] = listaAbonos.get(i).getIDAbono() + "";
-			matrizInfo[i][1] = listaAbonos.get(i).getCodigoAbono() + "";
-			matrizInfo[i][2] = listaAbonos.get(i).getMontoACobrar() + "";
-			matrizInfo[i][3] = listaAbonos.get(i).getMontoPagado() + "";
-			matrizInfo[i][4] = listaAbonos.get(i).getCompletoAbono() + "";
-			matrizInfo[i][5] = listaAbonos.get(i).getFechaACobrar() + "";
-			matrizInfo[i][6] = listaAbonos.get(i).getFechaPago() + "";
-			matrizInfo[i][7] = listaAbonos.get(i).getAbonoPrestamo() + "";
-			matrizInfo[i][8] = listaAbonos.get(i).getPuntualAbono() + "";
-			matrizInfo[i][9] = listaAbonos.get(i).getEstadoAbono() + "";
-			matrizInfo[i][10] = listaAbonos.get(i).getNumeroAbono() + "";
+			matrizInfo[i][0] = listaAbonos.get(i).getCodigoAbono() + "";
+			matrizInfo[i][1] = listaAbonos.get(i).getMontoACobrar() + "";
+			matrizInfo[i][2] = listaAbonos.get(i).getMontoPagado() + "";
+			matrizInfo[i][3] = listaAbonos.get(i).getFechaACobrar() + "";
+			matrizInfo[i][4] = listaAbonos.get(i).getFechaPago() + "";
+			matrizInfo[i][5] = listaAbonos.get(i).getAbonoPrestamo() + "";
+			matrizInfo[i][6] = listaAbonos.get(i).getEstadoAbono() + "";
 		}
 
 		return matrizInfo;
@@ -507,19 +487,15 @@ public class AbonoDAO {
 
 			while (miRs.next()) {
 				miAbono = new AbonoVO();
-				miAbono.setIDAbono(miRs.getInt("idAbono"));
 				miAbono.setCodigoAbono(miRs.getString("codigoAbono"));
 				miAbono.setMontoACobrar(formatoMoneda.format(miRs.getDouble("montoACobrar")));
 				miAbono.setMontoPagado(formatoMoneda.format(miRs.getDouble("montoPagado")));
-				miAbono.setCompletoAbono(miRs.getString("completoAbono"));
 				miAbono.setFechaACobrar(formato.format(miRs.getDate("fechaACobrar")));
 				if (miRs.getDate("fechaPago") != null) {
 					miAbono.setFechaPago(formato.format(miRs.getDate("fechaPago")));
 				}
 				miAbono.setAbonoPrestamo(miRs.getString("abonoPrestamo"));
-				miAbono.setPuntualAbono(miRs.getString("puntualAbono"));
 				miAbono.setEstadoAbono(miRs.getString("estadoAbono"));
-				miAbono.setNumeroAbono(miRs.getInt("numeroAbono"));
 
 				listaAbonos.add(miAbono);
 			}

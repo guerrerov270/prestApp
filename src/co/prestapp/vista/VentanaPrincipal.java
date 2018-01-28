@@ -1959,7 +1959,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private void actualizaAbonos() {
 
 		AbonoDAO miAbono = new AbonoDAO();
-		String informacionAbonos[][] = miAbono.obtenerMatrizAbonos();
+		String informacionAbonos[][] = miAbono.obtenerMatrizAbonosPendientes();
 		String titulos[] = miAbono.getColumnas();
 		jTableAbonosRecibidos = new JTable(informacionAbonos, titulos);
 		jScrollAbonosRecibidos.setViewportView(jTableAbonosRecibidos);
