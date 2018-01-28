@@ -47,7 +47,7 @@ public class MovimientoDAO {
 
 	public String[] getColumnas() {
 
-		String encabezados[] = { "#", "Código", "Fecha", "Entrada", "Salida", "Saldo" };
+		String encabezados[] = { "Código", "Fecha", "Entrada", "Salida", "Saldo" };
 		return encabezados;
 	}// Fin getColumnas
 
@@ -67,7 +67,6 @@ public class MovimientoDAO {
 
 			while (miRs.next()) {
 				miMovimiento = new MovimientoVO();
-				miMovimiento.setIdMovimiento(miRs.getInt("idMovimiento"));
 				miMovimiento.setCodigoMovimiento(miRs.getString("codigoMovimiento"));
 				miMovimiento.setFechaMovimiento(formato.format(miRs.getDate("fechaMovimiento")));
 				miMovimiento.setEntradaMovimiento(formatoMoneda.format(miRs.getDouble("entradaMovimiento")));
@@ -92,15 +91,14 @@ public class MovimientoDAO {
 	public String[][] obtenerMatrizMovimientos() {
 
 		ArrayList<MovimientoVO> listaMovimientos = buscarMovimientosConMatriz();
-		String matrizInfo[][] = new String[listaMovimientos.size()][6];
+		String matrizInfo[][] = new String[listaMovimientos.size()][5];
 
 		for (int i = 0; i < listaMovimientos.size(); i++) {
-			matrizInfo[i][0] = listaMovimientos.get(i).getIdMovimiento() + "";
-			matrizInfo[i][1] = listaMovimientos.get(i).getCodigoMovimiento() + "";
-			matrizInfo[i][2] = listaMovimientos.get(i).getFechaMovimiento() + "";
-			matrizInfo[i][3] = listaMovimientos.get(i).getEntradaMovimiento() + "";
-			matrizInfo[i][4] = listaMovimientos.get(i).getSalidaMovimiento() + "";
-			matrizInfo[i][5] = listaMovimientos.get(i).getSaldoMovimiento() + "";
+			matrizInfo[i][0] = listaMovimientos.get(i).getCodigoMovimiento() + "";
+			matrizInfo[i][1] = listaMovimientos.get(i).getFechaMovimiento() + "";
+			matrizInfo[i][2] = listaMovimientos.get(i).getEntradaMovimiento() + "";
+			matrizInfo[i][3] = listaMovimientos.get(i).getSalidaMovimiento() + "";
+			matrizInfo[i][4] = listaMovimientos.get(i).getSaldoMovimiento() + "";
 		}
 
 		return matrizInfo;
@@ -134,15 +132,14 @@ public class MovimientoDAO {
 	public String[][] obtenerMatrizMovimientosEntrada() {
 
 		ArrayList<MovimientoVO> listaMovimientos = buscarMovimientosEntradaConMatriz();
-		String matrizInfo[][] = new String[listaMovimientos.size()][6];
+		String matrizInfo[][] = new String[listaMovimientos.size()][5];
 
 		for (int i = 0; i < listaMovimientos.size(); i++) {
-			matrizInfo[i][0] = listaMovimientos.get(i).getIdMovimiento() + "";
-			matrizInfo[i][1] = listaMovimientos.get(i).getCodigoMovimiento() + "";
-			matrizInfo[i][2] = listaMovimientos.get(i).getFechaMovimiento() + "";
-			matrizInfo[i][3] = listaMovimientos.get(i).getEntradaMovimiento() + "";
-			matrizInfo[i][4] = listaMovimientos.get(i).getSalidaMovimiento() + "";
-			matrizInfo[i][5] = listaMovimientos.get(i).getSaldoMovimiento() + "";
+			matrizInfo[i][0] = listaMovimientos.get(i).getCodigoMovimiento() + "";
+			matrizInfo[i][1] = listaMovimientos.get(i).getFechaMovimiento() + "";
+			matrizInfo[i][2] = listaMovimientos.get(i).getEntradaMovimiento() + "";
+			matrizInfo[i][3] = listaMovimientos.get(i).getSalidaMovimiento() + "";
+			matrizInfo[i][4] = listaMovimientos.get(i).getSaldoMovimiento() + "";
 		}
 
 		return matrizInfo;
@@ -164,7 +161,6 @@ public class MovimientoDAO {
 
 			while (miRs.next()) {
 				miMovimiento = new MovimientoVO();
-				miMovimiento.setIdMovimiento(miRs.getInt("idMovimiento"));
 				miMovimiento.setCodigoMovimiento(miRs.getString("codigoMovimiento"));
 				miMovimiento.setFechaMovimiento(formato.format(miRs.getDate("fechaMovimiento")));
 				miMovimiento.setEntradaMovimiento(formatoMoneda.format(miRs.getDouble("entradaMovimiento")));
@@ -189,15 +185,14 @@ public class MovimientoDAO {
 	public String[][] obtenerMatrizMovimientosSalida() {
 
 		ArrayList<MovimientoVO> listaMovimientos = buscarMovimientosSalidaConMatriz();
-		String matrizInfo[][] = new String[listaMovimientos.size()][6];
+		String matrizInfo[][] = new String[listaMovimientos.size()][5];
 
 		for (int i = 0; i < listaMovimientos.size(); i++) {
-			matrizInfo[i][0] = listaMovimientos.get(i).getIdMovimiento() + "";
-			matrizInfo[i][1] = listaMovimientos.get(i).getCodigoMovimiento() + "";
-			matrizInfo[i][2] = listaMovimientos.get(i).getFechaMovimiento() + "";
-			matrizInfo[i][3] = listaMovimientos.get(i).getEntradaMovimiento() + "";
-			matrizInfo[i][4] = listaMovimientos.get(i).getSalidaMovimiento() + "";
-			matrizInfo[i][5] = listaMovimientos.get(i).getSaldoMovimiento() + "";
+			matrizInfo[i][0] = listaMovimientos.get(i).getCodigoMovimiento() + "";
+			matrizInfo[i][1] = listaMovimientos.get(i).getFechaMovimiento() + "";
+			matrizInfo[i][2] = listaMovimientos.get(i).getEntradaMovimiento() + "";
+			matrizInfo[i][3] = listaMovimientos.get(i).getSalidaMovimiento() + "";
+			matrizInfo[i][4] = listaMovimientos.get(i).getSaldoMovimiento() + "";
 		}
 
 		return matrizInfo;
@@ -219,7 +214,6 @@ public class MovimientoDAO {
 
 			while (miRs.next()) {
 				miMovimiento = new MovimientoVO();
-				miMovimiento.setIdMovimiento(miRs.getInt("idMovimiento"));
 				miMovimiento.setCodigoMovimiento(miRs.getString("codigoMovimiento"));
 				miMovimiento.setFechaMovimiento(formato.format(miRs.getDate("fechaMovimiento")));
 				miMovimiento.setEntradaMovimiento(formatoMoneda.format(miRs.getDouble("entradaMovimiento")));
@@ -244,15 +238,14 @@ public class MovimientoDAO {
 	public String[][] obtenerMatrizMovimientosFechas(Date fechaInicio, Date fechaFin) {
 
 		ArrayList<MovimientoVO> listaMovimientos = buscarMovimientosFechasConMatriz(fechaInicio, fechaFin);
-		String matrizInfo[][] = new String[listaMovimientos.size()][6];
+		String matrizInfo[][] = new String[listaMovimientos.size()][5];
 
 		for (int i = 0; i < listaMovimientos.size(); i++) {
-			matrizInfo[i][0] = listaMovimientos.get(i).getIdMovimiento() + "";
-			matrizInfo[i][1] = listaMovimientos.get(i).getCodigoMovimiento() + "";
-			matrizInfo[i][2] = listaMovimientos.get(i).getFechaMovimiento() + "";
-			matrizInfo[i][3] = listaMovimientos.get(i).getEntradaMovimiento() + "";
-			matrizInfo[i][4] = listaMovimientos.get(i).getSalidaMovimiento() + "";
-			matrizInfo[i][5] = listaMovimientos.get(i).getSaldoMovimiento() + "";
+			matrizInfo[i][0] = listaMovimientos.get(i).getCodigoMovimiento() + "";
+			matrizInfo[i][1] = listaMovimientos.get(i).getFechaMovimiento() + "";
+			matrizInfo[i][2] = listaMovimientos.get(i).getEntradaMovimiento() + "";
+			matrizInfo[i][3] = listaMovimientos.get(i).getSalidaMovimiento() + "";
+			matrizInfo[i][4] = listaMovimientos.get(i).getSaldoMovimiento() + "";
 		}
 
 		return matrizInfo;
@@ -321,7 +314,7 @@ public class MovimientoDAO {
 		return totalEntradas;
 
 	}// Fin calcularTotalEntradas
-	
+
 	public float calcularTotalSalidas() {
 
 		float totalSalidas = 0;
