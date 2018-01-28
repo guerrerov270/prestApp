@@ -31,7 +31,7 @@ public class ReporteClientes {
 	String strRotuloPDF;
 
 	// Metodo principal del ejemplo
-	public ReporteClientes(String titulo, String nomPDF) {
+	public ReporteClientes(String titulo, String nomPDF, String categoriaSeleccionada, String tituloTabla) {
 		strRotuloPDF = titulo;
 		strNombreDelPDF = nomPDF;
 		try { // Hoja tamanio carta, rotarla (cambiar a horizontal)
@@ -45,7 +45,7 @@ public class ReporteClientes {
 			document.open();
 
 			agregarMetaDatos(document);
-			agregarContenido(document);
+			agregarContenido(document, categoriaSeleccionada, tituloTabla);
 
 			document.close();
 
@@ -60,16 +60,22 @@ public class ReporteClientes {
 	// agrega el contenido del documento; para este ejemplo agrega una tabla con
 	// datos y una imagen
 	// Espera como entrada el documento donde agregara el contenido
-	private void agregarContenido(Document document) throws DocumentException {
+	private void agregarContenido(Document document, String categoriaSeleccionada, String tituloTabla)
+			throws DocumentException {
 		Paragraph ParrafoHoja = new Paragraph();
 
 		// Agregamos una linea en blanco al principio del documento
 		// agregarLineasEnBlanco(ParrafoHoja, 1);
 		// Colocar un encabezado (en mayusculas)
 		ParrafoHoja.add(new Paragraph(strRotuloPDF));
-		//agregarLineasEnBlanco(ParrafoHoja, 1);
+		// agregarLineasEnBlanco(ParrafoHoja, 1);
 		// 1.- AGREGAMOS LA TABLA
-		agregarTabla(ParrafoHoja);
+		try {
+			agregarTabla(ParrafoHoja, categoriaSeleccionada, tituloTabla);
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".agregarTabla");
+		}
 		// Agregar 2 lineas en blanco
 		agregarLineasEnBlanco(ParrafoHoja, 2);
 		// 2.- AGREGAMOS LA IMAGEN
@@ -89,11 +95,10 @@ public class ReporteClientes {
 	// Se conecta al DBMS MySQL , obtiene los datos de la tabla (SELECT) y los
 	// acomoda en una tabla JTable de iText.
 	// Espera como entrada el parrafo donde agregara la tabla
-	private void agregarTabla(Paragraph parrafo) {
-		
+	private void agregarTabla(Paragraph parrafo, String categoriaSeleccionada, String tituloTabla) throws SQLException {
 
 		// Anchos de las columnas
-		float anchosFilas[] = { 0.2f, 0.3f, 1f, 1f, 1f, 0.4f };
+		float anchosFilas[] = { 0.4f, 2f, 1f, 2f, 0.7f };
 		PdfPTable tabla = new PdfPTable(anchosFilas);
 		String rotulosColumnas[] = miCliente.getColumnas();
 		// Porcentaje que ocupa a lo ancho de la pagina del PDF
@@ -101,7 +106,7 @@ public class ReporteClientes {
 		// Alineacion horizontal centrada
 		tabla.setHorizontalAlignment(Element.ALIGN_CENTER);
 		// agregar celda que ocupa las 9 columnas de los rotulos
-		PdfPCell cell = new PdfPCell(new Paragraph("Listado de clientes"));
+		PdfPCell cell = new PdfPCell(new Paragraph(tituloTabla));
 		cell.setColspan(6);
 		// Centrar contenido de celda
 		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -118,37 +123,41 @@ public class ReporteClientes {
 			tabla.addCell(cell);
 		}
 
-		try {
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		CallableStatement miProcedimiento = null;
+		ResultSet rs;
 
-			DBConnection miConexion = new DBConnection();
-			Connection conexion = miConexion.darConexion();
-			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_clientes}");
-			ResultSet rs = miProcedimiento.executeQuery();
-
-			// Iterar Mientras haya una fila siguiente
-			while (rs.next()) { // Agregar 9 celdas
-				cell = new PdfPCell(new Paragraph(String.valueOf(rs.getInt("idCliente"))));
-				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(rs.getString("codigoCliente")));
-				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(rs.getString("nombreCliente")));
-				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(rs.getString("empresaCliente")));
-				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(rs.getString("referenciaCliente")));
-				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(rs.getString("estadoCliente")));
-				tabla.addCell(cell);
-			}
-
-			// Cerrar los objetos de manejo de BD
-			rs.close(); // ResultSet
-			// estSQL1.close();
-			conexion.close();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".agregarTabla");
+		if (categoriaSeleccionada.equals("todos")) {
+			miProcedimiento = conexion.prepareCall("{call listar_clientes}");
+		} else if (categoriaSeleccionada.equals("alfa")) {
+			miProcedimiento = conexion.prepareCall("{call listar_clientes_alfa}");
+		} else if (categoriaSeleccionada.equals("activos")) {
+			miProcedimiento = conexion.prepareCall("{call listar_clientes_activos}");
+		} else if (categoriaSeleccionada.equals("noActivos")) {
+			miProcedimiento = conexion.prepareCall("{call listar_clientes_no_activos}");
 		}
+
+		rs = miProcedimiento.executeQuery();
+
+		// Iterar Mientras haya una fila siguiente
+		while (rs.next()) { // Agregar 9 celdas
+			cell = new PdfPCell(new Paragraph(rs.getString("codigoCliente")));
+			tabla.addCell(cell);
+			cell = new PdfPCell(new Paragraph(rs.getString("nombreCliente")));
+			tabla.addCell(cell);
+			cell = new PdfPCell(new Paragraph(rs.getString("empresaCliente")));
+			tabla.addCell(cell);
+			cell = new PdfPCell(new Paragraph(rs.getString("referenciaCliente")));
+			tabla.addCell(cell);
+			cell = new PdfPCell(new Paragraph(rs.getString("estadoCliente")));
+			tabla.addCell(cell);
+		}
+
+		// Cerrar los objetos de manejo de BD
+		rs.close(); // ResultSet
+		// estSQL1.close();
+		conexion.close();
 
 		// Agregar la tabla con los datos al parrafo que nos llego como entrada
 		parrafo.add(tabla);
