@@ -35,7 +35,8 @@ public class ReporteMovimientosFechas {
 	String strRotuloPDF;
 
 	// Metodo principal del ejemplo
-	public ReporteMovimientosFechas(String titulo, String nomPDF, Date fechaInicio, Date fechaFin) {
+	public ReporteMovimientosFechas(String titulo, String nomPDF, String consultaSeleccionada, String tituloTabla,
+			Date fechaInicio, Date fechaFin, String rangoFechas) {
 		strRotuloPDF = titulo;
 		strNombreDelPDF = nomPDF;
 		try { // Hoja tamanio carta, rotarla (cambiar a horizontal)
@@ -49,7 +50,7 @@ public class ReporteMovimientosFechas {
 			document.open();
 
 			agregarMetaDatos(document);
-			agregarContenido(document, fechaInicio, fechaFin);
+			agregarContenido(document, consultaSeleccionada, tituloTabla, fechaInicio, fechaFin, rangoFechas);
 
 			document.close();
 
@@ -64,11 +65,11 @@ public class ReporteMovimientosFechas {
 	// agrega el contenido del documento; para este ejemplo agrega una tabla con
 	// datos y una imagen
 	// Espera como entrada el documento donde agregara el contenido
-	private void agregarContenido(Document document, Date fechaInicio, Date fechaFin) throws DocumentException {
+	private void agregarContenido(Document document, String consultaSeleccionada, String tituloTabla, Date fechaInicio,
+			Date fechaFin, String rangoFechas) throws DocumentException {
 		Paragraph ParrafoHoja = new Paragraph();
 		Locale locale = new Locale("es", "CO");
 		NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
-		DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
 
 		// Agregamos una linea en blanco al principio del documento
 		// agregarLineasEnBlanco(ParrafoHoja, 1);
@@ -80,10 +81,14 @@ public class ReporteMovimientosFechas {
 				+ formatoMoneda.format(miMovimiento.calcularTotalEntradas(fechaInicio, fechaFin))));
 		ParrafoHoja.add(new Paragraph("El total de las salidas es:  "
 				+ formatoMoneda.format(miMovimiento.calcularTotalSalidas(fechaInicio, fechaFin))));
-		ParrafoHoja.add(new Paragraph("Los datos corresponden a movimientos registrados entre el: "
-				+ formato.format(fechaInicio) + " y el " + formato.format(fechaFin) + ""));
+		ParrafoHoja.add(new Paragraph(rangoFechas));
 		// 1.- AGREGAMOS LA TABLA
-		agregarTabla(ParrafoHoja, fechaInicio, fechaFin);
+		try {
+			agregarTabla(ParrafoHoja, consultaSeleccionada, tituloTabla, fechaInicio, fechaFin);
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".agregarTabla");
+		}
 		// Agregar 2 lineas en blanco
 		agregarLineasEnBlanco(ParrafoHoja, 2);
 		// 2.- AGREGAMOS LA IMAGEN
@@ -103,10 +108,11 @@ public class ReporteMovimientosFechas {
 	// Se conecta al DBMS MySQL , obtiene los datos de la tabla (SELECT) y los
 	// acomoda en una tabla JTable de iText.
 	// Espera como entrada el parrafo donde agregara la tabla
-	private void agregarTabla(Paragraph parrafo, Date fechaInicio, Date fechaFin) {
+	private void agregarTabla(Paragraph parrafo, String consultaSeleccionada, String tituloTabla, Date fechaInicio,
+			Date fechaFin) throws SQLException {
 
 		// Anchos de las columnas
-		float anchosFilas[] = { 1f, 1f, 1f, 1f, 1f, 1f };
+		float anchosFilas[] = { 1f, 1f, 1f, 1f, 1f };
 		PdfPTable tabla = new PdfPTable(anchosFilas);
 		String rotulosColumnas[] = miMovimiento.getColumnas();
 		// Porcentaje que ocupa a lo ancho de la pagina del PDF
@@ -114,7 +120,7 @@ public class ReporteMovimientosFechas {
 		// Alineacion horizontal centrada
 		tabla.setHorizontalAlignment(Element.ALIGN_CENTER);
 		// agregar celda que ocupa las 9 columnas de los rotulos
-		PdfPCell cell = new PdfPCell(new Paragraph("Listado de movimientos entre fechas"));
+		PdfPCell cell = new PdfPCell(new Paragraph(tituloTabla));
 		cell.setColspan(11);
 		// Centrar contenido de celda
 		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -135,44 +141,59 @@ public class ReporteMovimientosFechas {
 			tabla.addCell(cell);
 		}
 
-		try {
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
+		CallableStatement miProcedimiento = null;
+		ResultSet rs;
+		if (consultaSeleccionada.equals("entrada")) {
 
-			DBConnection miConexion = new DBConnection();
-			Connection conexion = miConexion.darConexion();
-			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_movimientos_fechas(?,?)}");
+			miProcedimiento = conexion.prepareCall("{call listar_movimientos_entrada}");
+
+		} else if (consultaSeleccionada.equals("salida")) {
+
+			miProcedimiento = conexion.prepareCall("{call listar_movimientos_salida}");
+
+		} else if (consultaSeleccionada.equals("entradaFecha")) {
+
+			miProcedimiento = conexion.prepareCall("{call listar_movimientos_entrada_fechas(?,?)}");
 			miProcedimiento.setDate(1, fechaInicio);
 			miProcedimiento.setDate(2, fechaFin);
-			ResultSet rs = miProcedimiento.executeQuery();
 
-			// Iterar Mientras haya una fila siguiente
-			while (rs.next()) { // Agregar 6 celdas
-				cell = new PdfPCell(new Paragraph(String.valueOf(rs.getInt("idMovimiento"))));
-				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(rs.getString("codigoMovimiento")));
-				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(String.valueOf(formatoFecha.format(rs.getDate("fechaMovimiento")))));
-				tabla.addCell(cell);
+		} else if (consultaSeleccionada.equals("salidaFecha")) {
 
-				cell = new PdfPCell(
-						new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("entradaMovimiento")))));
-				tabla.addCell(cell);
-				cell = new PdfPCell(
-						new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("salidaMovimiento")))));
-				tabla.addCell(cell);
-				cell = new PdfPCell(
-						new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("saldoMovimiento")))));
-				tabla.addCell(cell);
+			miProcedimiento = conexion.prepareCall("{call listar_movimientos_salida_fechas(?,?)}");
+			miProcedimiento.setDate(1, fechaInicio);
+			miProcedimiento.setDate(2, fechaFin);
 
-			}
+		} else if (consultaSeleccionada.equals("todos")) {
 
-			// Cerrar los objetos de manejo de BD
-			rs.close(); // ResultSet
-			// estSQL1.close();
-			conexion.close();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".agregarTabla");
+			miProcedimiento = conexion.prepareCall("{call listar_movimientos_fechas(?,?)}");
+			miProcedimiento.setDate(1, fechaInicio);
+			miProcedimiento.setDate(2, fechaFin);
 		}
+
+		rs = miProcedimiento.executeQuery();
+
+		// Iterar Mientras haya una fila siguiente
+		while (rs.next()) { // Agregar 6 celdas
+			cell = new PdfPCell(new Paragraph(rs.getString("codigoMovimiento")));
+			tabla.addCell(cell);
+			cell = new PdfPCell(new Paragraph(String.valueOf(formatoFecha.format(rs.getDate("fechaMovimiento")))));
+			tabla.addCell(cell);
+
+			cell = new PdfPCell(new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("entradaMovimiento")))));
+			tabla.addCell(cell);
+			cell = new PdfPCell(new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("salidaMovimiento")))));
+			tabla.addCell(cell);
+			cell = new PdfPCell(new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("saldoMovimiento")))));
+			tabla.addCell(cell);
+
+		}
+
+		// Cerrar los objetos de manejo de BD
+		rs.close(); // ResultSet
+		// estSQL1.close();
+		conexion.close();
 
 		// Agregar la tabla con los datos al parrafo que nos llego como entrada
 		parrafo.add(tabla);

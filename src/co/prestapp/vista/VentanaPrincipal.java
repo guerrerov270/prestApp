@@ -60,9 +60,7 @@ import co.prestapp.reports.ReporteClientes;
 import co.prestapp.reports.ReporteClientesActivos;
 import co.prestapp.reports.ReporteClientesAlfa;
 import co.prestapp.reports.ReporteClientesNOActivos;
-import co.prestapp.reports.ReporteMovimientosEntrada;
 import co.prestapp.reports.ReporteMovimientosFechas;
-import co.prestapp.reports.ReporteMovimientosSalida;
 import co.prestapp.reports.ReportePrestamosCatEmpresa;
 
 import com.toedter.calendar.JDateChooser;
@@ -2658,97 +2656,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
-	private void generarReporteMovimientosEntrada() {
+	private void generarReporteMovimientosFechas(String strTituloPDF, String strNombrePDF, String consultaSeleccionada,
+			String tituloTabla, java.sql.Date fechaInicio, java.sql.Date fechaFin, String rangoFechas) {
 
-		// configuracion de la fecha actual
-		// Creamos un objeto de la clase Calendar.
-		Calendar fecha = new GregorianCalendar();
-		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
-		// Usando el método get y el parámetro correspondiente.
-		int anio = fecha.get(Calendar.YEAR);
-		int mes = fecha.get(Calendar.MONTH);
-		int dia = fecha.get(Calendar.DAY_OF_MONTH);
-		int hora = fecha.get(Calendar.HOUR_OF_DAY);
-		int minuto = fecha.get(Calendar.MINUTE);
-		int segundo = fecha.get(Calendar.SECOND);
-
-		String mesS = concatenaCero(mes + 1);
-		String diaS = concatenaCero(dia);
-		String horaS = concatenaCero(hora);
-		String minutoS = concatenaCero(minuto);
-		String segundoS = concatenaCero(segundo);
-
-		String strNombrePDF = "ReporteMovimientosEntrada" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
-		String strTituloPDF = "Reporte de movimientos de entrada resgistrados, generado el: " + diaS + "/" + mesS + "/"
-				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
-		ReporteMovimientosEntrada reporte = new ReporteMovimientosEntrada(strTituloPDF, strNombrePDF);
-		// Preguntar al usuario si desea abrir el documento PDF
-		int respuesta = JOptionPane.showConfirmDialog(null,
-				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
-				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-		// Si la respuesta es SI, abrirlo
-		if (respuesta == JOptionPane.YES_OPTION)
-			reporte.abrirPDF();
-	}
-
-	private void generarReporteMovimientosSalida() {
-
-		// configuracion de la fecha actual
-		// Creamos un objeto de la clase Calendar.
-		Calendar fecha = new GregorianCalendar();
-		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
-		// Usando el método get y el parámetro correspondiente.
-		int anio = fecha.get(Calendar.YEAR);
-		int mes = fecha.get(Calendar.MONTH);
-		int dia = fecha.get(Calendar.DAY_OF_MONTH);
-		int hora = fecha.get(Calendar.HOUR_OF_DAY);
-		int minuto = fecha.get(Calendar.MINUTE);
-		int segundo = fecha.get(Calendar.SECOND);
-
-		String mesS = concatenaCero(mes + 1);
-		String diaS = concatenaCero(dia);
-		String horaS = concatenaCero(hora);
-		String minutoS = concatenaCero(minuto);
-		String segundoS = concatenaCero(segundo);
-
-		String strNombrePDF = "ReporteMovimientosSalida" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
-		String strTituloPDF = "Reporte de movimientos de salida resgistrados, generado el: " + diaS + "/" + mesS + "/"
-				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
-		ReporteMovimientosSalida reporte = new ReporteMovimientosSalida(strTituloPDF, strNombrePDF);
-		// Preguntar al usuario si desea abrir el documento PDF
-		int respuesta = JOptionPane.showConfirmDialog(null,
-				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
-				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-		// Si la respuesta es SI, abrirlo
-		if (respuesta == JOptionPane.YES_OPTION)
-			reporte.abrirPDF();
-	}
-
-	private void generarReporteMovimientosFechas(java.sql.Date fechaInicio, java.sql.Date fechaFin) {
-
-		// configuracion de la fecha actual
-		// Creamos un objeto de la clase Calendar.
-		Calendar fecha = new GregorianCalendar();
-		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
-		// Usando el método get y el parámetro correspondiente.
-		int anio = fecha.get(Calendar.YEAR);
-		int mes = fecha.get(Calendar.MONTH);
-		int dia = fecha.get(Calendar.DAY_OF_MONTH);
-		int hora = fecha.get(Calendar.HOUR_OF_DAY);
-		int minuto = fecha.get(Calendar.MINUTE);
-		int segundo = fecha.get(Calendar.SECOND);
-
-		String mesS = concatenaCero(mes + 1);
-		String diaS = concatenaCero(dia);
-		String horaS = concatenaCero(hora);
-		String minutoS = concatenaCero(minuto);
-		String segundoS = concatenaCero(segundo);
-
-		String strNombrePDF = "ReporteMovimientosFechas" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
-		String strTituloPDF = "Reporte de movimientos resgistrados por fecha, generado el: " + diaS + "/" + mesS + "/"
-				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
-		ReporteMovimientosFechas reporte = new ReporteMovimientosFechas(strTituloPDF, strNombrePDF, fechaInicio,
-				fechaFin);
+		ReporteMovimientosFechas reporte = new ReporteMovimientosFechas(strTituloPDF, strNombrePDF,
+				consultaSeleccionada, tituloTabla, fechaInicio, fechaFin, rangoFechas);
 		// Preguntar al usuario si desea abrir el documento PDF
 		int respuesta = JOptionPane.showConfirmDialog(null,
 				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
@@ -2982,6 +2894,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String tituloTabla = "";
 		String rangoFechas = "";
 		DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
+		String consultaSeleccionada = "";
 
 		String listaSeleccionada = (String) jComboSeleccionListado.getSelectedItem();
 
@@ -3040,40 +2953,68 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			strTituloPDF = "Reporte de movimientos de entrada registrados, generado el: " + diaS + "/" + mesS + "/"
 					+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 			tituloTabla = "Reporte de movimientos de entrada (Abonos recibidos)";
-			generarReporteMovimientosEntrada();
+			consultaSeleccionada = "entrada";
+			generarReporteMovimientosFechas(strTituloPDF, strNombrePDF, consultaSeleccionada, tituloTabla, null, null,
+					rangoFechas);
+
 			break;
 		case listaMovimientosSalida:
 			strNombrePDF = "ReporteMovimientosSalida" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 			strTituloPDF = "Reporte de movimientos de salida registrados, generado el: " + diaS + "/" + mesS + "/"
 					+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 			tituloTabla = "Reporte de movimientos de salida (Préstamos realizados)";
-			generarReporteMovimientosSalida();
+			consultaSeleccionada = "salida";
+			generarReporteMovimientosFechas(strTituloPDF, strNombrePDF, consultaSeleccionada, tituloTabla, null, null,
+					rangoFechas);
 			break;
 		case listaMovimientosEntradaFechas:
-			strNombrePDF = "ReporteMovimientosEntrada" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
+			strNombrePDF = "ReporteMovimientosEntradaFechas" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 			strTituloPDF = "Reporte de movimientos de entrada registrados, generado el: " + diaS + "/" + mesS + "/"
 					+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 			tituloTabla = "Reporte de movimientos de entrada (Abonos recibidos)";
-			generarReporteMovimientosEntrada();
+			consultaSeleccionada = "entradaFecha";
+
+			java.sql.Date fechaInicioFormateadaE = new java.sql.Date(calendarioInicioMovimiento.getDate().getTime());
+			java.sql.Date fechaFinFormateadaE = new java.sql.Date(calendarioFinMovimiento.getDate().getTime());
+			rangoFechas = "Los datos corresponden a movimientos registrados entre el: "
+					+ formato.format(fechaInicioFormateadaE) + " y el " + formato.format(fechaFinFormateadaE) + "";
+			generarReporteMovimientosFechas(strTituloPDF, strNombrePDF, consultaSeleccionada, tituloTabla,
+					fechaInicioFormateadaE, fechaFinFormateadaE, rangoFechas);
+
+			calendarioInicioMovimiento.setDate(null);
+			calendarioFinMovimiento.setDate(null);
 			break;
 		case listaMovimientosSalidaFechas:
-			strNombrePDF = "ReporteMovimientosSalida" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
+			strNombrePDF = "ReporteMovimientosSalidaFechas" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 			strTituloPDF = "Reporte de movimientos de salida registrados, generado el: " + diaS + "/" + mesS + "/"
 					+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
 			tituloTabla = "Reporte de movimientos de salida (Préstamos realizados)";
-			generarReporteMovimientosSalida();
+			consultaSeleccionada = "salidaFecha";
+
+			java.sql.Date fechaInicioFormateadaS = new java.sql.Date(calendarioInicioMovimiento.getDate().getTime());
+			java.sql.Date fechaFinFormateadaS = new java.sql.Date(calendarioFinMovimiento.getDate().getTime());
+			rangoFechas = "Los datos corresponden a movimientos registrados entre el: "
+					+ formato.format(fechaInicioFormateadaS) + " y el " + formato.format(fechaFinFormateadaS) + "";
+			generarReporteMovimientosFechas(strTituloPDF, strNombrePDF, consultaSeleccionada, tituloTabla,
+					fechaInicioFormateadaS, fechaFinFormateadaS, rangoFechas);
+
+			calendarioInicioMovimiento.setDate(null);
+			calendarioFinMovimiento.setDate(null);
 			break;
 		case listaMovimientosFechas:
-			strNombrePDF = "ReporteMovimientosFechas" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
+			strNombrePDF = "ReporteMovimientosTodosFechas" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 			strTituloPDF = "Reporte de movimientos de salida registrados, generado el: " + diaS + "/" + mesS + "/"
 					+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
-			tituloTabla = "Reporte de movimientos de salida (Préstamos realizados)";
+			tituloTabla = "Reporte de todos los movimientos registrados (Préstamos y abonos)";
+			consultaSeleccionada = "todos";
 
 			java.sql.Date fechaInicioFormateada = new java.sql.Date(calendarioInicioMovimiento.getDate().getTime());
 			java.sql.Date fechaFinFormateada = new java.sql.Date(calendarioFinMovimiento.getDate().getTime());
-			generarReporteMovimientosFechas(fechaInicioFormateada, fechaFinFormateada);
 			rangoFechas = "Los datos corresponden a movimientos registrados entre el: "
 					+ formato.format(fechaInicioFormateada) + " y el " + formato.format(fechaFinFormateada) + "";
+			generarReporteMovimientosFechas(strTituloPDF, strNombrePDF, consultaSeleccionada, tituloTabla,
+					fechaInicioFormateada, fechaFinFormateada, rangoFechas);
+
 			calendarioInicioMovimiento.setDate(null);
 			calendarioFinMovimiento.setDate(null);
 			break;

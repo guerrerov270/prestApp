@@ -343,6 +343,10 @@ public class MovimientoDAO {
 
 	public float calcularTotalEntradas(Date fechaInicio, Date fechaFin) {
 
+		if (fechaInicio == null && fechaFin == null) {
+			return calcularTotalEntradas();
+		}
+
 		java.sql.Date fechaInicioFormateada = new java.sql.Date(fechaInicio.getTime());
 		java.sql.Date fechaFinFormateada = new java.sql.Date(fechaFin.getTime());
 		float totalEntradas = 0;
@@ -367,6 +371,10 @@ public class MovimientoDAO {
 	}
 
 	public float calcularTotalSalidas(Date fechaInicio, Date fechaFin) {
+
+		if (fechaInicio == null && fechaFin == null) {
+			return calcularTotalSalidas();
+		}
 
 		java.sql.Date fechaInicioFormateada = new java.sql.Date(fechaInicio.getTime());
 		java.sql.Date fechaFinFormateada = new java.sql.Date(fechaFin.getTime());
