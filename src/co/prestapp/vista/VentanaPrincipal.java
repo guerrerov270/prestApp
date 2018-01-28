@@ -55,8 +55,6 @@ import co.prestapp.VO.PrestamoVO;
 import co.prestapp.connection.DBBackup;
 import co.prestapp.connection.DBError;
 import co.prestapp.reports.ReporteAbonos;
-import co.prestapp.reports.ReporteAbonosPagados;
-import co.prestapp.reports.ReporteAbonosPendientes;
 import co.prestapp.reports.ReporteClientes;
 import co.prestapp.reports.ReporteClientesActivos;
 import co.prestapp.reports.ReporteClientesAlfa;
@@ -2644,30 +2642,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
-	private void generarReporteAbonos() {
+	private void generarReporteAbonos(String strTituloPDF, String strNombrePDF, String categoria, String tituloTabla) {
 
-		// configuracion de la fecha actual
-		// Creamos un objeto de la clase Calendar.
-		Calendar fecha = new GregorianCalendar();
-		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
-		// Usando el método get y el parámetro correspondiente.
-		int anio = fecha.get(Calendar.YEAR);
-		int mes = fecha.get(Calendar.MONTH);
-		int dia = fecha.get(Calendar.DAY_OF_MONTH);
-		int hora = fecha.get(Calendar.HOUR_OF_DAY);
-		int minuto = fecha.get(Calendar.MINUTE);
-		int segundo = fecha.get(Calendar.SECOND);
-
-		String mesS = concatenaCero(mes + 1);
-		String diaS = concatenaCero(dia);
-		String horaS = concatenaCero(hora);
-		String minutoS = concatenaCero(minuto);
-		String segundoS = concatenaCero(segundo);
-
-		String strNombrePDF = "ReporteAbonos" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
-		String strTituloPDF = "Reporte de abonos registrados, generado el: " + diaS + "/" + mesS + "/" + anio
-				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
-		ReporteAbonos ejemplo = new ReporteAbonos(strTituloPDF, strNombrePDF);
+		ReporteAbonos ejemplo = new ReporteAbonos(strTituloPDF, strNombrePDF, categoria, tituloTabla);
 		// Preguntar al usuario si desea abrir el documento PDF
 		int respuesta = JOptionPane.showConfirmDialog(null,
 				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
@@ -2675,74 +2652,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		// Si la respuesta es SI, abrirlo
 		if (respuesta == JOptionPane.YES_OPTION)
 			ejemplo.abrirPDF();
-
-	}
-
-	private void generarReporteAbonosPendientes() {
-
-		// configuracion de la fecha actual
-		// Creamos un objeto de la clase Calendar.
-		Calendar fecha = new GregorianCalendar();
-		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
-		// Usando el método get y el parámetro correspondiente.
-		int anio = fecha.get(Calendar.YEAR);
-		int mes = fecha.get(Calendar.MONTH);
-		int dia = fecha.get(Calendar.DAY_OF_MONTH);
-		int hora = fecha.get(Calendar.HOUR_OF_DAY);
-		int minuto = fecha.get(Calendar.MINUTE);
-		int segundo = fecha.get(Calendar.SECOND);
-
-		String mesS = concatenaCero(mes + 1);
-		String diaS = concatenaCero(dia);
-		String horaS = concatenaCero(hora);
-		String minutoS = concatenaCero(minuto);
-		String segundoS = concatenaCero(segundo);
-
-		String strNombrePDF = "ReporteAbonosPendientes" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
-		String strTituloPDF = "Reporte de abonos pendientes, generado el: " + diaS + "/" + mesS + "/" + anio
-				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
-		ReporteAbonosPendientes ejemplo = new ReporteAbonosPendientes(strTituloPDF, strNombrePDF);
-		// Preguntar al usuario si desea abrir el documento PDF
-		int respuesta = JOptionPane.showConfirmDialog(null,
-				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
-				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-		// Si la respuesta es SI, abrirlo
-		if (respuesta == JOptionPane.YES_OPTION)
-			ejemplo.abrirPDF();
-
-	}
-
-	private void generarReporteAbonosPagados() {
-
-		// configuracion de la fecha actual
-		// Creamos un objeto de la clase Calendar.
-		Calendar fecha = new GregorianCalendar();
-		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
-		// Usando el método get y el parámetro correspondiente.
-		int anio = fecha.get(Calendar.YEAR);
-		int mes = fecha.get(Calendar.MONTH);
-		int dia = fecha.get(Calendar.DAY_OF_MONTH);
-		int hora = fecha.get(Calendar.HOUR_OF_DAY);
-		int minuto = fecha.get(Calendar.MINUTE);
-		int segundo = fecha.get(Calendar.SECOND);
-
-		String mesS = concatenaCero(mes + 1);
-		String diaS = concatenaCero(dia);
-		String horaS = concatenaCero(hora);
-		String minutoS = concatenaCero(minuto);
-		String segundoS = concatenaCero(segundo);
-
-		String strNombrePDF = "ReporteAbonosPagados" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
-		String strTituloPDF = "Reporte de abonos pagados, generado el: " + diaS + "/" + mesS + "/" + anio + "  a las "
-				+ " " + horaS + ":" + minutoS + ":" + segundoS;
-		ReporteAbonosPagados reporte = new ReporteAbonosPagados(strTituloPDF, strNombrePDF);
-		// Preguntar al usuario si desea abrir el documento PDF
-		int respuesta = JOptionPane.showConfirmDialog(null,
-				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
-				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-		// Si la respuesta es SI, abrirlo
-		if (respuesta == JOptionPane.YES_OPTION)
-			reporte.abrirPDF();
 
 	}
 
@@ -3047,6 +2956,28 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private void jButtonGenerarPDFActionPerformed(ActionEvent evt) {
 
+		// configuracion de la fecha actual
+		// Creamos un objeto de la clase Calendar.
+		Calendar fecha = new GregorianCalendar();
+		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
+		// Usando el método get y el parámetro correspondiente.
+		int anio = fecha.get(Calendar.YEAR);
+		int mes = fecha.get(Calendar.MONTH);
+		int dia = fecha.get(Calendar.DAY_OF_MONTH);
+		int hora = fecha.get(Calendar.HOUR_OF_DAY);
+		int minuto = fecha.get(Calendar.MINUTE);
+		int segundo = fecha.get(Calendar.SECOND);
+
+		String mesS = concatenaCero(mes + 1);
+		String diaS = concatenaCero(dia);
+		String horaS = concatenaCero(hora);
+		String minutoS = concatenaCero(minuto);
+		String segundoS = concatenaCero(segundo);
+
+		String strNombrePDF = "";
+		String strTituloPDF = "";
+		String tituloTabla = "";
+
 		String listaSeleccionada = (String) jComboSeleccionListado.getSelectedItem();
 
 		switch (listaSeleccionada) {
@@ -3079,13 +3010,25 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			generarReportePrestamosVencidos();
 			break;
 		case listaAbonos:
-			generarReporteAbonos();
+			strNombrePDF = "ReporteAbonos" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
+			strTituloPDF = "Reporte de abonos registrados, generado el: " + diaS + "/" + mesS + "/" + anio + "  a las "
+					+ " " + horaS + ":" + minutoS + ":" + segundoS;
+			tituloTabla = "Reporte de todos los abonos";
+			generarReporteAbonos(strTituloPDF, strNombrePDF, "todos", tituloTabla);
 			break;
 		case listaAbonosPendientes:
-			generarReporteAbonosPendientes();
+			strNombrePDF = "ReporteAbonosPendientes" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
+			strTituloPDF = "Reporte de abonos pendientes registrados, generado el: " + diaS + "/" + mesS + "/" + anio
+					+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+			tituloTabla = "Reporte de los abonos pendientes";
+			generarReporteAbonos(strTituloPDF, strNombrePDF, "pendientes", tituloTabla);
 			break;
 		case listaAbonosPagados:
-			generarReporteAbonosPagados();
+			strNombrePDF = "ReporteAbonosPagados" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
+			strTituloPDF = "Reporte de abonos pagados registrados, generado el: " + diaS + "/" + mesS + "/" + anio
+					+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+			tituloTabla = "Reporte de los abonos pagados";
+			generarReporteAbonos(strTituloPDF, strNombrePDF, "pagados", tituloTabla);
 			break;
 		case listaMovimientosEntrada:
 			generarReporteMovimientosEntrada();

@@ -35,7 +35,7 @@ public class ReporteAbonos {
 	String strRotuloPDF;
 
 	// Metodo principal del ejemplo
-	public ReporteAbonos(String titulo, String nomPDF) {
+	public ReporteAbonos(String titulo, String nomPDF, String categoria, String tituloTabla) {
 		strRotuloPDF = titulo;
 		strNombreDelPDF = nomPDF;
 		try { // Hoja tamanio carta, rotarla (cambiar a horizontal)
@@ -49,7 +49,7 @@ public class ReporteAbonos {
 			document.open();
 
 			agregarMetaDatos(document);
-			agregarContenido(document);
+			agregarContenido(document, categoria, tituloTabla);
 
 			document.close();
 
@@ -64,7 +64,7 @@ public class ReporteAbonos {
 	// agrega el contenido del documento; para este ejemplo agrega una tabla con
 	// datos y una imagen
 	// Espera como entrada el documento donde agregara el contenido
-	private void agregarContenido(Document document) throws DocumentException {
+	private void agregarContenido(Document document, String categoria, String tituloTabla) throws DocumentException {
 		Paragraph ParrafoHoja = new Paragraph();
 
 		// Agregamos una linea en blanco al principio del documento
@@ -73,7 +73,12 @@ public class ReporteAbonos {
 		ParrafoHoja.add(new Paragraph(strRotuloPDF));
 		// agregarLineasEnBlanco(ParrafoHoja, 1);
 		// 1.- AGREGAMOS LA TABLA
-		agregarTabla(ParrafoHoja);
+		try {
+			agregarTabla(ParrafoHoja, categoria, tituloTabla);
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".agregarTabla");
+		}
 		// Agregar 2 lineas en blanco
 		agregarLineasEnBlanco(ParrafoHoja, 2);
 		// 2.- AGREGAMOS LA IMAGEN
@@ -93,10 +98,10 @@ public class ReporteAbonos {
 	// Se conecta al DBMS MySQL , obtiene los datos de la tabla (SELECT) y los
 	// acomoda en una tabla JTable de iText.
 	// Espera como entrada el parrafo donde agregara la tabla
-	private void agregarTabla(Paragraph parrafo) {
+	private void agregarTabla(Paragraph parrafo, String categoria, String tituloTabla) throws SQLException {
 
 		// Anchos de las columnas
-		float anchosFilas[] = { 0.2f, 0.4f, 0.8f, 0.8f, 0.4f, 1f, 1f, 0.5f, 0.4f, 0.7f, 0.3f };
+		float anchosFilas[] = { 1f, 1f, 1f, 1f, 1f, 1f, 1f };
 		PdfPTable tabla = new PdfPTable(anchosFilas);
 		String rotulosColumnas[] = miAbono.getColumnas();
 		// Porcentaje que ocupa a lo ancho de la pagina del PDF
@@ -104,7 +109,7 @@ public class ReporteAbonos {
 		// Alineacion horizontal centrada
 		tabla.setHorizontalAlignment(Element.ALIGN_CENTER);
 		// agregar celda que ocupa las 9 columnas de los rotulos
-		PdfPCell cell = new PdfPCell(new Paragraph("Listado de abonos"));
+		PdfPCell cell = new PdfPCell(new Paragraph(tituloTabla));
 		cell.setColspan(11);
 		// Centrar contenido de celda
 		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -125,57 +130,53 @@ public class ReporteAbonos {
 			tabla.addCell(cell);
 		}
 
-		try {
+		DBConnection miConexion = new DBConnection();
+		Connection conexion = miConexion.darConexion();
 
-			DBConnection miConexion = new DBConnection();
-			Connection conexion = miConexion.darConexion();
-			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_abonos}");
-			ResultSet rs = miProcedimiento.executeQuery();
+		CallableStatement miProcedimiento = null;
+		ResultSet rs;
 
-			// Iterar Mientras haya una fila siguiente
-			while (rs.next()) { // Agregar 9 celdas
-				cell = new PdfPCell(new Paragraph(String.valueOf(rs.getInt("idAbono"))));
-				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(rs.getString("codigoAbono")));
-				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("montoACobrar")))));
-				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("montoPagado")))));
-				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(rs.getString("completoAbono")));
-				tabla.addCell(cell);
-				if (rs.getDate("fechaACobrar") != null) {
-					cell = new PdfPCell(new Paragraph(String.valueOf(formatoFecha.format(rs.getDate("fechaACobrar")))));
-					tabla.addCell(cell);
-				}
+		if (categoria.equals("todos")) {
+			miProcedimiento = conexion.prepareCall("{call listar_abonos}");
+		} else if (categoria.equals("pendientes")) {
+			miProcedimiento = conexion.prepareCall("{call listar_abonos_pendientes}");
+		} else if (categoria.equals("pagados")) {
+			miProcedimiento = conexion.prepareCall("{call listar_abonos_pagados}");
+		}
+		rs = miProcedimiento.executeQuery();
 
-				if (rs.getDate("fechaPago") != null) {
-					cell = new PdfPCell(new Paragraph(String.valueOf(formatoFecha.format(rs.getDate("fechaPago")))));
-					tabla.addCell(cell);
-				} else {
-					cell = new PdfPCell(new Paragraph(String.valueOf(rs.getDate("fechaPago"))));
-					tabla.addCell(cell);
-				}
-
-				cell = new PdfPCell(new Paragraph(rs.getString("abonoPrestamo")));
+		// Iterar Mientras haya una fila siguiente
+		while (rs.next()) { // Agregar 9 celdas
+			cell = new PdfPCell(new Paragraph(rs.getString("codigoAbono")));
+			tabla.addCell(cell);
+			cell = new PdfPCell(new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("montoACobrar")))));
+			tabla.addCell(cell);
+			cell = new PdfPCell(new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("montoPagado")))));
+			tabla.addCell(cell);
+			if (rs.getDate("fechaACobrar") != null) {
+				cell = new PdfPCell(new Paragraph(String.valueOf(formatoFecha.format(rs.getDate("fechaACobrar")))));
 				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(rs.getString("puntualAbono")));
-				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(rs.getString("estadoAbono")));
-				tabla.addCell(cell);
-				cell = new PdfPCell(new Paragraph(String.valueOf(rs.getInt("numeroAbono"))));
-				tabla.addCell(cell);
-
 			}
 
-			// Cerrar los objetos de manejo de BD
-			rs.close(); // ResultSet
-			// estSQL1.close();
-			conexion.close();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".agregarTabla");
+			if (rs.getDate("fechaPago") != null) {
+				cell = new PdfPCell(new Paragraph(String.valueOf(formatoFecha.format(rs.getDate("fechaPago")))));
+				tabla.addCell(cell);
+			} else {
+				cell = new PdfPCell(new Paragraph(String.valueOf(rs.getDate("fechaPago"))));
+				tabla.addCell(cell);
+			}
+
+			cell = new PdfPCell(new Paragraph(rs.getString("abonoPrestamo")));
+			tabla.addCell(cell);
+			cell = new PdfPCell(new Paragraph(rs.getString("estadoAbono")));
+			tabla.addCell(cell);
+
 		}
+
+		// Cerrar los objetos de manejo de BD
+		rs.close(); // ResultSet
+		// estSQL1.close();
+		conexion.close();
 
 		// Agregar la tabla con los datos al parrafo que nos llego como entrada
 		parrafo.add(tabla);
