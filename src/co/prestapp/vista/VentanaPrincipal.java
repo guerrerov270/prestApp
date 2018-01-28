@@ -1155,7 +1155,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						{
 							jLabelCategoríaEmpresa = new JLabel();
 							jPaneSeleccionListado.add(jLabelCategoríaEmpresa, "1, 2");
-							jLabelCategoríaEmpresa.setText("Categoría/Empresa:");
+							jLabelCategoríaEmpresa.setText("Préstamos por categoría:");
 							jLabelCategoríaEmpresa.setBounds(12, 112, 143, 30);
 							jLabelCategoríaEmpresa.setFont(new java.awt.Font("Arial", 0, 16));
 						}
