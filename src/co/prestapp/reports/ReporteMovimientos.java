@@ -103,7 +103,7 @@ public class ReporteMovimientos {
 	private void agregarTabla(Paragraph parrafo) {
 
 		// Anchos de las columnas
-		float anchosFilas[] = { 1f, 1f, 1f, 1f, 1f, 1f };
+		float anchosFilas[] = { 1f, 1f, 1f, 1f, 1f };
 		PdfPTable tabla = new PdfPTable(anchosFilas);
 		String rotulosColumnas[] = miMovimiento.getColumnas();
 		// Porcentaje que ocupa a lo ancho de la pagina del PDF
@@ -141,8 +141,6 @@ public class ReporteMovimientos {
 
 			// Iterar Mientras haya una fila siguiente
 			while (rs.next()) { // Agregar 6 celdas
-				cell = new PdfPCell(new Paragraph(String.valueOf(rs.getInt("idMovimiento"))));
-				tabla.addCell(cell);
 				cell = new PdfPCell(new Paragraph(rs.getString("codigoMovimiento")));
 				tabla.addCell(cell);
 				cell = new PdfPCell(new Paragraph(String.valueOf(formatoFecha.format(rs.getDate("fechaMovimiento")))));

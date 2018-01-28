@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -218,16 +219,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private final String listaClientesAlfa = "Listado de clientes alfabéticamente";
 	private final String listaClientesActivos = "Listado de clientes activos";
 	private final String listaClientesNoActivos = "Listado de clientes no activos";
-
-	// Nuevos
-	// private final String listaClientesEmpresa = "Listado de clientes por
-	// empresa/categoria";
 	private final String listaPrestamosEmpresa = "Listado de préstamos por empresa/categoria";
-	// private final String listaPrestamosPlazo = "Listado de préstamos por tipo de
-	// plazo";
 	private final String listaPrestamosCliente = "Listado de préstamos de un cliente";
-	// private final String listaAbonosCliente = "Listado de abonos por cliente";
-
 	private final String listaPrestamos = "Listado de préstamos registrados";
 	private final String listaPrestamosPendientes = "Listado de préstamos pendientes";
 	private final String listaPrestamosPagados = "Listado de préstamos pagados";
@@ -238,7 +231,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private final String listaMovimientos = "Listado de movimientos registrados";
 	private final String listaMovimientosEntrada = "Listado de movimientos de entrada registrados";
 	private final String listaMovimientosSalida = "Listado de movimientos de salida registrados";
-	private final String listaMovimientosFechas = "Listado de movimientos entre fechas";
+	private final String listaMovimientosEntradaFechas = "Listado de movimientos de entrada rango de fechas";
+	private final String listaMovimientosSalidaFechas = "Listado de movimientos de salida rango de fechas";
+	private final String listaMovimientosFechas = "Listado de todos los movimientos entre fechas";
 	// SIN CATEGORIA, SEMANAL, IMPULSO, SUPERMERCADO, COMUN, VENDEDORES, DON POLLO,
 	// DROGUERIA, LA LOCURA, MR POMPY, COMUNICACIONES, MOCAWA, HOGAR INFANTIL, OTRO
 	private final String seleccioneUna = "Seleccione una";
@@ -1063,7 +1058,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							jButtonBuscarMovimientos.setEnabled(false);
 							jButtonBuscarMovimientos.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent evt) {
-									jButtonBuscarMovimientosActionPerformed(evt);
+									try {
+										jButtonBuscarMovimientosActionPerformed(evt);
+									} catch (SQLException e) {
+										System.out.println(
+												"Error al ejecutar consulta para listar movimientos entre fechas");
+										System.out.println(e.getMessage());
+										error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName()
+												+ ".buscarMovimientosFechasConMatriz");
+									}
 								}
 							});
 						}
@@ -2281,11 +2284,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private void llenaComboListados() {
 
-		ComboBoxModel<String> jComboListadosModel = new DefaultComboBoxModel<String>(
-				new String[] { seleccioneUno, listaClientes, listaClientesAlfa, listaClientesActivos,
-						listaClientesNoActivos, listaPrestamosCliente, listaPrestamos, listaPrestamosPendientes,
-						listaPrestamosPagados, listaPrestamosVencidos, listaAbonos, listaAbonosPendientes,
-						listaAbonosPagados, listaMovimientosEntrada, listaMovimientosSalida, listaMovimientosFechas });
+		ComboBoxModel<String> jComboListadosModel = new DefaultComboBoxModel<String>(new String[] { seleccioneUno,
+				listaClientes, listaClientesAlfa, listaClientesActivos, listaClientesNoActivos, listaPrestamosCliente,
+				listaPrestamos, listaPrestamosPendientes, listaPrestamosPagados, listaPrestamosVencidos, listaAbonos,
+				listaAbonosPendientes, listaAbonosPagados, listaMovimientosEntrada, listaMovimientosSalida,
+				listaMovimientosEntradaFechas, listaMovimientosSalidaFechas, listaMovimientosFechas });
 		jComboSeleccionListado.setModel(jComboListadosModel);
 
 	}
@@ -2977,6 +2980,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String strNombrePDF = "";
 		String strTituloPDF = "";
 		String tituloTabla = "";
+		String rangoFechas = "";
+		DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
 
 		String listaSeleccionada = (String) jComboSeleccionListado.getSelectedItem();
 
@@ -3031,15 +3036,44 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			generarReporteAbonos(strTituloPDF, strNombrePDF, "pagados", tituloTabla);
 			break;
 		case listaMovimientosEntrada:
+			strNombrePDF = "ReporteMovimientosEntrada" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
+			strTituloPDF = "Reporte de movimientos de entrada registrados, generado el: " + diaS + "/" + mesS + "/"
+					+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+			tituloTabla = "Reporte de movimientos de entrada (Abonos recibidos)";
 			generarReporteMovimientosEntrada();
 			break;
 		case listaMovimientosSalida:
+			strNombrePDF = "ReporteMovimientosSalida" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
+			strTituloPDF = "Reporte de movimientos de salida registrados, generado el: " + diaS + "/" + mesS + "/"
+					+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+			tituloTabla = "Reporte de movimientos de salida (Préstamos realizados)";
+			generarReporteMovimientosSalida();
+			break;
+		case listaMovimientosEntradaFechas:
+			strNombrePDF = "ReporteMovimientosEntrada" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
+			strTituloPDF = "Reporte de movimientos de entrada registrados, generado el: " + diaS + "/" + mesS + "/"
+					+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+			tituloTabla = "Reporte de movimientos de entrada (Abonos recibidos)";
+			generarReporteMovimientosEntrada();
+			break;
+		case listaMovimientosSalidaFechas:
+			strNombrePDF = "ReporteMovimientosSalida" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
+			strTituloPDF = "Reporte de movimientos de salida registrados, generado el: " + diaS + "/" + mesS + "/"
+					+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+			tituloTabla = "Reporte de movimientos de salida (Préstamos realizados)";
 			generarReporteMovimientosSalida();
 			break;
 		case listaMovimientosFechas:
+			strNombrePDF = "ReporteMovimientosFechas" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
+			strTituloPDF = "Reporte de movimientos de salida registrados, generado el: " + diaS + "/" + mesS + "/"
+					+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+			tituloTabla = "Reporte de movimientos de salida (Préstamos realizados)";
+
 			java.sql.Date fechaInicioFormateada = new java.sql.Date(calendarioInicioMovimiento.getDate().getTime());
 			java.sql.Date fechaFinFormateada = new java.sql.Date(calendarioFinMovimiento.getDate().getTime());
 			generarReporteMovimientosFechas(fechaInicioFormateada, fechaFinFormateada);
+			rangoFechas = "Los datos corresponden a movimientos registrados entre el: "
+					+ formato.format(fechaInicioFormateada) + " y el " + formato.format(fechaFinFormateada) + "";
 			calendarioInicioMovimiento.setDate(null);
 			calendarioFinMovimiento.setDate(null);
 			break;
@@ -3237,6 +3271,22 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jTextTotalSalidas.setText(formatoMoneda.format(miMovimiento.calcularTotalSalidas()) + "");
 			jLabelTotalSalidas.setText("Total salidas:");
 			break;
+		case listaMovimientosEntradaFechas:
+			calendarioInicioMovimiento.setEnabled(true);
+			calendarioFinMovimiento.setEnabled(true);
+			jButtonBuscarMovimientos.setEnabled(true);
+			jTextTotalentradas.setText("");
+			jTextTotalSalidas.setText("");
+			jLabelTotalSalidas.setText("Total salidas:");
+			break;
+		case listaMovimientosSalidaFechas:
+			calendarioInicioMovimiento.setEnabled(true);
+			calendarioFinMovimiento.setEnabled(true);
+			jButtonBuscarMovimientos.setEnabled(true);
+			jTextTotalentradas.setText("");
+			jTextTotalSalidas.setText("");
+			jLabelTotalSalidas.setText("Total salidas:");
+			break;
 		case listaMovimientosFechas:
 			calendarioInicioMovimiento.setEnabled(true);
 			calendarioFinMovimiento.setEnabled(true);
@@ -3272,7 +3322,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
-	private void jButtonBuscarMovimientosActionPerformed(ActionEvent evt) {
+	private void jButtonBuscarMovimientosActionPerformed(ActionEvent evt) throws SQLException {
 
 		MovimientoDAO miMovimiento = new MovimientoDAO();
 		String titulosMovimiento[] = miMovimiento.getColumnas();
@@ -3281,14 +3331,75 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		Locale locale = new Locale("es", "CO");
 		NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
 
-		// Movimientos entre fechas seleccionado
+		// Movimientos entrada fechas seleccionado
 		if (jComboSeleccionListado.getSelectedIndex() == 15) {
 
 			if (fechaInicio != null && fechaFin != null) {
 
 				miMovimiento = new MovimientoDAO();
 				String informacionMovimientosFechas[][] = miMovimiento.obtenerMatrizMovimientosFechas(fechaInicio,
-						fechaFin);
+						fechaFin, "entrada");
+				tablaResultados = new JTable(informacionMovimientosFechas, titulosMovimiento);
+				jScrollPaneResultados.setViewportView(tablaResultados);
+				JTableHeader thMovimientos = tablaResultados.getTableHeader();
+				tablaResultados.setFont(new java.awt.Font("Arial", 0, 14));
+				thMovimientos.setFont(new java.awt.Font("Arial", 0, 14));
+				ajustaColumnasAContenido(tablaResultados);
+				jTextTotalentradas
+						.setText(formatoMoneda.format(miMovimiento.calcularTotalEntradas(fechaInicio, fechaFin)) + "");
+				jTextTotalSalidas
+						.setText(formatoMoneda.format(miMovimiento.calcularTotalSalidas(fechaInicio, fechaFin)) + "");
+				jLabelTotalSalidas.setText("Total salidas:");
+				calendarioInicioMovimiento.setEnabled(false);
+				calendarioFinMovimiento.setEnabled(false);
+				jButtonBuscarMovimientos.setEnabled(false);
+				return;
+
+			} else {
+				JOptionPane.showMessageDialog(this, "Debe especificar una fecha de inicio y una final", "Alerta",
+						JOptionPane.WARNING_MESSAGE);
+			}
+
+		}
+		// Movimientos salida fechas seleccionado
+		if (jComboSeleccionListado.getSelectedIndex() == 16) {
+
+			if (fechaInicio != null && fechaFin != null) {
+
+				miMovimiento = new MovimientoDAO();
+				String informacionMovimientosFechas[][] = miMovimiento.obtenerMatrizMovimientosFechas(fechaInicio,
+						fechaFin, "salida");
+				tablaResultados = new JTable(informacionMovimientosFechas, titulosMovimiento);
+				jScrollPaneResultados.setViewportView(tablaResultados);
+				JTableHeader thMovimientos = tablaResultados.getTableHeader();
+				tablaResultados.setFont(new java.awt.Font("Arial", 0, 14));
+				thMovimientos.setFont(new java.awt.Font("Arial", 0, 14));
+				ajustaColumnasAContenido(tablaResultados);
+				jTextTotalentradas
+						.setText(formatoMoneda.format(miMovimiento.calcularTotalEntradas(fechaInicio, fechaFin)) + "");
+				jTextTotalSalidas
+						.setText(formatoMoneda.format(miMovimiento.calcularTotalSalidas(fechaInicio, fechaFin)) + "");
+				jLabelTotalSalidas.setText("Total salidas:");
+				calendarioInicioMovimiento.setEnabled(false);
+				calendarioFinMovimiento.setEnabled(false);
+				jButtonBuscarMovimientos.setEnabled(false);
+				return;
+
+			} else {
+				JOptionPane.showMessageDialog(this, "Debe especificar una fecha de inicio y una final", "Alerta",
+						JOptionPane.WARNING_MESSAGE);
+			}
+
+		}
+
+		// Movimientos todos fechas seleccionado
+		if (jComboSeleccionListado.getSelectedIndex() == 17) {
+
+			if (fechaInicio != null && fechaFin != null) {
+
+				miMovimiento = new MovimientoDAO();
+				String informacionMovimientosFechas[][] = miMovimiento.obtenerMatrizMovimientosFechas(fechaInicio,
+						fechaFin, "todos");
 				tablaResultados = new JTable(informacionMovimientosFechas, titulosMovimiento);
 				jScrollPaneResultados.setViewportView(tablaResultados);
 				JTableHeader thMovimientos = tablaResultados.getTableHeader();

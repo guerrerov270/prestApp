@@ -57,7 +57,8 @@ public class ReporteMovimientosEntrada {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			error.guardarMensajeError(e.getMessage(), this.getClass().getCanonicalName() + ".ReporteMovimientosEntrada");
+			error.guardarMensajeError(e.getMessage(),
+					this.getClass().getCanonicalName() + ".ReporteMovimientosEntrada");
 		}
 	}
 
@@ -77,6 +78,8 @@ public class ReporteMovimientosEntrada {
 		agregarLineasEnBlanco(ParrafoHoja, 1);
 		ParrafoHoja.add(new Paragraph(
 				"El total de las entradas es:  " + formatoMoneda.format(miMovimiento.calcularTotalEntradas())));
+		ParrafoHoja.add(new Paragraph(
+				"El total de las salidas es:  " + formatoMoneda.format(miMovimiento.calcularTotalSalidas())));
 		// 1.- AGREGAMOS LA TABLA
 		agregarTabla(ParrafoHoja);
 		// Agregar 2 lineas en blanco
@@ -101,7 +104,7 @@ public class ReporteMovimientosEntrada {
 	private void agregarTabla(Paragraph parrafo) {
 
 		// Anchos de las columnas
-		float anchosFilas[] = { 1f, 1f, 1f, 1f, 1f, 1f };
+		float anchosFilas[] = { 1f, 1f, 1f, 1f, 1f };
 		PdfPTable tabla = new PdfPTable(anchosFilas);
 		String rotulosColumnas[] = miMovimiento.getColumnas();
 		// Porcentaje que ocupa a lo ancho de la pagina del PDF
@@ -139,8 +142,6 @@ public class ReporteMovimientosEntrada {
 
 			// Iterar Mientras haya una fila siguiente
 			while (rs.next()) { // Agregar 6 celdas
-				cell = new PdfPCell(new Paragraph(String.valueOf(rs.getInt("idMovimiento"))));
-				tabla.addCell(cell);
 				cell = new PdfPCell(new Paragraph(rs.getString("codigoMovimiento")));
 				tabla.addCell(cell);
 				cell = new PdfPCell(new Paragraph(String.valueOf(formatoFecha.format(rs.getDate("fechaMovimiento")))));

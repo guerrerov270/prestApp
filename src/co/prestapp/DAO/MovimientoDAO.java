@@ -235,9 +235,11 @@ public class MovimientoDAO {
 		return listaMovimientos;
 	}
 
-	public String[][] obtenerMatrizMovimientosFechas(Date fechaInicio, Date fechaFin) {
+	public String[][] obtenerMatrizMovimientosFechas(Date fechaInicio, Date fechaFin, String tipoConsulta)
+			throws SQLException {
 
-		ArrayList<MovimientoVO> listaMovimientos = buscarMovimientosFechasConMatriz(fechaInicio, fechaFin);
+		ArrayList<MovimientoVO> listaMovimientos = buscarMovimientosFechasConMatriz(fechaInicio, fechaFin,
+				tipoConsulta);
 		String matrizInfo[][] = new String[listaMovimientos.size()][5];
 
 		for (int i = 0; i < listaMovimientos.size(); i++) {
@@ -251,7 +253,8 @@ public class MovimientoDAO {
 		return matrizInfo;
 	}
 
-	private ArrayList<MovimientoVO> buscarMovimientosFechasConMatriz(Date fechaInicio, Date fechaFin) {
+	private ArrayList<MovimientoVO> buscarMovimientosFechasConMatriz(Date fechaInicio, Date fechaFin,
+			String tipoConsulta) throws SQLException {
 
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
@@ -260,36 +263,37 @@ public class MovimientoDAO {
 		java.sql.Date fechaInicioFormateada = new java.sql.Date(fechaInicio.getTime());
 		java.sql.Date fechaFinFormateada = new java.sql.Date(fechaFin.getTime());
 
-		try {
-			CallableStatement miProcedimiento = conexion.prepareCall("{call listar_movimientos_fechas(?,?)}");
-			miProcedimiento.setDate(1, fechaInicioFormateada);
-			miProcedimiento.setDate(2, fechaFinFormateada);
-			ResultSet miRs = miProcedimiento.executeQuery();
-			DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
-			Locale locale = new Locale("es", "CO");
-			NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
+		CallableStatement miProcedimiento = null;
 
-			while (miRs.next()) {
-				miMovimiento = new MovimientoVO();
-				miMovimiento.setIdMovimiento(miRs.getInt("idMovimiento"));
-				miMovimiento.setCodigoMovimiento(miRs.getString("codigoMovimiento"));
-				miMovimiento.setFechaMovimiento(formato.format(miRs.getDate("fechaMovimiento")));
-				miMovimiento.setEntradaMovimiento(formatoMoneda.format(miRs.getDouble("entradaMovimiento")));
-				miMovimiento.setSalidaMovimiento(formatoMoneda.format(miRs.getDouble("salidaMovimiento")));
-				miMovimiento.setSaldoMovimiento(formatoMoneda.format(miRs.getDouble("saldoMovimiento")));
-
-				listaMovimientos.add(miMovimiento);
-			}
-			miRs.close();
-			conexion.close();
-
-		} catch (SQLException e) {
-			System.out.println("Error al ejecutar consulta para listar movimientos entre fechas");
-			System.out.println(e.getMessage());
-			error.guardarMensajeError(e.getMessage(),
-					this.getClass().getCanonicalName() + ".buscarMovimientosFechasConMatriz");
-
+		if (tipoConsulta.equals("todos")) {
+			miProcedimiento = conexion.prepareCall("{call listar_movimientos_fechas(?,?)}");
+		} else if (tipoConsulta.equals("entrada")) {
+			miProcedimiento = conexion.prepareCall("{call listar_movimientos_entrada_fechas(?,?)}");
+		} else if (tipoConsulta.equals("salida")) {
+			miProcedimiento = conexion.prepareCall("{call listar_movimientos_salida_fechas(?,?)}");
 		}
+
+		miProcedimiento.setDate(1, fechaInicioFormateada);
+		miProcedimiento.setDate(2, fechaFinFormateada);
+		ResultSet miRs = miProcedimiento.executeQuery();
+		DateFormat formato = new SimpleDateFormat("dd MMMM yyyy");
+		Locale locale = new Locale("es", "CO");
+		NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
+
+		while (miRs.next()) {
+			miMovimiento = new MovimientoVO();
+			miMovimiento.setIdMovimiento(miRs.getInt("idMovimiento"));
+			miMovimiento.setCodigoMovimiento(miRs.getString("codigoMovimiento"));
+			miMovimiento.setFechaMovimiento(formato.format(miRs.getDate("fechaMovimiento")));
+			miMovimiento.setEntradaMovimiento(formatoMoneda.format(miRs.getDouble("entradaMovimiento")));
+			miMovimiento.setSalidaMovimiento(formatoMoneda.format(miRs.getDouble("salidaMovimiento")));
+			miMovimiento.setSaldoMovimiento(formatoMoneda.format(miRs.getDouble("saldoMovimiento")));
+
+			listaMovimientos.add(miMovimiento);
+		}
+		miRs.close();
+		conexion.close();
+
 		return listaMovimientos;
 	}
 
