@@ -77,10 +77,20 @@ public class ReporteMovimientosFechas {
 		ParrafoHoja.add(new Paragraph(strRotuloPDF));
 
 		agregarLineasEnBlanco(ParrafoHoja, 1);
-		ParrafoHoja.add(new Paragraph("El total de las entradas es:  "
-				+ formatoMoneda.format(miMovimiento.calcularTotalEntradas(fechaInicio, fechaFin))));
-		ParrafoHoja.add(new Paragraph("El total de las salidas es:  "
-				+ formatoMoneda.format(miMovimiento.calcularTotalSalidas(fechaInicio, fechaFin))));
+
+		if (consultaSeleccionada.equals("entrada") || consultaSeleccionada.equals("entradaFecha")) {
+			ParrafoHoja.add(new Paragraph("El total de las entradas es:  "
+					+ formatoMoneda.format(miMovimiento.calcularTotalEntradas(fechaInicio, fechaFin))));
+		} else if (consultaSeleccionada.equals("salida") || consultaSeleccionada.equals("salidaFecha")) {
+			ParrafoHoja.add(new Paragraph("El total de las salidas es:  "
+					+ formatoMoneda.format(miMovimiento.calcularTotalSalidas(fechaInicio, fechaFin))));
+		} else {
+			ParrafoHoja.add(new Paragraph("El total de las entradas es:  "
+					+ formatoMoneda.format(miMovimiento.calcularTotalEntradas(fechaInicio, fechaFin))));
+			ParrafoHoja.add(new Paragraph("El total de las salidas es:  "
+					+ formatoMoneda.format(miMovimiento.calcularTotalSalidas(fechaInicio, fechaFin))));
+		}
+
 		ParrafoHoja.add(new Paragraph(rangoFechas));
 		// 1.- AGREGAMOS LA TABLA
 		try {

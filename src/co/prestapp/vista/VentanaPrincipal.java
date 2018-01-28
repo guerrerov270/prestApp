@@ -3288,8 +3288,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				ajustaColumnasAContenido(tablaResultados);
 				jTextTotalentradas
 						.setText(formatoMoneda.format(miMovimiento.calcularTotalEntradas(fechaInicio, fechaFin)) + "");
-				jTextTotalSalidas
-						.setText(formatoMoneda.format(miMovimiento.calcularTotalSalidas(fechaInicio, fechaFin)) + "");
 				jLabelTotalSalidas.setText("Total salidas:");
 				calendarioInicioMovimiento.setEnabled(false);
 				calendarioFinMovimiento.setEnabled(false);
@@ -3316,8 +3314,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 				tablaResultados.setFont(new java.awt.Font("Arial", 0, 14));
 				thMovimientos.setFont(new java.awt.Font("Arial", 0, 14));
 				ajustaColumnasAContenido(tablaResultados);
-				jTextTotalentradas
-						.setText(formatoMoneda.format(miMovimiento.calcularTotalEntradas(fechaInicio, fechaFin)) + "");
 				jTextTotalSalidas
 						.setText(formatoMoneda.format(miMovimiento.calcularTotalSalidas(fechaInicio, fechaFin)) + "");
 				jLabelTotalSalidas.setText("Total salidas:");
