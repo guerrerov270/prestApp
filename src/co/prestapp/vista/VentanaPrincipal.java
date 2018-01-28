@@ -1174,7 +1174,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							});
 						}
 						{
+							URL urlDeLaImagenpdf = VentanaPrincipal.class.getClassLoader()
+									.getResource("co/prestapp/res/pdf.png");
+							ImageIcon icono1 = new ImageIcon(urlDeLaImagenpdf);
+							Image img1 = icono1.getImage();
+							Image otraimg1 = img1.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
 							jButton1 = new JButton();
+							jButton1.setIcon(new ImageIcon(otraimg1));
 							jPaneSeleccionListado.add(jButton1, "5, 2");
 							jButton1.setText("Generar PDF");
 							jButton1.setFont(new java.awt.Font("Arial", 0, 16));
