@@ -35,7 +35,7 @@ public class ReporteClientes {
 		strRotuloPDF = titulo;
 		strNombreDelPDF = nomPDF;
 		try { // Hoja tamanio carta, rotarla (cambiar a horizontal)
-			document = new Document(PageSize.LETTER.rotate());
+			document = new Document(PageSize.LETTER);
 
 			writer = PdfWriter.getInstance(
 					// that listens to the document
@@ -98,7 +98,7 @@ public class ReporteClientes {
 	private void agregarTabla(Paragraph parrafo, String categoriaSeleccionada, String tituloTabla) throws SQLException {
 
 		// Anchos de las columnas
-		float anchosFilas[] = { 0.4f, 2f, 1f, 2f, 0.7f };
+		float anchosFilas[] = { 0.5f, 2f, 1.4f, 1.2f, 0.9f };
 		PdfPTable tabla = new PdfPTable(anchosFilas);
 		String rotulosColumnas[] = miCliente.getColumnas();
 		// Porcentaje que ocupa a lo ancho de la pagina del PDF
