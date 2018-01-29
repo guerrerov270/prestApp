@@ -2814,11 +2814,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			calendarioFinMovimiento.setDate(null);
 			break;
 		case listaPrestamosCliente:
+			String codigoCliente = jLabelCodigoClienteOcultoListado.getText();
+			ClienteDAO miCliente = new ClienteDAO();
+			ClienteVO cliente = miCliente.buscarCliente(codigoCliente);
 			strNombrePDF = "ReportePrestamosCliente" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
 			strTituloPDF = "Reporte de préstamos registrados de un cliente, generado el: " + diaS + "/" + mesS + "/"
 					+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
-			tituloTabla = "Listado de todos los préstamos registrados de un cliente";
-			String codigoCliente = jLabelCodigoClienteOcultoListado.getText();
+			tituloTabla = "Listado de todos los préstamos registrados del cliente: " + cliente.getCodigoCliente() + " "
+					+ cliente.getNombreCliente();
+
 			generarReportePrestamos(strTituloPDF, strNombrePDF, codigoCliente, tituloTabla);
 			break;
 
@@ -3177,10 +3181,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String categoriaSeleccionada = (String) jComboBoxCategoriaEmpresa.getSelectedItem();
 		switch (categoriaSeleccionada) {
 		case seleccioneUna:
-			JOptionPane.showMessageDialog(this, "Debe seleccionar una categoria", "Información",
-					JOptionPane.INFORMATION_MESSAGE);
 			tablaResultados = new JTable();
 			jScrollPaneResultados.setViewportView(tablaResultados);
+			calendarioInicioMovimiento.setEnabled(false);
+			calendarioFinMovimiento.setEnabled(false);
+			jTextTotalentradas.setText("");
+			jTextTotalSalidas.setText("");
 			break;
 		case SinCategoria:
 			miPrestamo = new PrestamoDAO();

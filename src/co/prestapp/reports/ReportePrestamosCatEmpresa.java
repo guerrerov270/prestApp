@@ -151,7 +151,7 @@ public class ReportePrestamosCatEmpresa {
 				|| categoriaSeleccionada.equals("DON POLLO") || categoriaSeleccionada.equals("DROGUERIA")
 				|| categoriaSeleccionada.equals("LA LOCURA") || categoriaSeleccionada.equals("MR POMPY")
 				|| categoriaSeleccionada.equals("COMUNICACIONES") || categoriaSeleccionada.equals("MOCAWA")
-				|| categoriaSeleccionada.equals("HOGAR INFANTIL") || categoriaSeleccionada.equals("OTRO")) {
+				|| categoriaSeleccionada.equals("HOGAR INFANTIL") || categoriaSeleccionada.equals("OTRA")) {
 			miProcedimiento = conexion.prepareCall("{call listar_prestamos_req_categoria(?)}");
 			miProcedimiento.setString(1, categoriaSeleccionada);
 		} else {
