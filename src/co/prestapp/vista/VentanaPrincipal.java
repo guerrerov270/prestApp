@@ -104,6 +104,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private JLabel jLabelTotalAbonosPendientes;
 	private JLabel jLabelTotalAbonosCobrados;
 	private JLabel jLabelTotalClientesactivos;
+	private JLabel jLabelCodigoClienteOcultoListado;
 	private JButton jButton1;
 	private JLabel jLabel1;
 	private JButton jButtonEliminarPrestamo;
@@ -243,7 +244,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private final String Comunicaciones = "COMUNICACIONES";
 	private final String Mocawa = "MOCAWA";
 	private final String Hogarinfantil = "HOGAR INFANTIL";
-	private final String Otro = "OTRO";
+	private final String Otro = "OTRA";
 
 	private DBError error = new DBError();
 
@@ -1192,6 +1193,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 									jButton1ActionPerformed(evt);
 								}
 							});
+						}
+						{
+							jLabelCodigoClienteOcultoListado = new JLabel();
+							jPaneSeleccionListado.add(jLabelCodigoClienteOcultoListado, "6, 2");
+							jLabelCodigoClienteOcultoListado.setVisible(false);
 						}
 					}
 					{
@@ -2808,7 +2814,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			calendarioFinMovimiento.setDate(null);
 			break;
 		case listaPrestamosCliente:
-
+			strNombrePDF = "ReportePrestamosCliente" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
+			strTituloPDF = "Reporte de préstamos registrados de un cliente, generado el: " + diaS + "/" + mesS + "/"
+					+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+			tituloTabla = "Listado de todos los préstamos registrados de un cliente";
+			String codigoCliente = jLabelCodigoClienteOcultoListado.getText();
+			generarReportePrestamos(strTituloPDF, strNombrePDF, codigoCliente, tituloTabla);
 			break;
 
 		}
@@ -3032,7 +3043,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			if (cliente.getCodigoCliente() == null) {
 				JOptionPane.showMessageDialog(this, "Cliente no encontrado", "Alerta", JOptionPane.ERROR_MESSAGE);
 			} else {
-
+				jLabelCodigoClienteOcultoListado.setText(codigoCliente);
 				miPrestamo.actualizaPagos();
 				informacionPrestamos = miPrestamo.obtenerMatrizPrestamosRequeridoCliente(codigoCliente);
 				jTablePrestamos = new JTable(informacionPrestamos, titulosPrestamo);

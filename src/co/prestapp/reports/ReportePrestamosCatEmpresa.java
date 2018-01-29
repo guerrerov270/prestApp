@@ -135,7 +135,7 @@ public class ReportePrestamosCatEmpresa {
 
 		DBConnection miConexion = new DBConnection();
 		Connection conexion = miConexion.darConexion();
-		CallableStatement miProcedimiento;
+		CallableStatement miProcedimiento = null;
 		ResultSet rs;
 		if (categoriaSeleccionada.equals("todos")) {
 			miProcedimiento = conexion.prepareCall("{call listar_prestamos_requerido}");
@@ -145,8 +145,17 @@ public class ReportePrestamosCatEmpresa {
 			miProcedimiento = conexion.prepareCall("{call listar_prestamos_pagados}");
 		} else if (categoriaSeleccionada.equals("vencidos")) {
 			miProcedimiento = conexion.prepareCall("{call listar_prestamos_vencidos}");
-		} else {
+		} else if (categoriaSeleccionada.equals("SIN CATEGORIA") || categoriaSeleccionada.equals("SEMANAL")
+				|| categoriaSeleccionada.equals("IMPULSO") || categoriaSeleccionada.equals("SUPERMERCADOS")
+				|| categoriaSeleccionada.equals("COMÚN") || categoriaSeleccionada.equals("VENDEDORES")
+				|| categoriaSeleccionada.equals("DON POLLO") || categoriaSeleccionada.equals("DROGUERIA")
+				|| categoriaSeleccionada.equals("LA LOCURA") || categoriaSeleccionada.equals("MR POMPY")
+				|| categoriaSeleccionada.equals("COMUNICACIONES") || categoriaSeleccionada.equals("MOCAWA")
+				|| categoriaSeleccionada.equals("HOGAR INFANTIL") || categoriaSeleccionada.equals("OTRO")) {
 			miProcedimiento = conexion.prepareCall("{call listar_prestamos_req_categoria(?)}");
+			miProcedimiento.setString(1, categoriaSeleccionada);
+		} else {
+			miProcedimiento = conexion.prepareCall("{call listar_prestamos_cliente(?)}");
 			miProcedimiento.setString(1, categoriaSeleccionada);
 		}
 
