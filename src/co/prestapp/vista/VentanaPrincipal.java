@@ -2348,31 +2348,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		return resultado;
 	}
 
-	private void generarReportePrestamos() {
+	private void generarReportePrestamos(String strTituloPDF, String strNombrePDF, String categoria,
+			String tituloTabla) {
 
-		// configuracion de la fecha actual
-		// Creamos un objeto de la clase Calendar.
-		Calendar fecha = new GregorianCalendar();
-		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
-		// Usando el método get y el parámetro correspondiente.
-		int anio = fecha.get(Calendar.YEAR);
-		int mes = fecha.get(Calendar.MONTH);
-		int dia = fecha.get(Calendar.DAY_OF_MONTH);
-		int hora = fecha.get(Calendar.HOUR_OF_DAY);
-		int minuto = fecha.get(Calendar.MINUTE);
-		int segundo = fecha.get(Calendar.SECOND);
-
-		String mesS = concatenaCero(mes + 1);
-		String diaS = concatenaCero(dia);
-		String horaS = concatenaCero(hora);
-		String minutoS = concatenaCero(minuto);
-		String segundoS = concatenaCero(segundo);
-
-		String strNombrePDF = "ReportePrestamos" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
-		String strTituloPDF = "Reporte de préstamos registrados, generado el: " + diaS + "/" + mesS + "/" + anio
-				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
-		String tituloTabla = "Listado de todos los préstamos registrados";
-		ReportePrestamosCatEmpresa ejemplo = new ReportePrestamosCatEmpresa(strTituloPDF, strNombrePDF, "todos",
+		ReportePrestamosCatEmpresa ejemplo = new ReportePrestamosCatEmpresa(strTituloPDF, strNombrePDF, categoria,
 				tituloTabla);
 		// Preguntar al usuario si desea abrir el documento PDF
 		int respuesta = JOptionPane.showConfirmDialog(null,
@@ -2411,114 +2390,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		String tituloTabla = "Listado de préstamos por categoría: " + categoriaSeleccionada;
 		ReportePrestamosCatEmpresa ejemplo = new ReportePrestamosCatEmpresa(strTituloPDF, strNombrePDF,
 				categoriaSeleccionada, tituloTabla);
-		// Preguntar al usuario si desea abrir el documento PDF
-		int respuesta = JOptionPane.showConfirmDialog(null,
-				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
-				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-		// Si la respuesta es SI, abrirlo
-		if (respuesta == JOptionPane.YES_OPTION)
-			ejemplo.abrirPDF();
-
-	}
-
-	private void generarReportePrestamosPendientes() {
-
-		// configuracion de la fecha actual
-		// Creamos un objeto de la clase Calendar.
-		Calendar fecha = new GregorianCalendar();
-		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
-		// Usando el método get y el parámetro correspondiente.
-		int anio = fecha.get(Calendar.YEAR);
-		int mes = fecha.get(Calendar.MONTH);
-		int dia = fecha.get(Calendar.DAY_OF_MONTH);
-		int hora = fecha.get(Calendar.HOUR_OF_DAY);
-		int minuto = fecha.get(Calendar.MINUTE);
-		int segundo = fecha.get(Calendar.SECOND);
-
-		String mesS = concatenaCero(mes + 1);
-		String diaS = concatenaCero(dia);
-		String horaS = concatenaCero(hora);
-		String minutoS = concatenaCero(minuto);
-		String segundoS = concatenaCero(segundo);
-
-		String strNombrePDF = "ReportePrestamosPendientes" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
-		String strTituloPDF = "Reporte de préstamos pendientes registrados, generado el: " + diaS + "/" + mesS + "/"
-				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
-		String tituloTabla = "Listado de préstamos pendientes";
-		ReportePrestamosCatEmpresa ejemplo = new ReportePrestamosCatEmpresa(strTituloPDF, strNombrePDF, "pendientes",
-				tituloTabla);
-		// Preguntar al usuario si desea abrir el documento PDF
-		int respuesta = JOptionPane.showConfirmDialog(null,
-				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
-				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-		// Si la respuesta es SI, abrirlo
-		if (respuesta == JOptionPane.YES_OPTION)
-			ejemplo.abrirPDF();
-
-	}
-
-	private void generarReportePrestamosPagados() {
-
-		// configuracion de la fecha actual
-		// Creamos un objeto de la clase Calendar.
-		Calendar fecha = new GregorianCalendar();
-		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
-		// Usando el método get y el parámetro correspondiente.
-		int anio = fecha.get(Calendar.YEAR);
-		int mes = fecha.get(Calendar.MONTH);
-		int dia = fecha.get(Calendar.DAY_OF_MONTH);
-		int hora = fecha.get(Calendar.HOUR_OF_DAY);
-		int minuto = fecha.get(Calendar.MINUTE);
-		int segundo = fecha.get(Calendar.SECOND);
-
-		String mesS = concatenaCero(mes + 1);
-		String diaS = concatenaCero(dia);
-		String horaS = concatenaCero(hora);
-		String minutoS = concatenaCero(minuto);
-		String segundoS = concatenaCero(segundo);
-
-		String strNombrePDF = "ReportePrestamosPagados" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
-		String strTituloPDF = "Reporte de préstamos pagados registrados, generado el: " + diaS + "/" + mesS + "/" + anio
-				+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
-		String tituloTabla = "Listado de préstamos pagados";
-		ReportePrestamosCatEmpresa ejemplo = new ReportePrestamosCatEmpresa(strTituloPDF, strNombrePDF, "pagados",
-				tituloTabla);
-		// Preguntar al usuario si desea abrir el documento PDF
-		int respuesta = JOptionPane.showConfirmDialog(null,
-				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
-				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-		// Si la respuesta es SI, abrirlo
-		if (respuesta == JOptionPane.YES_OPTION)
-			ejemplo.abrirPDF();
-
-	}
-
-	private void generarReportePrestamosVencidos() {
-
-		// configuracion de la fecha actual
-		// Creamos un objeto de la clase Calendar.
-		Calendar fecha = new GregorianCalendar();
-		// Obtenemos el valor del año, mes, día, hora, minuto y segundo del sistema.
-		// Usando el método get y el parámetro correspondiente.
-		int anio = fecha.get(Calendar.YEAR);
-		int mes = fecha.get(Calendar.MONTH);
-		int dia = fecha.get(Calendar.DAY_OF_MONTH);
-		int hora = fecha.get(Calendar.HOUR_OF_DAY);
-		int minuto = fecha.get(Calendar.MINUTE);
-		int segundo = fecha.get(Calendar.SECOND);
-
-		String mesS = concatenaCero(mes + 1);
-		String diaS = concatenaCero(dia);
-		String horaS = concatenaCero(hora);
-		String minutoS = concatenaCero(minuto);
-		String segundoS = concatenaCero(segundo);
-
-		String strNombrePDF = "ReportePrestamosVencidos" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
-		String strTituloPDF = "Reporte de préstamos vencidos registrados, generado el: " + diaS + "/" + mesS + "/"
-				+ anio + "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
-		String tituloTabla = "Listado de préstamos vencidos";
-		ReportePrestamosCatEmpresa ejemplo = new ReportePrestamosCatEmpresa(strTituloPDF, strNombrePDF, "vencidos",
-				tituloTabla);
 		// Preguntar al usuario si desea abrir el documento PDF
 		int respuesta = JOptionPane.showConfirmDialog(null,
 				"Se ha generado el documento " + strNombrePDF + ", ¿Desea abrirlo?", "Pregunta",
@@ -2818,16 +2689,32 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			generarReporteClientes(strTituloPDF, strNombrePDF, "noActivos", tituloTabla);
 			break;
 		case listaPrestamos:
-			generarReportePrestamos();
+			strNombrePDF = "ReportePrestamos" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
+			strTituloPDF = "Reporte de préstamos registrados, generado el: " + diaS + "/" + mesS + "/" + anio
+					+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+			tituloTabla = "Listado de todos los préstamos registrados";
+			generarReportePrestamos(strTituloPDF, strNombrePDF, "todos", tituloTabla);
 			break;
 		case listaPrestamosPendientes:
-			generarReportePrestamosPendientes();
+			strNombrePDF = "ReportePrestamosPendientes" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
+			strTituloPDF = "Reporte de préstamos pendientes registrados, generado el: " + diaS + "/" + mesS + "/" + anio
+					+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+			tituloTabla = "Listado de préstamos pendientes";
+			generarReportePrestamos(strTituloPDF, strNombrePDF, "pendientes", tituloTabla);
 			break;
 		case listaPrestamosPagados:
-			generarReportePrestamosPagados();
+			strNombrePDF = "ReportePrestamosPagados" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
+			strTituloPDF = "Reporte de préstamos pagados registrados, generado el: " + diaS + "/" + mesS + "/" + anio
+					+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+			tituloTabla = "Listado de préstamos pagados";
+			generarReportePrestamos(strTituloPDF, strNombrePDF, "pagados", tituloTabla);
 			break;
 		case listaPrestamosVencidos:
-			generarReportePrestamosVencidos();
+			strNombrePDF = "ReportePrestamosVencidos" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
+			strTituloPDF = "Reporte de préstamos vencidos registrados, generado el: " + diaS + "/" + mesS + "/" + anio
+					+ "  a las " + " " + horaS + ":" + minutoS + ":" + segundoS;
+			tituloTabla = "Listado de préstamos vencidos";
+			generarReportePrestamos(strTituloPDF, strNombrePDF, "vencidos", tituloTabla);
 			break;
 		case listaAbonos:
 			strNombrePDF = "ReporteAbonos" + diaS + mesS + anio + horaS + minutoS + segundoS + ".pdf";
@@ -2921,6 +2808,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			calendarioFinMovimiento.setDate(null);
 			break;
 		case listaPrestamosCliente:
+
 			break;
 
 		}
