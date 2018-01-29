@@ -7,9 +7,12 @@ import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Element;
+import com.lowagie.text.Font;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfWriter;
+import com.sun.org.apache.xpath.internal.functions.FuncUnparsedEntityURI;
+
 import co.prestapp.DAO.PrestamoDAO;
 import co.prestapp.connection.DBConnection;
 import co.prestapp.connection.DBError;
@@ -101,8 +104,12 @@ public class ReportePrestamosCatEmpresa {
 	// Espera como entrada el parrafo donde agregara la tabla
 	private void agregarTabla(Paragraph parrafo, String categoriaSeleccionada, String tituloTabla) throws SQLException {
 
+		// Manejo de fuente
+		Font fuente = new Font(Font.HELVETICA);
+		fuente.setSize(11);
+
 		// Anchos de las columnas
-		float anchosFilas[] = { 1.4f, 1.4f, 1f, 0.4f, 1f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f };
+		float anchosFilas[] = { 1.4f, 1.6f, 1f, 0.4f, 1f, 0.6f, 0.5f, 0.5f, 0.5f, 0.5f };
 		PdfPTable tabla = new PdfPTable(anchosFilas);
 		String rotulosColumnas[] = miPrestamo.getColumnasRequeridoReportes();
 		// Porcentaje que ocupa a lo ancho de la pagina del PDF
@@ -119,12 +126,10 @@ public class ReportePrestamosCatEmpresa {
 		tabla.addCell(cell);
 
 		DateFormat formatoFecha = new SimpleDateFormat("dd MMMM yyyy");
-		Locale locale = new Locale("es", "CO");
-		NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
 
 		// Mostrar los rotulos de las columnas
 		for (int i = 0; i < rotulosColumnas.length; i++) {
-			cell = new PdfPCell(new Paragraph(rotulosColumnas[i]));
+			cell = new PdfPCell(new Paragraph(rotulosColumnas[i], fuente));
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			cell.setBackgroundColor(grisClaro);
@@ -152,39 +157,40 @@ public class ReportePrestamosCatEmpresa {
 
 		// Iterar Mientras haya una fila siguiente
 		while (rs.next()) { // Agregar 10 celdas
-			cell = new PdfPCell(new Paragraph(rs.getString("nombreCliente")));
+			cell = new PdfPCell(new Paragraph(rs.getString("nombreCliente"), fuente));
 			tabla.addCell(cell);
-			cell = new PdfPCell(new Paragraph(rs.getString("empresaCliente")));
+			cell = new PdfPCell(new Paragraph(rs.getString("empresaCliente"), fuente));
 			tabla.addCell(cell);
-			cell = new PdfPCell(new Paragraph(rs.getString("referenciaCliente")));
+			cell = new PdfPCell(new Paragraph(rs.getString("referenciaCliente"), fuente));
 			tabla.addCell(cell);
-			cell = new PdfPCell(new Paragraph(rs.getString("codigoPrestamo")));
+			cell = new PdfPCell(new Paragraph(rs.getString("codigoPrestamo"), fuente));
 			tabla.addCell(cell);
 			if (rs.getDate("fechaInicioPrestamo") != null) {
 				cell = new PdfPCell(
-						new Paragraph(String.valueOf(formatoFecha.format(rs.getDate("fechaInicioPrestamo")))));
+						new Paragraph(String.valueOf(formatoFecha.format(rs.getDate("fechaInicioPrestamo"))), fuente));
 				tabla.addCell(cell);
 			}
-			cell = new PdfPCell(new Paragraph(String.valueOf((rs.getDouble("montoPrestamo")) / 1000)));
+			cell = new PdfPCell(new Paragraph(String.valueOf((rs.getInt("montoPrestamo")) / 1000), fuente));
 			tabla.addCell(cell);
 			if (rs.getString("tipoPlazoPrestamo").equals("QUINCENAL")) {
-				cell = new PdfPCell(new Paragraph("QUI"));
+				cell = new PdfPCell(new Paragraph("QUI", fuente));
 				tabla.addCell(cell);
 			}
 			if (rs.getString("tipoPlazoPrestamo").equals("MENSUAL")) {
-				cell = new PdfPCell(new Paragraph("MEN"));
+				cell = new PdfPCell(new Paragraph("MEN", fuente));
 				tabla.addCell(cell);
 			}
 			if (rs.getString("tipoPlazoPrestamo").equals("SEMANAL")) {
-				cell = new PdfPCell(new Paragraph("SEM"));
+				cell = new PdfPCell(new Paragraph("SEM", fuente));
 				tabla.addCell(cell);
 			}
 
-			cell = new PdfPCell(new Paragraph(String.valueOf(rs.getInt("numeroCuotasprestamo"))));
+			cell = new PdfPCell(new Paragraph(String.valueOf(rs.getInt("numeroCuotasprestamo")), fuente));
+
 			tabla.addCell(cell);
-			cell = new PdfPCell(new Paragraph(String.valueOf((rs.getDouble("montoACobrar")) / 1000)));
+			cell = new PdfPCell(new Paragraph(String.valueOf((rs.getInt("montoACobrar")) / 1000), fuente));
 			tabla.addCell(cell);
-			cell = new PdfPCell(new Paragraph(String.valueOf((rs.getDouble("saldoRestantePrestamo")) / 1000)));
+			cell = new PdfPCell(new Paragraph(String.valueOf((rs.getInt("saldoRestantePrestamo")) / 1000), fuente));
 			tabla.addCell(cell);
 
 		}
