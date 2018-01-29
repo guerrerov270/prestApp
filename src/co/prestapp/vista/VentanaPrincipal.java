@@ -436,9 +436,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						{
 							jLabelCodigo = new JLabel();
 							jPanelEntradasPrestamo.add(jLabelCodigo, "6, 1");
-							jLabelCodigo.setText("Código");
+							jLabelCodigo.setText("Aquí el código");
 							jLabelCodigo.setBounds(593, 161, 121, 30);
 							jLabelCodigo.setFont(new java.awt.Font("Arial", 0, 16));
+							jLabelCodigo.setForeground(Color.BLUE);
 						}
 						{
 							jLabelTipoPlazo = new JLabel();
@@ -460,9 +461,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						{
 							jLabelNombreCliente = new JLabel();
 							jPanelEntradasPrestamo.add(jLabelNombreCliente, "4, 0, 5, 0");
-							jLabelNombreCliente.setText("Nombre");
+							jLabelNombreCliente.setText("Aquí el nombre del cliente");
 							jLabelNombreCliente.setBounds(726, 121, 173, 30);
 							jLabelNombreCliente.setFont(new java.awt.Font("Arial", 0, 16));
+							jLabelNombreCliente.setForeground(Color.BLUE);
 						}
 						{
 							jLabelFechaInicio = new JLabel();
@@ -491,9 +493,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 						{
 							jLabelEmpresaResult = new JLabel();
 							jPanelEntradasPrestamo.add(jLabelEmpresaResult, "6, 2");
-							jLabelEmpresaResult.setText("Empresa");
+							jLabelEmpresaResult.setText("Aquí la empresa");
 							jLabelEmpresaResult.setBounds(726, 161, 168, 30);
 							jLabelEmpresaResult.setFont(new java.awt.Font("Arial", 0, 16));
+							jLabelEmpresaResult.setForeground(Color.BLUE);
 
 						}
 
@@ -525,9 +528,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 							{
 								jLabelComplemento6 = new JLabel();
 								jPanelEntradasPrestamo.add(jLabelComplemento6, "4, 1, 5, 1");
-								jLabelComplemento6.setText("Referencia");
+								jLabelComplemento6.setText("Aquí la referencia del cliente");
 								jLabelComplemento6.setBounds(12, 65, 65, 10);
 								jLabelComplemento6.setFont(new java.awt.Font("Arial", 0, 16));
+								jLabelComplemento6.setForeground(Color.BLUE);
 
 							}
 
@@ -1490,7 +1494,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			} else {
 				// Cambio valores de etiquetas en la vista
 				jLabelNombreCliente.setText(cliente.getNombreCliente());
-				jLabelCodigo.setForeground(Color.RED);
+				jLabelCodigo.setForeground(Color.BLUE);
 				jLabelCodigo.setText(cliente.getCodigoCliente() + "");
 				jLabelEmpresaResult.setText(cliente.getEmpresaCliente());
 				jLabelComplemento6.setText(cliente.getReferenciaCliente());
@@ -1573,10 +1577,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		jTextNumeroCuotas.setText("");
 		jLabelTotalFormato.setText("total formato");
 		jComboPlazo.setSelectedIndex(0);
-		jLabelNombreCliente.setText("Nombre");
-		jLabelCodigo.setText("Código");
-		jLabelEmpresaResult.setText("Empresa");
-		jLabelComplemento6.setText("Referencia");
 		calendarioPrestamos.setDate(null);
 		calendarioFinPrestamo.setDate(null);
 		calendarioFinPrestamo.setEnabled(false);
@@ -1722,7 +1722,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			} else {
 				// Cambio valores de etiquetas en la vista
 				jLabelNombreCliente.setText(cliente.getNombreCliente());
-				jLabelCodigo.setForeground(Color.RED);
+				jLabelCodigo.setForeground(Color.BLUE);
 				jLabelCodigo.setText(cliente.getCodigoCliente() + "");
 				jLabelEmpresaResult.setText(cliente.getEmpresaCliente());
 
@@ -1811,7 +1811,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 		} else {
 			// Cambio valores de etiquetas en la vista
 			jLabelNombreCliente.setText(cliente.getNombreCliente());
-			jLabelCodigo.setForeground(Color.RED);
+			jLabelCodigo.setForeground(Color.BLUE);
 			jLabelCodigo.setText(cliente.getCodigoCliente() + "");
 			jLabelEmpresaResult.setText(cliente.getEmpresaCliente());
 
@@ -2740,7 +2740,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 			jLabelNombreCliente.setText(miCliente.getNombreCliente());
 			jLabelEmpresaResult.setText(miCliente.getEmpresaCliente());
 			jLabelCodigo.setText(miCliente.getCodigoCliente());
-			jLabelCodigo.setForeground(Color.RED);
+			jLabelCodigo.setForeground(Color.BLUE);
 			jCheckBoxEditandoPrestamo.setSelected(true);
 
 		} else {
