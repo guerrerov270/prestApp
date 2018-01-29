@@ -11,7 +11,6 @@ import com.lowagie.text.Font;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfWriter;
-import com.sun.org.apache.xpath.internal.functions.FuncUnparsedEntityURI;
 
 import co.prestapp.DAO.PrestamoDAO;
 import co.prestapp.connection.DBConnection;
@@ -20,9 +19,7 @@ import co.prestapp.connection.DBError;
 import com.lowagie.text.pdf.PdfPTable;
 import java.sql.*;
 import java.text.DateFormat;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 public class ReportePrestamosCatEmpresa {
 

@@ -7,6 +7,7 @@ import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Element;
+import com.lowagie.text.Font;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfWriter;
@@ -100,6 +101,9 @@ public class ReporteAbonos {
 	// Espera como entrada el parrafo donde agregara la tabla
 	private void agregarTabla(Paragraph parrafo, String categoria, String tituloTabla) throws SQLException {
 
+		// Manejo de fuente
+		Font fuente = new Font(Font.HELVETICA);
+		fuente.setSize(11);
 		// Anchos de las columnas
 		float anchosFilas[] = { 0.5f, 1f, 1f, 1.1f, 1.1f, 0.6f, 0.9f };
 		PdfPTable tabla = new PdfPTable(anchosFilas);
@@ -123,7 +127,7 @@ public class ReporteAbonos {
 
 		// Mostrar los rotulos de las columnas
 		for (int i = 0; i < rotulosColumnas.length; i++) {
-			cell = new PdfPCell(new Paragraph(rotulosColumnas[i]));
+			cell = new PdfPCell(new Paragraph(rotulosColumnas[i], fuente));
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			cell.setBackgroundColor(grisClaro);
@@ -147,28 +151,30 @@ public class ReporteAbonos {
 
 		// Iterar Mientras haya una fila siguiente
 		while (rs.next()) { // Agregar 9 celdas
-			cell = new PdfPCell(new Paragraph(rs.getString("codigoAbono")));
+			cell = new PdfPCell(new Paragraph(rs.getString("codigoAbono"), fuente));
 			tabla.addCell(cell);
-			cell = new PdfPCell(new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("montoACobrar")))));
+			cell = new PdfPCell(new Paragraph(String.valueOf(formatoMoneda.format(rs.getInt("montoACobrar"))), fuente));
 			tabla.addCell(cell);
-			cell = new PdfPCell(new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("montoPagado")))));
+			cell = new PdfPCell(new Paragraph(String.valueOf(formatoMoneda.format(rs.getInt("montoPagado"))), fuente));
 			tabla.addCell(cell);
 			if (rs.getDate("fechaACobrar") != null) {
-				cell = new PdfPCell(new Paragraph(String.valueOf(formatoFecha.format(rs.getDate("fechaACobrar")))));
+				cell = new PdfPCell(
+						new Paragraph(String.valueOf(formatoFecha.format(rs.getDate("fechaACobrar"))), fuente));
 				tabla.addCell(cell);
 			}
 
 			if (rs.getDate("fechaPago") != null) {
-				cell = new PdfPCell(new Paragraph(String.valueOf(formatoFecha.format(rs.getDate("fechaPago")))));
+				cell = new PdfPCell(
+						new Paragraph(String.valueOf(formatoFecha.format(rs.getDate("fechaPago"))), fuente));
 				tabla.addCell(cell);
 			} else {
-				cell = new PdfPCell(new Paragraph(String.valueOf(rs.getDate("fechaPago"))));
+				cell = new PdfPCell(new Paragraph(" ", fuente));
 				tabla.addCell(cell);
 			}
 
-			cell = new PdfPCell(new Paragraph(rs.getString("abonoPrestamo")));
+			cell = new PdfPCell(new Paragraph(rs.getString("abonoPrestamo"), fuente));
 			tabla.addCell(cell);
-			cell = new PdfPCell(new Paragraph(rs.getString("estadoAbono")));
+			cell = new PdfPCell(new Paragraph(rs.getString("estadoAbono"), fuente));
 			tabla.addCell(cell);
 
 		}

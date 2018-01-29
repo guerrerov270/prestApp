@@ -7,6 +7,7 @@ import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Element;
+import com.lowagie.text.Font;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfWriter;
@@ -120,7 +121,9 @@ public class ReporteMovimientosFechas {
 	// Espera como entrada el parrafo donde agregara la tabla
 	private void agregarTabla(Paragraph parrafo, String consultaSeleccionada, String tituloTabla, Date fechaInicio,
 			Date fechaFin) throws SQLException {
-
+		// Manejo de fuente
+		Font fuente = new Font(Font.HELVETICA);
+		fuente.setSize(11);
 		// Anchos de las columnas
 		float anchosFilas[] = { 0.5f, 1f, 1f, 1f, 1f };
 		PdfPTable tabla = new PdfPTable(anchosFilas);
@@ -144,7 +147,7 @@ public class ReporteMovimientosFechas {
 
 		// Mostrar los rotulos de las columnas
 		for (int i = 0; i < rotulosColumnas.length; i++) {
-			cell = new PdfPCell(new Paragraph(rotulosColumnas[i]));
+			cell = new PdfPCell(new Paragraph(rotulosColumnas[i], fuente));
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			cell.setBackgroundColor(grisClaro);
@@ -186,16 +189,20 @@ public class ReporteMovimientosFechas {
 
 		// Iterar Mientras haya una fila siguiente
 		while (rs.next()) { // Agregar 6 celdas
-			cell = new PdfPCell(new Paragraph(rs.getString("codigoMovimiento")));
+			cell = new PdfPCell(new Paragraph(rs.getString("codigoMovimiento"), fuente));
 			tabla.addCell(cell);
-			cell = new PdfPCell(new Paragraph(String.valueOf(formatoFecha.format(rs.getDate("fechaMovimiento")))));
+			cell = new PdfPCell(
+					new Paragraph(String.valueOf(formatoFecha.format(rs.getDate("fechaMovimiento"))), fuente));
 			tabla.addCell(cell);
 
-			cell = new PdfPCell(new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("entradaMovimiento")))));
+			cell = new PdfPCell(
+					new Paragraph(String.valueOf(formatoMoneda.format(rs.getInt("entradaMovimiento"))), fuente));
 			tabla.addCell(cell);
-			cell = new PdfPCell(new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("salidaMovimiento")))));
+			cell = new PdfPCell(
+					new Paragraph(String.valueOf(formatoMoneda.format(rs.getInt("salidaMovimiento"))), fuente));
 			tabla.addCell(cell);
-			cell = new PdfPCell(new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("saldoMovimiento")))));
+			cell = new PdfPCell(
+					new Paragraph(String.valueOf(formatoMoneda.format(rs.getInt("saldoMovimiento"))), fuente));
 			tabla.addCell(cell);
 
 		}

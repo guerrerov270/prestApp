@@ -7,6 +7,7 @@ import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Element;
+import com.lowagie.text.Font;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfWriter;
@@ -96,7 +97,9 @@ public class ReporteClientes {
 	// acomoda en una tabla JTable de iText.
 	// Espera como entrada el parrafo donde agregara la tabla
 	private void agregarTabla(Paragraph parrafo, String categoriaSeleccionada, String tituloTabla) throws SQLException {
-
+		// Manejo de fuente
+		Font fuente = new Font(Font.HELVETICA);
+		fuente.setSize(11);
 		// Anchos de las columnas
 		float anchosFilas[] = { 0.5f, 2f, 1.4f, 1.2f, 0.9f };
 		PdfPTable tabla = new PdfPTable(anchosFilas);
@@ -116,7 +119,7 @@ public class ReporteClientes {
 
 		// Mostrar los rotulos de las columnas
 		for (int i = 0; i < rotulosColumnas.length; i++) {
-			cell = new PdfPCell(new Paragraph(rotulosColumnas[i]));
+			cell = new PdfPCell(new Paragraph(rotulosColumnas[i], fuente));
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			cell.setBackgroundColor(grisClaro);
@@ -142,15 +145,15 @@ public class ReporteClientes {
 
 		// Iterar Mientras haya una fila siguiente
 		while (rs.next()) { // Agregar 9 celdas
-			cell = new PdfPCell(new Paragraph(rs.getString("codigoCliente")));
+			cell = new PdfPCell(new Paragraph(rs.getString("codigoCliente"), fuente));
 			tabla.addCell(cell);
-			cell = new PdfPCell(new Paragraph(rs.getString("nombreCliente")));
+			cell = new PdfPCell(new Paragraph(rs.getString("nombreCliente"), fuente));
 			tabla.addCell(cell);
-			cell = new PdfPCell(new Paragraph(rs.getString("empresaCliente")));
+			cell = new PdfPCell(new Paragraph(rs.getString("empresaCliente"), fuente));
 			tabla.addCell(cell);
-			cell = new PdfPCell(new Paragraph(rs.getString("referenciaCliente")));
+			cell = new PdfPCell(new Paragraph(rs.getString("referenciaCliente"), fuente));
 			tabla.addCell(cell);
-			cell = new PdfPCell(new Paragraph(rs.getString("estadoCliente")));
+			cell = new PdfPCell(new Paragraph(rs.getString("estadoCliente"), fuente));
 			tabla.addCell(cell);
 		}
 
