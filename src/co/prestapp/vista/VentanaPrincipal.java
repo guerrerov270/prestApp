@@ -229,8 +229,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private final String listaMovimientosEntradaFechas = "Listado de movimientos de entrada rango de fechas";
 	private final String listaMovimientosSalidaFechas = "Listado de movimientos de salida rango de fechas";
 	private final String listaMovimientosFechas = "Listado de todos los movimientos entre fechas";
-	// SIN CATEGORIA, SEMANAL, IMPULSO, SUPERMERCADO, COMUN, VENDEDORES, DON POLLO,
-	// DROGUERIA, LA LOCURA, MR POMPY, COMUNICACIONES, MOCAWA, HOGAR INFANTIL, OTRO
 	private final String seleccioneUna = "Seleccione una";
 	private final String SinCategoria = "SIN CATEGORIA";
 	private final String Semanal = "SEMANAL";
@@ -2929,10 +2927,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	}
 
-	// listaClientesEmpresa,
-	// listaPrestamosEmpresa, listaPrestamosPlazo, listaPrestamosCliente,
-	// listaAbonosCliente,
-
 	private void jComboSeleccionListadoActionPerformed(ActionEvent evt) {
 
 		String listaSeleccionada = (String) jComboSeleccionListado.getSelectedItem();
@@ -3273,11 +3267,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	private void jButtonVerTodosAbonoActionPerformed(ActionEvent evt) {
 		actualizaAbonos();
 	}
-
-	// seleccioneUna, SinCategoria, Semanal, Impulso, Supermercados, Comun,
-	// Vendedores,
-	// DonPollo, Drogueria, LaLocura, MrPompy, Comunicaciones, Mocawa,
-	// Hogarinfantil, Otro
 
 	private void jComboBoxCategoriaEmpresaActionPerformed(ActionEvent evt) {
 
