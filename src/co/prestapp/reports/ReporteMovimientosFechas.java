@@ -40,7 +40,7 @@ public class ReporteMovimientosFechas {
 		strRotuloPDF = titulo;
 		strNombreDelPDF = nomPDF;
 		try { // Hoja tamanio carta, rotarla (cambiar a horizontal)
-			document = new Document(PageSize.LETTER.rotate());
+			document = new Document(PageSize.LETTER);
 
 			writer = PdfWriter.getInstance(
 					// that listens to the document
@@ -122,7 +122,7 @@ public class ReporteMovimientosFechas {
 			Date fechaFin) throws SQLException {
 
 		// Anchos de las columnas
-		float anchosFilas[] = { 1f, 1f, 1f, 1f, 1f };
+		float anchosFilas[] = { 0.5f, 1f, 1f, 1f, 1f };
 		PdfPTable tabla = new PdfPTable(anchosFilas);
 		String rotulosColumnas[] = miMovimiento.getColumnas();
 		// Porcentaje que ocupa a lo ancho de la pagina del PDF
