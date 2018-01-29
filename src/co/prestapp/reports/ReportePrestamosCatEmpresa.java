@@ -39,7 +39,7 @@ public class ReportePrestamosCatEmpresa {
 		strRotuloPDF = titulo;
 		strNombreDelPDF = nomPDF;
 		try { // Hoja tamanio carta, rotarla (cambiar a horizontal)
-			document = new Document(PageSize.LETTER.rotate());
+			document = new Document(PageSize.LETTER);
 
 			writer = PdfWriter.getInstance(
 					// that listens to the document
@@ -102,7 +102,7 @@ public class ReportePrestamosCatEmpresa {
 	private void agregarTabla(Paragraph parrafo, String categoriaSeleccionada, String tituloTabla) throws SQLException {
 
 		// Anchos de las columnas
-		float anchosFilas[] = { 1.4f, 1f, 1f, 0.4f, 1f, 1f, 1f, 0.5f, 1f, 1f };
+		float anchosFilas[] = { 1.4f, 1.4f, 1f, 0.4f, 1f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f };
 		PdfPTable tabla = new PdfPTable(anchosFilas);
 		String rotulosColumnas[] = miPrestamo.getColumnasRequeridoReportes();
 		// Porcentaje que ocupa a lo ancho de la pagina del PDF
@@ -165,16 +165,26 @@ public class ReportePrestamosCatEmpresa {
 						new Paragraph(String.valueOf(formatoFecha.format(rs.getDate("fechaInicioPrestamo")))));
 				tabla.addCell(cell);
 			}
-			cell = new PdfPCell(new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("montoPrestamo")))));
+			cell = new PdfPCell(new Paragraph(String.valueOf((rs.getDouble("montoPrestamo")) / 1000)));
 			tabla.addCell(cell);
-			cell = new PdfPCell(new Paragraph(rs.getString("tipoPlazoPrestamo")));
-			tabla.addCell(cell);
+			if (rs.getString("tipoPlazoPrestamo").equals("QUINCENAL")) {
+				cell = new PdfPCell(new Paragraph("QUI"));
+				tabla.addCell(cell);
+			}
+			if (rs.getString("tipoPlazoPrestamo").equals("MENSUAL")) {
+				cell = new PdfPCell(new Paragraph("MEN"));
+				tabla.addCell(cell);
+			}
+			if (rs.getString("tipoPlazoPrestamo").equals("SEMANAL")) {
+				cell = new PdfPCell(new Paragraph("SEM"));
+				tabla.addCell(cell);
+			}
+
 			cell = new PdfPCell(new Paragraph(String.valueOf(rs.getInt("numeroCuotasprestamo"))));
 			tabla.addCell(cell);
-			cell = new PdfPCell(new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("montoACobrar")))));
+			cell = new PdfPCell(new Paragraph(String.valueOf((rs.getDouble("montoACobrar")) / 1000)));
 			tabla.addCell(cell);
-			cell = new PdfPCell(
-					new Paragraph(String.valueOf(formatoMoneda.format(rs.getDouble("saldoRestantePrestamo")))));
+			cell = new PdfPCell(new Paragraph(String.valueOf((rs.getDouble("saldoRestantePrestamo")) / 1000)));
 			tabla.addCell(cell);
 
 		}
